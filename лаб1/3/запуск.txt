@@ -1,4 +1,4 @@
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\3
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\лаб1\3
 python server.py
 
  http://127.0.0.1:8080/
