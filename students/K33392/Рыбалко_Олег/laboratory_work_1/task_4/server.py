@@ -1,10 +1,9 @@
 import os
 import socket
-import struct
 import threading
 
 from constants import HOST, PORT, WELCOME_MESSAGE
-from utils import recv_msg, create_msg
+from utils import create_msg, recv_msg
 
 
 def handle_client(conn: socket.socket, addr: tuple):
