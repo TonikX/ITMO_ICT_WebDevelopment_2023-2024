@@ -1,0 +1,5 @@
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\лаб1\2\b
+python server.py
+
+cd  C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\лаб1\2\b
+python client.py
