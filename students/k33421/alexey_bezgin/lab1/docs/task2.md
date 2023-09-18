@@ -101,7 +101,6 @@ if __name__ == "__main__":
 ```
 
 ## Демонстрация работы
-
 ![Клиентская часть #1](img/task2_client1.png)
 ![Клиентская часть #2](img/task2_client2.png)
 ![Клиентская часть #3](img/task2_client3.png)
