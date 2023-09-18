@@ -1,6 +1,7 @@
 import socket
 from threading import Thread, Lock
 from typing import Union
+import sys
 
 HOST = "127.0.0.1"
 PORT = 3000
@@ -15,6 +16,7 @@ class Client:
         self.__address = address
         self.__name = name
         self.__connection: Union[None, socket.socket] = None
+        self.__print_lock = Lock()
 
     def start(self):
         self.__connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,6 +42,11 @@ class Client:
         while True:
             try:
                 message = input(PROMT_MESSAGE)
+
+                with self.__print_lock:
+                    sys.stdout.write("\033[F")
+                    sys.stdout.write("\033[K")
+
                 if len(message) == 0:
                     continue
 
@@ -62,7 +69,8 @@ class Client:
                     self.__stop()
                     break
 
-                print(f"\r{message}\n{PROMT_MESSAGE}", end="")
+                with self.__print_lock:
+                    print(f"\r{message}\n{PROMT_MESSAGE}", end="")
             except Exception as error:
                 print(f"Failed to get message from server with error: {error}")
                 break
