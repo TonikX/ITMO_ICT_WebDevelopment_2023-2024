@@ -1,2 +1,0 @@
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\1
-python client.py
