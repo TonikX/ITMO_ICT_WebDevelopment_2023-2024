@@ -68,15 +68,14 @@ class HTTPServer:
 
     def __handle_client(self, conn: socket.socket):
         req = self.__parse_request(conn)
-        resp = self.__handle_request(conn, req)
+        resp = self.__handle_request(req)
         self.__send_response(conn, resp)
 
     def __send_response(self, conn: socket.socket, resp: HTTPResponse):
-        print(len(bytes(resp)))
-        print(conn.send(bytes(resp)))
+        logging.info(f"Sent {conn.send(bytes(resp))} bytes")
 
-    def __handle_request(self, conn: socket.socket, req: HTTPRequest):
-        print(req.path, req.method)
+    def __handle_request(self, req: HTTPRequest):
+        logging.info(f"Got {req.method} request {req.path}")
         if req.method == HTTPMethod.GET and req.path.startswith("/scores"):
             query_params = parse_qs(urlparse(req.path).query)
             if "subject" not in query_params:
@@ -128,7 +127,6 @@ class HTTPServer:
                 key, val = header.split(":")
                 headers[key.lower()] = val.strip()
             except ValueError:
-                print(1)
                 raise Exception("Malformed headers")
 
         # Parse body
