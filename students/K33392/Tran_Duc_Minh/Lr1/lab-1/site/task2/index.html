@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://example.com/task2/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Task 2 - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tasks <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../task1/" class="dropdown-item">Task 1</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Task 2</a>
+</li>
+                                    
+<li>
+    <a href="../task3/" class="dropdown-item">Task 3</a>
+</li>
+                                    
+<li>
+    <a href="../task4/" class="dropdown-item">Task 4</a>
+</li>
+                                    
+<li>
+    <a href="../task5/" class="dropdown-item">Task 5</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../task1/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../task3/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#no2" class="nav-link">Задача №2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Решение</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Демонстрация работы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="no2">Задача №2</h2>
+<p>Реализовать клиентскую и серверную часть приложения. Клиент запрашивает у сервера выполнение математической операции, параметры которой вводятся с клавиатуры. 
+Сервер обрабатывает полученные данные и возвращает результат клиенту. </p>
+<p>Мой вариант, согласно списку группы, – площадь параллелограмма.</p>
+<h2 id="_1">Решение</h2>
+<ol>
+<li>Сервер</li>
+</ol>
+<pre><code class="language-python">import socket
+
+port = 2002
+data_recv = 2048
+max_pending_conn = 8
+host = &quot;127.0.0.1&quot;
+
+#function to calculate the parallelogram area
+def calc_parallelogram_area(pair):
+    h, b = map(int, pair.split(&quot; &quot;))
+    return h*b
+
+def main():
+    #Create a TCP socket and associate it with the specified IP address and port.
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((host, port))
+    s.listen(max_pending_conn)
+
+    try:
+        while True:
+            #Accept an incoming connection from the client.
+            client, address = s.accept()
+
+            #Receive n bytes of data from the server and decode it
+            data = client.recv(port).decode(&quot;utf-8&quot;)
+            print(f&quot;Data recieved: &quot;, data)
+            result = calc_parallelogram_area(data)
+
+            #Send the encoded result to client
+            client.send(str(result).encode(&quot;utf-8&quot;))
+
+    except KeyboardInterrupt:
+        client.close()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<ol>
+<li>Клиент</li>
+</ol>
+<pre><code class="language-python">import socket
+
+port = 2002
+data_recv = 2048
+host = &quot;127.0.0.1&quot;
+
+print(&quot;Parallelogram area calculation&quot;)
+
+def main():
+    while True:
+        #input the height and the base of Parallelogram
+        h_str = input(&quot;Enter height: &quot;)
+        b_str = input(&quot;Enter base: &quot;)
+        #check if the input are positive integer
+        try:
+            h = int(h_str)
+            b = int(b_str)
+            if h &gt; 0 and b &gt; 0:
+                break
+            else:
+                print(&quot;Height and/or base is not positive integers.&quot;)
+        except ValueError:
+            print(&quot;Invalid input. Please enter valid integer values for height and base.&quot;)
+
+    msg = (h_str+&quot; &quot;+b_str).encode(&quot;utf-8&quot;)
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, port))
+
+    try:
+        #Send input to server
+        s.send(msg)
+        #Get the answer from server
+        msg, address = s.recvfrom(data_recv)
+        print(&quot;Area of parallelogram is: &quot;, msg.decode(&quot;utf-8&quot;))
+
+    except KeyboardInterrupt:
+        s.close()
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<h2 id="_2">Демонстрация работы</h2>
+<p><img alt="result" src="../assets/task2_result.jpg" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

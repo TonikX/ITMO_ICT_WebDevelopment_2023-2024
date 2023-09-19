@@ -1,7 +1,9 @@
 import socket
 
 class MyHTTPServer:
-    #The constructor of the MyHTTPServer class. It creates a socket object and sets options for it, then binds the socket to the given address and port, and listens on that port. Additionally, it initializes a dictionary (self.grades) to store the scores.
+    #The constructor of the MyHTTPServer class. It creates a socket object and sets options for it, 
+    # then binds the socket to the given address and port, and listens on that port.
+    #  Additionally, it initializes a dictionary (self.grades) to store the scores.
     def __init__(self, host, port):
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -9,7 +11,8 @@ class MyHTTPServer:
         self.conn.listen(1)
         self.grades = {}
 
-    #This function is the main loop of the server. It listens for and accepts connections from clients and calls the serve_client function to serve the client's request.
+    #This function is the main loop of the server. It listens for and accepts connections
+    #  from clients and calls the serve_client function to serve the client's request.
     def serve_forever(self):
         while True:
             client, address = self.conn.accept()
@@ -31,7 +34,9 @@ class MyHTTPServer:
         )
         self.handle_request(client, method, params)
 
-    #This function processes the HTTP request based on the method (GET or POST) and extracted parameters. If the method is GET, it sends the score list as HTML. If the method is POST, it stores the grade into the self.grades dictionary and sends a confirmation message.
+    #This function processes the HTTP request based on the method (GET or POST) and extracted parameters. 
+    #If the method is GET, it sends the score list as HTML. 
+    #If the method is POST, it stores the grade into the self.grades dictionary and sends a confirmation message.
     def handle_request(self, client, method, params):
         if method == "GET":
             self.send_response(client, 200, "OK", self.grades_to_html())
@@ -43,7 +48,8 @@ class MyHTTPServer:
         else:
             self.send_response(client, 404, "Not Found", "Incorrect method, try a different method.")
 
-    #This function sends an HTTP response to the client with a status code, reason, and specific content. The response is sent as an HTTP string.
+    #This function sends an HTTP response to the client with a status code, reason, and specific content. 
+    #The response is sent as an HTTP string.
     def send_response(self, client, code, reason, body):
         response = f"HTTP/1.1 {code} {reason}\nContent-Type: text/html\n\n{body}"
         client.send(response.encode("utf-8"))
