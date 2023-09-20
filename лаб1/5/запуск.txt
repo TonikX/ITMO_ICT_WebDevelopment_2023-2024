@@ -1,5 +1,0 @@
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\5
-python сервер.py
-
-
-http://localhost:8080

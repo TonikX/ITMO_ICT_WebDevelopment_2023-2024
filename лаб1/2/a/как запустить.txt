@@ -1,8 +1,0 @@
-Запустить в двух отдельных cmd
-
-
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\2\a
-python server.py
-
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\2\a
-python client.py

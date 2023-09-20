@@ -1,5 +1,0 @@
-cd  C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\2\c
-python server.py
-
-cd  C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\2\c
-python client.py

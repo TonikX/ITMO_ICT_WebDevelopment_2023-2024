@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Task 4 - Документация для лабораторной работы №1</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Документация для лабораторной работы №1</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../task1/" class="nav-link">Task 1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../task2/" class="nav-link">Task 2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../task3/" class="nav-link">Task 3</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Task 4</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../task5/" class="nav-link">Task 5</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../task3/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../task5/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><em>Задание №4</em></p>
+<p><strong>client.py</strong></p>
+<pre><code class="language-python">import socket
+import threading
+
+class Client:
+    def __init__(self, host='127.0.0.1', port=55555):
+        self.nickname = input(&quot;Введите ваш никнейм: &quot;)
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client.connect((host, port))
+
+    def receive(self):
+        while True:
+            try:
+                message = self.client.recv(1024).decode('utf-8')
+                if message == 'NICK':
+                    self.client.send(self.nickname.encode('utf-8'))
+                else:
+                    print(message)
+            except:
+                print(&quot;Произошла ошибка!&quot;)
+                self.client.close()
+                break
+
+    def write(self):
+        while True:
+            message = input(&quot;&quot;)
+            if message.lower() == 'quit':  # Проверка на команду &quot;quit&quot; для выхода
+                self.client.send('quit'.encode('utf-8'))
+                break
+            else:
+                message_to_send = f'{self.nickname}: {message}'
+                self.client.send(message_to_send.encode('utf-8'))
+
+    def run(self):
+        receive_thread = threading.Thread(target=self.receive)
+        receive_thread.start()
+
+        write_thread = threading.Thread(target=self.write)
+        write_thread.start()
+
+client = Client()
+client.run()
+</code></pre>
+<p><strong>server.py</strong></p>
+<pre><code class="language-python">import threading
+import socket
+
+class Server:
+    def __init__(self, host = '127.0.0.1', port = 55555):
+        self.host = host
+        self.port = port
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.bind((self.host, self.port))
+        self.server.listen()
+        self.clients = []       # Список подключенных клиентов
+        self.nicknames = []     # Список никнеймов клиентов
+
+    def broadcast(self, message):
+        # Рассылка сообщения всем клиентам
+        for client in self.clients:
+            client.send(message)
+
+    def handle(self, client):
+        while True:
+            try:
+                message = client.recv(1024)  # Прием сообщения от клиента (максимум 1024 байта)
+                self.broadcast(message)     # Рассылка сообщения всем клиентам
+            except:
+                # Обработка исключений, если клиент отключился
+                index = self.clients.index(client)
+                self.clients.remove(client)
+                client.close()
+                nickname = self.nicknames[index]
+                self.nicknames.remove(nickname)
+                self.broadcast(f'{nickname} left the chat!'.encode('ascii'))
+                break
+
+    def receive(self):
+        while True:
+            client, address = self.server.accept()  # Принятие нового клиента и его адреса
+            print(f'Connected with {str(address)}')
+
+            client.send('NICK'.encode('ascii'))     # Запрос никнейма у клиента
+            nickname = client.recv(1024).decode('ascii')  # Получение никнейма от клиента
+            self.nicknames.append(nickname)
+            self.clients.append(client)
+
+            print(f'Nickname of the client is {nickname}!')
+            self.broadcast(f'{nickname} joined the chat!'.encode('ascii'))  # Оповещение о входе клиента
+            client.send('Connected to the server!'.encode('ascii'))  # Отправка клиенту сообщения о подключении
+
+            thread = threading.Thread(target=self.handle, args=(client,))
+            thread.start()  # Запуск обработки сообщений клиента в отдельном потоке
+
+    def run(self):
+        print(&quot;Server started...&quot;)
+        self.receive()  # Запуск прослушивания подключений и обработки клиентов
+
+server = Server()
+server.run()
+</code></pre>
+<p>Написал код для клиентов и общего сервера. Запуск произвел через командную строку. Как видно из скрина, каждый клиент независимо добавляется в чат через отдельный поток.
+Сервер слушает подключения новых клиентов</p>
+<p><img alt="задание №4" src="../img/4_1.jpg" /></p>
+<p>Клиенты могут общаться друг с другом через общий интерфейс</p>
+<p><img alt="задание №4" src="../img/4_2.png" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

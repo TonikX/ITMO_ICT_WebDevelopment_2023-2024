@@ -1,4 +1,0 @@
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\3
-python server.py
-
- http://127.0.0.1:8080/

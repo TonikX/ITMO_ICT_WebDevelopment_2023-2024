@@ -1,12 +1,12 @@
 Запустить в отдельных cmd. Сервер, соотвественно, 1 раз запуск, для приема клиентов:
 
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\4
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\Nikiforov_Arsen\лаб1\4
 python server.py
 
 
 
 Для разных клиентов по несколько раз:
 
-cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\лаб1\4
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\Nikiforov_Arsen\лаб1\4
 python client.py
 

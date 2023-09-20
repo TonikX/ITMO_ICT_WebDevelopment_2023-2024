@@ -2,35 +2,40 @@ import socket
 import threading
 
 class Client:
-    def __init__(self, host = '127.0.0.1', port = 55555):
-        self.nickname = input("Enter your nickname: ")
+    def __init__(self, host='127.0.0.1', port=55555):
+        self.nickname = input("Введите ваш никнейм: ")
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect((host, port))  # Подключение к серверу по указанному адресу и порту
+        self.client.connect((host, port))
 
     def receive(self):
         while True:
             try:
-                message = self.client.recv(1024).decode('ascii')  # Прием сообщения от сервера
+                message = self.client.recv(1024).decode('utf-8')
                 if message == 'NICK':
-                    self.client.send(self.nickname.encode('ascii'))  # Отправка своего никнейма серверу
+                    self.client.send(self.nickname.encode('utf-8'))
                 else:
-                    print(message)  # Вывод сообщения от сервера
+                    print(message)
             except:
-                print("An error occurred!")
+                print("Произошла ошибка!")
                 self.client.close()
                 break
-            
+
     def write(self):
         while True:
-            message = f'{self.nickname}: {input("")}'  # Ввод сообщения с указанием своего никнейма
-            self.client.send(message.encode('ascii'))  # Отправка сообщения серверу
+            message = input("")
+            if message.lower() == 'quit':  # Проверка на команду "quit" для выхода
+                self.client.send('quit'.encode('utf-8'))
+                break
+            else:
+                message_to_send = f'{self.nickname}: {message}'
+                self.client.send(message_to_send.encode('utf-8'))
 
     def run(self):
         receive_thread = threading.Thread(target=self.receive)
-        receive_thread.start()  # Запуск потока для приема сообщений от сервера
+        receive_thread.start()
 
         write_thread = threading.Thread(target=self.write)
-        write_thread.start()    # Запуск потока для отправки сообщений на сервер
+        write_thread.start()
 
 client = Client()
 client.run()
