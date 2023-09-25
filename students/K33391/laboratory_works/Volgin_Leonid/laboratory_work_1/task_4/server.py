@@ -99,11 +99,15 @@ server.listen(10)
 
 def sending():
     time.sleep(2)
-    for user in usersDict.keys():
-        for new_message in newMessages:
-            if new_message.userSocket != user:
-                user.send((bytes(new_message.make_text(), "UTF-8")))
-    newMessages.clear()
+    while True:
+        try:
+            for user in usersDict.keys():
+                for new_message in newMessages:
+                    if new_message.userSocket != user:
+                        user.send((bytes(new_message.make_text(), "UTF-8")))
+            newMessages.clear()
+        except:
+            print("Let's try again")
 
 while True:
     clientSocket, clientAdress = server.accept()
