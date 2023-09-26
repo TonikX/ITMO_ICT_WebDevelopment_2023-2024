@@ -17,11 +17,11 @@ def listen():
 #client.send(bytes('web', "UTF-8"))
 time.sleep(1)
 #mouth = threading.Thread(target=send)
+client.send(bytes("web", "UTF-8"))
 ear = threading.Thread(target=listen)
 #mouth.start()
 #ear.start()
 while True:
-
     data = client.recv(4096)
     print(data.decode("UTF-8"))
 #data = client.recv(4096)
