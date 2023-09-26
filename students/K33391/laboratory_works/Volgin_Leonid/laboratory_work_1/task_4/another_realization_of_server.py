@@ -24,6 +24,7 @@ class ClientThread(threading.Thread):
         self.clientSocket = clientSocket
         self.clientAdress = clientAdress
         self.connection = True
+
         self.userName = "Default User"
         usersDict[self.clientSocket] = self.clientAdress
 
