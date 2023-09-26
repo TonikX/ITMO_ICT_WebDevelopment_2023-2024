@@ -5,11 +5,10 @@ import time
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('localhost', 2002))
 
+
 def send():
     while True:
         data = input()
-        if data == 'exit':
-            break
         client.send(data.encode('utf-8'))
 
 def listen():

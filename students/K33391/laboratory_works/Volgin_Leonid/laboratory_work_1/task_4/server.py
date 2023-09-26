@@ -36,34 +36,42 @@ class ClientThread(threading.Thread):
         print(f"Start listening to {self.userName}")
         counter = 0
         while self.connection:
-            msg = self.clientSocket.recv(16384)
-            msg = msg.decode("UTF-8")
-            if msg:
-                counter = 0
-                print(self.userName+': ' + msg)
-                msg = Message(self.userName,self.clientSocket,msg)
-                for key in usersDict:
-                    if key!=self.clientSocket:
-                        arr = usersDict.get(key,[])
-                        arr.append(msg)
-                        usersDict[key] = arr
+            try:
+                msg = self.clientSocket.recv(16384)
+                msg = msg.decode("UTF-8")
+                if msg:
+                    counter = 0
+                    print(self.userName+': ' + msg)
+                    msg = Message(self.userName,self.clientSocket,msg)
+                    for key in usersDict:
+                        if key!=self.clientSocket:
+                            arr = usersDict.get(key,[])
+                            arr.append(msg)
+                            usersDict[key] = arr
 
-            else:
-                counter+=1
-            if counter>=10:
-                print(f"The {self.userName} was blocked")
+                else:
+                    counter+=1
+                if counter>=10:
+                    print(f"The {self.userName} was blocked")
+                    self.break_connection()
+                    break
+            except:
+                print("exeption in listening")
                 self.break_connection()
-                break
         print(f"End listening to {self.userName}")
     def send(self):
          print(f"Start sending to {self.userName}")
          while self.connection:
-             time.sleep(2)
-             arr = usersDict.get(self.clientSocket,[])
-             for msg in arr:
-                if self.connection:
-                    self.clientSocket.send(bytes(msg.make_text(), "UTF-8"))
-             usersDict[self.clientSocket]=[]
+             try:
+                time.sleep(2)
+                arr = usersDict.get(self.clientSocket,[])
+                for msg in arr:
+                    if self.connection:
+                        self.clientSocket.send(bytes(msg.make_text(), "UTF-8"))
+                usersDict[self.clientSocket]=[]
+             except:
+                 print("exeption in sending")
+                 self.break_connection()
          print(f"End sending to {self.userName}")
 
     def run(self):
