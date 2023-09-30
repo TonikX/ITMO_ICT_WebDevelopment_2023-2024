@@ -14,7 +14,6 @@ class MyHTTPServer:
         while True:
             try:
                 clientSocket, clientAdress = self.connection.accept()
-                print('qwerty')
                 servitor = threading.Thread(target=self.serve_client, args=[clientSocket])
                 servitor.start()
             except:
