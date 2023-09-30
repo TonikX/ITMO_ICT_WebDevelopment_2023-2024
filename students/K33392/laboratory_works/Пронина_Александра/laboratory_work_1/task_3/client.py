@@ -1,3 +1,15 @@
-# Здесь реализуется проверка вывода HTML-страницы,
-# которую сервер загружает из файла index.html
+import socket
 
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_address = ('localhost', 12345)
+client_socket.connect(server_address)
+
+request = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n"
+client_socket.send(request.encode())
+
+response = client_socket.recv(1024).decode()
+
+print(response)
+
+client_socket.close()
