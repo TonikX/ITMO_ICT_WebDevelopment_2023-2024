@@ -23,5 +23,5 @@ while True:
         result = solve_hypotenuse(a, b)
         outer_socket.send(str(result).encode(codage))
     except KeyboardInterrupt:
-        outer_socket.close()
+        server_socket.close()
         break
