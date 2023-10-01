@@ -1,12 +1,14 @@
 import socket
 import sys
 
+
 class Response:
-  def __init__(self, status, reason, headers=None, body=None):
-    self.status = status
-    self.reason = reason
-    self.headers = headers
-    self.body = body
+    def __init__(self, status, reason, headers=None, body=None):
+        self.status = status
+        self.reason = reason
+        self.headers = headers
+        self.body = body
+
 
 class MyHTTPServer:
     def __init__(self, host, port):
@@ -38,6 +40,7 @@ class MyHTTPServer:
             name, value = param.split('=')
             params_dict[name] = value
         return data, http_method, params_dict
+
     def parse_headers(self, data):
         headers = []
         for line in data:
@@ -63,7 +66,6 @@ class MyHTTPServer:
             else:
                 return Response(404, 'Not found.')
 
-
     def send_response(self, client_socket, resp):
         wfile = client_socket.makefile('wb')
         status_line = f'HTTP/1.1 {resp.status} {resp.reason}\r\n'
@@ -71,8 +73,6 @@ class MyHTTPServer:
         wfile.flush()
         wfile.close()
 
-
-# 6. Функция для отправки ответа. Необходимо записать в соединение status line вида HTTP/1.1 <status_code> <reason>. Затем, построчно записать заголовки и пустую строку, обозначающую конец секции заголовков.
 
 if __name__ == '__main__':
     host = 'localhost'
