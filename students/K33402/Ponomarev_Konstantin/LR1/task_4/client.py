@@ -16,6 +16,7 @@ def send_to_chat(connection: socket.socket):
             if message != "Quit":
                 connection.send(message.encode("utf-8"))
             else:
+                connection.send(message.encode("utf-8"))
                 print("Bye")
                 connection.close()
         except OSError:
@@ -29,4 +30,4 @@ if __name__ == "__main__":
 
     handleThread = threading.Thread(target=handle_messages, args=[_socket], name="Handle thread")
     handleThread.start()
-    sendToChatThread = threading.Thread(target=send_to_chat, args=[_socket],name="Send to chat thread")
+    sendToChatThread = threading.Thread(target=send_to_chat, args=[_socket], name="Send to chat thread")

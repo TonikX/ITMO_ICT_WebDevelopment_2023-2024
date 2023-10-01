@@ -20,6 +20,8 @@ class ChatServer:
                 print(f"handled message {message}")
                 if message != b"":
                     self.send_message_to_clients(message, user_address)
+                if message == b"Quit":
+                    break
         finally:
             connection.close()
 
@@ -48,7 +50,7 @@ class ChatServer:
 
             connection.send("Welcome to chat!".encode("utf-8"))
 
-            self.send_message_to_clients(f"New user has joined: {address}".encode("utf-8"), ("Server", ""))
+            self.send_message_to_clients(f"New user joined: {address}".encode("utf-8"), ("server side", ""))
 
             self._connections.append((connection, address))
 

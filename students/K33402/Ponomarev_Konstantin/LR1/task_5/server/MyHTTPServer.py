@@ -81,7 +81,6 @@ class MyHTTPServer:
 
     def send_response(self, response: Response, client: socket.socket):
         client.send(response.to_byte())
-        pass
 
     def parse_headers(self, data: list[bytes]) -> tuple[dict[str, str], int]:
         index = -1
