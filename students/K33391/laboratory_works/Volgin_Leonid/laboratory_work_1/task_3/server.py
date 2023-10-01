@@ -16,8 +16,9 @@ while True:
     body+=line
     if not line:
         break
-file1.close
+file1.close()
 
 response = response_type+headers+body
 clientSocket.send(response.encode("UTF-8"))
 clientSocket.close()
+print(response)
