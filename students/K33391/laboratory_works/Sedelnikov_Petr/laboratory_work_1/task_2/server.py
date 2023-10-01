@@ -16,13 +16,16 @@ def get_answer(a, b, c):
         x2 = (-(b) - sqrt(discriminant)) / (2 * a)
         return f"{x1}, {x2}"
 
-server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 server.bind(('', 14900))
+server.listen(1)
 
-data, client_address = server.recvfrom(16384)
+client_socket, client_address = server.accept()
+data = client_socket.recvfrom(16384)[0]
 coefficients = list(map(int, data.decode("UTF-8").split()))
 
 answer = get_answer(*coefficients)
-server.sendto(bytes(answer, 'UTF-8'), client_address)
+client_socket.send(bytes(answer, 'UTF-8'))
 
+client_socket.close()
 server.close()

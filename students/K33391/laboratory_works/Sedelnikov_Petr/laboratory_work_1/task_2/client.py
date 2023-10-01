@@ -1,7 +1,7 @@
 import socket
 
 server_address = ('localhost', 14900)
-client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
     coefficients = list(map(int, input("Введите коэффициенты a, b, c: ").split()))
