@@ -4,7 +4,7 @@ import threading
 
 class ChatServer:
     _socket: socket
-    _connections: list[socket.socket]
+    _connections: list[socket.socket] = []
 
     def start(self):
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,10 +14,12 @@ class ChatServer:
         self.handle_connections(self._socket)
 
     def handle_client_message(self, connection: socket.socket, user_address: tuple):
-        message = connection.recv(1024)
         try:
-            while message is not None and message != b"Quit":
-                self.send_message_to_clients(message, user_address)
+            while True:
+                message = connection.recv(1024)
+                print(f"handled message {message}")
+                if message != b"":
+                    self.send_message_to_clients(message, user_address)
         finally:
             connection.close()
 
@@ -27,16 +29,16 @@ class ChatServer:
 
         # Нужно отправить всем подключением сообщение, исключая пользователя
         unreceived_users = set()
-        for i, (connection, connectionAddress) in enumerate(self._connections):
+        for index, (connection, connectionAddress) in enumerate(self._connections):
             if address != connectionAddress:
                 try:
                     connection.send(message)
                 except OSError:
-                    unreceived_users.add(i)
+                    unreceived_users.add(index)
 
         unreceived_users = list(unreceived_users)
-        for i in unreceived_users:
-            self._connections.pop(i)
+        for index in unreceived_users:
+            self._connections.pop(index)
 
     def handle_connections(self, sock: socket.socket):
         print("server handle connections")
@@ -44,9 +46,9 @@ class ChatServer:
             connection, address = sock.accept()
             print(f"Client connected: {address}")
 
-            connection.send("Say hello to new user!")
+            connection.send("Welcome to chat!".encode("utf-8"))
 
-            self.send_message_to_clients(f"New user has joined: {address}".encode(), ("Server", ""))
+            self.send_message_to_clients(f"New user has joined: {address}".encode("utf-8"), ("Server", ""))
 
             self._connections.append((connection, address))
 

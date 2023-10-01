@@ -3,11 +3,23 @@ import threading
 
 
 def handle_messages(connection: socket.socket):
-    message = connection.recv(1024)
-    while message is not None and message != b'':
-        print(f"\n{message.decode()}", end="")
-    _socket.close()
-    print("Bye!")
+    while True:
+        message = connection.recv(1024)
+        if message is not None and message != b"":
+            print(message.decode("utf-8"))
+
+
+def send_to_chat(connection: socket.socket):
+    while True:
+        try:
+            message = input("Введите ваше сообщение")
+            if message != "Quit":
+                connection.send(message.encode("utf-8"))
+            else:
+                print("Bye")
+                connection.close()
+        except OSError:
+            break
 
 
 if __name__ == "__main__":
@@ -15,11 +27,6 @@ if __name__ == "__main__":
     _socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     _socket.connect(("localhost", 9090))
 
-    t = threading.Thread(target=handle_messages, args=(_socket,))
-    t.start()
-
-    while True:
-        try:
-            _socket.send(input("Write your messages at console: "))
-        except OSError:
-            break
+    handleThread = threading.Thread(target=handle_messages, args=[_socket], name="Handle thread")
+    handleThread.start()
+    sendToChatThread = threading.Thread(target=send_to_chat, args=[_socket],name="Send to chat thread")
