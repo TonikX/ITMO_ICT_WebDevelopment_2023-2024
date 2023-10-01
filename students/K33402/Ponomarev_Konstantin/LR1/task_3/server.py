@@ -23,10 +23,10 @@ def init_server():
     print(f"Connected client: {client_address}")
     while True:
         try:
-            request = client.recv(1024).decode('utf-8')
-            http_response = generate_http_response()
-            client.send(http_response.encode('utf-8'))
-            client.close()
+            if client.recv(1024) is not None:
+                http_response = generate_http_response()
+                client.send(http_response.encode('utf-8'))
+                client.close()
             break
         except Exception as e:
             print(f"ERROR: {str(e)}")
