@@ -55,8 +55,8 @@ class MyHTTPServer:
             return Response(
                 protocolVersion="HTTP/1.1",
                 status=200,
-                headers={"Content-Type": "application/json"},
-                body=json.dumps({"grade": self._grades[query_parameters["subject"][0]]}).encode(),
+                headers={"Content-Type": "text/html", "charset": "UTF-8"},
+                body=self.generate_html().encode(),
             )
         elif request.method == Method.POST and request.path.startswith("/subject"):
             query_params = parse_qs(urlparse(request.path).query)
@@ -96,3 +96,10 @@ class MyHTTPServer:
                 raise Exception("Wrong header")
 
         return headers, index
+
+    def generate_html(self):
+        return (
+            "<html><body>"
+            f"{''.join([f'<div>{subject}: {grade}</div>' for subject, grade in self._grades.items()])}"
+            "</body></html>"
+        )
