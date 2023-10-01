@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2><center>Ведомость</center></h2>
+        <table style="border-collapse: collapse; width: 70%;" align="center">
+            <tr>
+                <th style="border: 1px solid black; padding: 4px;">Предмет</th>
+                <th style="border: 1px solid black; padding: 4px;">Оценка</th>
+            </tr>
+            % for subject, grades in information:
+                % for grade in grades:
+                    <tr>
+                        <td style="border: 1px solid black; padding: 4px;">{{ subject }}</td>
+                        <td style="border: 1px solid black; padding: 4px;">{{ grade }}</td>
+                    </tr>
+                % end
+            % end
+        </table>
+            <form action="/add_grade" style="padding: 10px;">
+                <center><input type="submit" value="Добавить данные"></center>
+            </form>
+    </body>
+</html>
