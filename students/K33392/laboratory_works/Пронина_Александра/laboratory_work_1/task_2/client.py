@@ -5,7 +5,7 @@ def send_request(operate, params):
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    server_address = ('localhost', 12345)
+    server_address = ('localhost', 123)
     client_socket.connect(server_address)
 
     request = operate + ' ' + ' '.join(params)

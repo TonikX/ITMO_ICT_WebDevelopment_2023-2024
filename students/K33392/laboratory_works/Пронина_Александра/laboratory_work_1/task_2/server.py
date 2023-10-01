@@ -39,7 +39,7 @@ def process_request(code_operation, params):
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server_address = ('localhost', 12345)
+server_address = ('localhost', 123)
 server_socket.bind(server_address)
 
 server_socket.listen(1)
