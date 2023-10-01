@@ -5,11 +5,11 @@ import sys
 
 class MyHTTPServer:
     # Параметры сервера
-    def __init__(self, ip, port):
+    def __init__(self, ip, port, codage):
         self.ip = ip
         self.port = port
         self.grades = []
-        self.codage = 'utf-8'
+        self.codage = codage
 
     def serve_forever(self):
         #1. Запуск сервера на сокете, обработка входящих соединений
@@ -49,8 +49,10 @@ class MyHTTPServer:
             raise Exception("Bad request line")
 
         body = lines[-1]
-        grds = body.split(";") if ";" in body else {}
-        request = {"method": headers[0], "url": headers[1], "version": headers[2], "grades" : grds}
+        grds = {}
+        if ":" in body:
+            grds = {grade.split(":")[0]: grade.split(":")[1] for grade in body.split(";")}
+        request = {"method": headers[0], "url": headers[1], "version": headers[2], "grades": grds}
 
         return request
 
@@ -67,16 +69,17 @@ class MyHTTPServer:
             with open('index.html', 'r') as f:
                 return f"HTTP/1.1 200 OK\n\n{f.read()}"
         elif request["method"] == "GET":
-            response = f"HTTP/1.1 200 OK\n\n{f.read()}" + "<html><head><title>Grades</title></head><body>"
+            response = f"HTTP/1.1 200 OK\n\n" + "<html><head><title>Grades</title></head><body>"
             for s in self.grades:
                 response += f"<p>{s} </p>"
             response += "</body></html>"
             return response
         else:
-            return "HTTP/1.1 Something wrong\n\n"
+            return "HTTP/1.1 405 Something wrong with request\n\n"
 
     #def send_response(self, *):
-        # 6. Функция для отправки ответа. Необходимо записать в соединение status line вида HTTP/1.1 <status_code> <reason>. Затем, построчно записать заголовки и пустую строку, обозначающую конец секции заголовков.
+        # 6. Функция для отправки ответа. Необходимо записать в соединение status line вида HTTP/1.1 <status_code> <reason>.
+        # Затем, построчно записать заголовки и пустую строку, обозначающую конец секции заголовков.
 
 if __name__ == '__main__':
     IP = "127.0.0.1"
