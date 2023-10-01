@@ -92,4 +92,3 @@
 ## Результат
 
 ![Result](images/task_4.png)
-![Result](images/task_4(2).png)

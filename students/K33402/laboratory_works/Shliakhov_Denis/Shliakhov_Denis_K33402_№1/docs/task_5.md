@@ -5,15 +5,15 @@
 Задание: сделать сервер, который может:
 
 - Принять и записать информацию о дисциплине и оценке по дисциплине.
-- Отдать информацию обо всех оценах по дсициплине в виде html-страницы.
+- Отдать информацию обо всех оценках по дсициплине в виде html-страницы.
 
 ## Ход выполнения работы
 
 ### Код server.py
 
     import socket
-    
-    
+
+
     class MyHTTPServer:
         def __init__(self):
     
@@ -36,10 +36,13 @@
             method, url, version = body[0].split()
             params = {}
             if method == "GET":
-                args = url.split("?")[1].split("&")
-                for arg in args:
-                    key, value = arg.split("=")
-                    params[key] = value
+                if "?" in url:
+                    args = url.split("?")[1].split("&")
+                    for arg in args:
+                        key, value = arg.split("=")
+                        params[key] = value
+                else:
+                    params = None
     
             elif method == "POST":
                 body = data.split("\n")[-1]
@@ -52,7 +55,10 @@
     
         def handle_request(self, client, method, params):
             if method == "GET":
-                self.send_response(client, 200, "OK", self.generate_html())
+                if params is None:
+                    self.send_response(client, 200, "OK", self.generate_html())
+                else:
+                    self.send_response(client, 200, "OK", self.generate_html(subject=params.get("subject")))
                 print("GET 200 OK")
             elif method == "POST":
                 discipline = params.get("subject")
@@ -69,22 +75,28 @@
             client.send(response.encode("utf-8"))
             client.close()
     
-        def generate_html(self):
-            page = (
-                "<html><body><div>"
-                f"{''.join([f'<p>{discipline}: {mark}</p>' for discipline, mark in self.marks.items()])}"
-                "</div></body></html>"
-            )
+        def generate_html(self, subject=None):
+            if subject is None:
+                page = (
+                    "<html><body><div>"
+                    f"{''.join([f'<p>{discipline}: {mark}</p>' for discipline, mark in self.marks.items()])}"
+                    "</div></body></html>"
+                )
+            else:
+                page = (
+                    "<html><body><div>"
+                    f"{''.join([f'<p>{subject}: {self.marks.get(subject)}</p>'])}"
+                    "</div></body></html>"
+                )
             return page
-
-
+    
+    
     if __name__ == "__main__":
         server = MyHTTPServer()
         try:
             server.serve_forever()
         except KeyboardInterrupt:
             server.conn.close()
-
 
 ### Код get.py
 
@@ -110,7 +122,7 @@
     mark = input('Введите оценку: ')
     
     request = "POST /discipline HTTP/1.1\nHost: localhost\nContent-Type: " \
-              "application/x-www-form-urlencoded\nContent-Length: 38\n\n "
+              "application/x-www-form-urlencoded\nContent-Length: 38\n\n"
     body = f"subject={discipline}&mark={mark}"
     
     sock.send((request + body).encode())
@@ -120,6 +132,6 @@
 
 ## Результат
 
-![Result](images/task_5.png)
-![Result](images/task_5(2).png)
-![Result](images/task_5(3).png)
+![Result](images/task_5_1.png)
+![Result](images/task_5_2.png)
+![Result](images/task_5_3.png)

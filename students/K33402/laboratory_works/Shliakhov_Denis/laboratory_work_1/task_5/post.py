@@ -7,7 +7,7 @@ discipline = input('Введите название предмета: ')
 mark = input('Введите оценку: ')
 
 request = "POST /discipline HTTP/1.1\nHost: localhost\nContent-Type: " \
-          "application/x-www-form-urlencoded\nContent-Length: 38\n\n "
+          "application/x-www-form-urlencoded\nContent-Length: 38\n\n"
 body = f"subject={discipline}&mark={mark}"
 
 sock.send((request + body).encode())

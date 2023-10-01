@@ -23,10 +23,13 @@ class MyHTTPServer:
         method, url, version = body[0].split()
         params = {}
         if method == "GET":
-            args = url.split("?")[1].split("&")
-            for arg in args:
-                key, value = arg.split("=")
-                params[key] = value
+            if "?" in url:
+                args = url.split("?")[1].split("&")
+                for arg in args:
+                    key, value = arg.split("=")
+                    params[key] = value
+            else:
+                params = None
 
         elif method == "POST":
             body = data.split("\n")[-1]
@@ -39,7 +42,10 @@ class MyHTTPServer:
 
     def handle_request(self, client, method, params):
         if method == "GET":
-            self.send_response(client, 200, "OK", self.generate_html())
+            if params is None:
+                self.send_response(client, 200, "OK", self.generate_html())
+            else:
+                self.send_response(client, 200, "OK", self.generate_html(subject=params.get("subject")))
             print("GET 200 OK")
         elif method == "POST":
             discipline = params.get("subject")
@@ -56,12 +62,19 @@ class MyHTTPServer:
         client.send(response.encode("utf-8"))
         client.close()
 
-    def generate_html(self):
-        page = (
-            "<html><body><div>"
-            f"{''.join([f'<p>{discipline}: {mark}</p>' for discipline, mark in self.marks.items()])}"
-            "</div></body></html>"
-        )
+    def generate_html(self, subject=None):
+        if subject is None:
+            page = (
+                "<html><body><div>"
+                f"{''.join([f'<p>{discipline}: {mark}</p>' for discipline, mark in self.marks.items()])}"
+                "</div></body></html>"
+            )
+        else:
+            page = (
+                "<html><body><div>"
+                f"{''.join([f'<p>{subject}: {self.marks.get(subject)}</p>'])}"
+                "</div></body></html>"
+            )
         return page
 
 

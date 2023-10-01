@@ -57,5 +57,5 @@
 
 ## Результат
 
-![Result](images/task_3.png)
-![Result](images/task_3(2).png)
+![Result](images/task_3_1.png)
+![Result](images/task_3_2.png)

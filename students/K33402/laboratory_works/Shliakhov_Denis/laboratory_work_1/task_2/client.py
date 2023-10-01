@@ -5,9 +5,8 @@ client.connect((socket.gethostname(), 9090))
 
 try:
     m = float(input("Введите размер средней линии трапеции: "))
-    h = float(input("Введите высоту трапеции: "))
-
     client.send(str(m).encode())
+    h = float(input("Введите высоту трапеции: "))
     client.send(str(h).encode())
 
     res, addr = client.recvfrom(1024)
