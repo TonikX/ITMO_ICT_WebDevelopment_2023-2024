@@ -165,7 +165,13 @@ class HTTPserver():
         return json.loads(json_str)
 
     def handle_get(self, req):
-        pass
+        accept = req.headers.get('Accept')
+        contentType = 'application/json; charset=utf-8'
+        with open('data.json', mode='r', encoding='utf-8') as f: # открваем json
+            body = json.load(f)
+        body = body.encode('utf-8')
+        headers = [('Content-Type', contentType), ('Content-Length', len(body))]
+        return Response(200, 'OK', headers, body)
 
 a = HTTPserver('localhost', 8081, 'Server')
 a.launch_server()
