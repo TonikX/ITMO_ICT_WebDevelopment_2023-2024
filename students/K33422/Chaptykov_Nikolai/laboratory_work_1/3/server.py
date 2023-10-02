@@ -18,5 +18,6 @@ s.listen(10)
 while True:
     conn, addr = s.accept()
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
+    conn.sendto(file.encode('utf-8'), addr)
     data = conn.recv(1024)
     conn.close()
