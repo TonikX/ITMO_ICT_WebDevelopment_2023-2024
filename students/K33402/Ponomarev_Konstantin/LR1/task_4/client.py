@@ -4,9 +4,12 @@ import threading
 
 def handle_messages(connection: socket.socket):
     while True:
-        message = connection.recv(1024)
-        if message is not None and message != b"":
-            print(message.decode("utf-8"))
+        try:
+            message = connection.recv(1024)
+            if message is not None and message != b"":
+                print(message.decode("utf-8"))
+        except Exception:
+            connection.close()
 
 
 def send_to_chat(connection: socket.socket):
@@ -19,6 +22,7 @@ def send_to_chat(connection: socket.socket):
                 connection.send(message.encode("utf-8"))
                 print("Bye")
                 connection.close()
+                break
         except OSError:
             break
 
@@ -31,3 +35,4 @@ if __name__ == "__main__":
     handleThread = threading.Thread(target=handle_messages, args=[_socket], name="Handle thread")
     handleThread.start()
     sendToChatThread = threading.Thread(target=send_to_chat, args=[_socket], name="Send to chat thread")
+    sendToChatThread.start()

@@ -15,10 +15,11 @@ class ChatServer:
 
     def handle_client_message(self, connection: socket.socket, user_address: tuple):
         try:
+            previous_message = b""
             while True:
                 message = connection.recv(1024)
-                print(f"handled message {message}")
-                if message != b"":
+                if message != b"" and message != previous_message:
+                    previous_message = message
                     self.send_message_to_clients(message, user_address)
                 if message == b"Quit":
                     break
