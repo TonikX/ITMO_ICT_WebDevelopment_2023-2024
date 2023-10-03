@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+  {% block content %}
+        <!-- Header -->
+        <section style="background: url({% static 'img/index.jpeg' %}); background-size: cover; background-position: center center" class="hero">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-7">
+                <h1>hotelist</h1>
+                <h2>the list of hotels, duh</h2>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- List of hotels -->
+        <main class="posts-listing col-md-12">
+          <div class="container">
+            <header>
+              <h2>the hottest destinations</h2>
+            </header>
+            <div class="row" style="margin-top: 10%;">
+              <!-- hotels -->
+              {% for hotel in hotel_list %}
+              <div class="post col-md-6">
+                <a href="{% url 'hotel' id=hotel.pk %}">
+                <div class="post-thumbnail" style="margin-bottom: 5%;">
+                    <img src="{{ hotel.thumbnail.url }}" alt="hotel photo" class="img-fluid" style="width: 100%;">
+                </div>
+                <div class="post-details">
+                    <h3 class="h4">{{ hotel.name }}</h3>
+                  <p class="text-muted">{{ hotel.location }}</p>
+                </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  {% endblock content %}

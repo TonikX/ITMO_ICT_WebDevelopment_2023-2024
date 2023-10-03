@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+  {% block content %}
+    <section style="color: white; background: url({{ hotel.thumbnail.url }}); background-size: cover; background-position: center center">
+      <div class="col-6 offset-1 mt-5 mb-5">
+        <h2 class="h1">{{ hotel.name }}</h2> <br>
+        <h2 class="h4">{{ hotel.location }}</h2>
+      </div>
+    </section>
+    <div class="container">
+      <div class="row">
+        <main class="posts-listing col-md-12">
+          <div class="container">
+            <p>{{ hotel.description }}</p>
+            <br>
+            <header> <p class="text-big"><b>Owner</b> {{ hotel.owner }}</p> </header>
+            <br>
+            <header> <p class="text-big"><b>Rooms</b></p> </header>
+            <div class="row">
+              <!-- rooms -->
+              {% for room in room_list %}
+              <div class="post col-md-6">
+                <a href="{% url 'room' id=room.pk %}">
+                <div class="post-thumbnail" style="margin-bottom: 5%;">
+                    <img src="{{ room.thumbnail.url }}" alt="room photo" class="img-fluid" style="width: 100%;">
+                </div>
+                <div class="post-details">
+                  <h3 class="h4">{{ room.type }} room for {{ room.capacity }}
+                    {% if room.capacity == 1 %}person{% endif %}{% if room.capacity != 1 %}people{% endif %}</h3>
+                  <p class="text-muted">{{ room.price }} rub/night</p>
+                </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+            <header> <p class="text-big"><b>Who visited last month</b></p> </header>
+            <div class="row">
+              <!-- guests -->
+              {% for guest in guest_list %}
+              <div class="post col">
+                <div class="post-thumbnail" style="margin-bottom: 5%;">
+                    <img src="{{ guest.photo.url }}" alt="user photo" class="img-fluid" style="width: 50%;">
+                </div>
+                <div class="post-details">
+                  <p class="text-muted">{{ guest.username }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+  {% endblock content %}

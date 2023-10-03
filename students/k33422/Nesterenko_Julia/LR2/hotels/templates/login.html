@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+  {% block content %}
+
+    <div class="col-6 offset-3 mt-5 mb-5">
+        <h3>Access the <strong>hotelist</strong> </h3>
+        <br>
+        <form method="POST" action="{% url 'login' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group col-md-6">
+                <input type="text" name="username" id="username" placeholder="username" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="password" name="password" id="password" placeholder="password" class="form-control">
+            </div>
+            <div class="form-group col-md-12 mt-5">
+                <button type="submit" class="btn btn-secondary">Log In</button>
+            </div>
+            <div class="form-group col-md-12 mt-5">
+                {% for message in messages %}
+                    <p style="color:#a10909">{{ message }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <p>Don't have an account? <a href="{% url 'register' %}"><b>Register now</b></a></p>
+        </form>
+        <div class="container" style="position: relative; width: 100%; margin-top: 255px"></div>
+    </div>
+  {% endblock content %}

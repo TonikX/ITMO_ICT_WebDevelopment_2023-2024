@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+  {% block content %}
+  <style>
+    .post-body img {
+      width: 100%;
+   }
+  </style>
+    <div class="container">
+      <div class="row">
+        <!-- Room info -->
+        <main class="post blog-post col-lg-8">
+          <div class="container">
+            <div class="post-single">
+              <div class="post-thumbnail"><img src="{{ room.thumbnail.url }}" alt="room image" class="img-fluid" style="width:100%;"></div>
+              <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="category">
+                      <a href="{% url 'hotel' id=room.hotel.pk %}">{{ room.hotel.name }}</a>
+                    </div>
+                  </div>
+                <h1>{{ room.type }} room for {{ room.capacity }}
+                    {% if room.capacity == 1 %}person{% endif %}{% if room.capacity != 1 %}people{% endif %}</h1>
+                <br>
+                <h5 class="h5">{{ room.price }} Rub/night</h5>
+
+                {% if request.user.is_authenticated %}
+                <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                  <div style="background-color: rgb(190,190,190); width:40%">
+                    <br>
+                    <form method="POST" action="/room/{{ room.pk }}/" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group col-md-12">
+                        <label for="from"><b>Arrival</b></label>
+                        <input type="date" id="from" name="from">
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label for="until"><b>Departure</b></label>
+                        <input type="date" id="until" name="until">
+                      </div>
+                      <div class="form-group col-md-12 mt-5">
+                        {% for message in messages %}
+                            <p style="color:#a10909">{{ message }}</p>
+                        {% endfor %}
+                      </div>
+                      <div class="form-group col-md-12 mt-5">
+                        <button type="submit" class="btn btn-secondary">Book now</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                {% endif %}
+                <div class="post-body">
+                  <h3 class="h5"><i class="fa fa-bath"></i> Commodities</h3>
+                  <ul style="margin-left: 3%">
+                    {% for comm in room.commodities %}
+                      <li>{{ comm }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="post-comments">
+                  <header>
+                    <h3 class="h5"><i class="fa fa-comment"></i> Reviews<span class="no-of-comments">({{ room.reviews.count }})</span></h3>
+                    {% if room.reviews.count == 0 %}
+                    <p>There are no reviews yet.<p>
+                    {% endif %}
+                  </header>
+                  {% for review in room.reviews %}
+                  <div class="comment">
+                    <div class="comment-header d-flex justify-content-between">
+                      <div class="user d-flex align-items-center">
+                        <div class="image"><img src="{{ review.booking.guest.photo.url }}" alt="user photo" class="img-fluid rounded-circle"></div>
+                        <div class="title"><strong>{{ review.booking.guest.username }}</strong><span class="date">visited on {{ review.booking.date_until }}</span></div>
+                      </div>
+                    </div>
+                    <div class="comment-body">
+                      <p class="text-big" style="color: #1e6abc"><b style="font-size: xx-large">{{ review.rating }}</b> out of <b>5</b></p>
+                      <p>{{ review.body }}</p>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  <script>
+        var dtToday = new Date();
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+          month = '0' + month.toString();
+        if(day < 10)
+          day = '0' + day.toString();
+        var minDate = year + '-' + month + '-' + day;
+
+        var form_fields = document.getElementsByTagName('input');
+        for (var field in form_fields){
+            form_fields[field].min = minDate;
+            form_fields[field].className += ' form-control';
+        }
+    </script>
+  {% endblock content %}
