@@ -35,12 +35,14 @@ class MyHTTPServer:
             )
 
         elif method == "POST":
+            discipline = None
+            grade = None
 
             for line in lines:
                 if 'Content-Disposition: form-data; name="discipline"' in line:
-                    discipline = data[data.index(line) + 2].strip()
+                    discipline = lines[lines.index(line) + 2].strip()
                 elif 'Content-Disposition: form-data; name="grade"' in line:
-                    grade = data[data.index(line) + 2].strip()
+                    grade = lines[lines.index(line) + 2].strip()
 
             params = {"discipline": discipline, "grade": grade}
 
