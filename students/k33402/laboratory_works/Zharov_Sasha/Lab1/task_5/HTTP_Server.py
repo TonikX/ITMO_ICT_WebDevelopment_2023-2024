@@ -1,4 +1,5 @@
 import socket
+from collections import defaultdict
 
 class MyHTTPServer:
     def __init__(self, ip, port):
@@ -8,7 +9,7 @@ class MyHTTPServer:
         self.conn.bind((host, port))
         self.conn.listen(5)
 
-        self.grades = {}
+        self.grades = defaultdict(list)
 
     # Старт сервера
     def serve_forever(self):
@@ -34,8 +35,14 @@ class MyHTTPServer:
             )
 
         elif method == "POST":
-            body = data.split("\n")[-1]
-            params = {p.split("=")[0]: p.split("=")[1] for p in body.split("&")}
+
+            for line in lines:
+                if 'Content-Disposition: form-data; name="discipline"' in line:
+                    discipline = data[data.index(line) + 2].strip()
+                elif 'Content-Disposition: form-data; name="grade"' in line:
+                    grade = data[data.index(line) + 2].strip()
+
+            params = {"discipline": discipline, "grade": grade}
 
         else:
             params = None
@@ -50,7 +57,7 @@ class MyHTTPServer:
         elif method == "POST":
             discipline = params.get("discipline")
             grade = params.get("grade")
-            self.grades[discipline] = grade
+            self.grades[discipline].append(grade)
             self.send_response(client, 200, "OK", f'{discipline}: {grade} добавлено')
             print("POST 200 OK")
         else:
