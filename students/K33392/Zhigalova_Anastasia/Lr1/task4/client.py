@@ -1,0 +1,42 @@
+import socket
+import random
+from threading import Thread
+from colorama import Fore, init, Back
+
+init()
+
+colors = [Fore.BLUE, Fore.CYAN, Fore.GREEN, Fore.LIGHTBLACK_EX,
+    Fore.LIGHTBLUE_EX, Fore.LIGHTCYAN_EX, Fore.LIGHTGREEN_EX,
+    Fore.LIGHTMAGENTA_EX, Fore.LIGHTRED_EX, Fore.LIGHTWHITE_EX,
+    Fore.LIGHTYELLOW_EX, Fore.MAGENTA, Fore.RED, Fore.WHITE, Fore.YELLOW]
+
+client_color = random.choice(colors)
+
+host = "127.0.0.1"
+port = 9090
+separator_token = "<sep>"
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print(f"[*] Connecting to {host}:{port}...")
+s.connect((host, port))
+print("[+] Connected.")
+name = input("Enter your name: ")
+
+def listen_for_messages():
+    while True:
+        message = s.recv(1024).decode()
+        print("\n" + message)
+
+
+t = Thread(target=listen_for_messages)
+t.daemon = True
+t.start()
+
+while True:
+    to_send =input("Your message: ")
+    if to_send.lower() == 'stop':
+        break
+    to_send = f"{client_color}{name}{separator_token}{to_send}{Fore.RESET}"
+    s.send(to_send.encode())
+
+s.close()
