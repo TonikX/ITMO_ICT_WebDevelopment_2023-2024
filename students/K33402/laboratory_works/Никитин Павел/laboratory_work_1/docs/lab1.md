@@ -200,7 +200,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-
+![Демо](assets/Lab1Task3.png)
 ## Задание 4
 
 #### Текст задания:
@@ -412,7 +412,7 @@ if __name__ == "__main__":
     server = CustomHTTPServer(HOST_NAME, PORT)
     server.start_server()
 ```
-
+![Demo](assets/Lab1Task5.png)
 ## Вывод
 
 В ходе выполнения работы я научился настраивать сервер через tcp udp, а также эмулировать http сервер.
