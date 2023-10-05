@@ -16,6 +16,7 @@ class CustomHTTPServer:
     def start_server(self):
         while True:
             client, ip = self.connection.accept()
+            print(ip)
             self.client_listener(client)
 
     def client_listener(self, client):
@@ -49,7 +50,9 @@ class CustomHTTPServer:
         elif method == "POST":
             subject = params.get("subject")
             grade = params.get("grade")
-            self.journal[subject] = grade
+            if subject in self.journal:
+                self.journal[subject].append(grade)
+            else: self.journal[subject] = [grade]
             self.send_response(client, 200, "OK", f'{subject}: {grade} добавлено')
             print("POST 200 OK")
         else:
@@ -63,12 +66,15 @@ class CustomHTTPServer:
         client.close()
 
     def generate_html(self):
-        page = (
-            "<html><body>"
-            f"{''.join([f'<div>{subject}: {grade}</div>' for subject, grade in self.journal.items()])}"
-            "</body></html>"
-        )
-        return page
+        html = "<html><body>"
+        for subject in self.journal:
+            html += '<div style="display: flex; flex-direction: row; gap: 5px;">'
+            html += f"<div>{subject}:</div>"
+            for grade in self.journal[subject]:
+                html += f"<div>{grade}</div>"
+            html += "</div>"
+        html += "</body></html>"
+        return html
 
 
 if __name__ == "__main__":

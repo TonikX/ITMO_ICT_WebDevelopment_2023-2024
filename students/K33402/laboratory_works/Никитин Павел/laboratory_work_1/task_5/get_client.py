@@ -1,12 +1,12 @@
 import socket
 
-BUFFER = 2048
+BUFFER = 4096
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect(("localhost", 8080))
 
-request = "GET /scores?subject=test HTTP/1.1\nContent-Type: text"
-sock.send(request.encode())
+sock.send(b"GET / HTTP/1.1\r\nHost:localhost:8080\r\n\r\n")
+response = sock.recv(BUFFER)
 
-response = sock.recv(BUFFER).decode()
-print(response)
+sock.close()
+print(response.decode())
