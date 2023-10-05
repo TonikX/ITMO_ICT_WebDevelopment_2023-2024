@@ -41,6 +41,10 @@ def get_mapper(body):
 def post_mapper(body):
     try:
         g = loads(body)
+        for grade in grades:
+            if grade['subject'] == g['subject']:
+                grade['grade'] += f', {g["grade"]}'
+                return f'HTTP/1.0 200 OK\n\n'
         grades.append(g)
         return f'HTTP/1.0 201 CREATED\n\n'
     except Exception:
