@@ -35,8 +35,16 @@ class CustomHTTPServer:
             )
 
         elif method == "POST":
-            body = data.split("\n")[-1]
-            params = {p.split("=")[0]: p.split("=")[1] for p in body.split("&")}
+            subject = ''
+            grade = ''
+            print(lines)
+            for line in lines:
+                if 'Content-Disposition: form-data; name="subject"' in line:
+                    subject = lines[lines.index(line) + 2].strip()
+                elif 'Content-Disposition: form-data; name="grade"' in line:
+                    grade = lines[lines.index(line) + 2].strip()
+
+            params = {"subject": subject, "grade": grade}
 
         else:
             params = None
