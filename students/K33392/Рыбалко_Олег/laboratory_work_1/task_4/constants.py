@@ -13,5 +13,5 @@ welcome_message = b"""
 """
 WELCOME_MESSAGE = struct.pack(">I", len(welcome_message)) + welcome_message
 HOST = "localhost"
-PORT = 9090
+PORT = 9080
 INPUT_PROMPT = "Enter your message: "

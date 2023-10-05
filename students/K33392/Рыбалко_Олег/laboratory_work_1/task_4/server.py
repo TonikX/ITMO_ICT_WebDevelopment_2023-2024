@@ -17,7 +17,7 @@ def handle_client(conn: socket.socket, addr: tuple):
 def send_message_to_clients(msg: bytes, addr: tuple):
     global connections
 
-    payload = create_msg(f"{addr[0]}:{addr[1]}: ".encode() + msg + b"\n")
+    payload = create_msg(f"{addr[0]}:{addr[1]}: " + msg.decode() + "\n")
 
     # Send message to all connected users
     indexes = set()

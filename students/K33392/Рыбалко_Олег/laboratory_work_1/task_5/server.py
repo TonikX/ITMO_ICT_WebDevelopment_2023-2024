@@ -60,6 +60,7 @@ class HTTPServer:
 
     def __enter__(self):
         self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.__socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return self
 
     def __exit__(self, *_):
@@ -124,7 +125,9 @@ class HTTPServer:
         while (data := next(req_generator, None)) is not None and data[1].strip() != "":
             index, header = data
             try:
-                key, val = header.split(":")
+                logging.info(data)
+                key, *val = header.split(":")
+                val = "".join(val)
                 headers[key.lower()] = val.strip()
             except ValueError:
                 raise Exception("Malformed headers")
