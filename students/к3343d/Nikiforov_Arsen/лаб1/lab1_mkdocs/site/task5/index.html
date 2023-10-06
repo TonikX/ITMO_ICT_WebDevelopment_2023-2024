@@ -83,17 +83,44 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#no5" class="nav-link">Задание №5</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Решение</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Результат работы программы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><em>Задание №5</em></p>
+<h2 id="no5">Задание №5</h2>
+<hr />
+<p><strong>Задача:</strong>
+Необходимо написать простой web-сервер для обработки GET и POST http запросов средствами Python и библиотеки socket.</p>
+<p>Базовый класс для простейшей реализации web-сервера доступен <a href="https://docs.google.com/document/d/1lv_3D9VtMxz8tNkA6rA1xu9zaWEIBGXiLWBo1cse-0k/edit?usp=sharing">здесь</a>.</p>
+<p>Подробный мануал по работе доступен <a href="https://iximiuz.com/ru/posts/writing-python-web-server-part-3/">по этой ссылке</a>.</p>
+<p><strong>Задачи сервера:</strong></p>
+<ul>
+<li>Принять и записать информацию о дисциплине и оценке по дисциплине.</li>
+<li>Отдать информацию обо всех оценах по дисциплине в виде HTML-страницы.</li>
+</ul>
+<hr />
+<h2 id="_1">Решение</h2>
 <p><strong>server.py</strong></p>
 <pre><code class="language-python">import http.server
 import urllib.parse
 
-# Р—Р°РїРёСЃСЊ РѕС†РµРЅРѕРє
+# Запись оценок
 grades = {}
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -102,7 +129,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)
             self.end_headers()
-            # HTML-С„РѕСЂРјР° РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РѕС†РµРЅРєРё
+            # HTML-форма для добавления оценки
             html = &quot;&quot;&quot;
                 &lt;html&gt;
                 &lt;head&gt;&lt;title&gt;Add Grade&lt;/title&gt;&lt;/head&gt;
@@ -125,7 +152,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)
             self.end_headers()
 
-            # РЎС‚СЂР°РЅРёС†Р° СЃ РѕР±Р·РѕСЂРѕРј РѕС†РµРЅРѕРє РІ РІРёРґРµ С‚Р°Р±Р»РёС†С‹
+            # Страница с обзором оценок в виде таблицы
             html = &quot;&quot;&quot;
                 &lt;html&gt;
                 &lt;head&gt;&lt;title&gt;Grades Overview&lt;/title&gt;&lt;/head&gt;
@@ -164,17 +191,42 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(bytes(&quot;Bad request. Grade must be between 1 and 5.&quot;, &quot;utf8&quot;))
 
-# РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р° РѕР±СЂР°Р±РѕС‚С‡РёРєР° Р·Р°РїСЂРѕСЃРѕРІ
+# Создание объекта обработчика запросов
 handler_object = MyHttpRequestHandler
-# РЎРѕР·РґР°РЅРёРµ HTTP-СЃРµСЂРІРµСЂР°
+# Создание HTTP-сервера
 my_server = http.server.HTTPServer((&quot;localhost&quot;, 8080), handler_object)
 print(&quot;Server is running on localhost:8080...&quot;)
-# Р—Р°РїСѓСЃРє СЃРµСЂРІРµСЂР°
+# Запуск сервера
 my_server.serve_forever() 
 </code></pre>
-<p><em>Добавление оценок</em></p>
+<p><strong>Что делает код:</strong></p>
+<ul>
+<li>Создает HTTP-сервер, который обрабатывает GET и POST запросы.</li>
+</ul>
+<p><strong>Обработчик GET запроса:</strong></p>
+<ul>
+<li>Отдает страницу для добавления оценок, если путь равен '/'.</li>
+<li>Отдает страницу с обзором оценок, если путь равен '/grades'.</li>
+</ul>
+<p><strong>Обработчик POST запроса:</strong></p>
+<ul>
+<li>Принимает данные из формы (предмет и оценка).</li>
+<li>Проверяет и сохраняет оценку в переменную grades.</li>
+<li>Возвращает код состояния 303 (See Other) с перенаправлением на страницу для добавления оценок.</li>
+</ul>
+<hr />
+<h2 id="_2">Результат работы программы</h2>
+<p><strong>Страница для добавления оценок</strong></p>
+<ul>
+<li>Представляет собой HTML-форму, где пользователь вводит предмет и оценку.</li>
+<li>Отправляет данные методом POST на сервер по адресу "/add_grade" для обработки.</li>
+</ul>
 <p><img alt="задание №5" src="../img/5_1.png" /></p>
-<p><em>Просмотр оценок</em></p>
+<p><strong>Страница отображения оценок</strong></p>
+<ul>
+<li>Генерирует HTML-страницу с обзором оценок в виде таблицы.</li>
+<li>Использует данные из переменной grades (оценки по предметам) для отображения.</li>
+</ul>
 <p><img alt="задание №5" src="../img/5_2.png" /></p></div>
             </div>
         </div>

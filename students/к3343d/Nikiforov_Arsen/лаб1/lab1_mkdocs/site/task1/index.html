@@ -83,13 +83,38 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#no1" class="nav-link">Задание №1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Решение</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Результат работы программы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><em>Задание №1</em></p>
-<p><em>client.py</em></p>
+<h2 id="no1">Задание №1</h2>
+<hr />
+<p><strong>Задача:</strong> </p>
+<p>Реализовать клиентскую и серверную часть приложения. Клиент отсылает серверу сообщение "Hello, server". Сообщение должно отразиться на стороне сервера. Сервер в ответ отсылает клиенту сообщение "Hello, client". Сообщение должно отобразиться у клиента.</p>
+<p><strong>Требования:</strong></p>
+<ul>
+<li>Обязательно использовать библиотеку socket.</li>
+<li>Реализовать с помощью протокола UDP.</li>
+</ul>
+<hr />
+<h2 id="_1">Решение</h2>
+<p><strong>client.py</strong></p>
 <pre><code class="language-python">import socket
 
 # Создаем сокет для UDP
@@ -113,7 +138,7 @@ print(f&quot;Получено от сервера: {data.decode()}&quot;)
 # Закрываем сокет клиента
 client_socket.close()
 </code></pre>
-<p><em>server.py</em></p>
+<p><strong>server.py</strong></p>
 <pre><code class="language-python">import socket
 
 # Создаем сокет для UDP
@@ -137,6 +162,22 @@ while True:
     response = &quot;Hello, client&quot;
     server_socket.sendto(response.encode(), client_address)
 </code></pre>
+<hr />
+<h2 id="_2">Результат работы программы</h2>
+<p><strong>Страница клиента (client.py)</strong></p>
+<ul>
+<li>Создает UDP сокет.</li>
+<li>Отправляет сообщение "Hello, server" на сервер.</li>
+<li>Принимает ответ от сервера.</li>
+<li>Выводит полученный ответ от сервера.</li>
+</ul>
+<p><strong>Страница сервера (server.py)</strong></p>
+<ul>
+<li>Создает UDP сокет и привязывает его к определенному адресу и порту.</li>
+<li>Принимает данные от клиента.</li>
+<li>Выводит полученные данные от клиента.</li>
+<li>Отправляет ответ "Hello, client" клиенту.</li>
+</ul>
 <p><img alt="задание №1" src="../img/1.jpg" /></p></div>
             </div>
         </div>

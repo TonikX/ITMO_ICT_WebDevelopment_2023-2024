@@ -2,4 +2,4 @@ cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITM
 python server.py
 
 
-http://localhost:8080
+http://localhost:8080/

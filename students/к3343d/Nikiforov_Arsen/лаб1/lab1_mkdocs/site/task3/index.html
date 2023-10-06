@@ -83,12 +83,40 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#no3" class="nav-link">Задание №3</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Решение</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Результат работы программы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><em>Задание №3</em></p>
+<h2 id="no3">Задание №3</h2>
+<hr />
+<p><strong>Задача:</strong></p>
+<p>Реализовать серверную часть приложения. Клиент подключается к серверу. В ответ клиент получает http-сообщение, содержащее html-страницу, которую сервер подгружает из файла index.html. </p>
+<p>Полезные ссылки:</p>
+<ul>
+<li><a href="http://zetcode.com/python/socket/">http://zetcode.com/python/socket/</a></li>
+</ul>
+<p><strong>Требования:</strong></p>
+<ul>
+<li>Обязательно использовать библиотеку socket</li>
+</ul>
+<hr />
+<h2 id="_1">Решение</h2>
 <p><strong>server.py</strong></p>
 <pre><code class="language-python">import socket
 
@@ -130,7 +158,27 @@ Content-Type: text/html
     # Закрываем соединение с клиентом
     client_socket.close()
 </code></pre>
+<p><strong>Что делает код:</strong>
+Код в <code>server.py</code> создает простой HTTP-сервер, который прослушивает определенный порт. Когда клиент подключается, сервер отправляет HTML-страницу, содержимое которой хранится в файле <code>index.html</code>. Это позволяет клиенту увидеть простую веб-страницу с текстом.</p>
+<hr />
+<h2 id="_2">Результат работы программы</h2>
+<p><strong>server.py</strong></p>
+<ul>
+<li>Создается сокет для сервера.</li>
+<li>Указывается IP-адрес и порт для прослушивания.</li>
+<li>Привязывается сокет к указанному адресу и порту.</li>
+<li>Начинается прослушивание соединений.</li>
+</ul>
+<p>В бесконечном цикле:</p>
+<ul>
+<li>Принимается соединение от клиента.</li>
+<li>Читается запрос от клиента.</li>
+<li>Формируется HTTP-ответ с содержимым из файла "index.html".</li>
+<li>Отправляется ответ клиенту.</li>
+<li>Закрывается соединение с клиентом.</li>
+</ul>
 <p><strong>index.html</strong></p>
+<p>простая HTML-страница с заголовком и текстом.</p>
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -142,8 +190,9 @@ Content-Type: text/html
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+<p><strong>Запуск</strong></p>
 <p><img alt="задание №3" src="../img/3_1.png" /></p>
-<p>Клиентский запрос через порт 8080</p>
+<p>Клиентский запрос через порт 8080 подгружает страницу html</p>
 <p><img alt="задание №3" src="../img/3_2.png" /></p></div>
             </div>
         </div>
