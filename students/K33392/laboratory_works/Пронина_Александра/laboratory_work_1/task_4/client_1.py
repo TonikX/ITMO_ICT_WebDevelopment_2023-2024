@@ -1,7 +1,8 @@
+
 import socket
 import threading
 
-from task_4.server import ChatServer
+from students.K33392.laboratory_works.Пронина_Александра.laboratory_work_1.task_4.server import ChatServer
 
 
 class ChatClient:

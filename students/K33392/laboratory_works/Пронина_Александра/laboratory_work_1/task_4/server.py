@@ -1,6 +1,7 @@
 import socket
 import threading
 
+
 class ChatServer:
     def __init__(self):
         self.host = 'localhost'
@@ -36,7 +37,7 @@ class ChatServer:
                 else:
                     self.remove_client(nickname, client_socket)
                     break
-            except:
+            except():
                 self.remove_client(nickname, client_socket)
                 break
 
@@ -48,4 +49,3 @@ class ChatServer:
     def broadcast(self, message):
         for client in self.clients:
             client[1].sendall(message.encode())
-
