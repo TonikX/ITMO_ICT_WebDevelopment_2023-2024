@@ -5,7 +5,7 @@ class MyHTTPServer:
     def __init__(self):
 
         self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.conn.bind(("localhost", 9090))
+        self.conn.bind(("localhost", 9089))
         self.conn.listen(5)
         self.marks = {}
 
@@ -50,7 +50,10 @@ class MyHTTPServer:
         elif method == "POST":
             discipline = params.get("subject")
             mark = params.get("mark")
-            self.marks[discipline] = mark
+            try:
+                self.marks[discipline].append(mark)
+            except:
+                self.marks[discipline] = [mark]
             self.send_response(client, 200, "OK", f'{discipline}: {mark} добавлено')
             print("POST 200 OK")
         else:
@@ -63,16 +66,22 @@ class MyHTTPServer:
         client.close()
 
     def generate_html(self, subject=None):
+
         if subject is None:
+            lines = []
+            for discipline, mark in self.marks.items():
+                lines.append(f"{discipline}: {' '.join(mark)}<br>")
+
             page = (
                 "<html><body><div>"
-                f"{''.join([f'<p>{discipline}: {mark}</p>' for discipline, mark in self.marks.items()])}"
+                f"{''.join(lines)}"
                 "</div></body></html>"
             )
         else:
+            marks = ' '.join(self.marks.get(subject))
             page = (
                 "<html><body><div>"
-                f"{''.join([f'<p>{subject}: {self.marks.get(subject)}</p>'])}"
+                f"{''.join([f'<p>{subject}: {marks}</p>'])}\n"
                 "</div></body></html>"
             )
         return page
