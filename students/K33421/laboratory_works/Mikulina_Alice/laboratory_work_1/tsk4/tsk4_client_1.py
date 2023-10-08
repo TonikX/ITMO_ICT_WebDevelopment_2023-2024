@@ -11,7 +11,7 @@ client_name = input("Enter your name: ")
 
 client_socket.send(client_name.encode())
 
-def receive():св
+def receive():
     while True:
         try:
             message = client_socket.recv(1024).decode()
