@@ -82,7 +82,10 @@ class MyHTTPServer:
             query_params = urllib.parse.parse_qs(request_body)
             subject = query_params.get("subject", [''])[0]
             grade = query_params.get("grade", [""])[0]
-            self.grades[subject] = grade
+            if subject in self.grades:
+                self.grades[subject].append(grade)
+            else:
+                self.grades[subject] = [grade]
             page = """
                 <h1>Successufully added!</h1>
                 <button onclick="window.location.href = '/'">Back to home</button>
@@ -94,8 +97,12 @@ class MyHTTPServer:
 
     def generate_grade_table(self):
         table = "<table border='1'><tr><th>Subject</th><th>Grade</th></tr>"
-        for subject, grade in self.grades.items():
-            table += f"<tr><td>{subject}</td><td>{grade}</td></tr>"
+        for subject, grades in self.grades.items():
+            string = ''
+            for i in range(len(grades) - 1):
+                string += str(grades[i]) + ', '
+            string += str(grades[(len(grades) - 1)])
+            table += f"<tr><td>{subject}</td><td>{string}</td></tr>"
         table += "</table>"
         return table
 
