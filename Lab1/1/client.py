@@ -1,4 +1,3 @@
-import socket
 from socket import *
 
 message = "Hello, server!"
