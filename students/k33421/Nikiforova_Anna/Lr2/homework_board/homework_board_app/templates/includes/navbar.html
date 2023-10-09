@@ -1,0 +1,25 @@
+
+<nav class="nav navbar py-3 px-0 shadow-sm text-white position-relative">
+    <div class="container-fluid w-100">
+        <div class="navbar-holder d-flex align-items-center justify-content-between w-100">
+            <div class="navbar-header">
+                <a class="navbar-brand d-none d-sm-inline-block" href="{% url 'homepage' %}">
+                    <div class="brand-text d-none d-lg-inline-block"><span>На главную </span></div>
+                </a>
+            </div>
+            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <li>
+                    <a class="navbar-brand d-none d-sm-inline-block" href="{% url 'user_profile' user.id %}">
+                        <div class="brand-text d-none d-lg-inline-block"><span>Мой профиль </span></div>
+                    </a>
+                </li>
+                <li>
+                    <a class="navbar-brand d-none d-sm-inline-block" href="{% url 'logout' %}">
+                        <div class="brand-text d-none d-lg-inline-block"><span>Выйти </span></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

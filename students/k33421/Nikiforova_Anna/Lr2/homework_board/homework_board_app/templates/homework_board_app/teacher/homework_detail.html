@@ -1,0 +1,54 @@
+{% extends "../base.html" %}
+
+{% block content %}
+
+<div class="row-gy-4">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header position-relative">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <h2 class="h2 fw-normal text-dark mb-0">{{ homework.name }}</h2>
+                    </div>
+                    <div class="col-auto">
+                        <form method="post" action="{% url 'update_homework' homework.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <form method="post" action="{% url 'delete_homework' homework.id %}"
+                              onsubmit="return confirm('Вы уверены, что хотите удалить д/з?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'submitted_homeworks' homework.id %}" class="btn btn-secondary">Сданные д/з</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'all_homeworks' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="p-4">
+                    <p>Предмет: {{ homework.subject }}</p>
+                    <p>Класс: {{ homework.class_it_is_assigned_to }}</p>
+                    <p>{{ homework.get_dates }}</p>
+                    <p>Задание: {{ homework.assignment_text }}</p>
+                    <p>Штраф: {{ homework.fines_information|default:"-" }}</p>
+                    <p>Сделали/не проверено: {{ homework.submitted_num }}/{{ homework.not_checked_num }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

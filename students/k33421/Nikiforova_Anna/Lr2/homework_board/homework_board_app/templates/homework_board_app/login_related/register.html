@@ -1,0 +1,52 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+<h1 class="display-6 fw-bold">Регистрация в HomeworkBoard</h1>
+<div class="col-lg-6 bg-white">
+    <div class="d-flex align-items-center px-4 px-lg-5 h-100">
+        <form class="registration-form py-5 w-100" method="POST">
+            {% csrf_token %}
+            <label for="{{ registration_form.fio.id_for_label }}">ФИО:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.fio }}
+            </div>
+            <label for="{{ registration_form.username.id_for_label }}">Логин:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.username }}
+            </div>
+            <label for="{{ registration_form.password1.id_for_label }}">Пароль:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.password1 }}
+            </div>
+            <div class="form-text">
+                {{ register_form.password1.help_text }}
+            </div>
+            <div class="form-text text-danger">
+            </div>
+            <label for="{{ registration_form.password2.id_for_label }}">Подтвердите пароль:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.password2 }}
+            </div>
+            <label for="{{ registration_form.student_class.id_for_label }}">Класс:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.student_class }}
+            </div>
+            <label for="{{ registration_form.date_of_birth.id_for_label }}">Дата рождения:</label>
+            <div class="input-material-group mb-3">
+                {{ register_form.date_of_birth }}
+            </div>
+
+            <label for="{{ registration_form.address.id_for_label }}">Адрес:</label>
+            <div class="input-material-group mb-4">
+                {{ register_form.address }}
+            </div>
+            <button class="btn btn-primary mb-3" id="register" type="submit">Зарегистрироваться</button>
+            <br>
+            <small class="text-gray-500">Уже есть аккаунт? </small><a class="text-sm text-paleBlue"
+                                                                      href="{% url 'login' %}">Войти</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

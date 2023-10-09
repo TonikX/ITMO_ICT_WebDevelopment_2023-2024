@@ -1,0 +1,20 @@
+plugins:
+    - mkdocs-video
+site_name: Nikiforova Anna K33421
+site_url: https://report.com/
+theme:
+  name: readthedocs
+nav:
+  - Home: index.md
+  - Lab 1:
+      - Intro: lab1/intro.md
+      - Task 1: lab1/task1.md
+      - Task 2: lab1/task2.md
+      - Task 3: lab1/task3.md
+      - Task 4: lab1/task4.md
+      - Task 5: lab1/task5.md
+  - Lab 2:
+    - Intro: lab2/intro.md
+    - Functionality: lab2/website.md
+    - Conclusion: lab2/conclusion.md
+

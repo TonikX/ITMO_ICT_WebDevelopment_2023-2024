@@ -1,0 +1,34 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+<h1 class="display-6 fw-bold">Обновление профиля</h1>
+<div class="col-lg-6 bg-white">
+    <div class="d-flex align-items-center px-4 px-lg-5 h-100">
+        <form class="registration-form py-5 w-100" method="POST">
+            {% csrf_token %}
+            <label for="{{ register_form.fio.id_for_label }}">ФИО:</label>
+            <div class="input-material-group mb-3">
+                <input type="text" name="fio" value="{{ register_form.initial.fio }}">
+            </div>
+            <div class="input-material-group mb-3">
+                <label for="{{ register_form.student_class.id_for_label }}">Класс:</label>
+                <input type="text" name="student_class"
+                       value="{{ user.student_class }}"
+                       disabled>
+            </div>
+            <label for="{{ register_form.date_of_birth.id_for_label }}">Дата рождения:</label>
+            <div class="input-material-group mb-3">
+                <input type="date" name="date_of_birth" value="{{ register_form.initial.date_of_birth | date:'c' }}">
+            </div>
+            <label for="{{ register_form.address.id_for_label }}">Адрес:</label>
+            <div class="input-material-group mb-4">
+                <input type="text" name="address" value="{{ register_form.initial.address }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{% url 'user_profile' user.id %}" class="btn btn-secondary">Назад</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "../base.html" %}
+
+{% block content %}
+
+<div class="row-gy-4">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header position-relative">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <h2 class="h2 fw-normal text-dark mb-0">{{ submission.homework.name }}</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'submitted_homeworks' submission.homework.id %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="p-4">
+                    <p>Класс: {{ submission.student.student_class }}</p>
+                    <p>{{ submission.homework.get_dates }}</p>
+                    <p>Задание: {{ submission.homework.assignment_text }}</p>
+                    <p>Штраф за просрочку: {{ submission.homework.fines_info }}</p>
+                    <p>Штраф: {{ submission.homework.fines_information|default:"-" }}</p>
+                    <p>ФИО ученика: {{ submission.student.fio }}</p>
+                    <p>Дата сдачи: {{ submission.submission_date }}</p>
+                    <p>Текст работы: {{ submission.submission_text }}</p>
+                    <form method="post" action="{% url 'submitted_homework_detail' submission.id %}">
+                        {% csrf_token %}
+                        <label for="grade">Оценка:</label>
+                        <input type="number" name="grade" id="grade" min="1" max="5" value="{{ submission.grade }}" required>
+                        <span id="grade-error" style="color: red;"></span>
+                        <button class="btn btn-primary" type="submit">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const gradeInput = document.getElementById('grade');
+    const gradeError = document.getElementById('grade-error');
+
+    gradeInput.addEventListener('input', () => {
+        const grade = gradeInput.value;
+        if (grade < 1 || grade > 5) {
+            gradeError.textContent = 'Оценка должна быть от 1 до 5';
+            gradeInput.setCustomValidity('Оценка должна быть от 1 до 5');
+        } else {
+            gradeError.textContent = '';
+            gradeInput.setCustomValidity('');
+        }
+    });
+</script>
+
+{% endblock %}

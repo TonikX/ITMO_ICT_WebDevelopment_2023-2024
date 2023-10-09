@@ -1,0 +1,178 @@
+/*!*!* Pagination container *!*!*/
+/*!*.pagination {*!*/
+/*!*    text-align: center;*!*/
+/*!*    margin-top: 20px;*!*/
+/*!*}*!*/
+
+/*!*!* Pagination links *!*!*/
+/*!*.step-links a {*!*/
+/*!*    display: inline-block;*!*/
+/*!*    padding: 8px;*!*/
+/*!*    margin: 0 2px;*!*/
+/*!*    background-color: #007bff;*!*/
+/*!*    color: #fff;*!*/
+/*!*    text-decoration: none;*!*/
+/*!*    border-radius: 4px;*!*/
+/*!*    font-size: 14px;*!*/
+/*!*}*!*/
+
+/*!*.current-page {*!*/
+/*!*    display: inline-block;*!*/
+/*!*    padding: 8px;*!*/
+/*!*    margin: 0 2px;*!*/
+/*!*    background-color: #007bff;*!*/
+/*!*    color: #fff;*!*/
+/*!*    border-radius: 4px;*!*/
+/*!*    font-size: 14px;*!*/
+/*!*}*!*/
+
+/*!*.step-links a:hover {*!*/
+/*!*    background-color: #0056b3;*!*/
+/*!*    color: #fff;*!*/
+/*!*}*!*/
+
+/*!*.step-links span {*!*/
+/*!*    display: inline-block;*!*/
+/*!*    padding: 8px;*!*/
+/*!*    margin: 0 2px;*!*/
+/*!*    background-color: #f2f2f2;*!*/
+/*!*    color: #ccc;*!*/
+/*!*    border-radius: 4px;*!*/
+/*!*    font-size: 14px;*!*/
+/*!*}*!*/
+
+/*!*!*!* Form container *!*!*!*/
+/*!*!*.form-container {*!*!*/
+/*!*!*    display: flex;*!*!*/
+/*!*!*    align-items: center;*!*!*/
+/*!*!*    background-color: #f5f5f5;*!*!*/
+/*!*!*    padding: 10px;*!*!*/
+/*!*!*    border-radius: 8px;*!*!*/
+/*!*!*    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!*!* Input field *!*!*!*/
+/*!*!*.form-container input[type="text"] {*!*!*/
+/*!*!*    flex: 1;*!*!*/
+/*!*!*    padding: 10px;*!*!*/
+/*!*!*    border: none;*!*!*/
+/*!*!*    border-radius: 4px;*!*!*/
+/*!*!*    font-size: 16px;*!*!*/
+/*!*!*    outline: none;*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!*!* Select dropdown *!*!*!*/
+/*!*!*.form-container select {*!*!*/
+/*!*!*    padding: 10px;*!*!*/
+/*!*!*    border: none;*!*!*/
+/*!*!*    border-radius: 4px;*!*!*/
+/*!*!*    font-size: 16px;*!*!*/
+/*!*!*    outline: none;*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!*!* Checkbox label *!*!*!*/
+/*!*!*.form-container label {*!*!*/
+/*!*!*    margin-left: 10px;*!*!*/
+/*!*!*    font-size: 16px;*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!*!* Search button *!*!*!*/
+/*!*!*.form-container button {*!*!*/
+/*!*!*    background-color: #007bff;*!*!*/
+/*!*!*    color: #fff;*!*!*/
+/*!*!*    border: none;*!*!*/
+/*!*!*    border-radius: 4px;*!*!*/
+/*!*!*    padding: 10px 20px;*!*!*/
+/*!*!*    font-size: 16px;*!*!*/
+/*!*!*    cursor: pointer;*!*!*/
+/*!*!*    outline: none;*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!*!* Style the button on hover *!*!*!*/
+/*!*!*.form-container button:hover {*!*!*/
+/*!*!*    background-color: #0056b3;*!*!*/
+/*!*!*}*!*!*/
+
+/*!*!* Form container *!*!*/
+/*!*.form-container {*!*/
+/*!*    display: flex;*!*/
+/*!*    align-items: center;*!*/
+/*!*    justify-content: center; !* Center horizontally *!*!*/
+/*!*    background-color: #f5f5f5;*!*/
+/*!*    padding: 10px;*!*/
+/*!*    border-radius: 8px;*!*/
+/*!*    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);*!*/
+/*!*}*!*/
+
+/*!*!* Input field and select dropdown *!*!*/
+/*!*.form-container input[type="text"],*!*/
+/*!*.form-container select,*!*/
+/*!*.form-container label,*!*/
+/*!*.form-container button {*!*/
+/*!*    height: 48px; !* Same height for all elements *!*!*/
+/*!*}*!*/
+
+/*!*!* Input field and select dropdown styles *!*!*/
+/*!*.form-container input[type="text"],*!*/
+/*!*.form-container select {*!*/
+/*!*    flex: 1;*!*/
+/*!*    padding: 10px;*!*/
+/*!*    border: none;*!*/
+/*!*    border-radius: 4px;*!*/
+/*!*    font-size: 16px;*!*/
+/*!*    outline: none;*!*/
+/*!*}*!*/
+
+/*!*!* Checkbox label styles *!*!*/
+/*!*.form-container label {*!*/
+/*!*    margin-left: 10px;*!*/
+/*!*    font-size: 16px;*!*/
+/*!*}*!*/
+
+/*!*!* Search button styles *!*!*/
+/*!*.form-container button {*!*/
+/*!*    background-color: #007bff;*!*/
+/*!*    color: #fff;*!*/
+/*!*    border: none;*!*/
+/*!*    border-radius: 4px;*!*/
+/*!*    padding: 10px 20px;*!*/
+/*!*    font-size: 16px;*!*/
+/*!*    cursor: pointer;*!*/
+/*!*    outline: none;*!*/
+/*!*}*!*/
+
+/*!*!* Style the button on hover *!*!*/
+/*!*.form-container button:hover {*!*/
+/*!*    background-color: #0056b3;*!*/
+/*!*}*!*/
+
+/*!* Example CSS styles for messages *!*/
+/*.success {*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+/*.info {*/
+/*    background-color: #2196F3;*/
+/*    color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+/*.warning {*/
+/*    background-color: #FF9800;*/
+/*    color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+/*.error {*/
+/*    background-color: #F44336;*/
+/*    color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+
