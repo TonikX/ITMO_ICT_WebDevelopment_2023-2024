@@ -21,6 +21,10 @@ import json
 
 
 class Request:
+	'''
+	Класс запроса со стороны клиента
+	'''
+
 	def __init__(self, method: str, target: str, version: str, headers: list[str], body: list[str], fileReader: BufferedReader):
 		self.method = method
 		self.target = target
@@ -39,6 +43,9 @@ class Request:
 	
 
 class Response:
+	'''
+	Класс ответа от сервера
+	'''
 	def __init__(self, status: int, reason: str, headers = None, body = None):
 		self.status = status
 		self.reason = reason
@@ -58,10 +65,9 @@ class HTTPServer:
 
 	def serverStart(self):
 		'''
-		Start server \n
-		Create server socket and try to connect to client
+		Старт сервера \n
+		Создание сокета и попытка подключения к клиенту
 		'''
-
 		serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		
 		try:
@@ -85,6 +91,11 @@ class HTTPServer:
 			print(f"=== Server [{self._name}] stopped ===")
 
 	def serveClient(self, clientSocket: socket.socket):
+		'''
+		Обработка запроса клиента и отправка ответа
+			Параметры:
+				clientSocket (socket) - сокет клиента
+		'''
 		try:
 			request = self.parseRequest(clientSocket)
 			print(f"Received request: {request.method}, target: {request.target}")
@@ -100,9 +111,15 @@ class HTTPServer:
 			print(f"Failed receive request and return response")
 
 		if clientSocket:
+			# Закрываем подключение
 			clientSocket.close()
 
 	def parseRequest(self, clientSocket: socket.socket) -> Request:
+		'''
+		Парсинг запроса клиента в формат класса Request
+			Параметры:
+				clientSocket (socket) - сокет клиента
+		'''
 		fileReader = clientSocket.makefile('rb')
 		requestString = fileReader.readline(self._maxBufferLen + 1)
 		if len(requestString) > self._maxBufferLen:
@@ -125,9 +142,14 @@ class HTTPServer:
 		return Request(method, target, version, requestHeaders, requestBody, fileReader)
 
 	def _parseRequestHeaders(self, requestFileReader: BufferedReader) -> list[str]:
-
+		'''
+		Парсинг headers запроса
+			Параметры:
+				requestFileReader (BufferedReader)
+		'''
 		headersList = []
 
+		# Считывание файла, пока не додет до body запроса
 		while True:
 			requestString = requestFileReader.readline(self._maxBufferLen + 1)
 			if requestString in (b"\r\n", b"\n", b""):
@@ -137,8 +159,12 @@ class HTTPServer:
 
 		return headersList
 	
-	def _parseRequestBody(self, requestFileReader: BufferedReader, requestHeaders: list[str]) -> list[str]:
-		
+	def _parseRequestBody(self, requestFileReader: BufferedReader, requestHeaders: list[str]) -> bytes:
+		'''
+		Парсинг body запроса
+			Параметры:
+				requestFileReader (BufferedReader)
+		'''	
 		length = 0
 		for header in reversed(requestHeaders):
 			index = header.find('Content-Length: ')
@@ -147,11 +173,17 @@ class HTTPServer:
 				length = int(header[lastIndex : header.find('\r')])
 
 		if length != 0:
+			# Считывание всех элементов длины body запроса
 			body = requestFileReader.read(length)
 
 		return body
 
 	def handleRequest(self, request: Request):
+		'''
+		Проверка правильности пути и определение типа запроса
+			Параметры:
+				request (Request)
+		'''	
 		if request.getPath == "/disciplines" and request.method == "POST":
 			return self._handlePostDiscipline(request)
 		
@@ -160,7 +192,8 @@ class HTTPServer:
 		
 		raise Exception("Not found such response")
 	
-	def _handlePostDiscipline(self, request: Request):
+	def _handlePostDiscipline(self, request: Request) -> Response:
+		# Если POST-запрос, то парсинг его body для записи данных в дальнейшем
 		postBody = json.loads(request.body)
 		if not postBody["discipline"] in self._disciplinesGrades:
 			self._disciplinesGrades[postBody["discipline"]] = []
@@ -171,9 +204,11 @@ class HTTPServer:
         	("Content-Type", "application/json; charset=utf-8"),
         	("Content-Length", len(responseBody))]
 
+		# Возвращает ответ с reason = created
 		return Response(204, 'Created', headers, responseBody)
 		
 	def _handleGetDiscipline(self):
+		# Если GET-запрос, то возврат данных для вывода в html
 		requestBody = self._htmlTableGen()
 		requestBody = requestBody.encode('utf-8')
 		requestHeaders = [("Content-Type", "text/html; charset=utf-8"), ("Content-Length", len(requestBody))]
@@ -181,6 +216,9 @@ class HTTPServer:
 		return Response(200, "OK", requestHeaders, requestBody)
 
 	def _htmlMain(self, ctx: str) -> str:
+		'''
+		Создание основы html странцы
+		'''
 		return f"""<!DOCTYPE html>
 		<head>
 			<style>
@@ -194,6 +232,9 @@ class HTTPServer:
 		</html>"""
 	
 	def _htmlTableGen(self) -> str:
+		'''
+		Выдает строку html-кода для создание таблицы в <body>
+		'''
 		tableRows = []
 		for discipline in self._disciplinesGrades:
 			gradesString = ', '.join(list(map(str, list(self._disciplinesGrades[discipline]))))
@@ -217,6 +258,9 @@ class HTTPServer:
 		return self._htmlMain(f"<table>{tableHead}\n{tableBody}</table>")
 
 	def sendResponse(self, clientSocket: socket.socket, response: Response):
+		'''
+		Отправка ответа сервера клиенту
+		'''
 		fileWriter = clientSocket.makefile("wb")
 		status = f"HTTP/1.1 {response.status} {response.reason}\r\n"
 		fileWriter.write(status.encode('iso-8859-1'))

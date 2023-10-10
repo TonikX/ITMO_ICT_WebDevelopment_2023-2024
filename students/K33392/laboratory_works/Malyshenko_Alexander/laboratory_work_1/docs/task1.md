@@ -9,6 +9,8 @@
 ## Выполнение задания
 ### Серверная часть
 
+
+
 ```py
 import socket
 
@@ -18,12 +20,13 @@ buffer = 1024
 
 serverMessage  = "Hello, client"
 bytesToSend    = str.encode(serverMessage)
+# Создание сокета сервера, type=socket.SOCK_DGRAM - UDP протокол
 UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPSocket.bind((ip, port))
-
 print(" === server is running ===")
 
 while True:
+    #получеам сообщение от клиента и его адресс
     message, address = UDPSocket.recvfrom(buffer)
 
     if not message:
@@ -32,6 +35,7 @@ while True:
     message = message.decode("utf-8")
     clientMessage = "Message from Client: {}".format(message)
     print(clientMessage)
+    #отправляем сообщение по адрессу клиента
     UDPSocket.sendto(bytesToSend, address)
 ```
 
@@ -46,7 +50,9 @@ serverAdress    = ("127.0.0.1", 9090)
 buffer          = 1024
 
 UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+#отправляем сообщение по адресу сервера
 UDPSocket.sendto(bytesToSend, serverAdress)
+#считываем сообщение от сервера
 serverMessage = UDPSocket.recvfrom(buffer)
 
 serverMessage = serverMessage[0].decode("utf-8")
