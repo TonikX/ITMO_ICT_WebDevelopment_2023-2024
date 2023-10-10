@@ -4,7 +4,7 @@
 ## 🥸 Реализация
 1. Server.py
    
-   ```
+   ```python
    import socket
 
    servers_sockets = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
