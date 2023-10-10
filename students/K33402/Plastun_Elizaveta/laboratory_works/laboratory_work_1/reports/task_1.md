@@ -37,8 +37,6 @@ clients_socket.close()
 ```
 
 ## 🤡 Демонстрация работы
-![client](https://https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/img/client_task_1.png "")
-![server](https://https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/img/server_task_1.png "")
 
 
 
