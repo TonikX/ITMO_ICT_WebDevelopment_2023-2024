@@ -19,4 +19,24 @@
            break
 
    servers_sockets.close()
+
+2. Client.py
+```python
+import socket
+
+clients_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+clients_socket.connect((socket.gethostname(), 6666))
+
+clients_socket.send("Hello Server!".encode())
+
+serverMessage, addr = clients_socket.recvfrom(1024)
+
+print(f"Server says: {serverMessage.decode()}")
+
+clients_socket.close()
 ```
+
+## 🤡 Демонстрация работы
+![client_task_1] (https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/task_1.md#:~:text=img-,client_task_1,-.png)
+![server_task_1] (https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/task_1.md#:~:text=server_task_1-,.,-png)
+
