@@ -37,8 +37,8 @@ clients_socket.close()
 ```
 
 ## 🤡 Демонстрация работы
-<img width="490" alt="image" src="https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/assets/71229447/29c60d99-2b64-4c61-8917-4217e84d8c2a">
-<img width="447" alt="image" src="https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/assets/71229447/11c9a855-a130-41c1-9616-a2495ee0ecce">
+![client](https://https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/img/client_task_1 "")
+![server](https://https://github.com/elizavetaplastun/ITMO_ICT_WebDevelopment_2023-2024/edit/main/students/K33402/Plastun_Elizaveta/laboratory_works/laboratory_work_1/reports/img/server_task_1 "")
 
 
 
