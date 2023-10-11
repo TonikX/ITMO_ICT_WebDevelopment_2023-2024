@@ -1,13 +1,19 @@
-<ul>
-    <!-- Iterate over object_list -->
-    {% for object in object_list %}
-    <!-- Display Objects -->
-    <li>Номер машины: {{ object.number }}</li>
-    <li>Название: {{ object.brand }} {{ object.car_model }}</li>
+<div>
+    <ul>
+        <!-- Iterate over object_list -->
+        {% for object in object_list %}
+        <!-- Display Objects -->
+        <li>Номер машины: {{ object.number }}</li>
+        <li>Название: {{ object.brand }} {{ object.car_model }}</li>
 
-    <hr/>
-    <!-- If objet_list is empty  -->
-    {% empty %}
-    <li>No objects yet.</li>
-    {% endfor %}
-</ul>
+        <hr/>
+        <!-- If objet_list is empty  -->
+        {% empty %}
+        <li>No objects yet.</li>
+        {% endfor %}
+
+    </ul>
+
+    <a href="/" >Назад</a>
+    <a href="/car/create" >Добавить автомобиль</a>
+</div>

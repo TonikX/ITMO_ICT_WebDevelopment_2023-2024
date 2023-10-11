@@ -1,14 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class Driver(models.Model):
+class Driver(AbstractUser):
     first_name = models.CharField('Имя', max_length=30)
     last_name = models.CharField('Фамилия', max_length=30)
+    password = models.CharField(max_length=128, default='123',)
     birth_date = models.DateTimeField('Дата рождения', null=True)  # needed that for creating a superuser
     cars = models.ManyToManyField('Car', through='Ownership')
+    passport_number = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    nationality = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
-        return self.first_name, self.last_name
+        return f"{self.first_name} {self.last_name}"
 
 
 class Ownership(models.Model):

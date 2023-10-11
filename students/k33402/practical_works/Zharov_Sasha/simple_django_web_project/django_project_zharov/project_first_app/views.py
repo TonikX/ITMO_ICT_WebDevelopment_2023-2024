@@ -7,6 +7,10 @@ from .models import Driver, Car
 from .forms import DriverForm
 
 
+def index(request):
+    return render(request, 'project_first_app/index.html')
+
+
 def detail(request, id):
     try:
         d = Driver.objects.get(pk=id)
