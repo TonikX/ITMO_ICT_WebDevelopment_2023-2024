@@ -7,7 +7,7 @@ while True:
     if 1 < len(name) < 10:
         break
 
-client.connect((socket.gethostname(), 1236))
+client.connect((socket.gethostname(), 12345))
 print ('подключился к серверу')
 print ('Чтобы закрыть соединение с сервером нажмите Y' )
 
