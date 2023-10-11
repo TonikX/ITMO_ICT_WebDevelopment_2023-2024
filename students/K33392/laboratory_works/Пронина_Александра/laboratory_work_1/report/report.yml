@@ -1,6 +1,7 @@
 site_name: Pronina Alexandra K33392 lab_1
 
 nav:
+  - Титульный лист работы: ind.md
   - Задание 1: task_1.md
   - Задание 2: task_2.md
   - Задание 3: task_3.md
