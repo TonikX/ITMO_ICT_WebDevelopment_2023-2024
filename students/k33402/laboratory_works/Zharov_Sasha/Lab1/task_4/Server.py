@@ -1,7 +1,7 @@
 import socket, threading
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((socket.gethostname(), 12345))
+server.bind((socket.gethostname(), 1236))
 server.listen(5)
 
 client_list = list()
@@ -19,7 +19,7 @@ def recv_data(client):
         try:
             input_data = client.recv(1024)
 
-        except Exception:
+        except Exception as e:
             client_list.remove(client)
             print(f'Количество подключений: {len(client_list)}')
             break
@@ -40,9 +40,9 @@ def out_datas():
             break
         print(f'Отправить всем: {out_data}')
 
-        # Отправлять информацию каждому клиенту
-        for cli in client_list:
-            cli.send(f'Сервер: {out_data}'.encode('utf-8)'))
+    # Отправлять информацию каждому клиенту
+    for cli in client_list:
+        cli.send(f'Сервер: {out_data}'.encode('utf-8)'))
 
 
 def input_datas():
