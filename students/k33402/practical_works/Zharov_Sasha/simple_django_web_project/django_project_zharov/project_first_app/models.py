@@ -7,6 +7,9 @@ class Driver(models.Model):
     birth_date = models.DateTimeField('Дата рождения', null=True)  # needed that for creating a superuser
     cars = models.ManyToManyField('Car', through='Ownership')
 
+    def __str__(self):
+        return self.first_name, self.last_name
+
 
 class Ownership(models.Model):
     car = models.ForeignKey('Car', null=True, on_delete=models.CASCADE)
@@ -22,6 +25,8 @@ class Car(models.Model):
     color = models.CharField('Цвет', max_length=30, blank=True, null=True)
     drivers = models.ManyToManyField('Driver', through='Ownership')
 
+    def __str__(self):
+        return self.number, self.car_model
 
 
 class DriverLicence(models.Model):
