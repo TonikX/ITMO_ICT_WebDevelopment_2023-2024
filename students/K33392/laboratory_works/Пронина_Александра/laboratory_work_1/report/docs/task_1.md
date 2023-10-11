@@ -29,48 +29,48 @@
 8. Выводится ответное сообщение от сервера, преобразованное из байтовой строки в строку с помощью метода decode(). 
 9. Закрывается сокет клиента. После определения функции main() на стороне клиента, проверяется, что код выполняется как самостоятельный скрипт, а не импортирован как модуль, и вызывается функция main(). import socket def main(): server_ip
 
-import socket
-
-
-def main():
-    server_ip = "127.0.0.1"
-    server_port = 12345
-    message = "Hello, server"
-
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    client_socket.sendto(message.encode(), (server_ip, server_port))
-
-    response, _ = client_socket.recvfrom(1024)
-    print("Response from server:", response.decode())
-
-    client_socket.close()
-
-
-if __name__ == "__main__":
-    main()
-
-import socket
-
-
-def main():
-    server_ip = "127.0.0.1"
-    server_port = 12345
-
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_socket.bind((server_ip, server_port))
-
-    print("Server is listening on", server_ip, "port", server_port)
-
-    while True:
-        message, client_address = server_socket.recvfrom(1024)
-        print("Message from client:", message.decode())
-
-        response = "Hello, client"
-        server_socket.sendto(response.encode(), client_address)
-
-
-if __name__ == "__main__":
-    main()
+    import socket
+    
+    
+    def main():
+        server_ip = "127.0.0.1"
+        server_port = 12345
+        message = "Hello, server"
+    
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        client_socket.sendto(message.encode(), (server_ip, server_port))
+    
+        response, _ = client_socket.recvfrom(1024)
+        print("Response from server:", response.decode())
+    
+        client_socket.close()
+    
+    
+    if __name__ == "__main__":
+        main()
+    
+    import socket
+    
+    
+    def main():
+        server_ip = "127.0.0.1"
+        server_port = 12345
+    
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        server_socket.bind((server_ip, server_port))
+    
+        print("Server is listening on", server_ip, "port", server_port)
+    
+        while True:
+            message, client_address = server_socket.recvfrom(1024)
+            print("Message from client:", message.decode())
+    
+            response = "Hello, client"
+            server_socket.sendto(response.encode(), client_address)
+    
+    
+    if __name__ == "__main__":
+        main()
 
 
 ### Презентация результата

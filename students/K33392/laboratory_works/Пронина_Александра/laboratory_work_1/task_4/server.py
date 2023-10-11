@@ -5,7 +5,7 @@ import threading
 class ChatServer:
     def __init__(self):
         self.host = 'localhost'
-        self.port = 456
+        self.port = 4567
         self.server_socket = None
         self.clients = []
 

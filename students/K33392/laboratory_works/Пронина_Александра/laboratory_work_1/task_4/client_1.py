@@ -8,7 +8,7 @@ from students.K33392.laboratory_works.Пронина_Александра.labora
 class ChatClient:
     def __init__(self):
         self.host = 'localhost'
-        self.port = 456
+        self.port = 4567
         self.client_socket = None
 
     def start(self):
