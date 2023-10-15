@@ -1,0 +1,14 @@
+<div class="main">
+  
+    {% for person in dataset %}
+  
+    Имя: {{ person.first_name }}<br/>
+    Фамилия: {{ person.last_name }}<br/>
+    Паспорт: {{ person.passport }}<br/>
+    Националиация: {{ person.nationality }}<br/>
+    Адрес: {{ person.address }}<br/>
+    <hr/>
+  
+    {% endfor %}
+  
+</div>
