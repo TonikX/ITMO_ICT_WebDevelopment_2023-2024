@@ -38,7 +38,7 @@ class Homework(models.Model):
     subject = models.ForeignKey('Subject', on_delete=models.CASCADE)
     class_it_is_assigned_to = models.ForeignKey('Class', on_delete=models.CASCADE)
     date_of_issue = models.DateField(default=datetime.datetime.today())
-    deadline_date = models.DateField()
+    deadline_date = models.DateField(blank=True, null=True)
     assignment_text = models.TextField()
     fines_information = models.TextField(blank=True, null=True)
     students_who_submitted_it = models.ManyToManyField('Student', through='HomeworkSubmission')
