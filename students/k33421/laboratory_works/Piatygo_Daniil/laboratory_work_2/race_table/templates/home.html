@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная страница</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать!</h1>
+        <a href="{% url 'login' %}"><button>Вход</button></a>
+        <a href="{% url 'register' %}"><button>Регистрация пользователя</button></a>
+        <a href="{% url 'register_racer' %}"><button>Регистрация гонщика</button></a>
+    </div>
+</body>
+</html>

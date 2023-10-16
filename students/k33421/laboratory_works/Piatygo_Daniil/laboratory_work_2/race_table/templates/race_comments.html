@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Комментарии к гонке {{ race.id }}</title>
+</head>
+<body>
+<div class="container">
+    <h1>Комментарии к гонке {{ race.id }}</h1>
+    <a href="{% url 'races_list' %}">Вернуться к таблице гонок</a>
+    <h2>Добавить комментарий</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+    <h2>Список комментариев</h2>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <strong>{{ comment.author.username }}</strong> ({{ comment.created_at }})
+            <br>
+            Тип: {{ comment.get_comment_type_display }}
+            <br>
+            Рейтинг: {{ comment.rating }}
+            <br>
+            {{ comment.text }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

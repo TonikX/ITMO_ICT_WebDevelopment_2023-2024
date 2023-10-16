@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация пользователей</title>
+</head>
+<body>
+<div class="container">
+    <h1>Регистрация</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Учетная запись</h2>
+        {{ user_form.as_p }}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+</body>
+</html>

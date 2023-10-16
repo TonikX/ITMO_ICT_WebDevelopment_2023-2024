@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Список гонок</title>
+</head>
+<body>
+<div class="container">
+    <a href="{% url 'profile' %}">Управление профилем</a>
+    <h1>Таблица гонок</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Номер гонки</th>
+                <th>Название гонки</th>
+                <th>Дата</th>
+                <th>Победитель</th>
+                <th>Оставить комментарий</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for race in races %}
+            <tr>
+                <td>{{ race.id }}</td>
+                <td>{{ race.name }}</td>
+                <td>{{ race.date }}</td>
+                <td>{{ race.winner }}</td>
+                <td><a href="{% url 'race_comments' race.id %}">Комментировать</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
