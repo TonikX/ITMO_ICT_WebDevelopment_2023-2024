@@ -1,0 +1,21 @@
+html
+<table>
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Grade</th>
+      <th>Discipline</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in object_list %}
+    <tr>
+      <td>{{ student.student_object }}</td>
+      <td>{{ student.discipline_object }}</td>
+      {% for grades in student.grades.all %}
+      <td>{{ grades }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
