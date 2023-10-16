@@ -1,10 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
-class Driver(models.Model):
+class Driver(AbstractUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     date_of_birth = models.DateField(null=True)
+    passport = models.CharField(max_length=25, null=True)
+    address = models.CharField(max_length=100, null=True)
+    nationality = models.CharField(max_length=30, null=True)
     cars = models.ManyToManyField("Car", through="Ownership")
 
     def __str__(self):
@@ -24,7 +29,9 @@ class Car(models.Model):
 
 class Ownership(models.Model):
     car = models.ForeignKey("Car", null=True, on_delete=models.CASCADE)
-    driver = models.ForeignKey("Driver", null=True, on_delete=models.CASCADE)
+    driver = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE
+    )
     start = models.DateField()
     end = models.DateField(null=True, blank=True)
 
