@@ -1,0 +1,18 @@
+{% for message in messages %}
+<div class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const alertMessages = document.querySelectorAll(".alert");
+  alertMessages.forEach(function (alert) {
+    setTimeout(function () {
+      alert.style.display = "none";
+    }, 2000);
+  });
+});
+</script>

@@ -1,0 +1,42 @@
+/* Apply styles to all tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Add more common table styles here */
+}
+
+/* Style table headers */
+th {
+    background-color: #333;
+    color: #fff;
+    padding: 8px;
+}
+
+/* Style table rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style table cells (table data) */
+td {
+    padding: 8px;
+    /* Add more cell-specific styles here */
+}
+
+.btn {
+    background-color: #606060;
+    color: #fff;
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+

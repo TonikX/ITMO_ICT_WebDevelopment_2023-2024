@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+
+{% block content %}
+
+<div class="p-4">
+    <p>Добро пожаловать, {{ user.username }}!</p>
+    <p>Предметы: {{ subjects }}</p>
+    <p>Классы: </p>
+    {% for class in classes %}
+    <li>
+        <a href="{% url 'class_info' class.id %}">{{ class }}</a>
+    </li>
+    {% endfor %}
+    <br>
+    <a href="{% url 'all_homeworks' %}" class="btn btn-primary mb-3">К домашним заданиям</a>
+</div>
+
+{% endblock %}

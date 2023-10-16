@@ -1,0 +1,22 @@
+{% extends "../base.html" %}
+
+{% block content %}
+
+<div class="row-gy-4">
+    <div class="col-lg-6">
+        <div class="card mb-4">
+            <div class="card-header position-relative">
+                <h2 class="h2 fw-normal text-dark mb-0">Вы вошли как преподаватель (админ)</h2>
+            </div>
+            <div class="card-body p-0">
+                <div class="p-4">
+                    <p>Логин: {{ user.username }}</p>
+                    <button class="btn btn-secondary mb-3" onclick="goBack()">Назад</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
