@@ -22,6 +22,9 @@ def main():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP, PORT))
 
+    username = input("Enter your username: ")
+    client_socket.send(username.encode(codage))
+
     receive_thread = threading.Thread(target=receive, args = (client_socket, ))
     send_thread = threading.Thread(target=send, args = (client_socket, ))
 

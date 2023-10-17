@@ -8,7 +8,7 @@ class MyHTTPServer:
     def __init__(self, ip, port, codage):
         self.ip = ip
         self.port = port
-        self.grades = []
+        self.grades = {}
         self.codage = codage
 
     def serve_forever(self):
@@ -40,38 +40,49 @@ class MyHTTPServer:
         # Python, сокет предоставляет возможность создать вокруг него некоторую обертку,
         # которая предоставляет file object интерфейс. Это дайте возможность построчно обработать запрос.
         # Заголовок всегда - первая строка. Первую строку нужно разбить на 3 элемента  (метод + url + версия протокола).
-        # URL необходимо разбить на адрес и параметры (isu.ifmo.ru/pls/apex/f?p=2143 , где isu.ifmo.ru/pls/apex/f, а p=2143 - параметр p со значением 2143)
+        # URL необходимо разбить на адрес и параметры (isu.ifmo.ru/pls/apex/f?p=2143 ,
+        # где isu.ifmo.ru/pls/apex/f, а p=2143 - параметр p со значением 2143)
         lines = data.split('\r\n')
         headers = lines[0].split()
-        print(f"Headers : {headers}")
+        print(f"Headers : {headers}, {len(headers)}")
 
         if len(headers) != 3:
             raise Exception("Bad request line")
 
         body = lines[-1]
+        print(body)
         grds = {}
         if ":" in body:
-            grds = {grade.split(":")[0]: grade.split(":")[1] for grade in body.split(";")}
-        request = {"method": headers[0], "url": headers[1], "version": headers[2], "grades": grds}
+            grds = {grade.split(":")[0]: grade.split(":")[1]
+                    for grade in body.split(";")}
+        request = {"method": headers[0], "url": headers[1],
+                   "version": headers[2], "grades": grds}
 
         return request
 
 
-    #def parse_headers(self, *):
-        # 4. Функция для обработки headers. Необходимо прочитать все заголовки после первой строки до появления пустой строки и сохранить их в массив.
-
     def handle_request(self, request):
         # 5. Функция для обработки url в соответствии с нужным методом.
-        # В случае данной работы, нужно будет создать набор условий, который обрабатывает GET или POST запрос.
-        # GET запрос должен возвращать данные. POST запрос должен записывать данные на основе переданных параметров.
+        # В случае данной работы, нужно будет создать набор условий,
+        # который обрабатывает GET или POST запрос.
+        # GET запрос должен возвращать данные.
+        # POST запрос должен записывать данные на основе переданных параметров.
         if request["method"] == "POST":
-            self.grades.extend(request["grades"].values())
-            with open('index.html', 'r') as f:
-                return f"HTTP/1.1 200 OK\n\n{f.read()}"
+            for subject, grade in request["grades"].items():
+                if subject not in self.grades:
+                    self.grades[subject] = []
+                self.grades[subject].extend(grade)
+            #with open('index.html', 'r') as f:
+            return f"HTTP/1.1 200 OK\n\n"
         elif request["method"] == "GET":
-            response = f"HTTP/1.1 200 OK\n\n" + "<html><head><title>Grades</title></head><body>"
-            for s in self.grades:
-                response += f"<p>{s} </p>"
+            response = f"HTTP/1.1 200 OK\n\n" \
+                       + "<html><head><title>Grades</title></head><body>"
+            response += "<table border='1'>"
+            response += "<tr><th>Subject</th><th>Grades</th></tr>"
+            for subject, grades in self.grades.items():
+                grades_str = ", ".join(map(str, grades))
+                response += f"<tr><td>{subject}</td><td>{grades_str}</td></tr>"
+            response += "</table>"
             response += "</body></html>"
             return response
         else:
