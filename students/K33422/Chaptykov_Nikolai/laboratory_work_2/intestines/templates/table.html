@@ -1,0 +1,44 @@
+<head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Успеваемость группы {{ group_object }}</h2>
+  <table>
+    <tr>
+      <th>Ученик</th>
+      <th>Дисциплина</th>
+      <th>Оценка</th>
+    </tr>
+    {% for student in object_list %}
+    <tr>
+      <td>{{ student.student_object }}</td>
+      <td>{{ student.discipline_object }}</td>
+      <td>
+      {% for grades in student.grades.all %}
+      {{ grades }}
+      {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</body>

@@ -7,6 +7,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from intestines.forms import UserCreateForm
 
 
 class HomeworkListView(ListView):
@@ -28,10 +32,10 @@ class AssignHomework(CreateView):
         return super().form_valid(form)
 
 
-class GroupGrades(ListView):
+class GroupGrades(LoginRequiredMixin, ListView):
     model = StudentPerformance
     fields = ['student_object', 'discipline_object', 'grades']
-    template_name = 'group_grades.html'
+    template_name = 'table.html'
 
 
 def LoginView(request):
@@ -44,3 +48,16 @@ def LoginView(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user[0])
+            # print(user)
+            return redirect('/homework')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})

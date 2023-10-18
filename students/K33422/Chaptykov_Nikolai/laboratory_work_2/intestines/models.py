@@ -10,7 +10,7 @@ class SchoolGroup(models.Model):
     letter_id = models.CharField(max_length=1, default='Ъ')
 
     def __str__(self):
-        return f"{self.grade} {self.letter_id}"
+        return f"{self.grade}{self.letter_id}"
 
 
 class Student(models.Model):
@@ -71,7 +71,7 @@ class StudentGrade(models.Model):
             performance_object.grades.add(self)
         except StudentPerformance.DoesNotExist:
             temp = StudentPerformance.objects.create(student_object=student, discipline_object=ahw.work_object.discipline_object)
-            temp.grades.set(self)
+            temp.grades.add(self)
 
     def __str__(self):
         return f"{self.grade}"
