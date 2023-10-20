@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reserve a Room</title>
+</head>
+<body>
+    <h1>Reserve a Room</h1>
+    <h2>Use MM/DD/YYYY format</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Reserve</button>
+    </form>
+</body>
+</html>
