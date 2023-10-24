@@ -1,8 +1,6 @@
-# Welcome to MkDocs
-
 # Отчет по лабораторной работе №1
 
-## Выполнил: Акулов Алексей, K33391
+Выполнил: Акулов Алексей, K33391
 
 #### Цель работы:
 
@@ -297,26 +295,49 @@ PORT = 44455
 codage = 'utf-8'
 
 clients = []
+client_names = {}
 
 
-def sharing_message(message):
+def elim_client(client_socket):
+    client_socket.close()
+    if client_socket in clients:
+        clients.remove(client_socket)
+    if client_socket in client_names:
+        del client_names[client_socket]
+
+
+def sharing_message(message, sender_socket):
     for client in clients:
-        try:
-            client.send(message)
-        except:
-            client.close()
-            clients.remove(client)
+        if client != sender_socket:
+            try:
+                client.send(message)
+            except:
+                elim_client(client)
+
 
 
 def handle_client(client_socket):
+    name = client_socket.recv(1024).decode(codage)
+    client_names[client_socket] = name
+
+    print(f"{name} has joined the chat!")
+    welcome_msg = f"{name} has joined the chat!".encode(codage)
+    sharing_message(welcome_msg, client_socket)
+
     while True:
         try:
             message = client_socket.recv(1024)
-            sharing_message(message)
+            formatted_message = f"{name}: {message.decode(codage)}".encode(
+                codage)
+            sharing_message(formatted_message, client_socket)
         except:
-            client_socket.close()
-            clients.remove(client_socket)
+            print(f"{name} has left the chat!")
+            leave_msg = f"{name} has left the chat!".encode(codage)
+            sharing_message(leave_msg, None)
+
+            elim_client(client_socket)
             break
+
 
 def main():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -328,12 +349,14 @@ def main():
     while True:
         client_socket, addr = server_socket.accept()
         clients.append(client_socket)
-        client_thread = threading.Thread(target=handle_client, args=(client_socket,))
+        client_thread = threading.Thread(target=handle_client,
+                                         args=(client_socket,))
         client_thread.start()
 
 
 if __name__ == "__main__":
     main()
+
 ```
 
 
@@ -363,6 +386,9 @@ def send(client_socket):
 def main():
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((IP, PORT))
+
+    username = input("Enter your username: ")
+    client_socket.send(username.encode(codage))
 
     receive_thread = threading.Thread(target=receive, args = (client_socket, ))
     send_thread = threading.Thread(target=send, args = (client_socket, ))
@@ -412,7 +438,7 @@ class MyHTTPServer:
     def __init__(self, ip, port, codage):
         self.ip = ip
         self.port = port
-        self.grades = []
+        self.grades = {}
         self.codage = codage
 
     def serve_forever(self):
@@ -444,38 +470,49 @@ class MyHTTPServer:
         # Python, сокет предоставляет возможность создать вокруг него некоторую обертку,
         # которая предоставляет file object интерфейс. Это дайте возможность построчно обработать запрос.
         # Заголовок всегда - первая строка. Первую строку нужно разбить на 3 элемента  (метод + url + версия протокола).
-        # URL необходимо разбить на адрес и параметры (isu.ifmo.ru/pls/apex/f?p=2143 , где isu.ifmo.ru/pls/apex/f, а p=2143 - параметр p со значением 2143)
+        # URL необходимо разбить на адрес и параметры (isu.ifmo.ru/pls/apex/f?p=2143 ,
+        # где isu.ifmo.ru/pls/apex/f, а p=2143 - параметр p со значением 2143)
         lines = data.split('\r\n')
         headers = lines[0].split()
-        print(f"Headers : {headers}")
+        print(f"Headers : {headers}, {len(headers)}")
 
         if len(headers) != 3:
             raise Exception("Bad request line")
 
         body = lines[-1]
+        print(body)
         grds = {}
         if ":" in body:
-            grds = {grade.split(":")[0]: grade.split(":")[1] for grade in body.split(";")}
-        request = {"method": headers[0], "url": headers[1], "version": headers[2], "grades": grds}
+            grds = {grade.split(":")[0]: grade.split(":")[1]
+                    for grade in body.split(";")}
+        request = {"method": headers[0], "url": headers[1],
+                   "version": headers[2], "grades": grds}
 
         return request
 
 
-    #def parse_headers(self, *):
-        # 4. Функция для обработки headers. Необходимо прочитать все заголовки после первой строки до появления пустой строки и сохранить их в массив.
-
     def handle_request(self, request):
         # 5. Функция для обработки url в соответствии с нужным методом.
-        # В случае данной работы, нужно будет создать набор условий, который обрабатывает GET или POST запрос.
-        # GET запрос должен возвращать данные. POST запрос должен записывать данные на основе переданных параметров.
+        # В случае данной работы, нужно будет создать набор условий,
+        # который обрабатывает GET или POST запрос.
+        # GET запрос должен возвращать данные.
+        # POST запрос должен записывать данные на основе переданных параметров.
         if request["method"] == "POST":
-            self.grades.extend(request["grades"].values())
-            with open('index.html', 'r') as f:
-                return f"HTTP/1.1 200 OK\n\n{f.read()}"
+            for subject, grade in request["grades"].items():
+                if subject not in self.grades:
+                    self.grades[subject] = []
+                self.grades[subject].extend(grade)
+            #with open('index.html', 'r') as f:
+            return f"HTTP/1.1 200 OK\n\n"
         elif request["method"] == "GET":
-            response = f"HTTP/1.1 200 OK\n\n" + "<html><head><title>Grades</title></head><body>"
-            for s in self.grades:
-                response += f"<p>{s} </p>"
+            response = f"HTTP/1.1 200 OK\n\n" \
+                       + "<html><head><title>Grades</title></head><body>"
+            response += "<table border='1'>"
+            response += "<tr><th>Subject</th><th>Grades</th></tr>"
+            for subject, grades in self.grades.items():
+                grades_str = ", ".join(map(str, grades))
+                response += f"<tr><td>{subject}</td><td>{grades_str}</td></tr>"
+            response += "</table>"
             response += "</body></html>"
             return response
         else:
@@ -494,6 +531,7 @@ if __name__ == '__main__':
         serv.serve_forever()
     except KeyboardInterrupt:
         pass
+
 
 
 ```
