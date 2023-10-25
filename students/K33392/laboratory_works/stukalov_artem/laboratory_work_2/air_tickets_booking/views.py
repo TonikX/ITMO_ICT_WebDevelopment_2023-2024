@@ -6,11 +6,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from string import ascii_uppercase
 
-from .models import Flight, City, Ticket
-from .forms import UserRegisterForm, TicketForm
+from .models import Flight, City, Ticket, Comment
+from .forms import UserRegisterForm, TicketForm, CommentForm
 
 
-TICKETS_PER_PAGE = 1
+TICKETS_PER_PAGE = 10
+COMMENTS_PER_PAGE = 10
 
 
 def index(request):
@@ -102,70 +103,102 @@ def flights_list_view(request):
 
 
 def flight_detail_view(request, flight_id):
+    if request.method != "GET":
+        return Http404(f"Method {request.method} not supported")
     flight = get_object_or_404(Flight, pk=flight_id)
-    match request.method:
-        case "POST":
-            if not request.user.is_authenticated:
-                return redirect("user_login")
+    tickets = Ticket.objects.filter(flight__id=flight_id)
+    tickets_paginator = Paginator(tickets, TICKETS_PER_PAGE)
+    tickets_page_number = request.GET.get("tickets")
+    try:
+        tickets_page = tickets_paginator.page(tickets_page_number)
+    except PageNotAnInteger:
+        tickets_page = tickets_paginator.page(1)
+    except EmptyPage:
+        tickets_page = tickets_paginator.page(tickets_paginator.num_pages)
 
-            form = TicketForm(request.POST)
-            if not form.is_valid():
-                return redirect("flight_detail", flight_id)
+    seats_set = {ticket.seat for ticket in tickets}
+    seats = [
+        [
+            {
+                "name": f"{row+1}{ascii_uppercase[seat]}",
+                "is_taken": f"{row+1}{ascii_uppercase[seat]}" in seats_set,
+            }
+            for seat in range(flight.plane.columns)
+        ]
+        for row in range(flight.plane.rows)
+    ]
 
-            if Ticket.objects.filter(
-                passenger__id=request.user.id, flight__id=flight.id
-            ).exists():
-                return redirect("flight_detail", flight_id)
+    booking_form = TicketForm()
+    comment_form = CommentForm()
+    has_ticket = Ticket.objects.filter(
+        passenger__id=request.user.id, flight__id=flight.id
+    ).exists()
 
-            ticket = form.save(commit=False)
-            ticket.passenger = request.user
-            ticket.flight = flight
-            ticket.save()
+    comments = Comment.objects.filter(flight__id=flight.id).order_by("-date_time")
+    comments_paginator = Paginator(comments, COMMENTS_PER_PAGE)
+    comments_page_number = request.GET.get("comments")
+    try:
+        comments_page = comments_paginator.page(comments_page_number)
+    except PageNotAnInteger:
+        comments_page = comments_paginator.page(1)
+    except EmptyPage:
+        comments_page = comments_paginator.page(comments_paginator.num_pages)
 
-            return redirect("flight_detail", flight_id)
+    return render(
+        request,
+        "air_tickets_booking/flight_detail.html",
+        {
+            "flight": flight,
+            "tickets_page": tickets_page,
+            "comments_page": comments_page,
+            "seats": seats,
+            "has_ticket": has_ticket,
+            "user": request.user,
+            "booking_form": booking_form,
+            "comment_form": comment_form,
+        },
+    )
 
-        case "GET":
-            tickets = Ticket.objects.filter(flight__id=flight_id)
-            paginator = Paginator(tickets, TICKETS_PER_PAGE)
-            page = request.GET.get("page")
-            try:
-                page_obj = paginator.page(page)
-            except PageNotAnInteger:
-                page_obj = paginator.page(1)
-            except EmptyPage:
-                page_obj = paginator.page(paginator.num_pages)
 
-            seats_set = {ticket.seat for ticket in tickets}
-            seats = [
-                [
-                    {
-                        "name": f"{row+1}{ascii_uppercase[seat]}",
-                        "is_taken": f"{row+1}{ascii_uppercase[seat]}" in seats_set,
-                    }
-                    for seat in range(flight.plane.columns)
-                ]
-                for row in range(flight.plane.rows)
-            ]
+@login_required
+def flight_book(request, flight_id):
+    if request.method != "POST":
+        return Http404(f"Method {request.method} not supported")
 
-            form = TicketForm()
-            has_ticket = Ticket.objects.filter(
-                passenger__id=request.user.id, flight__id=flight.id
-            ).exists()
-            return render(
-                request,
-                "air_tickets_booking/flight_detail.html",
-                {
-                    "flight": flight,
-                    "page_obj": page_obj,
-                    "seats": seats,
-                    "form": form,
-                    "has_ticket": has_ticket,
-                    "user": request.user,
-                },
-            )
+    flight = get_object_or_404(Flight, pk=flight_id)
+    form = TicketForm(request.POST)
+    if not form.is_valid():
+        return redirect("flight_detail", flight_id)
 
-        case _:
-            return Http404(f"Method {request.method} not supported")
+    if Ticket.objects.filter(
+        passenger__id=request.user.id, flight__id=flight.id
+    ).exists():
+        return redirect("flight_detail", flight_id)
+
+    ticket = form.save(commit=False)
+    ticket.passenger = request.user
+    ticket.flight = flight
+    ticket.save()
+
+    return redirect("flight_detail", flight_id)
+
+
+@login_required
+def flight_comment(request, flight_id):
+    if request.method != "POST":
+        return Http404(f"Method {request.method} not supported")
+
+    flight = get_object_or_404(Flight, pk=flight_id)
+    form = CommentForm(request.POST)
+    if not form.is_valid():
+        return redirect("flight_detail", flight_id)
+
+    comment = form.save(commit=False)
+    comment.user = request.user
+    comment.flight = flight
+    comment.save()
+
+    return redirect("flight_detail", flight_id)
 
 
 @login_required

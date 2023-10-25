@@ -62,3 +62,11 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"{self.passenger.first_name}-{self.passenger.last_name} {self.seat}"
+
+
+class Comment(models.Model):
+    message = models.CharField(max_length=200)
+
+    date_time = models.DateTimeField(auto_now_add=True)
+    flight = models.ForeignKey("Flight", on_delete=models.CASCADE)
+    user = models.ForeignKey("User", on_delete=models.CASCADE)

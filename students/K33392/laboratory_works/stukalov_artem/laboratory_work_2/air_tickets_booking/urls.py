@@ -8,6 +8,12 @@ urlpatterns = [
     path("logout", views.user_logout, name="user_logout"),
     path("flights", views.flights_list_view, name="flights_list"),
     path("flights/<int:flight_id>", views.flight_detail_view, name="flight_detail"),
+    path("flights/<int:flight_id>/book", views.flight_book, name="flight_book"),
+    path(
+        "flights/<int:flight_id>/comment",
+        views.flight_comment,
+        name="flight_comment",
+    ),
     path("tickets", views.tickets_list_view, name="tickets_list"),
     path(
         "tickets/<int:ticket_id>/update", views.ticket_update_view, name="ticket_update"
