@@ -3,15 +3,17 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from string import ascii_uppercase
-from django.contrib import messages
 
 from .models import Flight, City, Ticket
 from .forms import UserRegisterForm, TicketForm
 
 
+TICKETS_PER_PAGE = 1
+
+
 def index(request):
-    messages.success(request, "Информация обновлена!")
     return render(request, "air_tickets_booking/index.html", {"user": request.user})
 
 
@@ -80,8 +82,12 @@ def flights_list_view(request):
     flights_in = None
 
     if city is not None:
-        flights_out = Flight.objects.filter(departure_city__name=city)
-        flights_in = Flight.objects.filter(arrival_city__name=city)
+        flights_out = Flight.objects.filter(departure_city__name=city).order_by(
+            "-date_time"
+        )
+        flights_in = Flight.objects.filter(arrival_city__name=city).order_by(
+            "-date_time"
+        )
 
     return render(
         request,
@@ -120,6 +126,15 @@ def flight_detail_view(request, flight_id):
 
         case "GET":
             tickets = Ticket.objects.filter(flight__id=flight_id)
+            paginator = Paginator(tickets, TICKETS_PER_PAGE)
+            page = request.GET.get("page")
+            try:
+                page_obj = paginator.page(page)
+            except PageNotAnInteger:
+                page_obj = paginator.page(1)
+            except EmptyPage:
+                page_obj = paginator.page(paginator.num_pages)
+
             seats_set = {ticket.seat for ticket in tickets}
             seats = [
                 [
@@ -141,7 +156,7 @@ def flight_detail_view(request, flight_id):
                 "air_tickets_booking/flight_detail.html",
                 {
                     "flight": flight,
-                    "tickets": tickets,
+                    "page_obj": page_obj,
                     "seats": seats,
                     "form": form,
                     "has_ticket": has_ticket,

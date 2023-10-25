@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-        {% for ticket in tickets %}
+        {% for ticket in page_obj %}
           <tr>
             <td class="align-middle">{{ticket.passenger.first_name}}<br>{{ticket.passenger.last_name}}</td>
             <td class="align-middle">{{ticket.seat}}</td>
@@ -22,6 +22,8 @@
         {% endfor %} 
       </tbody>
     </table>
+
+    {% include "air_tickets_booking/pagination.html" %}
   </div>
 </div>
 
