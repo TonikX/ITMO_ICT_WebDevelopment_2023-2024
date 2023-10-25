@@ -1,0 +1,14 @@
+{% extends 'air_tickets_booking/base.html' %} {% block content %}
+
+<h1>Билет на рейс {{ticket.flight.name}}</h1>
+<h1>Место: {{ticket.seat}}</h1>
+
+<h2>Изменить место</h2>
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit">Сохранить</button>
+</form>
+
+
+{% endblock %}

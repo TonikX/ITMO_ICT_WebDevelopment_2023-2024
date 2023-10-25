@@ -1,0 +1,82 @@
+{% extends 'air_tickets_booking/base.html' %} {% block content %}
+
+<h1 class="text-center">Табло рейсов{% if city %} {{city}} {% endif %}</h1>
+
+<form method="GET" class='mb-5'>
+  <div class='mb-3'>
+    <label for="citySearchSelect" class="form-label">Город</label>
+    <select id="citySearchSelect" name="city" class="form-select form-select-lg ">
+      <option value="">Выберите город</option>
+      {% for available_city in available_cities %}
+        <option 
+          value="{{available_city.name}}"
+          {% if city == available_city.name %} selected {% endif %}
+        >
+          {{available_city.name}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+
+<h2>Вылет</h2>
+<table class="table table-striped table-hover mb-5">
+  <thead>
+    <tr>
+      <th scope="col">Время</th>
+      <th scope="col">Рейс</th>
+      <th scope="col">Направление</th>
+      <th scope="col">Авиакомпания</th>
+      <th scope="col">Самолет</th>
+      <th scope="col">Статус</th>
+      <th scope="col">Действия</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for flight in flights_out %}
+      <tr>
+        <td>{{flight.date_time}}</td>
+        <td>{{flight.name}}</td>
+        <td>{{flight.arrival_city.name}}</td>
+        <td>{{flight.air_line.name}}</td>
+        <td>{{flight.plane.name}}</td>
+        <td>{{flight.status}}</td>
+        <td><a href="{% url 'flight_detail' flight.id %}">Детали</a></td>
+      </tr>
+    {% endfor %} 
+  </tbody>
+</table>
+
+<h2>Прилет</h2>
+<table class="table table-striped table-hover mb-5">
+  <thead>
+    <tr>
+      <th scope="col">Время</th>
+      <th scope="col">Рейс</th>
+      <th scope="col">Направление</th>
+      <th scope="col">Авиакомпания</th>
+      <th scope="col">Самолет</th>
+      <th scope="col">Статус</th>
+      <th scope="col">Действия</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for flight in flights_in %}
+      <tr>
+        <td>{{flight.date_time}}</td>
+        <td>{{flight.name}}</td>
+        <td>{{flight.arrival_city.name}}</td>
+        <td>{{flight.air_line.name}}</td>
+        <td>{{flight.plane.name}}</td>
+        <td>{{flight.status}}</td>
+        <td><a href="{% url 'flight_detail' flight.id %}">Детали</a></td>
+      </tr>
+    {% endfor %} 
+  </tbody>
+</table>
+
+{% endblock %}

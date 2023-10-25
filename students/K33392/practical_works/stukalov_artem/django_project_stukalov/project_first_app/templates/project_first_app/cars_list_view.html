@@ -8,12 +8,8 @@
     <h4>Модель: {{car.model}}</h4>
     <h4>Цвет: {{car.color}}</h4>
     <h5>
-      <a href="{% url 'car_update_view' car.id %}" class="btn btn-warning"
-        >Редактировать</a
-      >
-      <a href="{% url 'car_delete_view' car.id %}" class="btn btn-warning"
-        >Удалить</a
-      >
+      <a href="{% url 'car_update_view' car.id %}">Редактировать</a>
+      <a href="{% url 'car_delete_view' car.id %}">Удалить</a>
     </h5>
   </li>
   {% endfor %}
