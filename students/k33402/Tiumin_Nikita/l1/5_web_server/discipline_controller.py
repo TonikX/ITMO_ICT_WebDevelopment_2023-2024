@@ -13,13 +13,11 @@ class DisciplineController:
         html_to_insert = ''
 
         for name in self.fake_db:
-            html_to_insert += '<tr>'
-            html_to_insert += '<td>' + name + '</td>'
-            html_to_insert += '<td>'
             for grade in self.fake_db[name]:
-                html_to_insert += grade + ', '
-            html_to_insert = html_to_insert.strip(', ')
-            html_to_insert += '</td>'
+                html_to_insert += '<tr>'
+                html_to_insert += '<td>' + name + '</td>'
+                html_to_insert += '<td>' + grade + '</td>'
+                html_to_insert += '</td>'
 
         html = html.replace('#content', html_to_insert)
 
