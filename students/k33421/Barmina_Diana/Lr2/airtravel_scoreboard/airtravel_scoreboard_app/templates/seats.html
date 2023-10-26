@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if seats.count != 0 %}
+    {% if user.is_authenticated %}
+        {% if tickets.count != 0 %}
+            {% for s in seats %}
+                    <li>{{ s.name }} ({{ s.category }}-класс)</br></br></li>
+                {% endfor %}
+            {% else %}
+                {% for s in seats %}
+                    <li>{{ s.name }} ({{ s.category }}-класс)<a href="{% url 'booking-seat' flight_id=flight.pk seat_id=s.name %}" class="btn btn-outline-primary btn-sm">Забронировать место</a></br></br></li>
+                {% endfor %}
+        {% endif %}
+    {% else %}
+        {% for s in seats %}
+            <li>{{ s.name }} ({{ s.category }}-класс)</br></br></li>
+        {% endfor %}
+    {% endif %}
+{% else %}
+<p>Билетов на данный момент нет :( </br> Попробуйте заглянуть попозже</p>
+{% endif %}
+</br>
+<a href="{% url 'home' %}" class="btn btn-dark">К рейсам</a>
+{% endblock %}

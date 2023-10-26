@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Изменить билет</h1></br>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br/><button type="submit" class="btn btn-warning">Изменить</button>
+</form>
+<br/><a href="{% url 'user-page' user.pk %}" class="btn btn-dark">Назад в личный кабинет</a>
+
+{% endblock %}

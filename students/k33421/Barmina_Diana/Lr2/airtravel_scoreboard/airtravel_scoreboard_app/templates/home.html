@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Рейсы:</h1></br>
+
+<ul>
+{% for flight in object_list %}
+
+
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0 ">
+          <div class="card-body">
+            <h5 class="card-title">{{ flight.departure_site }} - {{ flight.landing_site }}</h5>
+            <p class="card-text">{{flight.departure_time }}-{{flight.landing_time}}</p>
+            <p class="card-text"><small class="text-body-secondary">Авиакомпания "{{ flight.airline }}" Модель самолета: {{ flight.plane_id.name}}</small></p>
+
+              <a href="{% url 'seats' flight.pk %}" class="btn btn-primary">Посмотреть свободные места</a>
+              <a href="{% url 'ticket-table' flight.pk %}" class="btn btn-outline-primary">Пассажиры</a>
+        </div>
+      </div>
+    </div>
+
+
+{% endfor %}
+</ul>
+{% endblock %}
