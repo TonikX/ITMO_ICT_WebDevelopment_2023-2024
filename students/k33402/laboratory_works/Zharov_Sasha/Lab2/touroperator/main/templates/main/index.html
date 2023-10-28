@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Туры</h1>
+  <ul class="list-group">
+    {% for data in dataset %}
+    <li class="list-group-item">
+      <h2>
+        <a href="{% url 'tour_page' data.id %}">{{ data.name }}</a>
+      </h2>
+      <p class="mb-0">Турагенство: {{ data.agency_name }}</p>
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет доступных туров</li>
+    {% endfor %}
+  </ul>
+
+  <div class="mt-4">
+    {% if user.is_authenticated %}
+    <div class="text-success">Добро пожаловать, {{ user.username }}!</div>
+    <a class="btn btn-primary" href="{% url 'logout' %}">Выйти</a>
+    {% else %}
+    <a class="btn btn-primary" href="{% url 'register' %}"
+      >Зарегистрироваться</a
+    >
+    <a class="btn btn-success" href="{% url 'login' %}">Войти</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

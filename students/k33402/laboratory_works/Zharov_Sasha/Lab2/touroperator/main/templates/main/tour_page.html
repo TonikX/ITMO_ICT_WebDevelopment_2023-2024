@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-5">
+  <a href="{% url 'index'%}" class="btn btn-primary mb-3">На главную</a>
+  <h1>{{ tour.name }}</h1>
+  <p>Турагенство: {{ tour.agency_name }}</p>
+  <p>{{ tour.description }}</p>
+
+  <br class="btn-group " role="group">
+    {% if user_reservation %} {%for reservation in user_reservation%}
+    <div>
+    <div>{{reservation.start_date}} - {{reservation.end_date}}</div>
+    <div class="text-danger">{{reservation.status}}</div>
+</div>
+    {%endfor%}
+
+    <!-- Кнопка для удаления резервации -->
+    <form
+      method="post"
+      action="{% url 'delete_reservation' tour.id %}"
+    >
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger mt-2">Отменить бронь</button>
+    </form>
+    {% else %}
+    <!-- Кнопка для создания резервации -->
+    <form method="post" action="{% url 'create_reservation' tour.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Забронировать</button>
+    </form>
+    {% endif %}
+  </div>
+  <h4 class="mt-5">комментарии</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Отправить комментарий</button>
+    </form>
+
+  <!-- Существующие комментарии -->
+  <div class="mb-3">
+    {% for comment in comments %}
+    <div class="card mt-3">
+      <div class="card-body">
+        <p class="card-text">{{ comment.user }}: {{ comment.text }}</p>
+        <p class="card-text">{{ comment.date_written }}</p>
+        {% if comment.user == request.user %}
+        <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger"
+          >Удалить</a
+        >
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <p>Пока нет комментариев.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

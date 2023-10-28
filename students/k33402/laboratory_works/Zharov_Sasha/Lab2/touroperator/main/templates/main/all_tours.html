@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Все резервирования</h1>
+  <ul class="list-group">
+    {% for data in dataset %}
+    <li class="list-group-item">
+      <h2>
+        <a href="{% url 'tour_page' data.tour.id %}">{{ data.tour.name }}</a>
+      </h2>
+      <p class="mb-0">Турагенство: {{ data.tour.agency_name }}</p>
+      <p class="mb-0">Статус: {{ data.status }}</p>
+      <p class="mb-0">Пользователь: {{ data.user }}</p>
+      <p class="mb-0">
+        Даты резервации: {{ data.start_date}} - {{ data.end_date}}
+      </p>
+
+      <!-- Кнопки для управления резервацией -->
+      <div class="btn-group mt-3" role="group">
+        <!-- Удалить резервацию -->
+        <form
+          method="post"
+          class="mr-3"
+          action="{% url 'delete_reservation_admin' reservation_id=data.id %}"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            Удалить резервацию
+          </button>
+        </form>
+
+        <!-- Подтвердить резервацию -->
+        <form
+          method="post"
+          class="mr-3"
+          action="{% url 'access_reservation_admin' reservation_id=data.id %}"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">Подтвердить</button>
+        </form>
+      </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет зарезервированных туров</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
