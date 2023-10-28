@@ -14,7 +14,7 @@ class Sertificate(models.Model):
     type = models.CharField(max_length=10)
     date_of_creation = models.DateField()
     def __str__(self):
-        return f"{self.number_sertificate} {self.id_owner.name} "
+        return f"{self.number_sertificate} {self.id_owner.first_name} {self.id_owner.surname}"
 
 class Car(models.Model):
     number = models.CharField(max_length=15)
@@ -23,7 +23,7 @@ class Car(models.Model):
     color = models.CharField(max_length=30, null=True)
     car_owner = models.ManyToManyField(CarOwner, through='Ownership')
     def __str__(self):
-        return f"{self.number}"
+        return f"{self.number} {self.brand} {self.model}"
 
 class Ownership(models.Model):
     car = models.ForeignKey(Car, null=True, on_delete=models.CASCADE)
@@ -31,6 +31,6 @@ class Ownership(models.Model):
     date_of_beginning = models.DateField()
     date_of_ending = models.DateField()
     def __str__(self):
-        return f"{self.car.number} {self.car_owner.first_name}  {self.car_owner.surname}"
+        return f"{self.car.number} {self.car_owner.first_name}  {self.car_owner.surname}  {self.date_of_beginning} {self.date_of_ending}"
 
 

@@ -56,7 +56,8 @@ ROOT_URLCONF = 'django_project_Volgin.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #добавил templates  в список Dirs
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
