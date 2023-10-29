@@ -1,0 +1,28 @@
+{% extends 'strap.html' %}
+{% block title %}New homework{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+{% if user.profile.role == 'teacher' %}
+<h1>Create Homework</h1>
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+    var name = '{{ user.id }}';
+    document.getElementById('user_').value
+          = name;
+</script>
+{% else %}
+<h4>There's nothing to do</h4>
+{% endif %}
+{% endblock %}

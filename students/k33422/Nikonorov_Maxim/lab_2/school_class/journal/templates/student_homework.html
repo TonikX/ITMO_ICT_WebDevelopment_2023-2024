@@ -1,0 +1,46 @@
+{% extends 'strap.html' %}
+{% block title %}Grade Student Homework{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Homework Details</h3>
+                </div>
+                <div class="card-body">
+                    By: {{ student.first_name }} {{ student.last_name }} <br>
+                    Subject: {{ submission.homework.subject }} <br>
+                    <small>
+                        {% if submission.submitted_at <= submission.homework.end_date %}
+                            <span class="text-success">On time</span>
+                        {% else %}
+                            <span class="text-danger">Late</span>
+                        {% endif %}
+                    </small>
+                    <div class="homework-content mt-4">
+                        <h5 class="card-subtitle mb-2">Student's answer</h5>
+                        <p class="card-text">{{ submission.homework_body |safe }}</p>
+                    </div>
+
+                    <div class="grade-submission mt-4">
+                        <h5 class="card-subtitle mb-2">Grade Submission</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                               
+                                <input type="number" name="grade" min="1" max="10" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit Grade</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'grade-homework' %}" class="btn btn-secondary mt-3">Back to Student Grades</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
