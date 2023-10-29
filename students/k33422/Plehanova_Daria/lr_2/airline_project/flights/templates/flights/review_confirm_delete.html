@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Подтверждение удаления{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h2 class="card-title">Подтверждение удаления</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <p class="card-text">Вы уверены, что хотите удалить этот отзыв?</p>
+                    <div class="d-flex justify-content-start align-items-center">
+                        <input type="submit" value="Удалить" class="btn btn-danger me-3">
+                        <a href="{% url 'home' %}" class="btn btn-secondary">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
