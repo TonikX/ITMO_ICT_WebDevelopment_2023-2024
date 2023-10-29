@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить автомобиль</title>
+</head>
+<body>
+    <h1>Удалить автомобиль</h1>
+    <p>Вы уверены, что хотите удалить этот автомобиль?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да, удалить</button>
+    </form>
+</body>
+</html>
