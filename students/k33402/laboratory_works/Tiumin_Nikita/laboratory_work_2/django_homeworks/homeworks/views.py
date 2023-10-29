@@ -42,7 +42,6 @@ def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            # User is authenticated, and you can log them in
             user = form.get_user()
             login(request, user)
             return redirect('home')
@@ -89,7 +88,7 @@ def show_homeworks(request, hw_id):
     homework = Homework.objects.get(pk=hw_id)
 
     try:
-        submission = HomeworkSubmission.objects.filter(student_id=request.user.id).get()
+        submission = HomeworkSubmission.objects.filter(student_id=request.user.id, homework_id=hw_id).get()
     except ObjectDoesNotExist:
         submission = None
 

@@ -5,6 +5,8 @@
   <p>Сдал: {{ submission.student.first_name }} {{ submission.student.last_name }}</p>
   <p>Текст задания:</p>
   <p>{{ submission.homework.description }}</p>
+  <p>Ответ ученика:</p>
+  <p>{{ submission.submission_text }}</p>
   <p>Оценка</p>
   {% if submission.homeworkgrade %}
     <p>{{ submission.homeworkgrade.grade }}</p>
