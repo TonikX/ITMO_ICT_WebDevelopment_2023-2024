@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+      <h2>User Profile</h2>
+
+      <h3>Your Reservations</h3>
+      <ul>
+        {% for reservation in user_reservations %}
+          <li>
+{#          {{ reservation.tour.name }} ({{ reservation.tour.date }})#}
+            {{ "Тур" }} ({{ reservation.tour.date }})
+            <a href="{% url 'update_reservation' reservation.id %}">Edit</a> |
+            <a href="{% url 'delete_reservation' reservation.id %}">Delete</a>
+          </li>
+        {% empty %}
+          <p>You have no reservations.</p>
+        {% endfor %}
+      </ul>
+</div>
+{% endblock %}
+

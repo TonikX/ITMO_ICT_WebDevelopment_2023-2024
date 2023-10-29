@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ tour.title }}</h1>
+    <p>{{ tour.description }}</p>
+    <p><strong>Agency:</strong> {{ tour.agency }}</p>
+    <p><strong>Start Date:</strong> {{ tour.start_date }}</p>
+    <p><strong>End Date:</strong> {{ tour.end_date }}</p>
+    <p><strong>Payment Conditions:</strong> {{ tour.payment_conditions }}</p>
+    <a href="{% url 'reserve_tour' tour.id %}" class="btn btn-success">Reserve</a>
+</div>
+
+<div class="container">
+      <h3>Reviews</h3>
+      <ul>
+        {% for review in tour.review_set.all %}
+          <li>
+            <p>Rating: {{ review.rating }}/10</p>
+            <p>{{ review.text }}</p>
+            <p>Posted by: {{ review.user.username }} on {{ review.date }}</p>
+          </li>
+        {% empty %}
+          <p>No reviews yet. Be the first to write a review!</p>
+        {% endfor %}
+      </ul>
+
+      {% if user.is_authenticated %}
+        <a href="{% url 'write_review' tour.id %}" class="btn btn-primary">Write a Review</a>
+      {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> to write a review.</p>
+      {% endif %}
+</div>
+{% endblock %}
