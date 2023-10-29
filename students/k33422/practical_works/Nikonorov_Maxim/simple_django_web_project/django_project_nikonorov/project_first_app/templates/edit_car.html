@@ -1,0 +1,23 @@
+{% extends 'strap.html' %}
+{% block title %}New car{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<h1>Edit car</h1>
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+  <a href="{% url 'delete-car' car.id  %}" class="btn btn-primary btn-sm">
+    Delete Car
+  </a>
+</div>
+
+{% endblock %}
