@@ -1,0 +1,18 @@
+{% extends 'strap.html' %}
+{% block title %}Register{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<h1>Register</h1>
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+{% endblock %}

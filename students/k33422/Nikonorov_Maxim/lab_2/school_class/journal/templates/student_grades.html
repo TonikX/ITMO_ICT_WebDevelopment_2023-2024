@@ -1,0 +1,104 @@
+{% extends 'strap.html' %}
+{% block title %}Student Grades{% endblock %}
+
+{% block content %}
+
+<style>
+    .grade-box {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        margin-right: 5px;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    .red-box {
+        background-color: rgb(196, 7, 7);
+        color: white;
+    }
+
+    .yellow-box {
+        background-color: rgb(255, 230, 4);
+    }
+
+    .green-box {
+        background-color: rgb(79, 164, 26);
+        color: white;
+    }
+</style>
+
+{% if user.profile.role == 'teacher' %}
+<h1>{{student.first_name}} {{student.last_name}}'s grades</h1>
+{% endif %}
+{% if user.profile.role == 'student' %}
+<h1>Your grades</h1>
+{% endif %}
+
+{% if user.profile.role == 'student' %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Grades</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subject, grades in grades_by_subject.items %}
+            <tr>
+                <td>{{ subject }}</td>
+                <td>
+                    {% for grade in grades %}
+                        {% if grade.grade >= 1 and grade.grade <= 4 %}
+                            <div class="grade-box red-box">{{ grade.grade }}</div>
+                        {% elif grade.grade >= 5 and grade.grade <= 7 %}
+                            <div class="grade-box yellow-box">{{ grade.grade }}</div>
+                        {% elif grade.grade >= 8 and grade.grade <= 10 %}
+                            <div class="grade-box green-box">{{ grade.grade }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+{% endif %}
+{% if user.profile.role == 'teacher' %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Grades</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sub in user.profile.subjects.all %}
+            {% for subject, grades in grades_by_subject.items %}
+                {% if sub.name == subject %}
+                <tr>
+                    <td>{{ subject }}</td>
+                    <td>
+                        {% for grade in grades %}
+                            {% if grade.grade >= 1 and grade.grade <= 4 %}
+                                <div class="grade-box red-box">{{ grade.grade }}</div>
+                            {% elif grade.grade >= 5 and grade.grade <= 7 %}
+                                <div class="grade-box yellow-box">{{ grade.grade }}</div>
+                            {% elif grade.grade >= 8 and grade.grade <= 10 %}
+                                <div class="grade-box green-box">{{ grade.grade }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'grade-homework' %}" class="btn btn-secondary">Back</a>
+{% endif %}
+
+
+{% endblock %}

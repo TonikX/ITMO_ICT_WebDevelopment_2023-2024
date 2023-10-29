@@ -1,0 +1,85 @@
+{% extends 'strap.html' %}
+{% block title %}Homework{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-primary" role="alert">
+                Welcome, {{ user.first_name }} {{ user.last_name }}
+                {% if user.profile.role == 'student' %}
+                    <br>Your class: {{ user.profile.student_class }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+{% if user.profile.role == 'student' %}
+
+<div class="row">
+    {% if homework_list %}
+    <h1>Homeworks</h1>
+    {% for homework, submission in homework_list %}
+    {% if homework.student_class == user.profile.student_class %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ homework.subject }}</h5>
+                <p class="card-text">Tutor: {{ homework.tutor.first_name }} {{ homework.tutor.last_name }}</p>
+                <p class="card-text">Deadline: {{ homework.end_date }}</p>
+                <p class="card-text">Status: 
+                    {% if submission %}
+                        {% if submission.status == 'issued' %}
+                            <span class="text-info">Issued</span>
+                        {% elif submission.status == 'pending_review' %}
+                            <span class="text-warning">Pending Review</span>
+                        {% elif submission.status == 'graded' %}
+                            <span class="text-success">Graded</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-info">Issued</span>
+                    {% endif %}
+                </p>
+                <a href="{% url 'homework-page' homework.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <h4>You don't have homework yet.</h4>
+    {% endif %}
+</div>
+
+{% elif user.profile.role == 'teacher' %}
+
+<div class="row">
+    {% if homework_list %}
+    <h1>Homeworks</h1>
+    {% for homework in homework_list %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ homework.subject }}</h5>
+                <p class="card-text">
+                    Tutor: {{ homework.tutor.first_name }} {{ homework.tutor.last_name }} <br>
+                    For: {{ homework.student_class }}
+                </p>
+                <p class="card-text">Deadline: {{ homework.end_date }}</p>
+                <a href="{% url 'homework-page' homework.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4>There's nothing to do here for now. <a class="nav-link" href="{% url 'new-homework' %}" style="color: grey;">Create your first homework</a></h4>
+
+    {% endif %}
+</div>
+</div>
+{% else %}
+<h4>There's nothing to do here for now, but we'll fix it soon</h4>
+{% endif %}
+
+{% endblock %}
