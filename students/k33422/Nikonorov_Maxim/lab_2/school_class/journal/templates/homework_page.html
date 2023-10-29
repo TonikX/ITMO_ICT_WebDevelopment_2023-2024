@@ -1,0 +1,65 @@
+{% extends 'strap.html' %}
+{% block title %}Homework page{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<h1>{{ object.subject }}</h1>
+<small>By: {{ object.tutor.last_name }} {{ object.tutor.first_name }}</br>
+When: {{ object.start_date }}</br>
+Until: {{ object.end_date }}
+</small>
+
+<hr>
+<b>Homework text:</b>
+<br>
+{{ object.body|safe }}
+{% if user.profile.role == 'student' %}
+<p>Status: 
+{% if submission %}
+    {% if submission.status == 'issued' %}
+        <span class="text-info">Issued</span>
+    {% elif submission.status == 'pending_review' %}
+        <span class="text-warning">Pending Review</span>
+    {% elif submission.status == 'graded' %}
+        <span class="text-success">Graded</span>
+    {% endif %}
+{% else %}
+    <span class="text-info">Issued</span>
+{% endif %}
+</p>
+{% if submission.grade %}
+<p>Grade: {{submission.grade}}</p>
+{% endif %}
+{% endif %}
+{% if user.id == object.tutor.id %}
+    <a href="{% url 'edit-homework' object.pk %}" class="btn btn-success">Edit</a>
+{% else %}
+    {% if user.profile.role == 'student' %}
+        {% if not submission or submission.status == 'issued' %}
+            <form method="post" action="{% url 'submit-homework' object.pk %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="homework_body">Your Homework:</label>
+                    <textarea class="form-control" id="homework_body" name="homework_body" rows="4" required></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit Homework</button>
+            </form>
+            <br> 
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% if submission.homework_body %}
+<b>Your submitted homework:</b>
+</br>
+{{submission.homework_body|safe}}
+</br>
+</br>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}
