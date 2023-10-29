@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2>{{ subject }}</h2>
+
+  <ul>
+    {% for homework in homeworks %}
+      <li>
+        <div><a href="{% url 'homeworks.show' hw_id=homework.id %}">{{ forloop.counter }}</a></div>
+        <div>Выдал: {{ homework.teacher.first_name }} {{ homework.teacher.last_name }}</div>
+        <div>Выдано: {{ homework.issue_date }}</div>
+        <div>Дедлайн: {{ homework.deadline }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

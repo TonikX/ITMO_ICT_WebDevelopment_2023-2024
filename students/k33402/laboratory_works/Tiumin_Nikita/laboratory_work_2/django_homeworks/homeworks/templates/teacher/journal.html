@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  {% load custom_filters %}
+  {% for subject in subjects %}
+    <h3>{{ subject.name }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          {% for homework in subject.homeworks %}
+            <th>{{ homework.issue_date }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td>{{ student.first_name }} {{ student.last_name }}</td>
+            {% for grade in student.grades|keyvalue:forloop.parentloop.counter %}
+              <td>
+                {% if grade|keyvalue:'id' is not None %}
+                  <a href="{% url 'submissions.show' s_id=grade|keyvalue:'id' %}">
+                    {{ grade|keyvalue:'value' }}
+                  </a>
+                {% else %}
+                  <span>{{ grade|keyvalue:'value' }}</span>
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+{% endblock %}
