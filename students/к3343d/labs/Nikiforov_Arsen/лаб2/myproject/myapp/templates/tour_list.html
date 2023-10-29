@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список туров</title>
+</head>
+<body>
+    <h1>Список туров</h1>
+    <ul>
+        {% for tour in tours %}
+        <li>{{ tour.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
