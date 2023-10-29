@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Домашняя работа</title>
+</head>
+
+<body>
+  <span><h1>Домашняя работа</h1>
+  <ul>
+  {% for car in object_list %}
+  <li><strong>Дисциплина:</strong> {{ car.discipline_object }}, actions: <a href="/assign/{{ car.id }}">Сдать</a>
+    <p><strong>Задание:</strong> {{ car.task }}</p>
+    <p><strong>Дедлайн:</strong> {{ car.date_deadline }}</p>
+    <p><strong>Homework id:</strong> {{ car.pk }}</p>
+  </li>
+  {% empty %}
+  <li>No books yet.</li>
+  {% endfor %}
+  </ul>
+</body>
+
+</html>
