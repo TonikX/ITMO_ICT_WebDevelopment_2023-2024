@@ -1,0 +1,11 @@
+{% extends 'project_first_app/app.html' %}
+
+{% block content %}
+<h1>Удалить авто</h1>
+<p>Вы уверены?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+<a href="{% url 'car_list' %}" class="btn btn-secondary">Отменить</a>
+{% endblock %}

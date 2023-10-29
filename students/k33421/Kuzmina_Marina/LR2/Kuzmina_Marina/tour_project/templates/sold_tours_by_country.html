@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+      <h2>Sold Tours by Country</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Tour Name</th>
+            <th>Description</th>
+            <th>Period</th>
+            <th>Payment Conditions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tour in sold_tours %}
+            <tr>
+              <td>{{ tour.country }}</td>
+              <td>{{ tour.name }}</td>
+              <td>{{ tour.description }}</td>
+              <td>{{ tour.period }}</td>
+              <td>{{ tour.payment_conditions }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}
