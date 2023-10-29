@@ -8,6 +8,7 @@
         <a href="{% url 'tour_page' data.tour.id %}">{{ data.tour.name }}</a>
       </h2>
       <p class="mb-0">Турагенство: {{ data.tour.agency_name }}</p>
+      <p class="mb-0">цена: {{ data.tour.price }}</p>
       <p class="mb-0">Статус: {{ data.status }}</p>
     </li>
     {% empty %}

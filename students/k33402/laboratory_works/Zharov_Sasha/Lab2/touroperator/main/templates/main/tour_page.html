@@ -4,14 +4,21 @@
   <h1>{{ tour.name }}</h1>
   <p>Турагенство: {{ tour.agency_name }}</p>
   <p>{{ tour.description }}</p>
+  <p class="mb-0">цена: {{ tour.price }} руб.</p>
 
   <br class="btn-group " role="group">
+  <div>
     {% if user_reservation %} {%for reservation in user_reservation%}
-    <div>
-    <div>{{reservation.start_date}} - {{reservation.end_date}}</div>
-    <div class="text-danger">{{reservation.status}}</div>
+    
+        <div>{{reservation.start_date}} - {{reservation.end_date}}</div>
+        {% if reservation.status == 'Подтвержден' %}
+          <div class="text-success">{{ reservation.status }}</div>
+        {% else %}
+          <div class="text-danger">{{ reservation.status }}</div>
+        {% endif %}
+      {%endfor%}
 </div>
-    {%endfor%}
+    
 
     <!-- Кнопка для удаления резервации -->
     <form
