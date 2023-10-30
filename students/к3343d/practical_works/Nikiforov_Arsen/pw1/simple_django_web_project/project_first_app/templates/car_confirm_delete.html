@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подтверждение удаления автомобиля</title>
+</head>
+<body>
+    <h1>Вы уверены, что хотите удалить этот автомобиль?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да, удалить</button>
+        <a href="{% url 'car_list' %}">Отмена</a>
+    </form>
+</body>
+</html>

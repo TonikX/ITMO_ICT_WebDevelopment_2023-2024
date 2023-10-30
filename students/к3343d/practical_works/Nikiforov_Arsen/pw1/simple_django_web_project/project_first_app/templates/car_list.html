@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список автомобилей</title>
+</head>
+<body>
+  <h1>Список автомобилей</h1>
+  
+  <form method="get" action="{% url 'car_list' %}">
+    <label for="make">Производитель:</label>
+    <input type="text" name="make">
+    
+    <label for="model">Модель:</label>
+    <input type="text" name="model">
+    
+    <label for="car_id">ID автомобиля:</label>
+    <input type="text" name="car_id">
+    
+    <input type="submit" value="Фильтровать">
+  </form>
+
+  <ul>
+    {% for car in cars %}
+      <li>
+        <strong>Производитель:</strong> {{ car.make }}, 
+        <strong>Модель:</strong> {{ car.model }}
+        <strong>ID автомобиля:</strong> {{ car.car_id }}
+      </li>
+    {% empty %}
+      <li>Нет автомобилей, соответствующих вашему запросу.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
