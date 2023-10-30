@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4">Table of flights</h2>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Flight number</th>
+        <th scope="col">Airline</th>
+        <th scope="col">Departure</th>
+        <th scope="col">Arrival</th>
+        <th scope="col">Type</th>
+        <th scope="col">Gate</th>
+        <th scope="col">Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for flight in flights %}
+    <tr>
+        <td>{{ flight.flight_number }}</td>
+        <td>{{ flight.airline }}</td>
+        <td>{{ flight.departure_city }} {{ flight.departure }}</td>
+        <td>{{ flight.arrival_city }} {{ flight.arrival }}</td>
+        <td>{{ flight.type }}</td>
+        <td>{{ flight.gate }}</td>
+        <td><a href="{% url 'flight_info' flight.id %}" class="btn btn-primary">More</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

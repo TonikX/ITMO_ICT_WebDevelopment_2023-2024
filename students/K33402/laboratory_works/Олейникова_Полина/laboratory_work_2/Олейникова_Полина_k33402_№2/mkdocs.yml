@@ -1,0 +1,14 @@
+site_name: Олейникова_Полина_k33402_№1
+dev_addr: '127.0.0.1:9000'
+nav:
+  - templates: templates.md
+  - urls: urls.md
+  - models: models.md
+  - views: views.md
+  - forms: forms.md
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: '../air_travel/air_travel_app/'
