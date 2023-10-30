@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="d-flex align-items-center mb-4">
+    <h2 class="mr-4">Flight {{ flight.id }}</h2>
+    {% if is_register and is_available %}
+    <div>
+        <a href="{% url 'reservation_update' reservation.id %}" class="btn btn-primary btn-sm">Change</a>
+        <a href="{% url 'reservation_delete' reservation.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+    {% elif is_available %}
+    <div><a href="{% url 'reservation' flight.id %}" class="btn btn-primary btn-sm">Make reservation</a></div>
+    {% endif %}
+</div>
+
+<h5 class="mb-3">Information about flight</h5>
+<div>Flight number: {{ flight.flight_number }}</div>
+<div>Airline: {{ flight.airline }}</div>
+<div>Departure: {{ flight.departure_city }} {{ flight.departure }}</div>
+<div>Arrival: {{ flight.arrival_city }} {{ flight.arrival }}</div>
+<div>Type: {{ flight.type }}</div>
+<div>Gate: {{ flight.gate }}</div>
+<div>Passengers:
+    {% for passenger in passengers %}
+    {{ passenger }},
+    {% endfor %}
+</div>
+
+{% if is_register %}
+<h5 class="my-3">Information about reservation</h5>
+<div>Seat: {{ reservation.seat.name }}</div>
+<div>Date reservation: {{ reservation.date }}</div>
+<div>Ticket: {{ reservation.ticket_number }}</div>
+
+
+<h5 class="my-3">Add comment</h5>
+<form method="post" class="mb-5">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endif %}
+
+<h5 class="my-3">Comments</h5>
+<ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item">
+        <strong>{{ comment.author.username }}</strong>
+        <br>
+        Rating: {{ comment.rating }}
+        <br>
+        {{ comment.text }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

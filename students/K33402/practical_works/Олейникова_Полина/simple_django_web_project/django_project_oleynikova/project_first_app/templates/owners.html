@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owners</title>
+</head>
+<body>
+<h1>Owners</h1>
+<a href="/owner/create">Add new one</a>
+<ul>
+    {% for owner in owners %}
+    <li>
+        <strong>Id:</strong> {{ owner.pk }}
+        <p><strong>First name:</strong> {{ owner.first_name }}</p>
+        <p><strong>Last name:</strong> {{ owner.last_name }}</p>
+        <p><strong>Birthday:</strong> {{ owner.birthday }}</p>
+        <p><strong>passport:</strong> {{ owner.passport }}</p>
+        <p><strong>address:</strong> {{ owner.address }}</p>
+        <p><strong>nationality:</strong> {{ owner.nationality }}</p>
+    </li>
+    {% empty %}
+    <li>No owners yet.</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
