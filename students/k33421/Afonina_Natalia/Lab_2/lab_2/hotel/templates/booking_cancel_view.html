@@ -1,0 +1,142 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancel Booking</title>
+
+    <style>
+        /* Ваши стили */
+        /* Стили для общей страницы */
+        body {
+            font-family: Montserrat, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .room {
+            font-family: Montserrat, sans-serif;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            margin: 20px auto; /* Центрирование по горизонтали */
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Стили для изображения комнаты */
+        .room img {
+            width: 100%; /* Заполнение изображения внутри блока .room */
+            max-height: 300px; /* Ограничение максимальной высоты изображения */
+            border-radius: 5px;
+        }
+
+        /* Стили для кнопки "Cancel the Booking" */
+        #booking-form button {
+            font-family: Montserrat, sans-serif;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #booking-form button:hover {
+            background-color: #555;
+        }
+
+        /* Стили для кнопки Home */
+        .home {
+            font-family: Montserrat, sans-serif;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+        }
+
+        .home a {
+            font-family: Montserrat, sans-serif;
+            color: #fff;
+            background-color: #333;
+            padding: 10px 20px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px; /* Добавьте отступ справа, например, 10px */
+        }
+
+        .home a:hover {
+            background-color: #555;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Div 1: Back to Home -->
+        <div class="home">
+            <a href="{% url 'hotel:BookingsListView' %}">Get Back</a>
+        </div>
+    <!-- Main Content -->
+    <div class="content">
+
+        <!-- Room Details -->
+        <div class="room">
+
+
+            <!-- Div 2: Room Information -->
+            <div class="room-info">
+                <h1>{{bookings.get_room_category}}</h1>
+                {% if bookings.get_room_category == "Single Room" %}
+                    <img src="{% static 'single.png' %}" alt="{{bookings.get_room_category}}">
+                {% elif bookings.get_room_category == "Double Room" %}
+                    <img src="{% static 'double.png' %}" alt="{{bookings.get_room_category}}">
+                {% elif bookings.get_room_category == "Deluxe Room" %}
+                    <img src="{% static 'deluxe.png' %}" alt="{{bookings.get_room_category}}">
+                {% elif bookings.get_room_category == "Family Room" %}
+                    <img src="{% static 'family.png' %}" alt="{{bookings.get_room_category}}">
+                {% elif bookings.get_room_category == "Suite" %}
+                    <img src="{% static 'suite.png' %}" alt="{{bookings.get_room_category}}">
+                {% endif %}
+                <p> </p>
+            </div>
+
+            <!-- Div 3: Room Booking Form -->
+            <form id="booking-form" action="" method="POST">
+
+                {% csrf_token %}
+                <h2>Are you sure you want to cancel this booking: {{bookings.room.number}} {{bookings.get_room_category}} from {{bookings.check_in}} to {{bookings.check_out}}?</h2>
+                <!-- Input Div -->
+                <div class="input-div">
+                    <button type="submit">Cancel the Booking</button>
+                </div>
+
+            </form>
+
+        </div> <!-- END Room Div -->
+
+    </div> <!-- END Main Content Div -->
+
+</body>
+
+</html>
