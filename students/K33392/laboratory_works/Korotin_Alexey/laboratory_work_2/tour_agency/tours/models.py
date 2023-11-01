@@ -5,6 +5,8 @@ from users.models import Tourist
 class Tour(models.Model):
     name = models.CharField(max_length=300)
     destination = models.CharField(max_length=200)
+    country = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     tourists = models.ManyToManyField(Tourist, through='Reservation')
 
 
