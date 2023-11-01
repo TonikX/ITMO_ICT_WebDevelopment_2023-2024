@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from project_firts_app.views import get_car_owner
+from project_firts_app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('owner/<int:driver_id>', get_car_owner),
+    path('list_of_car_owners',get_car_owners_list)
 ]

@@ -13,3 +13,7 @@ def get_car_owner(request, driver_id):
     except CarOwner.DoesNotExist:
         raise Http404("CarOwner does not exist")
     return render(request, "owner.html", {"car_owner": car_owner})
+
+def get_car_owners_list(request):
+    car_owners_list = CarOwner.objects.all()
+    return render(request,"list_of_car_owners.html", {"car_owners_list": car_owners_list})
