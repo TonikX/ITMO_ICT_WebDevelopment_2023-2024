@@ -45,11 +45,22 @@ class Publisher(models.Model):
 
   def __str__(self):
     return "{} {}".format(self.first_name, self.last_name)
-  
-class Book(models.Model):
-  name = models.CharField(max_length=100)
-  desc = models.CharField(max_length=200)
-  publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
 
-  def __str__(self):
-    return "{}, {}".format(self.name, self.publisher)
+from django.contrib.auth.models import AbstractUser
+class User(AbstractUser):
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    
+from django.conf import settings
+from django.contrib.auth import get_user_model
+class Book(models.Model):
+    name = models.CharField(max_length=100)
+    desc = models.CharField(max_length=200)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    def __str__(self):
+        return "{}, {}".format(self.name, self.publisher)
+  
+from django.contrib.auth.models import AbstractUser
+
+
+
