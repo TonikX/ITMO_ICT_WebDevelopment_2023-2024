@@ -26,4 +26,5 @@ urlpatterns = [
     path('list_of_cars',CarListView.as_view()),
     path('car/<int:pk>', CarDetailView.as_view()),
     path('update_car/<int:pk>', CarUpdateView.as_view()),
+    path('create_car_owner', create_car_owner),
 ]
