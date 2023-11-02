@@ -2,8 +2,14 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from .models import CarOwner
-
+from .models import CarOwner, Car
+from django.views.generic import (
+    ListView,
+    DetailView,
+    UpdateView,
+    CreateView,
+    DeleteView,
+)
 
 def get_car_owner(request, driver_id):
     try:
@@ -17,3 +23,16 @@ def get_car_owner(request, driver_id):
 def get_car_owners_list(request):
     car_owners_list = CarOwner.objects.all()
     return render(request,"list_of_car_owners.html", {"car_owners_list": car_owners_list})
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = "project_first_app/car_detail_view.html"
+    context_object_name = "car"
+
+
+class CarListView(ListView):
+    model = Car
+    template_name = "list_of_cars.html"
+
+
+
