@@ -70,6 +70,12 @@ class CarUpdateViewWithForm(UpdateView):
     success_url = "/list_of_cars"
 
 
+class CarDeleteView(DeleteView):
+    model = Car
+    template_name = "delete_car.html"
+    success_url = "/list_of_cars"
+
+
 
 
 
