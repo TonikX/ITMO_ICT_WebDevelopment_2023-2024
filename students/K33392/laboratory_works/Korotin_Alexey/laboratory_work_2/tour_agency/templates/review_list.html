@@ -6,15 +6,15 @@
 </head>
 <body>
   <div>
-      <h1>List of available tours</h1>
+      <h1>Reviews</h1>
       <!-- Iterate over object_list -->
-      {% for tour in object_list %}
+      {% for review in object_list %}
       <div>
-          <a href="/tours/{{ tour.id }}">{{ tour.name }}</a>
-          <div>{{ tour.country }}</div>
-          <div>{{ tour.destination }}</div>
-          <div>{{ tour.description }}</div>
+        <div>{{review.reservations.tourist.first_name}}</div>
+          <div>{{review.rating}} / 10</div>
+          <div>{{review.comment}}</div>
       </div>
+      <br>
 
       <!-- If objet_list is empty  -->
       {% empty %}
