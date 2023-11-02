@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Контроллеры(представления) - Conference project</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u041a\u043e\u043d\u0442\u0440\u043e\u043b\u043b\u0435\u0440\u044b(\u043f\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u044f)";
+        var mkdocs_page_input_path = "views.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Conference project
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Welcome to MkDocs</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../app/">Работа веб-сервиса</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../forms/">Формы</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../models/">Модели данных</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../urls/">Маршрутизация</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Контроллеры(представления)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_2">Создание профиля пользователя</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">Регистрация нового пользователя в системе</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">Отображение информации о конференции</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#login_required">Далее будет использовано @login_required, что означает, что доступ к функциям предоставлен только зарегистрированному пользователю в системе</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_5">Домашняя страница</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_6">Список участников</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_7">Регистрация на конференцию</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_8">Редактирование регастраций на конференции в профиле пользователя</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_9">Удаление регистраций пользователя на конференции</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_10">Написание отзыва</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_11">Отображение списока регистраций пользователя на конференции</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Conference project</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Контроллеры(представления)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">Контроллеры(представления)</h1>
+<h2 id="_2">Создание профиля пользователя</h2>
+<pre><code>def create_user_profile(user):
+try:
+    return UserProfile.objects.get(user=user)
+except UserProfile.DoesNotExist:
+    return UserProfile.objects.create(user=user)
+</code></pre>
+<h2 id="_3">Регистрация нового пользователя в системе</h2>
+<pre><code>def register(request):
+if request.method == 'POST':
+    form = UserRegistrationForm(request.POST)
+    if form.is_valid():
+        user = form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('confapp:home')
+else:
+    form = UserRegistrationForm()
+return render(request, 'registration_form.html', {'form': form})
+</code></pre>
+<h2 id="_4">Отображение информации о конференции</h2>
+<h3 id="login_required">Далее будет использовано @login_required, что означает, что доступ к функциям предоставлен только зарегистрированному пользователю в системе</h3>
+<pre><code>@login_required
+def conference_detail(request, conference_id):
+    conference = Conference.objects.get(pk=conference_id)
+    return render(request, 'conference_detail.html', {'conference': conference})
+</code></pre>
+<h2 id="_5">Домашняя страница</h2>
+<pre><code>@login_required
+def home(request):
+    conferences = Conference.objects.all()
+    return render(request, 'home.html', {'conferences': conferences})
+</code></pre>
+<h2 id="_6">Список участников</h2>
+<pre><code>@login_required
+def conference_participants(request, conference_id):
+    conference = Conference.objects.get(pk=conference_id)
+    participants = Registration.objects.filter(conference=conference)
+    return render(request, 'conference_participants.html', {'conference': conference, 'participants': participants})
+</code></pre>
+<h2 id="_7">Регистрация на конференцию</h2>
+<pre><code>@login_required
+def register_for_conference(request, conference_id):
+    conference = Conference.objects.get(pk=conference_id)
+    user = request.user
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            registration = form.save(commit=False)
+            registration.conference = conference
+            registration.user = user
+            registration.save()
+            return redirect('confapp:home')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'register_for_conference.html', {'conference': conference, 'form': form})
+</code></pre>
+<h2 id="_8">Редактирование регастраций на конференции в профиле пользователя</h2>
+<pre><code>@login_required
+def edit_registration(request, registration_id):
+    registration = get_object_or_404(Registration, id=registration_id)
+
+    if request.method == "POST":
+        form = RegistrationForm(request.POST, instance=registration)
+        if form.is_valid():
+            form.save()
+            return redirect('confapp:user_registrations')
+
+    else:
+        form = RegistrationForm(instance=registration)
+
+    return render(request, 'edit_registration.html', {'form': form})
+</code></pre>
+<h2 id="_9">Удаление регистраций пользователя на конференции</h2>
+<pre><code>@login_required
+def delete_registration(request, registration_id):
+    registration = get_object_or_404(Registration, id=registration_id)
+
+    if request.method == "POST":
+        registration.delete()
+        return redirect('confapp:user_registrations')
+
+    return render(request, 'delete_registration.html', {'registration': registration})
+</code></pre>
+<h2 id="_10">Написание отзыва</h2>
+<pre><code>@login_required
+def write_review(request, conference_id):
+    conference = Conference.objects.get(pk=conference_id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.conference = conference
+            review.user = request.user
+            review.date = timezone.now()
+            review.save()
+            return redirect('confapp:home')
+
+    else:
+        form = ReviewForm()
+
+    reviews = Review.objects.filter(conference=conference)
+
+    return render(request, 'write_review.html', {'form': form, 'conference': conference, 'reviews': reviews})
+</code></pre>
+<h2 id="_11">Отображение списока регистраций пользователя на конференции</h2>
+<pre><code>@login_required
+def user_registrations(request):
+    registrations = Registration.objects.filter(user=request.user)
+    return render(request, 'user_registrations.html', {'registrations': registrations})
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../urls/" class="btn btn-neutral float-left" title="Маршрутизация"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../urls/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
