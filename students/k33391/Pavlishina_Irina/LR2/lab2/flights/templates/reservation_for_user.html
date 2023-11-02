@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4">Your reservations</h2>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Seat</th>
+        <th scope="col">Ticket</th>
+        <th scope="col">Flight</th>
+        <th scope="col">FlightLink</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations %}
+    <tr>
+        <td>{{ reservation.seat}}</td>
+        <td>{{ reservation.ticket_number}}</td>
+        <td>
+            <div>Flight number: {{ reservation.flight.flight_number }}</div>
+            <div>Airline: {{ reservation.flight.air_line }}</div>
+            <div>Departure: {{ reservation.flight.departure_city }} {{ reservation.flight.departure }}</div>
+            <div>Arrival: {{ reservation.flight.arrival_city }} {{ reservation.flight.arrival }}</div>
+            <div>Gate: {{ reservation.flight.gate }}</div>
+        </td>
+        <td><a href="{% url 'flight_detail' reservation.flight.id %}" class="btn btn-primary">More</a></td>
+        <td><a href="{% url 'reservation_update' reservation.id %}" class="btn btn-primary">Change</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

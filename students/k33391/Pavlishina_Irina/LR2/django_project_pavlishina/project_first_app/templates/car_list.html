@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Машины:</h1>
+<ul>
+  {% for car in cars %}
+  <li>
+    <h4>Номер: {{car.state_number}}</h4>
+    <h4>Марка: {{car.brand}}</h4>
+    <h4>Модель: {{car.model}}</h4>
+    <h4>Цвет: {{car.color}}</h4>
+    <h5>
+      <a href="{% url 'car_update' car.id %}" class="btn btn-warning"
+        >Редактировать</a
+      >
+      <a href="{% url 'car_delete' car.id %}" class="btn btn-warning"
+        >Удалить</a
+      >
+    </h5>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
