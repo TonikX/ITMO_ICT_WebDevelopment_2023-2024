@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Name: {{ object.first_name }}</h1>
+    <a href="{% url 'update-own' object.pk %}">Edit</a>
+    <a href="{% url 'delete-own' object.pk %}">Delete</a>
+    <br>
+    <a href="/">Get Back</a>
+</body>
+</html>

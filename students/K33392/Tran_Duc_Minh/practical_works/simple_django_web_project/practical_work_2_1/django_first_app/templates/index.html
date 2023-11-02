@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+    <h1>Owner</h1>
+    <a href="addOwner"> Add new Owner</a>
+    <div class="owners">
+        {% for owner in owners %}
+            <p>ten: <a href="{{ owner.id_owner }}">{{ owner.first_name }}</a> </p>
+
+        {% endfor %}
+    </div>
+
+
+    <h1>Car</h1>
+    <a href="addCar"> Add new Car</a>
+    <div class="cars">
+        {% for car in cars %}
+            <p>ten: {{ car.brand }}</p>
+        {% endfor %}
+    </div>
+    <a href="car_list">Show car list</a>
+</body>
+</html>
