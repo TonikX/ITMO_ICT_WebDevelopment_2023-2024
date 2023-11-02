@@ -34,5 +34,18 @@ class CarListView(ListView):
     model = Car
     template_name = "list_of_cars.html"
 
+class CarDetailView(DetailView):
+    model = Car
+    template_name = "car.html"
+
+class CarUpdateView(UpdateView):
+    model = Car
+    fields = ['number', 'brand', 'model', 'color']
+    template_name = 'update_car.html'
+    success_url = '/list_of_cars'
+
+
+
+
 
 
