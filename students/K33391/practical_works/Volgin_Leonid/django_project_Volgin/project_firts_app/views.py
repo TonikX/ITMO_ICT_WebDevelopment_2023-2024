@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from .forms import CarOwnerCreateForm
+from .forms import CarOwnerCreateForm, CarCreateForm, CarUpdateForm
 from .models import CarOwner, Car
 from django.views.generic import (
     ListView,
@@ -54,6 +54,20 @@ def create_car_owner(request):
         form.save()
     context['form'] = form
     return render(request, "create_car_owner.html", context)
+
+
+class CarCreateView(CreateView):
+    model = Car
+    form_class = CarCreateForm
+    template_name = "create_car.html"
+    success_url = "/list_of_cars"
+
+
+class CarUpdateViewWithForm(UpdateView):
+    model = Car
+    form_class = CarUpdateForm
+    template_name = "update_car_with_form.html"
+    success_url = "/list_of_cars"
 
 
 
