@@ -1,6 +1,6 @@
 from os.path import join
 
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render
 
 from project_first_app.models import Car
@@ -8,5 +8,11 @@ from project_first_app.models import Car
 __BASE_PATH = "car"
 
 
-def all_cars(request: HttpRequest) -> HttpResponse:
-    return render(request, join(__BASE_PATH, "all.html"), dict(cars=Car.objects.all()))
+def car(request: HttpRequest, car_id: int) -> HttpResponse:
+    try:
+        found_car = Car.objects.get(pk=car_id)
+    except Car.DoesNotExist:
+        raise Http404("car doesn't exist")
+
+    return render(request, join(__BASE_PATH, "detail.html"), dict(car=found_car))
+
