@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -14,7 +15,7 @@ class CarOwner(AbstractUser):
         return f"{self.first_name} {self.surname}"
 
 class Sertificate(models.Model):
-    id_owner = models.ForeignKey(CarOwner, on_delete=models.CASCADE)
+    id_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     number_sertificate = models.CharField(max_length=10)
     type = models.CharField(max_length=10)
     date_of_creation = models.DateField()
@@ -32,7 +33,7 @@ class Car(models.Model):
 
 class Ownership(models.Model):
     car = models.ForeignKey(Car, null=True, on_delete=models.CASCADE)
-    car_owner = models.ForeignKey(CarOwner, null=True, on_delete=models.CASCADE)
+    car_owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     date_of_beginning = models.DateField()
     date_of_ending = models.DateField()
     def __str__(self):
