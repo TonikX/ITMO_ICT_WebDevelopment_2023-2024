@@ -3,7 +3,7 @@ from os.path import join
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from project_first_app.models import CarOwner, Car
+from project_first_app.models import Car, CarOwner
 
 __BASE_PATH = "car_owner"
 

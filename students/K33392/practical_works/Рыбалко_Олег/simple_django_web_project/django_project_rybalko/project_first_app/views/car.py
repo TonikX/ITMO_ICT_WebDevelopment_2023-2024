@@ -1,18 +1,16 @@
 from os.path import join
 
-from django.http import HttpRequest, HttpResponse, Http404
-from django.shortcuts import render
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
 from project_first_app.models import Car
 
-__BASE_PATH = "car"
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = join("car", "detail.html")
 
 
-def car(request: HttpRequest, car_id: int) -> HttpResponse:
-    try:
-        found_car = Car.objects.get(pk=car_id)
-    except Car.DoesNotExist:
-        raise Http404("car doesn't exist")
-
-    return render(request, join(__BASE_PATH, "detail.html"), dict(car=found_car))
-
+class CarListView(ListView):
+    model = Car
+    template_name = join("car", "all.html")
