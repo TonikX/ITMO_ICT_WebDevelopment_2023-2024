@@ -3,8 +3,8 @@ from os.path import join
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from project_first_app.models import Car, CarOwner
 from project_first_app.forms import CarOwnerModelForm
+from project_first_app.models import Car, CarOwner
 
 __BASE_PATH = "car_owner"
 
@@ -24,6 +24,10 @@ def all_owners(request: HttpRequest, car_id: int) -> HttpResponse:
     except Car.DoesNotExist:
         raise Http404("Car doesn't exist")
     return render(request, join(__BASE_PATH, "all.html"), dict(owners=car.owners.all()))
+
+
+def all_car_owners(request: HttpRequest) -> HttpResponse:
+    return render(request, join(__BASE_PATH, "all.html"), dict(owners=CarOwner.objects.all()))
 
 
 def create_car_owner(request: HttpRequest) -> HttpResponse:
