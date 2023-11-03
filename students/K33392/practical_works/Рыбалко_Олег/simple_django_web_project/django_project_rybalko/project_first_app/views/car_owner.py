@@ -4,6 +4,7 @@ from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from project_first_app.models import Car, CarOwner
+from project_first_app.forms import CarOwnerModelForm
 
 __BASE_PATH = "car_owner"
 
@@ -23,3 +24,9 @@ def all_owners(request: HttpRequest, car_id: int) -> HttpResponse:
     except Car.DoesNotExist:
         raise Http404("Car doesn't exist")
     return render(request, join(__BASE_PATH, "all.html"), dict(owners=car.owners.all()))
+
+
+def create_car_owner(request: HttpRequest) -> HttpResponse:
+    if (form := CarOwnerModelForm(request.POST or None)).is_valid():
+        form.save()
+    return render(request, join(__BASE_PATH, "create.html"), dict(form=form))
