@@ -1,8 +1,9 @@
-from django.http import Http404, HttpRequest, HttpResponse
 from os.path import join
+
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 
-from .models import CarOwner
+from project_first_app.models import CarOwner
 
 __BASE_PATH = "car_owner"
 

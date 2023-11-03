@@ -1,4 +1,4 @@
-from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, Model, ManyToManyField
+from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, ManyToManyField, Model
 
 
 class CarOwner(Model):

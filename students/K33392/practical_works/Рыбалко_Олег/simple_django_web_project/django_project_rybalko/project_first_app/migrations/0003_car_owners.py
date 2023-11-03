@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="car",
             name="owners",
-            field=models.ManyToManyField(
-                through="project_first_app.Ownership", to="project_first_app.carowner"
-            ),
+            field=models.ManyToManyField(through="project_first_app.Ownership", to="project_first_app.carowner"),
         ),
     ]
