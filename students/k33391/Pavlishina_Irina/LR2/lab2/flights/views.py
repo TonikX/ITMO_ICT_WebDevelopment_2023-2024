@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.contrib.auth import login, authenticate, logout
 from .forms import ReservationForm, RegistrationForm, LoginForm, CommentForm
-from .models import Flight, City, Reservation, Seat, Comment
+from .models import Flight, City, Reservation, Seat, Comment, AirLine
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.crypto import get_random_string
@@ -48,23 +48,34 @@ def user_logout(request):
 
 # Create your views here.
 def flights_list(request):
+
     if request.method != "GET":
         return Http404(f"Method {request.method} not supported")
 
     city = request.GET.get("city", None)
     available_cities = City.objects.all()
 
+    airline = request.GET.get("airline", None)
+    available_airlines = AirLine.objects.all()
+
+    print(city)
+    print(airline)
+
     flights = Flight.objects.all()
 
     if city is not None:
-        flights.filter(Q(arrival_city__name=city) or Q(departure_city__name=city))
+        flights = flights.filter(Q(arrival_city__name=city) or Q(departure_city__name=city))
 
+    if airline is not None:
+        flights = flights.filter(air_line__name=airline)
     return render(
         request,
         "flight_list.html",
         {
             "city": city,
             "available_cities": available_cities,
+            "airline": airline,
+            "available_airlines": available_airlines,
             "flights": flights
         },
     )

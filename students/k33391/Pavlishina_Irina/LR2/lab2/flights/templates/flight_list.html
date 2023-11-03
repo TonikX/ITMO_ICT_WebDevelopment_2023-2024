@@ -1,11 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1 class="text-center">Schedule{% if city %} {{city}} {% endif %}</h1>
+<h1 class="text-center">Schedule{% if city %} {{city}} {% endif %} {% if airline %} {{airline}} {% endif %}</h1>
 
-{% if user.is_authenticated %}
-{% endif %}
 
 <form method="GET" class='mb-5'>
+
   <div class='mb-3'>
     <label for="citySearchSelect" class="form-label">City: </label>
     <select id="citySearchSelect" name="city" class="form-select form-select-lg ">
@@ -16,6 +15,21 @@
           {% if city == available_city.name %} selected {% endif %}
         >
           {{available_city.name}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+    <div class='mb-3'>
+    <label for="airlineSearchSelect" class="form-label">airline: </label>
+    <select id="airlineSearchSelect" name="airline" class="form-select form-select-lg ">
+      <option value="">Choose the airline</option>
+      {% for available_airline in available_airlines %}
+        <option
+          value="{{available_airline.name}}"
+          {% if airline == available_airline.name %} selected {% endif %}
+        >
+          {{available_airline.name}}
         </option>
       {% endfor %}
     </select>
