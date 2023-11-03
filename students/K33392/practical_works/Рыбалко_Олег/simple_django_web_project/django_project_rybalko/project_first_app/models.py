@@ -1,3 +1,27 @@
-from django.db import models
+from django.db.models import CharField, DateTimeField, ForeignKey, Model
 
-# Create your models here.
+
+class CarOwner(Model):
+    name = CharField(max_length=30)
+    surname = CharField(max_length=30)
+    date_of_birth = DateTimeField()
+
+
+class DriversLicence(Model):
+    owner = ForeignKey(CarOwner)
+    number = CharField(max_length=10)
+    _type = CharField(max_length=10)
+    issue_date = DateTimeField()
+
+
+class Car(Model):
+    number = CharField(max_length=15)
+    model = CharField(max_length=20)
+    color = CharField(max_length=30)
+
+
+class Ownership(Model):
+    owner = ForeignKey(CarOwner)
+    car = ForeignKey(Car)
+    start_date = DateTimeField()
+    end_date = DateTimeField(null=True)
