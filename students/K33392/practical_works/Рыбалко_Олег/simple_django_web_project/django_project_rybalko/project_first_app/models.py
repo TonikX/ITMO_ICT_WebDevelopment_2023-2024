@@ -1,4 +1,4 @@
-from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, Model
+from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, Model, ManyToManyField
 
 
 class CarOwner(Model):
@@ -18,6 +18,7 @@ class Car(Model):
     number = CharField(max_length=15)
     model = CharField(max_length=20)
     color = CharField(max_length=30)
+    owners = ManyToManyField(CarOwner, through="Ownership")
 
 
 class Ownership(Model):
