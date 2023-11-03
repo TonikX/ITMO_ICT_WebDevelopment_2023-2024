@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.contrib.auth import login, authenticate, logout
-from .forms import ReservationForm, RegistrationForm, LoginForm
-from .models import Flight, City, Reservation, Seat
+from .forms import ReservationForm, RegistrationForm, LoginForm, CommentForm
+from .models import Flight, City, Reservation, Seat, Comment
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.crypto import get_random_string
@@ -76,15 +76,25 @@ def flight_detail(request, flight_id):
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect("user_login")
-        seat = Seat.objects.filter(row=request.POST['seat'][0], column=request.POST['seat'][1]).first()
-        form = ReservationForm({"seat": seat})
-        if not form.is_valid():
-            return redirect("flight_detail", flight_id)
-        ticket = form.save(commit=False)
-        ticket.passenger = request.user
-        ticket.flight = flight
-        ticket.ticken_number = get_random_string(32)
-        ticket.save()
+
+        if 'seat' in request.POST.keys():
+            seat = Seat.objects.filter(row=request.POST['seat'][0], column=request.POST['seat'][1]).first()
+            form = ReservationForm({"seat": seat})
+            if not form.is_valid():
+                return redirect("flight_detail", flight_id)
+            ticket = form.save(commit=False)
+            ticket.passenger = request.user
+            ticket.flight = flight
+            ticket.ticken_number = get_random_string(32)
+            ticket.save()
+        elif "rating" in request.POST:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.flight = flight
+                comment.author = request.user
+                comment.save()
+
         return redirect("flight_detail", flight_id)
 
     else:
@@ -95,20 +105,28 @@ def flight_detail(request, flight_id):
                    "is_taken": Reservation.objects.filter(seat__id=seat.id, flight__id=flight_id).exists(),
                } for seat in seats_set
         ]
-        form = ReservationForm(flight)
+
+        reseravtion_form = ReservationForm(flight)
+
         has_ticket = Reservation.objects.filter(
            passenger__id=request.user.id, flight__id=flight.id
         ).exists()
+
+        comments = Comment.objects.filter(flight=flight)
+        comment_form = CommentForm()
+
         return render(
            request,
            "flight_detail.html",
            {
                "flight": flight,
+               "comments": comments,
                "tickets": Reservation.objects.filter(flight__id=flight_id),
                "seats": seats,
-               "form": form,
+               "form": reseravtion_form,
                "has_ticket": has_ticket,
                "user": request.user,
+               "comment_form": comment_form
            },
        )
 

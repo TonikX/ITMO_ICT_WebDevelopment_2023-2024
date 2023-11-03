@@ -13,6 +13,7 @@ class CarOwner(AbstractUser):
     nationality = models.CharField(max_length=30, blank=True, null=True)
     home_address = models.CharField(max_length=100, blank=True, null=True)
 
+
 class Car(models.Model):
     id = models.IntegerField(primary_key=True)
     state_number = models.CharField(max_length=15)

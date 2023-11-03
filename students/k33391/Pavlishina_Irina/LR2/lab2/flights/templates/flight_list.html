@@ -3,7 +3,6 @@
 <h1 class="text-center">Schedule{% if city %} {{city}} {% endif %}</h1>
 
 {% if user.is_authenticated %}
-<td><a href="{% url 'reservations_for_user'%}">Your reservations</a></td>
 {% endif %}
 
 <form method="GET" class='mb-5'>

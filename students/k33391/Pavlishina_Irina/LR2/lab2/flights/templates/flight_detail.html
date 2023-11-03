@@ -34,6 +34,20 @@
   </div>
 </div>
 
+<h4 class="my-3">Comments</h4>
+<ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item">
+        <strong>{{ comment.author.username }}</strong>
+        <br>
+        Rating: {{ comment.rating }}
+        <br>
+        {{ comment.text }}
+    </li>
+    {% endfor %}
+</ul>
+
+
 <h2>Seats</h2>
 <table class="table table-striped table-hover mb-5">
   {% for seat in seats %}
@@ -63,7 +77,15 @@
   <td><a href="{% url 'reservations_for_user'%}">You already have a ticket on these flight</a></td>
   {% endif %}
 
+<h5 class="my-3">Add comment</h5>
+<form method="post" class="mb-5">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
 {% else %}
 <td><a href="{% url 'register' %}">Register</a> previously</td>
 {% endif %}
+
 {% endblock %}
