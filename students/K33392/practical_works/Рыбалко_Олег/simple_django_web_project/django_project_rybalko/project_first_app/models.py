@@ -1,4 +1,4 @@
-from django.db.models import CharField, DateTimeField, ForeignKey, Model
+from django.db.models import CharField, DateTimeField, ForeignKey, Model, CASCADE
 
 
 class CarOwner(Model):
@@ -8,7 +8,7 @@ class CarOwner(Model):
 
 
 class DriversLicence(Model):
-    owner = ForeignKey(CarOwner)
+    owner = ForeignKey(CarOwner, CASCADE)
     number = CharField(max_length=10)
     _type = CharField(max_length=10)
     issue_date = DateTimeField()
@@ -21,7 +21,7 @@ class Car(Model):
 
 
 class Ownership(Model):
-    owner = ForeignKey(CarOwner)
-    car = ForeignKey(Car)
+    owner = ForeignKey(CarOwner, CASCADE)
+    car = ForeignKey(Car, CASCADE)
     start_date = DateTimeField()
     end_date = DateTimeField(null=True)
