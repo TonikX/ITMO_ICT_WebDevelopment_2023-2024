@@ -17,5 +17,5 @@ def car_owner(request: HttpRequest, owner_id: str) -> HttpResponse:
     return render(request, join(__BASE_PATH, "detail.html"), dict(owner=owner))
 
 
-def all_owners(request: HttpRequest) -> HttpRequest:
+def all_owners(request: HttpRequest) -> HttpResponse:
     return render(request, join(__BASE_PATH, "all.html"), dict(owners=CarOwner.objects.all()))
