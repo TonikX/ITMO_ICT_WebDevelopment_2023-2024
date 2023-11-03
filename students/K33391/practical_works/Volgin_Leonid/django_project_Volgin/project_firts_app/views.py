@@ -15,8 +15,7 @@ from django.views.generic import (
 def get_car_owner(request, driver_id):
     try:
         car_owner = CarOwner.objects.get(pk=driver_id)
-        #car_owner = CarOwner.objects.filter(surname="Valua")
-        #print(car_owner.cars.all())
+
     except CarOwner.DoesNotExist:
         raise Http404("CarOwner does not exist")
     return render(request, "owner.html", {"car_owner": car_owner})

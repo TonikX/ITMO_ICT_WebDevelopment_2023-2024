@@ -1,11 +1,15 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# Create your models here.
-class CarOwner(models.Model):
+#Create your models here.
+class CarOwner(AbstractUser):
     surname = models.CharField(max_length=30)
     first_name = models.CharField(max_length=30)
     date_of_birth = models.DateField(null=True)
     cars = models.ManyToManyField('Car', through="Ownership")
+    passport = models.CharField(max_length=30,null=True)
+    address = models.CharField(max_length=30,null=True)
+    nationality = models.CharField(max_length=30,null=True)
     def __str__(self):
         return f"{self.first_name} {self.surname}"
 

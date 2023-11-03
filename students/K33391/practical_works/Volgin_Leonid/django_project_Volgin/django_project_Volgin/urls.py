@@ -20,14 +20,14 @@ from django.urls import path
 from project_firts_app.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('owner/<int:driver_id>', get_car_owner),
-    path('list_of_car_owners',get_car_owners_list),
-    path('list_of_cars',CarListView.as_view()),
-    path('car/<int:pk>', CarDetailView.as_view()),
-    path('update_car/<int:pk>', CarUpdateView.as_view()),
-    path('create_car_owner', create_car_owner),
-    path('create_car', CarCreateView.as_view()),
-    path('update_car_with_form/<int:pk>', CarUpdateViewWithForm.as_view()),
-    path('delete_car/<int:pk>', CarDeleteView.as_view()),
+      path('admin/', admin.site.urls),
+     path('owner/<int:driver_id>', get_car_owner),
+     path('list_of_car_owners',get_car_owners_list),
+     path('list_of_cars',CarListView.as_view()),
+     path('car/<int:pk>', CarDetailView.as_view()),
+     path('update_car/<int:pk>', CarUpdateView.as_view()),
+     path('create_car_owner', create_car_owner),
+     path('create_car', CarCreateView.as_view()),
+     path('update_car_with_form/<int:pk>', CarUpdateViewWithForm.as_view()),
+     path('delete_car/<int:pk>', CarDeleteView.as_view()),
 ]
