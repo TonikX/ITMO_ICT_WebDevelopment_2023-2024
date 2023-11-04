@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
+AUTH_USER_MODEL = "project_first_app.CarOwner"
+
 
 # Application definition
 

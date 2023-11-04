@@ -1,10 +1,14 @@
 from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, ManyToManyField, Model
+from django.contrib.auth.models import AbstractUser
 
 
-class CarOwner(Model):
+class CarOwner(AbstractUser):
     name = CharField(max_length=30)
     surname = CharField(max_length=30)
     date_of_birth = DateTimeField()
+    passport_number = CharField(max_length=30)
+    home_address = CharField(max_length=50)
+    nationality = CharField(max_length=30)
 
 
 class DriversLicence(Model):
