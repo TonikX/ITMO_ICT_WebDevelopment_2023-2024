@@ -1,0 +1,16 @@
+<html>
+    <header>
+        <title>New traveler</title>
+    </header>
+    <body>
+        <h1>Create new traveler</h1>
+        <form action="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" value="Create">
+        </form>
+        
+    </body>
+</html>
