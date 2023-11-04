@@ -5,7 +5,7 @@ from django.db.models import (CASCADE, BooleanField, CharField, DateField, DateT
 
 
 class Traveler(AbstractUser):
-    reservations = ManyToManyField("Reservation")
+    tours = ManyToManyField("Tour", "Reservations")
 
 
 class Tour(Model):
@@ -13,7 +13,7 @@ class Tour(Model):
     description = TextField(null=True)
     start_date = DateField()
     end_date = DateField()
-    country = ForeignKey("Country")
+    country = ForeignKey("Country", CASCADE)
     travelers = ManyToManyField(Traveler)
     payment_details = TextField()
     tour_agency = ForeignKey("TourAgency", CASCADE)
@@ -42,4 +42,3 @@ class TourAgency(Model):
 class Country(Model):
     code = CharField(max_length=3)  # iso 3166
     display_name = CharField(max_length=50)
-    tours = ManyToManyField(Tour)

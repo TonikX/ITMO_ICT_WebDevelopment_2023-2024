@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
-AUTH_MODEL = "tours_app.Traveler"
+AUTH_USER_MODEL = "tours_app.Traveler"
 
 
 # Application definition
