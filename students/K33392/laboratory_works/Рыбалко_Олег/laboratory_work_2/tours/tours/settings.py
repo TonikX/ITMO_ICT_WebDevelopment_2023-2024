@@ -25,12 +25,15 @@ SECRET_KEY = "django-insecure-$!jf2kdt@6&+5$ckemkvgep!3tdqcj#lio5n#o+e2px!tl&n-0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
+
+AUTH_MODEL = "tours_app.Traveler"
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "tours_app.apps.ToursAppConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
