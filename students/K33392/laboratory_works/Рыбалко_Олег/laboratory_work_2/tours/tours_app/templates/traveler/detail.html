@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block body %}
+    <h2>{{ user.username }}</h2>
+
+    <h3>Info</h3>
+    <p>First name: {{ user.first_name }} </p>
+    <p>Last name: {{ user.last_name }}</p>
+
+    <h3>Tours</h3>
+    <h4>Upcoming</h4>
+    <div style="margin-left: 20px">
+    {% for r in upcoming_reservations %}
+        {% include 'common/tour_date.html' with tour_date=r.tour_date %}
+        {% if r.is_confirmed %}
+            <p><i>Confirmed</i></p>
+        {% else %}
+            <p><i>Not confirmed</i></p>
+        {% endif %}
+        <a href="/cancel_reservation/{{ r.pk }}">Cancel</a>
+    {% endfor %}
+    </div>
+    <h4>Archive</h4>
+    <div style="margin-left: 20px">
+        {% for r in archive_reservations %}
+            {% include 'common/tour_date.html' with tour_date=r.tour_date %}
+            <a href="/review_tour/{{ r.tour_date.tour.pk }}">Write a review</a>
+        {% endfor %}
+        </div>
+{% endblock %}

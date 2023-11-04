@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>All tours</title>
+{% endblock %}
+
+{% block body %}
+    <h2>All tours</h2>
+    {% for t in tours_dates %}
+        {% include 'common/tour_date.html' with tour_date=t %}
+        <a href="/reserve/{{ t.pk }}">Reserve</a>
+    {% endfor %}
+{% endblock %}
