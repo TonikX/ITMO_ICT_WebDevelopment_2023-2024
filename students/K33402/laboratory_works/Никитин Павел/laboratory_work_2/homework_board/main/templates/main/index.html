@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-2">
+  <div>
+    {% if user.is_authenticated %}
+    <div class="text-success">Добро пожаловать, {{ user.username }}!</div>
+    {% endif %}
+  </div>
+  <div class="btn-group">
+    <a href="/homeworks" class="btn btn-primary">Мои домашние работы</a>
+    <span class="mx-2"></span> 
+    <a href="/marks" class="btn btn-primary">Мои оценки</a>
+    <span class="mx-2"></span> 
+    <a href="/users/logout" class="btn btn-danger">Выйти</a>
+  </div>
+</div>
+{% endblock %}

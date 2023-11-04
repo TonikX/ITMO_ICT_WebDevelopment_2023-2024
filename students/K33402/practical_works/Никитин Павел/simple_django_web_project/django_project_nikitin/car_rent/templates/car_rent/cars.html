@@ -1,0 +1,12 @@
+{% extends 'car_rent/layout.html' %}
+
+{% block title %}
+  Машины
+{% endblock %}
+
+{% block content %}
+  <div>Мои Машины</div>
+  {% for car in cars %}
+    <div>{{car.brand}}</div>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-2">
+  <div>
+    {% for homework in homeworks %}
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title">Предмет: {{ homework.subject }}</h5>
+          <p class="card-text">Условие: {{ homework.text }}</p>
+          <p class="card-text">Дедлайн: {{ homework.deadline }}</p>
+          {% if homework.solution %}
+              <h6 class="card-subtitle mb-2 text-muted">Ваш ответ: {{ homework.solution.text }}</h6>
+              {% if homework.solution.grade %}
+                  <p class="card-text">Статус: Проверено</p>
+                  <p class="card-text">Оценка: {{ homework.solution.grade }}</p>
+              {% else %}
+                  <p class="card-text">Статус: Не проверено</p>
+              {% endif %}
+          {% else %}
+              <form method="post" action="{% url 'add_solution' homework.id %}">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit" class="btn btn-primary">Отправить комментарий</button>
+              </form>
+          {% endif %}
+      </div>
+  </div>
+    {% endfor %}
+  </div>
+  <div style="margin-top: 10px;">
+    <a href="/" class="btn btn-primary">На главную</a>
+  </div>
+</div>
+{% endblock %}
