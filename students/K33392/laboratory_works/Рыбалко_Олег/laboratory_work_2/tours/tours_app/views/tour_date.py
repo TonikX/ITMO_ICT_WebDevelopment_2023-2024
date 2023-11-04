@@ -1,4 +1,5 @@
 from os.path import join
+from collections import defaultdict
 
 from django.forms import ModelForm
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseForbidden
@@ -25,7 +26,6 @@ def write_tour_review_view(request: HttpRequest, pk: int) -> HttpResponse:
         return Http404("Tour wasn't found")
 
     form = ReviewModelForm(request.POST or None)
-    print(form)
     if request.method == "GET":
         return render(request, join(__BASE_TEMPLATE_PATH, "review.html"), dict(form=form, tour_date=tour))
 
@@ -71,3 +71,16 @@ def cancel_reservation_view(request: HttpRequest, pk: int) -> HttpResponse:
     reservation.delete()
 
     return redirect("/profile")
+
+
+def sold_tour_dates_by_country_view(request: HttpRequest) -> HttpResponse:
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You are not a superuser")
+    
+    reservations = Reservation.objects.filter(confirmed=True)
+
+    by_country = defaultdict(list)
+    for r in reservations:
+        by_country[r.tour_date.tour.country.code].append(r)
+
+    return render(request, join(__BASE_TEMPLATE_PATH, "by_country.html"), dict(items=by_country.items()))

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>By country</title>
+{% endblock %}
+
+{% block body %}
+    {% for i in items %}
+        <h3>{{ i.0 }}</h3>
+        {% for reservation in i.1 %}
+            {% include 'common/tour_date.html' with tour_date=reservation.tour_date %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
