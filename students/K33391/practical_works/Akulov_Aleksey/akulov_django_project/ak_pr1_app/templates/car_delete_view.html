@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car delete</title>
+</head>
+<body>
+
+  <form method="post">{% csrf_token %}
+    <p>Вы уверены, что хотите удалить "{{ car.brand }} {{ car.model }}" с номером "{{ car.state_number }}"?</p>
+    <input type="submit" value="Уверен">
+  </form>
+  <br>
+  <br>
+  <a href="/cars">Get back</a>
+</body>
+</html>
