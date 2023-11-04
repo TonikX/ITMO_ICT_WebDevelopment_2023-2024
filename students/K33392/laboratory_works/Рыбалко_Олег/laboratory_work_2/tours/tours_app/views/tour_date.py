@@ -3,28 +3,28 @@ from os.path import join
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import redirect, render
 
-from tours_app.models import Reservation, Tour
+from tours_app.models import Reservation, Tour, TourDate
 
-__BASE_TEMPLATE_PATH = "tour"
+__BASE_TEMPLATE_PATH = "tour_dates"
 
 
 def all_tours_view(request: HttpRequest) -> HttpResponse:
-    return render(request, join(__BASE_TEMPLATE_PATH, "all.html"), dict(tours=Tour.objects.all()))
+    return render(request, join(__BASE_TEMPLATE_PATH, "all.html"), dict(tours_dates=TourDate.objects.all()))
 
 
-def reserve_tour_view(request: HttpRequest, pk: int) -> HttpResponse:
+def reserve_tour_date_view(request: HttpRequest, pk: int) -> HttpResponse:
     if (user := request.user).is_anonymous:
         return redirect("/login")
 
     try:
-        tour = Tour.objects.get(pk=pk)
+        tour_date = TourDate.objects.get(pk=pk)
     except Tour.DoesNotExist:
         raise Http404("Tour doesn't exist")
 
-    reservation = Reservation(traveler=user, tour=tour)
+    reservation = Reservation(traveler=user, tour_date=tour_date)
     reservation.save()
 
-    return render(request, join(__BASE_TEMPLATE_PATH, "reserved.html"), dict(user=user, tour=tour))
+    return render(request, join(__BASE_TEMPLATE_PATH, "reserved.html"), dict(user=user, tour_date=tour_date))
 
 
 def cancel_reservation_view(request: HttpRequest, pk: int) -> HttpResponse:

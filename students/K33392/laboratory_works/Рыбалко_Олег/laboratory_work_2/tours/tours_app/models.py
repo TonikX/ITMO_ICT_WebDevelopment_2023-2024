@@ -5,29 +5,32 @@ from django.db.models import (CASCADE, BooleanField, CharField, DateField, DateT
 
 
 class Traveler(AbstractUser):
-    tours = ManyToManyField("Tour", through="Reservation", blank=True)
+    pass
 
 
 class Tour(Model):
     name = CharField(max_length=200)
     description = TextField(null=True)
-    start_date = DateField()
-    end_date = DateField()
     country = ForeignKey("Country", CASCADE)
-    travelers = ManyToManyField(Traveler)
     payment_details = TextField()
     tour_agency = ForeignKey("TourAgency", CASCADE)
 
 
+class TourDate(Model):
+    tour = ForeignKey(Tour, CASCADE)
+    start_date = DateField()
+    end_date = DateField()
+
+
 class Reservation(Model):
     traveler = ForeignKey(Traveler, CASCADE)
-    tour = ForeignKey(Tour, CASCADE)
+    tour_date = ForeignKey(TourDate, CASCADE)
     reserved_at = DateTimeField(auto_now_add=True)
     confirmed = BooleanField(default=False)
 
 
 class Review(Model):
-    tour = ForeignKey(Tour, CASCADE)
+    tour_date = ForeignKey(TourDate, CASCADE)
     traveler = ForeignKey(Traveler, CASCADE)
     review_datetime = DateTimeField(auto_now_add=True)
     comment = TextField()

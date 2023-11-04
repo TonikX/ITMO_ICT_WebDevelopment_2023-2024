@@ -12,9 +12,10 @@
     <p>Last name: {{ user.last_name }}</p>
 
     <h3>Tours</h3>
-    <div class="reservations" style="margin-left: 20px">
-    {% for r in reservations %}
-        {% include 'common/tour.html' with tour=r.tour %}
+    <h4>Upcoming</h4>
+    <div style="margin-left: 20px">
+    {% for r in upcoming_reservations %}
+        {% include 'common/tour_date.html' with tour_date=r.tour_date %}
         {% if r.is_confirmed %}
             <p><i>Confirmed</i></p>
         {% else %}
@@ -23,4 +24,11 @@
         <a href="/cancel_reservation/{{ r.pk }}">Cancel</a>
     {% endfor %}
     </div>
+    <h4>Archive</h4>
+    <div style="margin-left: 20px">
+        {% for r in archive_reservations %}
+            {% include 'common/tour_date.html' with tour_date=r.tour_date %}
+            <button>Write a review</button>
+        {% endfor %}
+        </div>
 {% endblock %}
