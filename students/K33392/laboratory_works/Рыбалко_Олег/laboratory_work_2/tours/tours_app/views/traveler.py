@@ -6,7 +6,7 @@ from django.forms import CharField, Form, ModelForm, PasswordInput
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
-from tours_app.models import Traveler
+from tours_app.models import Reservation, Traveler
 
 __BASE_TEMPLATE_PATH = "traveler"
 
@@ -50,6 +50,8 @@ def login_traveler_view(request: HttpRequest) -> HttpResponse:
 
 def traveler_profile_view(request: HttpRequest, pk: Union[int, None] = None) -> HttpResponse:
     user: Traveler = request.user
-    if pk is None and (user is None or user.is_anonymous):
+    if pk is None and user.is_anonymous:
         return redirect("/login")
-    return render(request, join(__BASE_TEMPLATE_PATH, "detail.html"), dict(user=user, tours=user.tours.all()))
+
+    reservations = Reservation.objects.filter(traveler=user.pk)
+    return render(request, join(__BASE_TEMPLATE_PATH, "detail.html"), dict(user=user, reservations=reservations))

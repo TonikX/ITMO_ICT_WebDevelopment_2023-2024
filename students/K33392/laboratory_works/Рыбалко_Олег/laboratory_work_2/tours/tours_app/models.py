@@ -5,7 +5,7 @@ from django.db.models import (CASCADE, BooleanField, CharField, DateField, DateT
 
 
 class Traveler(AbstractUser):
-    tours = ManyToManyField("Tour", "Reservations", blank=True)
+    tours = ManyToManyField("Tour", through="Reservation", blank=True)
 
 
 class Tour(Model):

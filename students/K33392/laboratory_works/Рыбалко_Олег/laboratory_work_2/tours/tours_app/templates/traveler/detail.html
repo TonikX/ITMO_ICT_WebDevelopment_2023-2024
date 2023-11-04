@@ -12,7 +12,15 @@
     <p>Last name: {{ user.last_name }}</p>
 
     <h3>Tours</h3>
-    {% for t in tours %}
-        {% include 'common/tour.html' with tour=t %}
+    <div class="reservations" style="margin-left: 20px">
+    {% for r in reservations %}
+        {% include 'common/tour.html' with tour=r.tour %}
+        {% if r.is_confirmed %}
+            <p><i>Confirmed</i></p>
+        {% else %}
+            <p><i>Not confirmed</i></p>
+        {% endif %}
+        <a href="/cancel_reservation/{{ r.pk }}">Cancel</a>
     {% endfor %}
+    </div>
 {% endblock %}
