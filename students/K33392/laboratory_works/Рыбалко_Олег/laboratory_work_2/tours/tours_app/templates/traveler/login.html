@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <title>New traveler</title>
+    <title>Login</title>
 {% endblock %}
 
 {% block body %}
-    <h1>Create new traveler</h1>
+    <h1>Login</h1>
+
     <form method="POST" enctype="multipart/form-data">
+
         {% csrf_token %}
 
         {{ form.as_p }}
 
-        <input type="submit" value="Create">
+        <input type="submit" value="Login">
     </form>
 {% endblock %}

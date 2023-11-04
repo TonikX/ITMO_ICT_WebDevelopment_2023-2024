@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ user.username }}</h1>
+
+    <h3>Info</h3>
+    <p>First name: {{ user.first_name }} </p>
+    <p>Last name: {{ user.last_name }}</p>
+
+    <h3>Tours</h3>
+    {% for tour in tours %}
+    <div class="tour">
+        <h4>{{ tour.name }}</h4>
+        <textarea>{{ tour.description }}</textarea>
+    </div>
+    {% endfor %}
+{% endblock %}
