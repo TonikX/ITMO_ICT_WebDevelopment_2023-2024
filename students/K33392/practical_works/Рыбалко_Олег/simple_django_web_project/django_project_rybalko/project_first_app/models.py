@@ -1,5 +1,5 @@
-from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, ManyToManyField, Model
 from django.contrib.auth.models import AbstractUser
+from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, ManyToManyField, Model
 
 
 class CarOwner(AbstractUser):

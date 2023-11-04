@@ -1,6 +1,6 @@
 from django.apps import apps
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin 
+from django.contrib.auth.admin import UserAdmin
 
 app = apps.get_app_config("project_first_app")
 
