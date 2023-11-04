@@ -5,6 +5,7 @@ class CarOwner(models.Model):
     surname = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
     birth_date = models.DateTimeField(null=True, blank=True)
+    cars = models.ManyToManyField("Car", through="Ownership")
 
 
 class DrivingLicense(models.Model):
@@ -19,6 +20,7 @@ class Car(models.Model):
     brand = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
     color = models.CharField(max_length=30, null=True, blank=True)
+    owners = models.ManyToManyField("CarOwner", through="Ownership")
 
 
 class Ownership(models.Model):
