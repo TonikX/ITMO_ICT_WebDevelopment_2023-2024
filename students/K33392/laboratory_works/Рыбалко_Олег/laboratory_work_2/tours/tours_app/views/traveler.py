@@ -1,10 +1,10 @@
 from os.path import join
+from typing import Union
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.forms import CharField, Form, ModelForm, PasswordInput
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from typing import Union
 
 from tours_app.models import Traveler
 

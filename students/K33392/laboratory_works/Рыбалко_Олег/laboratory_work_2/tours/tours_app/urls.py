@@ -7,5 +7,5 @@ urlpatterns = [
     path("login", views.login_traveler_view),
     path("profile/<int:pk>", views.traveler_profile_view),
     path("profile", views.traveler_profile_view),
-    path("tours", views.all_tours_view)
+    path("tours", views.all_tours_view),
 ]
