@@ -10,12 +10,18 @@ class CarOwnerForm(forms.ModelForm):
             "first_name",
             "second_name",
             "birthday",
+            "passport",
+            "address",
+            "nationality",
         ]
 
         labels = {
             "first_name": "Имя",
             "second_name": "Фамилия",
             "birthday": "Дата Рождения",
+            "passport": "Номер паспорта",
+            "address": "Адрес",
+            "nationality": "Национальности",
         }
 
 

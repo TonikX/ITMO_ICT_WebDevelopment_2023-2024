@@ -39,7 +39,7 @@ def create_owner(request):
     if form.is_valid():
         form.save()
     context['form'] = form
-    return render(request, "OwnerForm.html", context)
+    return render(request, "OwnerCreateForm.html", context)
 
 
 class CreateCar(CreateView):
