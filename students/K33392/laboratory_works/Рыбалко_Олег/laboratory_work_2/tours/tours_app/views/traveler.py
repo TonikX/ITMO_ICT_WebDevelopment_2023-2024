@@ -1,5 +1,5 @@
-from os.path import join
 from datetime import date
+from os.path import join
 from typing import Union
 
 from django.contrib.auth import login
@@ -57,4 +57,8 @@ def traveler_profile_view(request: HttpRequest, pk: Union[int, None] = None) -> 
     reservations = Reservation.objects.filter(traveler=user.pk)
     upcoming_reservations = list(filter(lambda x: x.tour_date.end_date > date.today(), reservations))
     archive_reservations = list(filter(lambda x: x.tour_date.end_date <= date.today(), reservations))
-    return render(request, join(__BASE_TEMPLATE_PATH, "detail.html"), dict(user=user, upcoming_reservations=upcoming_reservations, archive_reservations=archive_reservations))
+    return render(
+        request,
+        join(__BASE_TEMPLATE_PATH, "detail.html"),
+        dict(user=user, upcoming_reservations=upcoming_reservations, archive_reservations=archive_reservations),
+    )

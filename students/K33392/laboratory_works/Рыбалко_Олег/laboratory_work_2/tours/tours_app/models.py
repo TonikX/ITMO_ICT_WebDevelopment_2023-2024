@@ -15,6 +15,9 @@ class Tour(Model):
     payment_details = TextField()
     tour_agency = ForeignKey("TourAgency", CASCADE)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class TourDate(Model):
     tour = ForeignKey(Tour, CASCADE)

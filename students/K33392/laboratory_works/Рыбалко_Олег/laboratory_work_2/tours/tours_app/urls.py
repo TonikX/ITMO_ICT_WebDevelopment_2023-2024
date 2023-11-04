@@ -10,4 +10,5 @@ urlpatterns = [
     path("tours", views.all_tours_view),
     path("reserve/<int:pk>", views.reserve_tour_date_view),
     path("cancel_reservation/<int:pk>", views.cancel_reservation_view),
+    path("review_tour/<int:pk>", views.write_tour_review_view),
 ]

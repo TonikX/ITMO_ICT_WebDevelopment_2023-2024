@@ -28,7 +28,7 @@
     <div style="margin-left: 20px">
         {% for r in archive_reservations %}
             {% include 'common/tour_date.html' with tour_date=r.tour_date %}
-            <button>Write a review</button>
+            <a href="/review_tour/{{ r.tour_date.tour.pk }}">Write a review</a>
         {% endfor %}
         </div>
 {% endblock %}
