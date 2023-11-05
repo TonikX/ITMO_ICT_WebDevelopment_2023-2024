@@ -5,8 +5,7 @@ from django.views.generic import DeleteView
 from django.contrib.auth import logout
 from .forms import UserRegistrationForm, UserLoginForm, RacerProfileForm, RacerCarForm, CommentForm
 from django.contrib import messages
-
-from .models import Race, RaceResult, Registration, Racer, RacerCar, Comment
+from .models import Race, RaceResult, Registration, Racer, Comment
 
 
 def home(request):
@@ -108,48 +107,6 @@ class DeleteRegistration(DeleteView):
     success_url = "/registrations"
 
 
-# def racer_profile(request):
-#     user = request.user
-#
-#     try:
-#         racer = Racer.objects.get(user=user)
-#         racer_car = RacerCar.objects.get(racer=racer)
-#     except Racer.DoesNotExist:
-#         racer = None
-#         racer_car = None
-#
-#     if request.method == 'POST':
-#         if racer:
-#             car_form = RacerCarForm(request.POST, instance=racer_car)
-#             profile_form = RacerProfileForm(request.POST, instance=racer)
-#         else:
-#             car_form = RacerCarForm(request.POST)
-#             profile_form = RacerProfileForm(request.POST)
-#
-#         if profile_form.is_valid() and car_form.is_valid():
-#             if not racer:
-#                 racer = profile_form.save(commit=False)
-#                 racer.user = user
-#             profile_form.save()
-#             car_form.instance = racer
-#             car_form.save()
-#             return redirect('racer_profile')
-#
-#     else:
-#         if racer:
-#             profile_form = RacerProfileForm(instance=racer)
-#             car_form = RacerCarForm(instance=racer_car)
-#         else:
-#             profile_form = RacerProfileForm()
-#             car_form = RacerCarForm()
-#
-#     context = {
-#         'profile_form': profile_form,
-#         'car_form': car_form,
-#     }
-#
-#     return render(request, 'profile/racer_profile.html', context)
-
 def racer_profile(request):
     user = request.user
 
@@ -199,7 +156,7 @@ def race_registration(request):
     current_datetime = timezone.now()
 
     try:
-        racer = Racer.objects.get(user=user)
+        Racer.objects.get(user=user)
     except Racer.DoesNotExist:
         return redirect('racer_profile')
 
