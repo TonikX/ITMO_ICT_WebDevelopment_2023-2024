@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="room-block" >
+        <table style="margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td style="width: 300px;">
+                <img src="/media/{{ room.thumbnail }}" alt="Room Image" width="700" height="500">
+            </td>
+            <td style="width: 300px;">
+                <a href='/main/hotel/{{ room.hotel.id }}'><h2>{{ room.hotel.name }}</h2></a>
+                <h3>{{ room.get_type_display }}</h3>
+                <p>Location: {{ room.hotel.city }}, {{ room.hotel.country }}</p>
+                <p>Capacity: {{room.capacity}} guest(s)</p>
+                <p>Cost: {{ room.price }}</p>
+                <p>Comodities:</p>
+                <ul>
+                    {% for commodity in room.commodities %}
+                        {% for comm in room.COMMODITIES_LIST %}
+                            {% if comm.0 == commodity %}
+                                <li>{{ comm.1 }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </td>
+            {% if user.is_authenticated %}
+            <td style="width: 300px;">
+                    <button onclick="window.location.href='/reservation/{{ room.id }}/create'">
+                        Reserve
+                    </button>
+            </td>
+            {% endif %}
+            </tr>
+            </tbody>
+            </table>
+    </div>
+    {% if room.reviews %}
+        <h2>Reviews:</h2>
+        {% for review in room.reviews %}
+            <a href='/user/{{ review.reservation.guest.id }}'><b>{{ review.reservation.guest }}</b></a>
+            <b>({{ review.date }})</b>
+            <p>{{ review.get_rating_display }}</p>
+            <p>{{ review.body }}</p>
+            <p></p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

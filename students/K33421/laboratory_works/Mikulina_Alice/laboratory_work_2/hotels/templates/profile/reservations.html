@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for res in object_list %}
+    {% if res.guest == user %}
+    <div class="room-block" >
+        <table style="border-bottom: 2px solid black; margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td style="width: 300px;">
+                <img src="/media/{{ res.room.thumbnail }}" alt="Room Image" width="300" height="200">
+            </td>
+            <td style="width: 300px;">
+                <h3>{{ res.room.hotel.name }} ({{ res.room.get_type_display }})</h3>
+                <p>Location: {{ res.room.hotel.city }}, {{ res.room.hotel.country }}</p>
+                <p>Capacity: {{res.room.capacity}} guest(s)</p>
+                <p>Cost: {{ res.room.price }}</p>
+            </td>
+            <td style="width: 300px;">
+                <p>Reservation period: {{ res.start_date }} - {{ res.end_date }}</p>
+                <p>Full price: {{ res.full_price }}</p>
+                <p>Status: {{ res.get_status_display }}</p>
+                <button onclick="window.location.href='/profile/reservation/{{ res.id }}'">
+                    Review
+                </button>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    {% endif %}    
+    {% endfor %}
+{% endblock %}

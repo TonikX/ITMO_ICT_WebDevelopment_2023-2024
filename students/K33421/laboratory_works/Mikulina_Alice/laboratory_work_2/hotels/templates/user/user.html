@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ guest.username }}</h2>
+  <img src=/media/{{guest.profile_picture}} width="200" height="200"/>
+  <h3>About {{guest.first_name}}:</h3>
+  <li>{{ guest.first_name }} {{ guest.last_name }}</li>
+  <li>{{ guest.email }}</li>
+  <li>{{ guest.country }}</li>
+  <li>{{ guest.about_info }}</li>
+{% endblock %}

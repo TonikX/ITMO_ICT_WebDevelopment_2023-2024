@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="room-block" >
+        <table style="margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td style="width: 300px;">
+                <img src="/media/{{ res.room.thumbnail }}" alt="Room Image" width="700" height="500">
+            </td>
+            <td style="width: 300px;">
+                <a href='/main/hotel/{{ res.room.hotel.id }}'><h2>{{ res.room.hotel.name }}</h2></a>
+                <h3>{{ res.room.get_type_display }}</h3>
+                <p>Location: {{ res.room.hotel.city }}, {{ res.room.hotel.country }}</p>
+                <p>Capacity: {{res.room.capacity}} guest(s)</p>
+                <p>Cost: {{ res.room.price }}</p>
+                <p>Comodities:</p>
+                <ul>
+                    {% for commodity in res.room.commodities %}
+                        {% for comm in res.room.COMMODITIES_LIST %}
+                            {% if comm.0 == commodity %}
+                                <li>{{ comm.1 }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </td>
+            <td style="width: 300px;">
+                <p>Reservation period: {{ res.start_date }} - {{ res.end_date }}</p>
+                <p>Full price: {{ res.full_price }}</p>
+                <p>Status: {{ res.get_status_display }}</p>
+                {% if res.status != 'FI' %}
+                    <p><button onclick="window.location.href='/reservation/{{ res.id }}/update'">
+                        Edit reservation
+                    </button></p>
+                    <p><button onclick="window.location.href='/reservation/{{ res.id }}/delete'">
+                        Delete reservation
+                    </button></p>
+                {% endif %}
+            </td>
+            </tr>
+            </tbody>
+            </table>
+        </div> 
+        {% if res.status == 'FI' %}
+            {% if not res.review %}
+
+                <h3>Add a review</h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <p>{{ form.reservation.label_tag }} {{ res.id }}</p>
+                    <p>{{ form.rating }}</p>
+                    <p>{{ form.body }}</p>
+                    <input type="hidden" name="{{ form.reservation.name }}" value="{{ res.id }}">
+                    <button type="submit">Submit</button>
+                </form>
+
+            {% else %}
+                <h2>Review:</h2>
+                {% for review in res.review_set.all %}
+                    <a href='/user/{{ review.reservation.guest.id }}'><b>{{ review.reservation.guest }}</b></a>
+                    <b>({{ review.date }})</b>
+                    <p>{{ review.get_rating_display }}</p>
+                    <p>{{ review.body }}</p>
+                    <p></p>
+                    <button onclick="window.location.href='/profile/review/{{ review.id }}/update'">
+                        Edit review
+                    </button>
+                    <p></p>
+                    <button onclick="window.location.href='/profile/review/{{ review.id }}/delete'">
+                        Delete review
+                    </button>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        
+{% endblock %}
