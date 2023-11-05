@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация о гонке: {{ race.title }}</title>
+</head>
+<body>
+    <h1>Информация о гонке</h1>
+    <h2>Название: {{ race.title }}</h2>
+    <p>Дата: {{ race.date }}</p>
+    <p>Локация: {{ race.location }}</p>
+    <p>Описание: {{ race.description }}</p>
+
+    {% if registrations %}
+        <h2>Участники гонки (зарегистрированные):</h2>
+        <ul>
+            {% for registration in registrations %}
+                <li>
+                    <p>Гонщик: {{ registration.racer.first_name }} {{ registration.racer.last_name }}<p>
+                    <p>Команда: {{ registration.racer.team_name }} <p>
+                </li>
+            {% empty %}
+                <li>Для этой гонки нет зарегистрированных участников.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if race_results %}
+        <h2>Результаты гонки:</h2>
+        <ul>
+            {% for result in race_results %}
+                <li>
+                    <p>Гонщик: {{ result.racer.first_name }} {{ result.racer.last_name }}<p>
+                    <p>Позиция: {{ result.position }}<p>
+                    <p>Время: {{ result.lap_time }}<p>
+                    <p>Максимальная скорость: {{ result.top_speed }} км/ч<p>
+                </li>
+            {% empty %}
+                <li>Для этой гонки нет результатов.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <button onclick="back()">Назад</button>
+
+    <script>
+        function back() {
+            window.location.href = '/races';
+        }
+    </script>
+</body>
+</html>

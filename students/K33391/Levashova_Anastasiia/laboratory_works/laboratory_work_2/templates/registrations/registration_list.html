@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрации</title>
+</head>
+<body>
+    <h1>Ваши регистрации</h1>
+    <ul>
+        {% for registration in registrations %}
+            <li>
+                <p>Гонка: {{ registration.race.title }}<p>
+                <p>Дата: {{ registration.race.date }}</p>
+                <p>Локация: {{ registration.race.location }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="registration_id" value="{{ registration.id }}">
+                    {% if registration.race.date > current_datetime %}
+                        <button type="submit">Удалить</button>
+                    {% endif %}
+                </form>
+            </li>
+        {% empty %}
+            <li>Вы не зарегистрированы ни на одну гонку.</li>
+        {% endfor %}
+    </ul>
+    <button onclick="back()">Назад</button>
+
+    <script>
+        function back() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
+

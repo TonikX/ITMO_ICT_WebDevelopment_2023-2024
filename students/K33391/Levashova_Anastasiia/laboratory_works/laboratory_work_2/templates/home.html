@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+</head>
+<body>
+    <h1>Добро пожаловать на наш сайт Гонки.ru</h1>
+
+    <button onclick="showRaceInfo()">Информация о гонках</button>
+    <button onclick="registerForRace()">Зарегистрироваться на гонку</button>
+
+    {% if user.is_authenticated %}
+        <button onclick="racerProfile()">Ваши регистрации</button>
+        <button onclick="racerProfile()">Профиль гонщика</button>
+    {% endif %}
+
+    <script>
+        function showRaceInfo() {
+            window.location.href = '/races/';
+        }
+
+        function registerForRace() {
+            window.location.href = '/register-for-race/';
+        }
+
+        function racerProfile() {
+            window.location.href = '/races/';
+        }
+
+        function registrationsList() {
+            window.location.href = '/registrations/';
+        }
+    </script>
+</body>
+</html>

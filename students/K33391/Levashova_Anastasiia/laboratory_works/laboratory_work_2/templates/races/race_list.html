@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список гонок</title>
+</head>
+<body>
+    <h1>Список гонок</h1>
+    <div class="race-buttons">
+        {% for race in races %}
+            <a href="{% url 'race_detail' race.id %}">
+                <button>
+                    <h2>Название: {{ race.title }}</h2>
+                    <p>Дата: {{ race.date }}</p>
+                    <p>Локация: {{ race.location }}</p>
+                </button>
+            </a>
+        {% empty %}
+            <p>На данный момент нет доступных гонок.</p>
+        {% endfor %}
+    </div>
+
+    <button onclick="back()">Назад</button>
+
+    <script>
+        function back() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
