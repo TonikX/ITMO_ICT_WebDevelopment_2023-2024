@@ -1,5 +1,5 @@
 """
-URL configuration for django_project_Volgin project.
+URL configuration for race project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -14,20 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib.auth.views import LogoutView
+from django.urls import include, path
 from django.contrib import admin
-from django.urls import path
 
-from project_firts_app.views import *
+import races_app
+from races_app import views
+
 
 urlpatterns = [
-     path('admin/', admin.site.urls),
-     path('owner/<int:driver_id>', get_car_owner),
-     path('list_of_car_owners',get_car_owners_list),
-     path('list_of_cars',CarListView.as_view()),
-     path('car/<int:pk>', CarDetailView.as_view()),
-     path('update_car/<int:pk>', CarUpdateView.as_view()),
-     path('create_car_owner', create_car_owner),
-     path('create_car', CarCreateView.as_view()),
-     path('update_car_with_form/<int:pk>', CarUpdateViewWithForm.as_view()),
-     path('delete_car/<int:pk>', CarDeleteView.as_view()),
+    path('admin/', admin.site.urls),
+    path('login/', views.user_login, name='login'),
+    #path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
+    path('', views.dashboard, name='dashboard')
 ]
