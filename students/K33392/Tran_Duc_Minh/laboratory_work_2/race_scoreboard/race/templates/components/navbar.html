@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'navbar.css' %}">
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-item">Home</a>
+    <a href="{% url 'race_result_list' %}" class="navbar-item">Result</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="navbar-item">Profile</a>
+        <a href="{% url 'logout' %}" class="navbar-item">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="navbar-item">Login</a>
+        <a href="{% url 'register_user' %}" class="navbar-item">Register</a>
+    {% endif %}
+</nav>
+
+
+
+
+
+

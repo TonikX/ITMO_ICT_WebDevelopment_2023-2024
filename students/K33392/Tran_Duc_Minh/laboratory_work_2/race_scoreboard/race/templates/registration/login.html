@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+{% include 'components/navbar.html' %}
+<div class="login-form">
+    <h1>Login</h1>
+    <form class="login-input" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <br>
+    <h3 class="alert alert-warning">
+        Please log in to view full content.
+    </h3>
+</div>
+</body>
+</html>

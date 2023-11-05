@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Race Result - {{ race.race_name }}</title>
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+    <h1>Race Result: {{ race.race_name }}</h1>
+    <ul>
+        {% for result in race_results|dictsort:"finishing_position" %}
+            <li>
+                #{{ result.finishing_position }} {{ result.participant.user.username }}<br>
+                Team: {{ result.participant.team }} <br>
+                Race Time: {{ result.race_time }}<br>
+            </li>
+            <br>
+        {% empty %}
+            <li>No race results available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

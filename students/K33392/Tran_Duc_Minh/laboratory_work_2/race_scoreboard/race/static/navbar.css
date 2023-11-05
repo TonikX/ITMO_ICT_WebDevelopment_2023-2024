@@ -1,0 +1,19 @@
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    padding-right: 7rem;
+    text-align: right;
+
+}
+
+.navbar-item {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 8px 5px 8px;
+    border-radius: 3px;
+}
+
+.navbar-item:hover, .navbar-item:active {
+    background-color: #555;
+}

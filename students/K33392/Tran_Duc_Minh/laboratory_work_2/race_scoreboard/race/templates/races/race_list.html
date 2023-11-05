@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Racing list</title>
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <h1>Racing list</h1>
+    <h2>Upcoming races</h2>
+    <ul>
+        {% for race in races %}
+            <li>
+            <a href="{% url 'view_race' race_id=race.id %}">{{ race.race_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Your registration</h2>
+    <ul>
+        {% for race in register_race %}
+            <li>
+                <a href="{% url 'view_race' race_id=race.id %}">{{ race.race_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

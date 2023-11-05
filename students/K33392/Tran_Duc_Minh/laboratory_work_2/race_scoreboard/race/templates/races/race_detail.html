@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Race detail</title>
+</head>
+<body>
+{% include 'components/navbar.html' %}
+
+<h1>Race detail</h1>
+<h2>{{ race.race_name }}</h2>
+<p>Organization day: {{ race.race_date }}</p>
+<p>Registration deadline: {{ race.registration_deadline }}</p>
+<h3>Participants:</h3>
+<ul>
+    {% for participant in participants %}
+        <li>{{ participant.participant.team }}</li>
+    {% endfor %}
+</ul>
+
+{% if not can_comment %}
+    <!-- Biểu mẫu đăng ký vào cuộc đua -->
+    <h3>Register driver:</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Đăng ký">
+    </form>
+{% endif %}
+
+{% if can_comment %}
+    <!-- Ô viết comment -->
+    <a href="{% url 'unregister_from_race' race.id %}">Unregister from this race</a>
+    <h3>Comment:</h3>
+    {% if comment_sent %}
+        <p>Comment sent successfully!</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.comment_content }}
+        <label for="{{ comment_form.comment_type.id_for_label }}">Comment Type:</label>
+        {{ comment_form.comment_type }}
+        <label for="{{ comment_form.rating.id_for_label }}">Rating (1-10):</label>
+        {{ comment_form.rating }}
+        <input type="submit" value="send">
+    </form>
+
+    <!-- Hiển thị danh sách các comment -->
+    <h3>Comments:</h3>
+    <ul>
+        {% for comment in race.comment_set.all %}
+            <li>{{ comment.commentator.user.username }} - {{ comment.comment_date }} - Type: {{ comment.comment_type }}
+                - Rating: {{ comment.rating }} - {{ comment.comment_content }}</li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+</body>
+</html>
