@@ -1,10 +1,16 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from django.conf import settings
 
-class CarOwner(models.Model):
+
+class CarOwner(AbstractUser):
     surname = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
     birth_date = models.DateTimeField(null=True, blank=True)
+    passport = models.CharField(max_length=25, null=True)
+    address = models.CharField(max_length=100, null=True)
+    nationality = models.CharField(max_length=30, null=True)
     cars = models.ManyToManyField("Car", through="Ownership")
 
 
@@ -24,7 +30,8 @@ class Car(models.Model):
 
 
 class Ownership(models.Model):
-    owner = models.ForeignKey(CarOwner, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(null=True, blank=True)

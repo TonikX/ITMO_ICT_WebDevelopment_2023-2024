@@ -11,6 +11,9 @@ from .forms import CarUpdateForm, OwnerCreateForm, CarCreateForm
 from .models import CarOwner, Car
 
 
+def index(request):
+    return render(request, "index.html")
+
 def detail(request, owner_id):
     try: #метод try-except - обработчик исключений
         p = CarOwner.objects.get(pk=owner_id)  #pk - автоматически создается в джанго для любой таблицы в моделе (оно есть у любого объекта из бд), poll_id будет передан функции при её вызове.
@@ -73,3 +76,5 @@ class CarDeleteView(DeleteView):
     model = Car
     success_url = "/cars"
     template_name = "car_delete_view.html"
+
+
