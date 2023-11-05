@@ -3,9 +3,10 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DeleteView
 
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, RacerProfileForm, RacerCarForm
 from django.contrib import messages
-from .models import Race, RaceResult, Registration
+
+from .models import Race, RaceResult, Registration, Racer, RacerCar
 
 
 def home(request):
@@ -98,3 +99,69 @@ class DeleteRegistration(DeleteView):
     template_name = "registrations/registration_delete.html"
     success_url = "/registrations"
 
+
+def racer_profile(request):
+    user = request.user
+
+    try:
+        racer = Racer.objects.get(user=user)
+        racer_car = RacerCar.objects.get(racer=racer)
+    except Racer.DoesNotExist:
+        racer = None
+        racer_car = None
+
+    if request.method == 'POST':
+        if racer:
+            profile_form = RacerProfileForm(request.POST, instance=racer)
+            car_form = RacerCarForm(request.POST, instance=racer_car)
+        else:
+            profile_form = RacerProfileForm(request.POST)
+            car_form = RacerCarForm(request.POST)
+
+        if profile_form.is_valid() and car_form.is_valid():
+            if not racer:
+                racer = profile_form.save(commit=False)
+                racer.user = user
+            profile_form.save()
+            car_form.instance = racer
+            car_form.save()
+            return redirect('racer_profile')
+
+    else:
+        if racer:
+            profile_form = RacerProfileForm(instance=racer)
+            car_form = RacerCarForm(instance=racer_car)
+        else:
+            profile_form = RacerProfileForm()
+            car_form = RacerCarForm()
+
+    context = {
+        'profile_form': profile_form,
+        'car_form': car_form,
+    }
+
+    return render(request, 'profile/racer_profile.html', context)
+
+
+def race_registration(request):
+    user = request.user
+    current_datetime = timezone.now()
+
+    upcoming_races = Race.objects.filter(date__gte=current_datetime).exclude(registration__racer__user=user)
+
+    if request.method == 'POST':
+        race_id = request.POST.get('race_id')
+        race = get_object_or_404(Race, pk=race_id)
+        racer = Racer.objects.get(user=user)
+
+        if race.date >= current_datetime:
+            registration, created = Registration.objects.get_or_create(racer=racer, race=race)
+            if created:
+                registration.save()
+
+    context = {
+        'upcoming_races': upcoming_races,
+        'current_datetime': current_datetime
+    }
+
+    return render(request, 'registrations/race_registration.html', context)

@@ -10,7 +10,7 @@
     <button onclick="registerForRace()">Зарегистрироваться на гонку</button>
 
     {% if user.is_authenticated %}
-        <button onclick="racerProfile()">Ваши регистрации</button>
+        <button onclick="registrationsList()">Ваши регистрации</button>
         <button onclick="racerProfile()">Профиль гонщика</button>
     {% endif %}
 
@@ -20,11 +20,11 @@
         }
 
         function registerForRace() {
-            window.location.href = '/register-for-race/';
+            window.location.href = '/race_registration/';
         }
 
         function racerProfile() {
-            window.location.href = '/races/';
+            window.location.href = '/racer_profile/';
         }
 
         function registrationsList() {
