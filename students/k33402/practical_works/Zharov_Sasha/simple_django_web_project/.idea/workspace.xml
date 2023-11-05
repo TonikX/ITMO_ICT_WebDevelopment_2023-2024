@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5b7892d-353f-47bb-946e-c7b2228e32ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/accounts/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/accounts/templates/accounts/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/accounts/templates/accounts/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/accounts/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/main/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/main/templates/main/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/main/templates/main/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/main/templates/main/tour_page.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2/touroperator/main/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django_project_zharov/project_first_app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/django_project_zharov/project_first_app/forms.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +42,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../laboratory_works/Zharov_Sasha/Lab2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">

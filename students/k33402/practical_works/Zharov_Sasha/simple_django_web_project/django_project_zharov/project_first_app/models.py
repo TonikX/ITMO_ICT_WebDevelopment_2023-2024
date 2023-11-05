@@ -28,10 +28,10 @@ class Car(models.Model):
     brand = models.CharField('Марка', max_length=20)
     car_model = models.CharField('Модель', max_length=20)
     color = models.CharField('Цвет', max_length=30, blank=True, null=True)
-    drivers = models.ManyToManyField('Driver', through='Ownership')
+    drivers = models.ManyToManyField('Driver', through='Ownership', null=True)
 
     def __str__(self):
-        return self.number, self.car_model
+        return f"{self.number} {self.car_model}"
 
 
 class DriverLicence(models.Model):

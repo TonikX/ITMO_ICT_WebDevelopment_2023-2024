@@ -27,14 +27,12 @@ def driver_list(request):
 
 
 def create_view(request):
-    # dictionary for initial data with
-    # field names as keys
     context = {}
 
-    # add the dictionary during initialization
+
     form = DriverForm(
-        request.POST or None)  # создание экземпляра формы, передача в него данных из формы (из полей в браузере)
-    if form.is_valid():  # проверка формы на корректность (валидация)
+        request.POST or None)
+    if form.is_valid():
         form.save()
     context['form'] = form
     return render(request, "project_first_app/create_view.html", context)
@@ -56,11 +54,9 @@ class DriverUpdateView(UpdateView):
 
 
 class CarCreate(CreateView):
-    # specify the model for create view
     model = Car
     template_name = 'project_first_app/cvb_create_view.html'
 
-    # specify the fields to be displayed
 
     fields = ['number', 'brand', 'car_model', 'color']
 
