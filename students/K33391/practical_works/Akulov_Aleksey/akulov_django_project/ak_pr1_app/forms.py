@@ -29,9 +29,15 @@ class CarCreateForm(forms.ModelForm):
 class OwnerCreateForm(forms.ModelForm):
     class Meta:
         model = CarOwner
-        fields = ["surname", "name", "birth_date"]
+        fields = ["username", "password", "surname", "name", "birth_date",
+                  "passport", "address", "nationality"]
         labels = {
+            "username": "Логин",
+            "password": "Пароль",
             "surname": "Фамилия",
             "name": "Имя",
             "birth_date": "Дата рождения",
+            "passport": "Паспорт",
+            "address": "Адрес",
+            "nationality": "Национальность"
         }
