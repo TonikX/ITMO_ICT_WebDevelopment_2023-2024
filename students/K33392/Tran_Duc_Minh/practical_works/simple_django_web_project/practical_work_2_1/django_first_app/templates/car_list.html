@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car List</title>
+</head>
+<body>
+    <h1 class="carlist">Car List</h1>
+    <table>
+        <tr>
+            <th>State Number</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Owners</th>
+        </tr>
+        {% for car in cars %}
+            <tr>
+                <td>{{ car.state_number }}</td>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.color }}</td>
+                <td>
+                    {% for owner in car.owners.all %}
+                        {{ owner.first_name }} {{ owner.last_name }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/">back to home</a>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</body>
+
+</html>

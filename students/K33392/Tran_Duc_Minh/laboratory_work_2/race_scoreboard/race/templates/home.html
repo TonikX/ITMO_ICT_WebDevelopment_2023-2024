@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+    <h1 class="head1">Welcome to Racing scoreboard</h1>
+    <p>Hello, this is home page</p>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'race_list' %}">Race list</a>
+    {% else %}
+        <p><strong>Please login to see race list</strong></p>
+    {% endif %}
+</body>
+</html>

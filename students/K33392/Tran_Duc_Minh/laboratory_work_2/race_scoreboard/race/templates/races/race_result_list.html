@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Race Results</title>
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+    <h1>Race Results</h1>
+    <ul>
+        {% for result in race_results %}
+            <li>
+                <a href="{% url 'race_result_detail' result.race.id %}">Race: {{ result.race.race_name }}</a>
+            </li>
+        {% empty %}
+            <li>No race results available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
