@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить комментарий</title>
+</head>
+<body>
+    <h1>Добавить комментарий к гонке: {{ race.title }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить комментарий</button>
+    </form>
+
+    <button onclick="back()">Назад</button>
+    <script>
+        function back() {
+            window.location.href = '/races/race/{{ race.id }}';
+        }
+    </script>
+</body>
+</html>
