@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Список отелей</h2>
+  <ul>
+    {% for hotel in hotels %}
+      <li>
+        <h3>{{ hotel.name }}</h3>
+        <p>Адрес: {{ hotel.address }}</p>
+        <p>Описание: {{ hotel.description }}</p>
+      </li>
+    {% empty %}
+      <li>Нет доступных отелей.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
