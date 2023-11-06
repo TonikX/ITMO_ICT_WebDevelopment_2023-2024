@@ -55,7 +55,7 @@ ROOT_URLCONF = 'lab_2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,6 +101,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'hotels.Visitor'
+LOGIN_REDIRECT_URL = 'hotel_list'
+LOGIN_URL = 'login'
 
 
 
