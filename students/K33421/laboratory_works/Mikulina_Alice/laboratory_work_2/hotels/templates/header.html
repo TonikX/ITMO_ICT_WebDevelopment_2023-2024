@@ -1,0 +1,45 @@
+<header>
+    <nav>
+        <ul>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid black;">
+                <div>
+                    <button onclick="window.location.href='/main'">
+                        Rooms
+                    </button>
+                </div>
+                <div>
+                    <button onclick="window.location.href='/main/hotels'">
+                        Hotels
+                    </button>
+                </div>
+                <div>
+                    {% if user.is_authenticated %}
+                        <button onclick="window.location.href='/profile/reservations'">
+                            My reservations
+                        </button>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if user.is_authenticated %}
+                        <button onclick="window.location.href='/auth/logout'">
+                            Log out
+                        </button>
+                    {% else %}
+                        <button onclick="window.location.href='/auth/login'">
+                            Log in
+                        </button>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if user.is_authenticated %}
+                        <img src="/media/{{ user.profile_picture }}" alt="Profile Photo" width="50" height="50" onclick="window.location.href='/profile'">
+                    {% else %}
+                        <button onclick="window.location.href='/auth/reg'">
+                            Create account
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </ul>
+    </nav>
+</header>

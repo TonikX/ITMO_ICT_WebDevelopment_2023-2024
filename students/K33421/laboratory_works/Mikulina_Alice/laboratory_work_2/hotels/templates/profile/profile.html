@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ user.username }}</h2>
+  <img src=/media/{{user.profile_picture}} width="200" height="200"/>
+  <h3>About me:</h3>
+  <li>{{ user.first_name }} {{ user.last_name }}</li>
+  <li>{{ user.email }}</li>
+  <li>{{ user.country }}</li>
+  <li>{{ user.about_info }}</li>
+  <p></p>
+  <button onclick="window.location.href='/auth/login'">
+    Log out
+  </button>
+  <p></p>
+  <button onclick="window.location.href='/profile/delete'">
+    Delete profile
+  </button>
+  <p></p>
+  <button onclick="window.location.href='/profile/edit'">
+    Edit profile
+  </button>
+{% endblock %}

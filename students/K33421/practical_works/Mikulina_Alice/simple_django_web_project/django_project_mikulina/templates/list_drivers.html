@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+  <meta charset="UTF-8">
+    <title>Drivers</title></head>
+<body>  
+
+    <h1>The best drivers ever:</h1>
+  
+    <div class="main">
+  
+        {% for driver in drivers %}
+
+        <strong>{{ driver.id }}. {{ driver.first_name }} {{ driver.last_name }}</strong>
+        <li>email: {{ driver.email }}</strong></li>
+        <li>birthdate: {{ driver.birthdate }}</strong></li>
+        <li>passport_number: {{ driver.passport_number }}</strong></li>
+        <li>address: {{ driver.address }}</strong></li>
+        <li>nationality: {{ driver.nationality }}</strong></li>
+        <hr/>
+
+        {% endfor %}
+      
+    </div>
+      
+</body>
+</html>
+
+

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="room-block" >
+        <table style="margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td style="width: 300px;">
+                <img src="/media/{{ hotel.thumbnail }}" alt="Hotel Image" width="700" height="500">
+            </td>
+            <td style="width: 300px;">
+                <h2>{{ hotel.name }}</h2>
+                <h3>{{ hotel.owner }}</h3>
+                <p>Location: {{ hotel.city }}, {{ hotel.country }}</p>
+                <p>About us: {{ hotel.about_info }}</p>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    <h2>Rooms:</h2>
+    {% for room in hotel.rooms %}
+        <div class="room-block" >
+            <table style="border-bottom: 2px solid black; margin-left: auto; margin-right: auto;">
+                <tbody>
+                <tr>
+                <td style="width: 300px;">
+                    <img src="/media/{{ room.thumbnail }}" alt="Room Image" width="350" height="200">
+                </td>
+                <td style="width: 300px;">
+                    <a href='/main/room/{{ room.id }}'><h3>{{ room.hotel.name }} ({{ room.get_type_display }})</h3></a>
+                    <p>Location: {{ room.hotel.city }}, {{ room.hotel.country }}</p>
+                    <p>Capacity: {{room.capacity}} guest(s)</p>
+                    <p>Cost: {{ room.price }}</p>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+    {% endfor %}
+    {% if hotel.guests %}
+        <h2>Residents over the last month:</h2>
+        {% for guest in hotel.guests %}
+            <a href='/user/{{ guest.id }}'><h3>{{ guest.first_name }} {{ guest.last_name }}</h3></a>
+            <p></p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

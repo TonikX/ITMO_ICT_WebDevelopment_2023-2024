@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+        <h2>This room is not available for the selected dates</h2>
+
+        <p><button onclick="window.location.href='/reservation/{{ room_id }}/create'">
+            Choose different dates
+        </button></p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for hotel in hotels %}
+    <div class="room-block" >
+        <table style="border-bottom: 2px solid black; margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td style="width: 300px;">
+                <img src="/media/{{ hotel.thumbnail }}" alt="Hotel Image" width="450" height="300">
+            </td>
+            <td style="width: 300px;">
+                <a href='/main/hotel/{{ hotel.id }}'><h3>{{ hotel.name }}</h3></a>
+                <p>Location: {{ hotel.city }}, {{ hotel.country }}</p>
+                <p>Owner: {{hotel.owner}}</p>
+                <p>About us: {{ hotel.about_info }}</p>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+    </div>
+    {% endfor %}
+{% endblock %}
