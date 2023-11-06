@@ -1,0 +1,20 @@
+{% extends 'hotels/main.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1 style="text-align: center;">Cancel Booking</h1>
+    <p><strong>Hotel:</strong> {{ booking.room.hotel.name }}</p>
+    <p><strong>Room:</strong> {{ booking.room.category }}</p>
+    <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
+    <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
+    <p><strong>Price:</strong> {{ booking.price }} rub</p>
+    <p><strong>Status:</strong> {{ booking.status }}</p>
+    
+    <p>Are you sure you want to cancel this booking? (This step can't be undone)</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Cancel Booking</button>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">No, Go Back</a>
+    </form>
+</div>
+{% endblock %}
