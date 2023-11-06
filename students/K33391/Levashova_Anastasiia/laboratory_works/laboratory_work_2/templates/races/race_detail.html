@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация о гонке: {{ race.title }}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Информация о гонке</h1>
+    <h2>Название: {{ race.title }}</h2>
+    <p>Дата: {{ race.date }}</p>
+    <p>Локация: {{ race.location }}</p>
+    <p>Описание: {{ race.description }}</p>
+
+    {% if registrations %}
+        <h2>Участники гонки (зарегистрированные):</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Гонщик</th>
+                    <th>Команда</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registration in registrations %}
+                    <tr>
+                        <td>{{ registration.racer.first_name }} {{ registration.racer.last_name }}</td>
+                        <td>{{ registration.racer.team_name }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">Для этой гонки нет зарегистрированных участников.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if race_results %}
+        <h2>Результаты гонки:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Гонщик</th>
+                    <th>Команда</th>
+                    <th>Описание</th>
+                    <th>Опыт</th>
+                    <th>Авто</th>
+                    <th>Позиция</th>
+                    <th>Время</th>
+                    <th>Максимальная скорость (км/ч)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in race_results %}
+                    <tr>
+                        <td>{{ result.racer.first_name }} {{ result.racer.last_name }}</td>
+                        <td>{{ result.racer.team_name }}</td>
+                        <td>{{ result.racer.participant_description }}</td>
+                        <td>{{ result.racer.experience }}</td>
+                        <td>{{ result.racer.car.brand }}, {{ result.racer.car.model }}</td>
+                        <td>{{ result.position }}</td>
+                        <td>{{ result.lap_time }}</td>
+                        <td>{{ result.top_speed }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">Для этой гонки нет результатов.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h2>Комментарии к гонке:</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>Автор: {{ comment.commentator.username }}</p>
+                <p>Дата: {{ comment.comment_date }}</p>
+                <p>Тип комментария: {{ comment.comment_type }}</p>
+                <p>Рейтинг: {{ comment.rating }}</p>
+                <p>{{ comment.comment_text }}</p>
+            </li>
+        {% empty %}
+            <li>Для этой гонки нет комментариев.</li>
+        {% endfor %}
+    </ul>
+
+    <h1></h1>
+    <button onclick="back()">Назад</button>
+    {% if user.is_authenticated %}
+        <button onclick="comments()">Добавить комментарии</button>
+    {% endif %}
+    <script>
+        function back() {
+            window.location.href = '/races';
+        }
+        function comments() {
+            window.location.href = '/races/race/add_comment/{{ race.id }}';
+        }
+    </script>
+</body>
+</html>
+

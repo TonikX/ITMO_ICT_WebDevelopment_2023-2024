@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список гонок</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список гонок</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата</th>
+                <th>Локация</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for race in races %}
+                <tr>
+                    <td>{{ race.title }}</td>
+                    <td>{{ race.date }}</td>
+                    <td>{{ race.location }}</td>
+                    <td>
+                        <a href="{% url 'race_detail' race.id %}">Подробнее</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">На данный момент нет доступных гонок.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1></h1>
+    <button onclick="back()">Назад</button>
+
+    <script>
+        function back() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

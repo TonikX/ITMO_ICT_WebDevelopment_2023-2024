@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+</head>
+<body>
+    <h1>Добро пожаловать на наш сайт Гонки.ru</h1>
+
+    <button onclick="showRaceInfo()">Информация о гонках</button>
+
+    {% if user.is_authenticated %}
+        <button onclick="registerForRace()">Зарегистрироваться на гонку</button>
+        <button onclick="registrationsList()">Ваши регистрации</button>
+        <button onclick="racerProfile()">Профиль гонщика</button>
+        <button onclick="logout()">Выйти</button>
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+        <button onclick="login()">Вход</button>
+        <button onclick="registration()">Регистрация</button>
+    {% endif %}
+
+    <script>
+        function showRaceInfo() {
+            window.location.href = '/races/';
+        }
+
+        function registerForRace() {
+            window.location.href = '/race_registration/';
+        }
+
+        function racerProfile() {
+            window.location.href = '/racer_profile/';
+        }
+
+        function registrationsList() {
+            window.location.href = '/registrations/';
+        }
+
+        function logout() {
+            window.location.href = '/logout/';
+        }
+
+        function login() {
+            window.location.href = '/login/';
+        }
+
+        function registration() {
+            window.location.href = '/register/';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Профиль гонщика</title>
+</head>
+<body>
+    <h1>Профиль гонщика</h1>
+    <p>*Если вы хотите участвовать в гонках, необходимо иметь заполненный профиль гонщика.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+        {{ car_form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <button onclick="back()">Назад</button>
+
+    <script>
+        function back() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
