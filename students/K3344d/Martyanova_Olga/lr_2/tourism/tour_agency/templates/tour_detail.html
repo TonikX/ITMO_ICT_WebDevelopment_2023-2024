@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Детали тура</h1>
+<p>Название тура: {{ tour.name }}</p>
+<a class="edit btn btn-primary" href="{% url 'booking' tour_id=tour.pk %}">Забронировать</a>
+<p>Страна: {{ country.country_name }}</p>
+<p>Город: {{ tour.city }}</p>
+<p>Продолжительность: {{ tour.duration }}</p>
+<p>Турагенство: {{ tour.tour_agency }}</p>
+<p>Описание тура: {{ tour.description }}</p>
+<p>Отзывы:</p>
+{% for review in reviews %}
+<div class="card mt-2">
+    <div class="card-header">
+        {{ review.tourist }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ review.rating }}</h5>
+        <p class="card-text">{{ review.text }}</p>
+    </div>
+    <div class="card-footer d-flex">
+        <p class="ms-1">Дата начала: {{ review.booking.selected_date }}</p>
+        <p class="ms-1">Продолжительность(ночей): {{ review.tour.duration }}</p>
+        <p class="ms-1">Категория отеля: {{ review.booking.selected_category }}*</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock%}

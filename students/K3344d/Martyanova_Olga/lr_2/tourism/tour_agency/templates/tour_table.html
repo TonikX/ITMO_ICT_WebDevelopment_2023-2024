@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="get">
+    {{ country_form.as_p }}
+    <button class="btn btn-primary" type="submit">Выбрать</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Тур</th>
+            <th>Пользователь</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.tour }}</td>
+                <td>{{ booking.tourist }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">Нет завершенных бронирований</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock%}

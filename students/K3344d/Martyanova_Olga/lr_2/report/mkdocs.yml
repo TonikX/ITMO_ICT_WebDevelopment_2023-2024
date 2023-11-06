@@ -1,0 +1,8 @@
+site_name: Отчет по лабораторной работе №2
+site_url: https://example.com
+nav:
+  - Задание: index.md
+  - Модели: models.md
+  - Представления: view.md
+  - Формы: forms.md
+  - Итоговый результат: result.md
