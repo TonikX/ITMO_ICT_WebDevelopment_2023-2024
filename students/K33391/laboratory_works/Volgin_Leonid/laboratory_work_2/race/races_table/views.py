@@ -130,3 +130,10 @@ def race_comments(request, race_id):
 def races_list(request):
     races = Race.objects.all()
     return render(request, "races_list.html", {"races": races})
+
+@login_required
+def delete_user(request):
+    if request.method == "POST":
+        request.user.delete()
+        return redirect("home")
+    return render(request, "delete_user.html")

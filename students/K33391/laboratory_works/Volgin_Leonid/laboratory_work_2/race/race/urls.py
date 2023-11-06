@@ -33,4 +33,5 @@ urlpatterns = [
      path("redact_racer/",views.redact_racer, name = "redact_racer"),
      path("races/comments/<int:race_id>/", views.race_comments, name="race_comments"),
      path("races/", views.races_list, name="races_list"),
+     path("profile/delete/", views.delete_user, name="delete_user"),
 ]
