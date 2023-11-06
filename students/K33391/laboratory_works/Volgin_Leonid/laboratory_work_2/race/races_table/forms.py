@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from . import models
 from django import forms
 # from .models import User
-from .models import User, Racer
+from .models import User, Racer, Comment
 
 
 class LoginForm(forms.Form):
@@ -18,3 +18,12 @@ class RacerForm(forms.ModelForm):
     class Meta:
         model = Racer
         fields = ["team", "car", "description", "experience", "klass"]
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name"]
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["comment_type", "rating", "text"]

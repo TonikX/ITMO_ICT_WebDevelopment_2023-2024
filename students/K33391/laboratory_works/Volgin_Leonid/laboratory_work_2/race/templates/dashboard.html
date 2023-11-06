@@ -7,28 +7,25 @@
 </head>
 <body>
 <div id="header">
-     <span class="logo">Select</span>
-    {% if request.user.is_authenticated %}
-        <ul class="menu">
-
-            <p><a href="{% url 'dashboard' %}">My dashboard</a></p>
-
-            <p><a href="#">Images</a></p>
-
-            <p><a href="#">People</a></p>
-        </ul>
-    {% endif %}
+    <div class="container mt-5">
     <span class="user">
-        {% if request.user.is_authenticated %}
-            Hello {{ request.user.first_name }},
-        <p><a href="{% url 'logout' %}">Logout</a></p>
-        {% else %}
-        <p><a href="{% url 'register' %}">Log-in</a></p>
-        <p><a href="{% url 'login' %}">Log-in</a></p>
-        {% endif %}
+            {{ request.user }}
+        <p><a href="{% url 'logout' %}" class="btn btn-primary mb-2">Logout</a></p>
+
     </span>
+    </div>
+    <div class="container mt-5">
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard.</p>
+    <p>Select an option:</p>
+        <p><a href="{% url 'races_list' %}" class="btn btn-primary">Race table</a></p>
+        <p><a href="{% url 'redact_user' %}" class="btn btn-primary mb-2">Redact user</a></p>
+        <p><a href="{% url 'change_password' %}" class="btn btn-primary mb-2">Change password</a></p>
+        {% if not has_racer %}
+        <p><a href="{% url 'registrate_racer' %}" class="btn btn-primary mb-2">Registrate a racer</a></p>
+        {% else %}
+        <p><a href="{% url 'redact_racer' %}" class="btn btn-primary mb-2">Redact a racer</a></p>
+        {% endif %}
+    </div>
 </div>
 </body>
 </html>

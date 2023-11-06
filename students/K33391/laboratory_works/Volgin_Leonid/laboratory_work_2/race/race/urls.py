@@ -28,4 +28,9 @@ urlpatterns = [
      path('home/', views.dashboard, name='dashboard'),
      path("registrate/", views.register, name="registrate"),
      path("registrate_racer/", views.register_racer, name="registrate_racer"),
+     path("redact_user/",views.redact_user, name = "redact_user"),
+     path("change_password/",views.change_password, name = "change_password"),
+     path("redact_racer/",views.redact_racer, name = "redact_racer"),
+     path("races/comments/<int:race_id>/", views.race_comments, name="race_comments"),
+     path("races/", views.races_list, name="races_list"),
 ]
