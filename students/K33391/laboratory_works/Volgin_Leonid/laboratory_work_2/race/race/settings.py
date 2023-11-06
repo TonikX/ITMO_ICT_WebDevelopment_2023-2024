@@ -31,19 +31,19 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
-LOGIN_URL = reverse_lazy('login')
-LOGOUT_URL = reverse_lazy('logout')
+#LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
+#LOGIN_URL = reverse_lazy('login')
+#LOGOUT_URL = reverse_lazy('logout')
 
-AUTH_USER_MODEL = 'races_app.User'
+AUTH_USER_MODEL = 'races_table.User'
 INSTALLED_APPS = [
-    'races_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'races_table',
 
 ]
 
