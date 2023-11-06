@@ -1,0 +1,31 @@
+<!-- carowner_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cars</title>
+</head>
+
+<body>
+    <ul>
+        <!-- Iterate over object_list -->
+        {% for field in object_list %}
+            <!-- Display Objects -->
+            <li>Гос номер: {{ field.govNumber }}</li>
+                </br>
+                <a href="/car/{{ field.id }}">Побробнее...</a></br>
+            <hr/>
+
+            <!-- If objet_list is empty  -->
+            {% empty %}
+            <li>No objects yet.</li>
+        {% endfor %}
+        <form action="/car/new/">
+            <button>Добавить</button>
+        </form>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- carowner_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarOwnersList</title>
+</head>
+
+<body>
+    <div class="main">
+        {% for data in dataset %}.
+            {{ data.username }}<br/>
+            </br>
+            <a href="/owner/{{ data.id }}">Побробнее...</a></br>
+        <hr/>
+        {% endfor %}
+    <form action="/owner/new/">
+        <button>Добавить</button>
+    </form>
+
+    </div>
+</body>
+</html>
