@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from races_table.forms import LoginForm, RegistrationForm
+from races_table.forms import LoginForm, RegistrationForm, RacerForm
 
 
 # Create your views here.
@@ -49,3 +49,25 @@ def home(request):
 def dashboard(request):
     return render(request, 'dashboard.html', {'section': 'dashboard'})
 
+@login_required
+def register_racer(request):
+    user = request.user
+    print(user.has_racer)
+    if user.has_racer:
+        return HttpResponse("You have already got a racer")
+    else:
+        if request.method == "POST":
+
+            racer_form = RacerForm(request.POST)
+            if  racer_form.is_valid():
+                print(user)
+                racer = racer_form.save(commit=False)
+                racer.user = user
+                racer.save()
+                user.has_racer = True
+                user.save()
+                return redirect("dashboard")
+        else:
+            racer_form = RacerForm()
+
+    return render(request,"register_racer.html", {"racer_form": racer_form})
