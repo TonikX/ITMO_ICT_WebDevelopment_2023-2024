@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Journal</title>
+</head>
+<body>
+    <h1>Journal</h1>
+    <table>
+        <tr>
+            <th>Homework</th>
+            <th>Student</th>
+            <th>Task Text</th>
+            <th>Submission Text</th>
+            <th>Grade</th>
+            <th>Graded By</th>
+        </tr>
+        {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.homework }}</td>
+                <td>{{ submission.student }}</td>
+                <td>{{ submission.homework.task_text }}</td>
+                <td>{{ submission.text_submission }}</td>
+                {% for grade in submission.grade_set.all %}
+                    <td>{{ grade.grade }}</td>
+                    <td>{{ grade.graded_by }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>Homework List</h1>
+    <ul>
+        {% for homework in homework_list %}
+            <li>{{ homework.task_text }} - {{ homework.deadline }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
