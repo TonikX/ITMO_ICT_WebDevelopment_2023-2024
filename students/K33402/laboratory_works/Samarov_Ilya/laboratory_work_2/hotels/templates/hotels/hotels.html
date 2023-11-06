@@ -1,0 +1,24 @@
+{% extends 'hotels/main.html' %}
+{% block content %}
+
+<h1 style="text-align:center">Hotels</h1>
+<div class="row">
+    {% for hotel in hotels %}
+    <div class="col">
+        <div class="card w-100">
+            <img src="{{ hotel.image.url }}" class="card-img-top" alt="{{ hotel.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ hotel.name }}</h5>
+                <p class="card-text">{{ hotel.small_description }}</p>
+            </div>
+            <div class="card-footer text-center">
+                <small class="text-body-secondary">{{ hotel.rating }} Stars</small>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="{% url 'hotelpage' hotel.name %}" class="btn btn-primary btn-block">Book</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

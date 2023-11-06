@@ -1,0 +1,71 @@
+{% load static %}
+
+<style>
+.navbar .nav-link {
+  color: white !important;
+  font-size: 22px;
+}
+
+.navbar .nav-item .nav-link:hover {
+  color: #014352 !important;
+}
+
+.navbar .nav-item.dropdown .nav-link {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu {
+  color: #343a40 !important;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: #76c6ff !important;
+  color: #343a40 !important;
+}
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #4cb4ff;">
+  <div class="container-fluid">
+      <a href="/">
+          <img src="{% static 'img/logo-transparent.png' %}" alt="logo" width="200" height="124">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                  <a class="nav-link active" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" href="/hotels">Hotels</a>
+              </li>
+              {% if user.is_authenticated %}
+              <!-- Display when user is logged in -->
+              <li class="nav-item dropdown">
+                  <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ user.username }}
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="/logout" style="color: crimson">Logout</a></li>
+                  </ul>
+              </li>
+              {% else %}
+              <!-- Display when user is not logged in -->
+              <li class="nav-item dropdown">
+                  <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Profile
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/login">Login</a></li>
+                      <li><a class="dropdown-item" href="/register">Register</a></li>
+                  </ul>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
