@@ -8,9 +8,6 @@ class Visitor(AbstractUser):
     birth_date = models.DateTimeField(null=True, blank=True)
     passport = models.CharField(max_length=25, null=True)
 
-    def __str__(self):
-        return self.passport
-
 
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
@@ -45,6 +42,9 @@ class Reservation(models.Model):
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+
+    def __str__(self):
+        return f'Reservation {self.user} - {self.id}'
 
 
 class Review(models.Model):
