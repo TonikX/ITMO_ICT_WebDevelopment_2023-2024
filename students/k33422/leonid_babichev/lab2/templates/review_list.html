@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available tours</title>
+</head>
+<body>
+  <div>
+      <h1>Reviews</h1>
+      <!-- Iterate over object_list -->
+      {% for review in object_list %}
+      <div>
+        <div>{{review.reservations.tourist.first_name}}</div>
+          <div>{{review.rating}} / 10</div>
+          <div>{{review.comment}}</div>
+      </div>
+      <br>
+
+      <!-- If objet_list is empty  -->
+      {% empty %}
+      <div>No objects yet.</div>
+      {% endfor %}
+  </div>
+</body>
+</html>

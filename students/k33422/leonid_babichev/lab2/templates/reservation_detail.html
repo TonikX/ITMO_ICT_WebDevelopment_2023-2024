@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View reservation</title>
+</head>
+<body>
+  <div>
+      <div>{{ reservation.tour.name }}</div>
+      <div>{{ reservation.tour.country }}</div>
+      <div>{{ reservation.start_date }}</div>
+      <div>{{ reservation.end_date }}</div>
+  </div>
+    <button onclick="window.location.href='/reservations/{{reservation.id}}/review'">Post your review</button>
+    <button onclick="window.location.href='/reservations/{{reservation.id}}/edit'">Edit</button>
+    <button onclick="window.location.href='/reservations/{{reservation.id}}/delete'">Delete</button>
+</body>
+</html>
