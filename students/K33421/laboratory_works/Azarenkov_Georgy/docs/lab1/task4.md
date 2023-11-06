@@ -18,7 +18,7 @@
 === "Сервер"
 
     ```Python title="server.py"
-    --8<-- "lab1/task5/server.py"
+    --8<-- "lab1/task4/server.py"
     ```
   
 === "Клиент"

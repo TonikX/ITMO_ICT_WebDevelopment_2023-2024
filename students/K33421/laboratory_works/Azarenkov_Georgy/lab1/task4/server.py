@@ -38,7 +38,10 @@ class Client:
 
                 self._try_receiving_and_broadcasting_message_from_remote_client()
 
-        except Exception:
+        except:
+            pass
+
+        finally:
             self._shot_down_self_gracefully()
 
     def _try_receiving_and_broadcasting_message_from_remote_client(self) -> None:
@@ -134,7 +137,7 @@ class Server:
             try:
                 client.send_message_to_client(message)
 
-            except KeyboardInterrupt:
+            except:
                 pass
 
 
