@@ -8,7 +8,7 @@ def http_response(body: str) -> bytes:
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-conn.bind(("localhost", 9090))
+conn.bind(("localhost", 9094))
 conn.listen(1)
 
 clientsocket, addr = conn.accept()

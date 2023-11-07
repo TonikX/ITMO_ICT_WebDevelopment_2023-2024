@@ -55,7 +55,10 @@ class HTTPServer():
         if method == 'POST':
             subj = params.get("subj")
             grade = params.get("grade")
-            self.Scores[subj] = grade
+            if self.Scores.get(subj):
+                self.Scores[subj].append(grade)
+            else:
+                self.Scores[subj] = [grade]
 
             return 200, self.generate_html(), "OK"
 

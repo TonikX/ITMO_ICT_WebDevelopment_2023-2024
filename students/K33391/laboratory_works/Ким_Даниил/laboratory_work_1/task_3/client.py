@@ -18,7 +18,7 @@ def read_http_body(response: bytes) -> str:
 
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("localhost", 9090))
+sock.connect(("localhost", 9094))
 
 data = socket_read_all(sock)
 body = read_http_body(data)

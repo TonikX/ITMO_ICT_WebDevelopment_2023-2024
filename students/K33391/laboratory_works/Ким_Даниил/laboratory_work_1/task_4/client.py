@@ -15,7 +15,7 @@ def send_messages():
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.connect(("localhost", 9090))
+server.connect(("localhost", 9097))
 
 get_mess_thread = threading.Thread(target=get_messages)
 get_mess_thread.start()

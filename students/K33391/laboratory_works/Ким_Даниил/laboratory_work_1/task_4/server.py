@@ -16,25 +16,25 @@ def send_everyone(message: str):
 
 def chat(user: User):
     while True:
-        try:
-            data = user.Conn.recv(1024)
-            print(data.decode('utf-8'))
-            if not data:
-                raise
+        data = user.Conn.recv(1024)
+        print(data.decode('utf-8'))
+        if not data:
+            raise
 
-            data = data.decode('utf-8')
-            if user.Name == "":
-                user.Name = data
-                send_everyone(f"{user.Name} joined the chat")
-                continue
+        data = data.decode('utf-8')
 
-            send_everyone(user.Name + ": " + data)
-
-        except (Exception,):
+        if data == "__out":
             users.remove(user)
             user.Conn.close()
             send_everyone(f"{user.Name} left the chat")
             break
+
+        if user.Name == "":
+            user.Name = data
+            send_everyone(f"{user.Name} joined the chat")
+            continue
+
+        send_everyone(user.Name + ": " + data)
 
 
 def start():
@@ -49,7 +49,7 @@ def start():
 users = []
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(("localhost", 9090))
+server.bind(("localhost", 9097))
 server.listen()
 
 start()

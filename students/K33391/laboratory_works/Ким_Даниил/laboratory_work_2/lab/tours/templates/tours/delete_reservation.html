@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить резервацию</title>
+</head>
+<body>
+    <h1>Удалить резервацию</h1>
+    <p>Вы уверены, что хотите удалить резервацию для тура "{{ reservation.tour.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить резервацию</button>
+    </form>
+    <a href="{% url 'reservations_list' %}">Отмена</a>
+</body>
+</html>

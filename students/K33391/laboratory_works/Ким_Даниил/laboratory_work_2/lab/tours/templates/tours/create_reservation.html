@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создать резервацию</title>
+</head>
+<body>
+    <h1>Создать новую резервацию</h1>
+    <form method="post" action="{% url 'create_reservation' %}">
+    {% csrf_token %}
+    <label for="tour">Выберите тур:</label>
+    <select id="tour" name="tour">
+        {% for tour in tours %}
+            <option value="{{ tour.id }}">{{ tour.title }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Создать резервацию</button>
+</form>
+    <a href="{% url 'reservations_list' %}">Вернуться к списку резерваций</a>
+</body>
+</html>
