@@ -52,3 +52,9 @@ nav:
       - lw1/task4.md
       - lw1/task5.md
       - lw1/conclusion.md
+  - "№2: Django web-server":
+      - lw2/task.md
+      - lw2/database_setup.md
+      - lw2/models.md
+      - lw2/forms.md
+      - lw2/views.md
