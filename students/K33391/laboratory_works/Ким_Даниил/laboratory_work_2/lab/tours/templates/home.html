@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to Our Tours</h1>
+
+    <h2>List of Tours</h2>
+    <ul>
+        {% for tour in tours %}
+            <li>
+                {{ tour.title }} - {{ tour.description }}
+                <form method="post" action="{% url 'add_review' tour.id %}">
+                    {% csrf_token %}
+                    {{ form.text }}
+                    {{ form.rating }}
+                    <button type="submit">Add Review</button>
+                </form>
+                <a href="{% url 'create_reservation' %}">Reserve Tour</a>
+            </li>
+        {% empty %}
+            <p>No tours available.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>

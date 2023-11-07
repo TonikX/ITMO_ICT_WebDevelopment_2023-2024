@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tours with Reservation Count</title>
+</head>
+<body>
+    <h1>Tours with Reservation Count</h1>
+    <table>
+        <tr>
+            <th>Tour Name</th>
+            <th>Reservation Count</th>
+        </tr>
+        {% for tour in tours_with_count %}
+        <tr>
+            <td>{{ tour.title }}</td>
+            <td>{{ tour.reservation_count }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No tours available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
