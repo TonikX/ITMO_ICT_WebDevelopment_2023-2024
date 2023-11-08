@@ -29,7 +29,9 @@
                 <td>{{ race.date }}</td>
                 <td>{{ race.winner }}</td>
                 <td><a href="{% url 'race_comments' race.id %}" class="btn btn-primary">Add comment</a></td>
+                {% if not race.id in race_connections %}
                 <td><a href="{% url 'create_race_connection' race.id %}" class = "btn btn-primary">Race registration</a></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

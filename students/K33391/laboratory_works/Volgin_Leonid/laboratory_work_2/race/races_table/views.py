@@ -129,7 +129,13 @@ def race_comments(request, race_id):
 @login_required
 def races_list(request):
     races = Race.objects.all()
-    return render(request, "races_list.html", {"races": races})
+    race_connections = RaceConnection.objects.filter(racer=request.user.racer).values("race")
+    #print(race_connections)
+    racer_races = []
+    for race_connection in race_connections:
+        racer_races.append(race_connection['race'])
+    #print(racer_races)
+    return render(request, "races_list.html", {"races": races, "race_connections": racer_races})
 
 @login_required
 def delete_user(request):
@@ -141,7 +147,7 @@ def delete_user(request):
 @login_required
 def create_race_connection(request,race_id):
     user = request.user
-    if  not(hasattr(user, "racer")):
+    if not(hasattr(user, "racer")):
         return HttpResponse("You have not got a racer")
     else:
             try:
