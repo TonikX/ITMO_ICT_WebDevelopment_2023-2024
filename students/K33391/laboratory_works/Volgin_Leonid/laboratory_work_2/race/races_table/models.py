@@ -37,6 +37,9 @@ class RaceConnection(models.Model):
     racer = models.ForeignKey(Racer, on_delete=models.CASCADE)
     race = models.ForeignKey(Race, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('racer', 'race')
+
 
 class Comment(models.Model):
     COMMENT_TYPES = (("cooperation", "вопрос о сотрудничестве"),

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from races_table.forms import LoginForm, RegistrationForm, RacerForm, UserUpdateForm, CommentForm
+from races_table.forms import LoginForm, RegistrationForm, RacerForm, UserUpdateForm, CommentForm, RaceConnectionForm
 
 # Create your views here.
 from races_table.models import Race, Comment
@@ -137,3 +137,22 @@ def delete_user(request):
         request.user.delete()
         return redirect("home")
     return render(request, "delete_user.html")
+
+@login_required
+def create_race_connection(request):
+    user = request.user
+    if  not(hasattr(user, "racer")):
+        return HttpResponse("You have not got a racer")
+    else:
+        if request.method == "POST":
+            race_connection_form = RaceConnectionForm(request.POST)
+            if race_connection_form.is_valid():
+                print(user)
+                race_connection = race_connection_form.save(commit=False)
+                race_connection.racer = user.racer
+                race_connection.save()
+                return redirect("dashboard")
+        else:
+            race_connection_form = RaceConnectionForm()
+
+    return render(request,"create_race_connection.html", {"race_connection_form": race_connection_form})

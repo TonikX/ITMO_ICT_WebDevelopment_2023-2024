@@ -34,4 +34,5 @@ urlpatterns = [
      path("races/comments/<int:race_id>/", views.race_comments, name="race_comments"),
      path("races/", views.races_list, name="races_list"),
      path("profile/delete/", views.delete_user, name="delete_user"),
+     path("create_race_connection/", views.create_race_connection, name="create_race_connection"),
 ]

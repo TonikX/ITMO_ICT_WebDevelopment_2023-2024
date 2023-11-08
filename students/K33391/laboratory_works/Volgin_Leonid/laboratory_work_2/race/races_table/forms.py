@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from . import models
 from django import forms
 # from .models import User
-from .models import User, Racer, Comment
+from .models import User, Racer, Comment, RaceConnection
 
 
 class LoginForm(forms.Form):
@@ -27,3 +27,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["comment_type", "rating", "text"]
+
+class RaceConnectionForm(forms.ModelForm):
+    class Meta:
+        model = RaceConnection
+        fields = ["race"]
