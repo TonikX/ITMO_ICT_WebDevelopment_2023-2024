@@ -35,4 +35,5 @@ urlpatterns = [
      path("races/", views.races_list, name="races_list"),
      path("profile/delete/", views.delete_user, name="delete_user"),
      path("create_race_connection/<int:race_id>/", views.create_race_connection, name="create_race_connection"),
+     path("delete_race_connection/<int:race_id>", views.delete_race_connection, name="delete_race_connection"),
 ]

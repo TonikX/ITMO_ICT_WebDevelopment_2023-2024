@@ -161,3 +161,8 @@ def create_race_connection(request,race_id):
                     return HttpResponse('You have already registrated')
             return redirect("races_list")
     return redirect("races_list")
+def delete_race_connection(request, race_id):
+    racer = request.user.racer
+    race = Race.objects.get(pk=race_id)
+    RaceConnection.objects.filter(racer= racer, race= race).delete()
+    return redirect("races_list")
