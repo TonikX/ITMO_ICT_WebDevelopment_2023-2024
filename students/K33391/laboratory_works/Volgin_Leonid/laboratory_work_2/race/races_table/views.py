@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from races_table.forms import LoginForm, RegistrationForm, RacerForm, UserUpdateForm, CommentForm, RaceConnectionForm
 
 # Create your views here.
-from races_table.models import Race, Comment
+from races_table.models import Race, Comment, RaceConnection
 
 
 def logout_view(request):
@@ -139,20 +139,19 @@ def delete_user(request):
     return render(request, "delete_user.html")
 
 @login_required
-def create_race_connection(request):
+def create_race_connection(request,race_id):
     user = request.user
     if  not(hasattr(user, "racer")):
         return HttpResponse("You have not got a racer")
     else:
-        if request.method == "POST":
-            race_connection_form = RaceConnectionForm(request.POST)
-            if race_connection_form.is_valid():
-                print(user)
-                race_connection = race_connection_form.save(commit=False)
-                race_connection.racer = user.racer
-                race_connection.save()
-                return redirect("dashboard")
-        else:
-            race_connection_form = RaceConnectionForm()
-
-    return render(request,"create_race_connection.html", {"race_connection_form": race_connection_form})
+            try:
+                    race_connection = RaceConnection()
+                    race = Race.objects.get(pk = race_id)
+                    race_connection.race = race
+                    race_connection.racer = user.racer
+                    race_connection.save()
+            except Exception as ex:
+                    print(ex)
+                    return HttpResponse('You have already registrated')
+            return redirect("races_list")
+    return redirect("races_list")

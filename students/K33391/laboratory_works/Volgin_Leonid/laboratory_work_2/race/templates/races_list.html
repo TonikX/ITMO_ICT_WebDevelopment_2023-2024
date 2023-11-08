@@ -18,6 +18,7 @@
                 <th scope="col">Data</th>
                 <th scope="col">Winner</th>
                 <th scope="col">Add comment</th>
+                <th scope="col">Race registration</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                 <td>{{ race.date }}</td>
                 <td>{{ race.winner }}</td>
                 <td><a href="{% url 'race_comments' race.id %}" class="btn btn-primary">Add comment</a></td>
+                <td><a href="{% url 'create_race_connection' race.id %}" class = "btn btn-primary">Race registration</a></td>
             </tr>
             {% endfor %}
         </tbody>
