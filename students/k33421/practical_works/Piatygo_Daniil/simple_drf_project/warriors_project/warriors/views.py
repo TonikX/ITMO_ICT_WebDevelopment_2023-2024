@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import serializers
 from warriors.models import *
+from drf_yasg.utils import swagger_auto_schema
+from django.utils.decorators import method_decorator
 
 
 class SkillSerializer(serializers.ModelSerializer):
@@ -12,15 +14,27 @@ class SkillSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+@method_decorator(
+    name="get", decorator=swagger_auto_schema(request_body=SkillSerializer)
+)
 class SkillList(APIView):
     """
-    Представление для просмотра списка скиллов или создания нового скилла.
+    Представление для просмотра списка скиллов.
     """
 
     def get(self, request):
         skills = Skill.objects.all()
         serializer = SkillSerializer(skills, many=True)
         return Response(serializer.data)
+
+
+@method_decorator(
+    name="post", decorator=swagger_auto_schema(request_body=SkillSerializer)
+)
+class SkillList(APIView):
+    """
+    Представление создания нового скилла.
+    """
 
     def post(self, request):
         serializer = SkillSerializer(data=request.data)
@@ -45,6 +59,9 @@ class WarriorSerializer(serializers.ModelSerializer):
         fields = ["id", "race", "name", "level", "profession", "skills"]
 
 
+@method_decorator(
+    name="get", decorator=swagger_auto_schema(request_body=WarriorSerializer)
+)
 class WarriorList(APIView):
     """
     Представление для вывода информации о всех войнах и их профессиях/скилах.
@@ -56,6 +73,9 @@ class WarriorList(APIView):
         return Response(serializer.data)
 
 
+@method_decorator(
+    name="get", decorator=swagger_auto_schema(request_body=WarriorSerializer)
+)
 class WarriorDetail(APIView):
     """
     Представление для вывода полной информации о войне по id, его профессиях и скилах,
@@ -67,10 +87,28 @@ class WarriorDetail(APIView):
         serializer = WarriorSerializer(warrior)
         return Response(serializer.data)
 
+
+@method_decorator(
+    name="delete", decorator=swagger_auto_schema(request_body=WarriorSerializer)
+)
+class WarriorDetail(APIView):
+    """
+    Удаление воина.
+    """
+
     def delete(self, request, pk):
         warrior = get_object_or_404(Warrior, pk=pk)
         warrior.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@method_decorator(
+    name="put", decorator=swagger_auto_schema(request_body=WarriorSerializer)
+)
+class WarriorDetail(APIView):
+    """
+    Редактирование воина.
+    """
 
     def put(self, request, pk):
         warrior = get_object_or_404(Warrior, pk=pk)
