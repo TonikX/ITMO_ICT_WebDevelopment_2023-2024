@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+
+{% block content%}
+    <h1>Оценки учащихся:</h1>
+    <table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+        <tr>
+            <th style="border: 1px solid black;">Домашняя работа</th>
+            <th style="border: 1px solid black;">Имя</th>
+            <th style="border: 1px solid black;">Фамилия</th>
+            <th style="border: 1px solid black;">Оценка</th>
+        </tr>
+        {% for journal in journals %}
+            <tr>
+                <td style="border: 1px solid black;">{{ journal.homework.subject }}</td>
+                <td style="border: 1px solid black;">{{ journal.student.first_name }}</td>
+                <td style="border: 1px solid black;">{{journal.student.last_name }}</td>
+                <td style="border: 1px solid black;">{{journal.grade }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>    
+{% endblock %}

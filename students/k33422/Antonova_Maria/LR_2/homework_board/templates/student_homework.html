@@ -1,0 +1,68 @@
+{% extends "base/base.html" %}
+
+{% block content%}
+<p>Вы вошли как >> {{ user.first_name }} {{ user.last_name }}</p>
+<h1 style="text-align: center;">Текущие и сданные домашние задания</h1>
+
+<table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+    <tr>
+        <th style="border: 1px solid black;">Заголовок</th>
+        <th style="border: 1px solid black;">Предмет</th>
+        <th style="border: 1px solid black;">Учитель</th>
+        <th style="border: 1px solid black;">Описание</th>
+        <th style="border: 1px solid black;">Срок сдачи</th>
+        <th style="border: 1px solid black;">Оценка</th>
+        <th style="border: 1px solid black;">Сдача</th>
+
+    </tr>
+    {% for journal in journals %}
+    <tr>
+        <td style="border: 1px solid black;">{{ journal.homework.title }}</td>
+        <td style="border: 1px solid black;">{{ journal.homework.subject }}</td>
+        <td style="border: 1px solid black;">{{ journal.homework.teacher }}</td>
+        <td style="border: 1px solid black;">{{ journal.homework.description }}</td>
+        <td style="border: 1px solid black;">{{ journal.homework.due_date }}</td>
+        <td style="border: 1px solid black;">{{ journal.grade }}</td>
+        <td style="border: 1px solid black;">
+            {% if not journal.grade %}
+            не сдано
+            {%else%}
+            сдано
+            {% endif%}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <form style="display: flex; flex-direction: column; width: 500px;" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<br>
+<br>
+<h1 style="text-align: center;">Все домашние задания</h1>
+<br>
+<br>
+<table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+    <tr>
+        <th style="border: 1px solid black;">Заголовок</th>
+        <th style="border: 1px solid black;">Предмет</th>
+        <th style="border: 1px solid black;">Учитель</th>
+        <th style="border: 1px solid black;">Описание</th>
+        <th style="border: 1px solid black;">Срок сдачи</th>
+    </tr>
+    {% for homework in homeworks %}
+    <tr>
+        <td style="border: 1px solid black;">{{ homework.title }}</td>
+        <td style="border: 1px solid black;">{{ homework.subject }}</td>
+        <td style="border: 1px solid black;">{{ homework.teacher }}</td>
+        <td style="border: 1px solid black;">{{ homework.description }}</td>
+        <td style="border: 1px solid black;">{{ homework.due_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<br>
+{% endblock %}
