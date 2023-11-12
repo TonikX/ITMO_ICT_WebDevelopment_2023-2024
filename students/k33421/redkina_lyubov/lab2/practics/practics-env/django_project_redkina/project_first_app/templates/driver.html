@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Имя: {{d.first_name}}, Фамилия: {{d.last_name}}</h3>
+
+<a href="{% url 'all-drivers' %}">Back to drivers</a>
+
+{% endblock %}

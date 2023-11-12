@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Cars</h1>
+<br/>
+<a href="{% url 'create-car' %}">Create car</a></br>
+<ul>
+
+{% for a in object_list %}
+    <li><a href="{% url 'get-car' a.pk %}">{{ a.car_number }}</a>
+        </li>
+
+{% endfor %}
+</ul>
+<a href="{% url 'homepage' %}">Return to home page</a>
+{% endblock %}

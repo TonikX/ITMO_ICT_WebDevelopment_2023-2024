@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>all registrations</title>
+</head>
+<body>
+    <h1>all registrations</h1>
+    <ul>
+        {% for registration in registrations %}
+            <li><a href="{% url 'registration_detail' registration.id %}">{{ registration.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

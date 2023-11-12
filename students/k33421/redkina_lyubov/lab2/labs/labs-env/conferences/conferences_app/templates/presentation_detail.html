@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ presentation.title }} details</title>
+</head>
+<body>
+    <h1>details on {{ presentation.title }}</h1>
+    <p>conference: {{ presentation.conference}}</p>
+    <p>author: {{ presentation.author.first_name }} {{ presentation.author.last_name }}</p>
+    <p>title: {{ presentation.title }}</p>
+    <p>approval status: {{ presentation.approved_pres }}</p>
+
+    <a href="{% url 'all_presentations' %}">back to all presentations</a>
+</body>
+</html>

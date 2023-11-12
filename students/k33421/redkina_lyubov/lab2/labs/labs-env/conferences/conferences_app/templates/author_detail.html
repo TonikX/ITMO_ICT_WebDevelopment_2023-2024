@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ author.first_name }} {{ author.last_name }} details</title>
+</head>
+<body>
+    <h1>details on {{ author.first_name }} {{ author.last_name }}</h1>
+    <p>occupation: {{ author.occupation }}</p>
+    <p>admin status: {{ author.is_admin }}</p>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

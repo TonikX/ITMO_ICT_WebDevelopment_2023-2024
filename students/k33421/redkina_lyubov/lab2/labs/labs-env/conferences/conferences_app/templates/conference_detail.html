@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ conference.title }} details</title>
+</head>
+<body>
+    <h1>details on {{ conference.title }}</h1>
+    <p>title: {{ conference.title }}</p>
+    <p>topic: {{ conference.topics }}</p>
+    <p>venue: {{ conference.venue }}</p>
+    <p>dates: from {{ conference.date_from }} till {{ conference.date_to }}</p>
+    <a href="{% url 'all_conferences' %}">back to all conferences</a>
+</body>
+</html>

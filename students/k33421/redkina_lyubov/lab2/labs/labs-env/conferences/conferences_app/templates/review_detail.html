@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ review.title }} details</title>
+</head>
+<body>
+    <h1>details on review #{{ review.id }}</h1>
+    <p>author: {{ review.author.first_name }} {{ review.author.last_name }}</p>
+    <p>conference: {{ review.conference }}</p>
+    <p>date: {{ review.comment_date }}</p>
+    <p>rating: {{ review.rating }}</p>
+    <p>review: {{ review.text }}</p>
+    <a href="{% url 'all_reviews' %}">Back to All Reviews</a>
+</body>
+</html>

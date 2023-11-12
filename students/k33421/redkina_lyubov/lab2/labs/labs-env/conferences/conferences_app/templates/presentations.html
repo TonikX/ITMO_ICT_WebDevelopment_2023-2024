@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>all presentations</title>
+</head>
+<body>
+    <h1>all presentations</h1>
+    <ul>
+        {% for presentation in presentations %}
+            <li><a href="{% url 'presentation_detail' presentation.id %}">{{ presentation.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

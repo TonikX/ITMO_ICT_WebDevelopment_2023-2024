@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>edit author</title>
+</head>
+<body>
+    <h1>edit author</h1>
+    <form method="post" action="{% url 'edit_author' pk=author.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">submit</button>
+    </form>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

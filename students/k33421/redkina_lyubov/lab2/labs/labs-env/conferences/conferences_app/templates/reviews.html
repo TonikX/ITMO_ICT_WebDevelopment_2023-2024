@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>all reviews</title>
+</head>
+<body>
+    <h1>all reviews</h1>
+    <ul>
+        {% for review in reviews %}
+            <li><a href="{% url 'review_detail' review.id %}">{{ review.id }} {{ review.rating }}Rating</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

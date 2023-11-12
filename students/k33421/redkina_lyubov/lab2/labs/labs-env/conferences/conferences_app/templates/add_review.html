@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>add new review</title>
+</head>
+<body>
+    <h1>add new review</h1>
+    <form method="post" action="{% url 'add_review' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">submit</button>
+    </form>
+    <a href="{% url 'home' %}">back to Home</a>
+</body>
+</html>

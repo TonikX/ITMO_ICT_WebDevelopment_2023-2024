@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>delete registration</title>
+</head>
+<body>
+    <h1>delete registration</h1>
+    <p>sure you want to delete this registration?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="yes, delete">
+    </form>
+    <a href="{% url 'all_registrations' %}">cancel</a>
+</body>
+</html>

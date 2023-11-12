@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>add new presentation</title>
+</head>
+<body>
+    <h1>add new presentation</h1>
+    <form method="post" action="{% url 'add_presentation' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">submit</button>
+    </form>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>

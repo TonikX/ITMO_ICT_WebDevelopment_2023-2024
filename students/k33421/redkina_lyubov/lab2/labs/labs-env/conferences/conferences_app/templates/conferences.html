@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>all conferences</title>
+</head>
+<body>
+    <h1>all conferences</h1>
+    <ul>
+        {% for conference in conferences %}
+            <li><a href="{% url 'conference_detail' conference.id %}">{{ conference.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'home' %}">back to home</a>
+</body>
+</html>
