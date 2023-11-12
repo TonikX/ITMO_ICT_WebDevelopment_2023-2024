@@ -1,22 +1,29 @@
 from django.shortcuts import render, redirect
 from .models import Owner, Car
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, View
-from .forms import OwnerForm, CarForm, CarDeleteByIdForm
+from .forms import OwnerForm, CarForm, CarDeleteByIdForm, UserProfileForm
 
 def add_owner(request):
     if request.method == 'POST':
-        form = OwnerForm(request.POST)
-        if form.is_valid():
-            form.save()
+        owner_form = OwnerForm(request.POST)
+        user_profile_form = UserProfileForm(request.POST)
+
+        if owner_form.is_valid() and user_profile_form.is_valid():
+            owner = owner_form.save(commit=False)
+            owner.user_profile = user_profile_form.save()
+            owner.save()
             return redirect('owner_list')
     else:
-        form = OwnerForm()
-    return render(request, 'add_owner.html', {'form': form})
+        owner_form = OwnerForm()
+        user_profile_form = UserProfileForm()
+
+    return render(request, 'add_owner.html', {'owner_form': owner_form, 'user_profile_form': user_profile_form})
 
 def owner_detail(request, owner_id):
-    owner = Owner.objects.get(pk=owner_id)  # Получить объект владельца по его идентификатору
-    return render(request, 'owner_detail.html', {'owner': owner})
+    owner = Owner.objects.get(pk=owner_id)
+    user_profile = owner.user_profile  # Получаем профиль пользователя
 
+    return render(request, 'owner_detail.html', {'owner': owner, 'user_profile': user_profile})
 def owner_list(request):
     owners = Owner.objects.all()
     return render(request, 'owner_list.html', {'owners': owners})

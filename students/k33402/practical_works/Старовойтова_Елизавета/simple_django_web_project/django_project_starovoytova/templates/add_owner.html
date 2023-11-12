@@ -6,9 +6,21 @@
 </head>
 <body>
     <h1>Форма ввода владельца</h1>
+
+    <!-- Форма для ввода данных владельца -->
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ owner_form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <br>
+
+    <!-- Форма для ввода данных профиля пользователя -->
+    <h2>Форма ввода профиля пользователя</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ user_profile_form.as_p }}
         <button type="submit">Сохранить</button>
     </form>
 </body>

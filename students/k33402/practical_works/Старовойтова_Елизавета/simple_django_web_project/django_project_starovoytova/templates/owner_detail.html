@@ -9,5 +9,13 @@
     <p>Имя: {{ owner.name }}</p>
     <p>Фамилия: {{ owner.surname }}</p>
     <p>Дата рождения: {{ owner.birthday_date }}</p>
+
+    <!-- Добавленный код для атрибутов профиля -->
+    {% if user_profile %}
+        <h2>Информация о пользователе</h2>
+        <p>Номер паспорта: {{ user_profile.passport_number }}</p>
+        <p>Домашний адрес: {{ user_profile.home_address }}</p>
+        <p>Национальность: {{ user_profile.nationality }}</p>
+    {% endif %}
 </body>
 </html>
