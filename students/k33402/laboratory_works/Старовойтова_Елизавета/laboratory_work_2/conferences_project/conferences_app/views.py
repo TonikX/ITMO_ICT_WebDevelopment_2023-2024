@@ -55,7 +55,6 @@ class WriteCommentView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Получение объекта Conference по его id (pk)
         context['conference'] = get_object_or_404(Conference, pk=self.kwargs['pk'])
         return context
 
@@ -71,7 +70,7 @@ class WriteCommentView(CreateView):
 class RegistrationView(CreateView):
     form_class = RegistrationForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('login')  # Указываем URL для перенаправления после успешной регистрации
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         response = super().form_valid(form)
