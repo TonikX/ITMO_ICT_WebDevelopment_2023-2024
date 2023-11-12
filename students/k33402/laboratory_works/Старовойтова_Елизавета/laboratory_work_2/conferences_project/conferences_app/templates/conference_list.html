@@ -1,0 +1,11 @@
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <h2>Список конференций</h2>
+        <ul>
+            {% for conference in conferences %}
+                <li><a href="{% url 'conference_detail' pk=conference.pk %}">{{ conference.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
