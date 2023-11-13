@@ -1,0 +1,7 @@
+<!-- cancel_reservation.html -->
+<h1>Cancel Reservation</h1>
+<p>Are you sure you want to cancel your reservation for {{ reservation.hotel.name }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirm Cancellation</button>
+</form>

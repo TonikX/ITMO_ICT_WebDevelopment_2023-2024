@@ -1,0 +1,15 @@
+<!-- make_reservation.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Make Reservation</title>
+  </head>
+  <body>
+    <h1>Make a Reservation</h1>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Submit Reservation</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ hotel.name }} - Hotel Detail</title>
+  </head>
+  <body>
+    <h1>{{ hotel.name }}</h1>
+    <p><strong>Owner:</strong> {{ hotel.owner }}</p>
+    <p><strong>Address:</strong> {{ hotel.address }}</p>
+    <p><strong>Description:</strong> {{ hotel.description }}</p>
+    <p><strong>Room Types:</strong> {{ hotel.room_types }}</p>
+    <p><strong>Price:</strong> ${{ hotel.price }}</p>
+    <p><strong>Capacity:</strong> {{ hotel.capacity }} guests</p>
+    <p><strong>Amenities:</strong> {{ hotel.amenities }}</p>
+
+    {% if user.is_authenticated %}
+
+    <form method="post" action="{% url 'make_reservation' hotel.id %}">
+      {% csrf_token %}
+      <label for="check_in_date">Check-In Date:</label>
+      <input type="date" name="check_in_date" required />
+      <label for="check_out_date">Check-Out Date:</label>
+      <input type="date" name="check_out_date" required />
+      <label for="num_guests">Number of Guests:</label>
+      <input type="number" name="num_guests" required />
+      <label for="additional_notes">Additional Notes:</label>
+      <textarea name="additional_notes" rows="4" cols="50"></textarea>
+      <button type="submit">Book Now</button>
+    </form>
+    {% endif %}
+    <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
+  </body>
+</html>

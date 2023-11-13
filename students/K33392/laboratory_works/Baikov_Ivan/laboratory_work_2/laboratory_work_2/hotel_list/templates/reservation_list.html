@@ -1,0 +1,18 @@
+<!-- reservation_list.html -->
+<h1>Your Reservations</h1>
+<ul>
+  {% for reservation in reservations %}
+  <li>
+    <strong>Hotel:</strong> {{ reservation.hotel.name }}<br />
+    <strong>Check-in Date:</strong> {{ reservation.check_in_date }}<br />
+    <strong>Check-out Date:</strong> {{ reservation.check_out_date }}<br />
+    <strong>Num Guests:</strong> {{ reservation.num_guests }}<br />
+    <strong>Additional Notes:</strong><br />
+    {{ reservation.additional_notes }}<br />
+    <a href="{% url 'cancel_reservation' reservation.id %}">Cancel Reservation</a>
+  </li>
+  {% empty %}
+  <li>No reservations found.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'hotel_list' %}">Go to Main Page</a>

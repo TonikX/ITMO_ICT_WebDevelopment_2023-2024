@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hotel Listing</title>
+  </head>
+  <body>
+    <h1>Hotels</h1>
+    <ul>
+      {% for hotel in hotels %}
+      <li>
+        <a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div>
+      {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}!</p>
+      <a href="{% url 'logout' %}">Logout</a>
+      <a href="{% url 'reservation_list' %}">Check reservations</a>
+      {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </div>
+  </body>
+</html>
