@@ -1,14 +1,35 @@
+<!-- C:\WEBDJANGO\myproject\myapp\templates\tour_list.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Список туров</title>
+    <title>Tour List</title>
 </head>
 <body>
-    <h1>Список туров</h1>
-    <ul>
-        {% for tour in tours %}
-        <li>{{ tour.name }}</li>
-        {% endfor %}
-    </ul>
+
+<h2>Tour List</h2>
+
+<!-- Отображение доступных туров -->
+{% for tour in tours %}
+    <h3>{{ tour.title }}</h3>
+    <p>{{ tour.description }}</p>
+    <p>Period: {{ tour.period }}</p>
+    <p>Payment Conditions: {{ tour.payment_conditions }}</p>
+
+    <!-- Форма для резервирования тура -->
+    <form method="post" action="{% url 'reserve_tour' tour.id %}">
+        {% csrf_token %}
+        <button type="submit">Reserve</button>
+    </form>
+
+    <!-- Форма для покупки тура -->
+    <form method="post" action="{% url 'buy_tour' tour.id %}">
+        {% csrf_token %}
+        <button type="submit">Buy</button>
+    </form>
+{% endfor %}
+
+<!-- Ссылка на страницу с проданными турами -->
+<a href="{% url 'sold_tours' %}">Your Sold Tours</a>
+
 </body>
 </html>

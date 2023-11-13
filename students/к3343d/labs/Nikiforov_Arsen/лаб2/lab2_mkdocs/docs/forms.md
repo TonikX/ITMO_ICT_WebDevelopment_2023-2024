@@ -1,3 +1,4 @@
+```python
 from django import forms
 from .models import Reservation, Review
 from django.contrib.auth.forms import UserCreationForm
@@ -35,3 +36,7 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['text', 'rating']
+
+
+
+```

@@ -1,39 +1,7 @@
-# C:\WEBDJANGO\myproject\myapp\views.py
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
-from django.contrib import messages
-from .models import Tour, Reservation, Review
-from .forms import ReservationForm, ReviewForm, RegistrationForm
-from .forms import RegistrationForm
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login as auth_login
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from .models import TourReservation
-from django.shortcuts import render, redirect
-from .models import Tour, Reservation
-from .forms import ReservationForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .models import Tour, Reservation, Review
-from .forms import ReservationForm, ReviewForm
-from .models import Tour, Review
-from .forms import ReviewForm
-from .models import SoldTour
-from .forms import SoldTourForm
-from .models import SoldTour
-from .forms import SoldTourForm
-from django.contrib import messages
-from .models import Tour, SoldTour
-from .forms import ReservationForm, SoldTourForm
-from .models import SoldTour, Tour
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import SoldTour, Tour
+Этот файл необходим для обработки HTTP-запросов, взаимодействия с базой данных и формирования HTTP-ответов, что позволяет представлять данные в виде веб-страниц и взаимодействовать с пользовательским интерфейсом.
+
+```python
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Tour, SoldTour
@@ -347,3 +315,5 @@ def review_tour(request, tour_id):
 def user_reservations(request):
     reservations = Reservation.objects.filter(user=request.user)
     return render(request, 'user_reservations.html', {'reservations': reservations})
+
+```

@@ -1,0 +1,33 @@
+<!-- templates/myapp/sold_tours.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sold Tours</title>
+</head>
+<body>
+
+<h2>Sold Tours</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Buyer</th>
+            <th>Tour</th>
+            <th>Sale Date</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sold_tour in sold_tours %}
+            <tr>
+                <td>{{ sold_tour.buyer.username }}</td>
+                <td>{{ sold_tour.tour.title }}</td>
+                <td>{{ sold_tour.sale_date }}</td>
+                <td>{{ sold_tour.price }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
