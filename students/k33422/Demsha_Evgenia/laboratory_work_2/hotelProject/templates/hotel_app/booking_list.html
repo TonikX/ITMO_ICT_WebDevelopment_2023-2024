@@ -1,0 +1,16 @@
+{% extends "header.html" %}
+{% block content %}
+
+<span><h1 style="margin-left: 40px">Bookings</h1>
+<ul>
+{% for booking in object_list %}
+<p><strong>{{ booking.room.type }} in {{ booking.room.hotel.city }}, {{ booking.room.hotel.country }}</strong>
+    <a href="/{{ booking.room.hotel.city }}/rooms/{{ booking.room.type }}/review">Leave review</a></p>
+{{ booking.date_start }} - {{ booking.date_end }}<br>
+<br>
+{% empty %}
+No bookings yet
+{% endfor %}
+</ul>
+</span>
+{% endblock %}
