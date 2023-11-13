@@ -1,20 +1,23 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render
 from msilib.schema import ListView
 from django.http import HttpResponseForbidden
-from .models import Hotel, Reservation,Room, Comment
+from .models import Hotel, Reservation, Room, Comment
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView, FormView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .form import RegisterForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-#главная страница
+
+
+# главная страница
 def main_page(request):
     return render(request, 'main_page.html')
 
 
-#для реистрации гостей
+# для реистрации гостей
 
 def registerPage(requset):
     form = RegisterForm
@@ -28,10 +31,10 @@ def registerPage(requset):
     context = {'form': form}
     return render(requset, 'register_guests.html', context)
 
-#вход в аккаунт
+
+# вход в аккаунт
 
 def loginPage(request):
-
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -46,17 +49,19 @@ def loginPage(request):
 
     return render(request, 'login.html', context)
 
-#выход из аккаунта
+
+# выход из аккаунта
 class Logout(LogoutView):
-    template_name='logout.html'
+    template_name = 'logout.html'
 
 
-#просмотр всех номеров
+# просмотр всех номеров
 class RoomsList(ListView):
     model = Room
     template_name = 'list_rooms.html'
 
-#бронирование
+
+# бронирование
 class BookingCreateView(LoginRequiredMixin, CreateView):
     model = Reservation
     fields = ['room', 'arrival_date', 'departure_date']
@@ -68,21 +73,22 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
         return super(BookingCreateView, self).form_valid(form)
 
 
-#просмотр бронирований пользователя
+# просмотр бронирований пользователя
 def user_book(request):
     need_book = Reservation.objects.filter(guest=request.user)
     current_book = {"object_list": need_book}
     return render(request, 'users_bookings.html', current_book)
 
 
-#редактирование брони
+# редактирование брони
 class UpdateBooking(UpdateView):
     model = Reservation
     fields = ['room', 'arrival_date', 'departure_date']
     template_name = 'update_book.html'
     success_url = '/users_bookings/'
 
-#удаление брони
+
+# удаление брони
 class DeleteBooking(LoginRequiredMixin, DeleteView):
     model = Reservation
     template_name = 'del_book.html'
@@ -95,7 +101,8 @@ class DeleteBooking(LoginRequiredMixin, DeleteView):
         else:
             return HttpResponseForbidden("You can't cancel this booking")
 
-#написать комментарий
+
+# написать комментарий
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['reservation', 'text', 'rate']
@@ -103,13 +110,15 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     success_url = '/all_comments/'
 
     def form_valid(self, form):
-        form.instance.guest = User.objects.get(username = self.request.user.username)
+        form.instance.guest = User.objects.get(username=self.request.user.username)
         return super(CommentCreateView, self).form_valid(form)
 
-#посмотреть все комментарии
+
+# посмотреть все комментарии
 def all_comments(request):
     list_comments = {"object_list": Comment.objects.all()}
     return render(request, 'all_comments.html', list_comments)
+
 
 # #таблица гостей отелей
 # def get_hotel(request):
