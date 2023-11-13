@@ -4,13 +4,18 @@ from .forms import UserRegistrationForm, ReservationForm, ReviewForm
 from .models import Hotel, RoomType, Reservation, Review
 from datetime import datetime, timedelta
 
+
+def starting_page(request):
+    hotels = Hotel.objects.all()
+    return render(request, 'starting_page.html', {'hotels':hotels})
+
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('hotel_list')
+            return redirect('starting_page')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
