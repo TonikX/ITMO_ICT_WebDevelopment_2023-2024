@@ -9,6 +9,15 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# Cериализатор производителя с выручкой
+class ManufacturerWithIncomeSerializer(serializers.ModelSerializer):
+    income = serializers.DecimalField(decimal_places=2, max_digits=30, validators=[MinValueValidator(0)])
+
+    class Meta:
+        model = Manufacturer
+        fields = ["name", "address", "ceo", "establishment_date", "income"]
+
+
 # Cериализатор типа товара
 class ProductTypeSerializer(serializers.ModelSerializer):
     units = serializers.ChoiceField(choices=ProductType.units_types)
@@ -23,6 +32,18 @@ class BrokerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Broker
         fields = "__all__"
+
+
+# Cериализатор брокера с зарплатой
+class BrokerWithSalarySerializer(serializers.ModelSerializer):
+    salary = serializers.SerializerMethodField()
+
+    def get_salary(self, instance):
+        return instance.average_salary
+
+    class Meta:
+        model = Broker
+        fields = ["first_name", "last_name", "telephone", "company", "salary"]
 
 
 # Cериализатор товара для просмотра

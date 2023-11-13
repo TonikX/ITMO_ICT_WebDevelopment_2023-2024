@@ -1,4 +1,5 @@
 import pytz
+from django.db.models import Sum
 from rest_framework.views import APIView, Response
 from rest_framework.generics import (CreateAPIView, ListAPIView, RetrieveAPIView,
                                      RetrieveDestroyAPIView, RetrieveUpdateAPIView)
@@ -180,13 +181,10 @@ class ProductsByTypeAndDateAPIView(APIView):
     def get(self, request):
         date_from = localize_isodate(request.query_params.get('date_from'))
         date_until = localize_isodate(request.query_params.get('date_until'))
-        consignments = Consignment.objects.filter(opening_date__range=(date_from, date_until))
-        prod_cons = ProductInConsignment.objects.filter(consignment__in=consignments)
-        pairs = {}
-        for pc in prod_cons:
-            pairs[pc.product.type] = pairs.get(pc.product.type, 0) + pc.amount
-        data = [{"ProductType": ProductTypeSerializer(key).data, "Count": value} for key, value in pairs.items()]
-        return Response({"ProductTypeCounts": sorted(data, key=lambda x: -x["Count"])})
+        data = ProductInConsignment.objects.filter(consignment__opening_date__range=(date_from, date_until))\
+            .values('product__type__id', 'product__type__name')\
+            .annotate(count=Sum('amount')).order_by('-count')
+        return Response({"ProductTypeCounts": data})
 
 
 # Найти фирму-производителя товаров, которая за заданный период времени
@@ -196,14 +194,23 @@ class TopManufacturerByDateAPIView(APIView):
     def get(self, request):
         date_from = localize_isodate(request.query_params.get('date_from'))
         date_until = localize_isodate(request.query_params.get('date_until'))
-        consignments = Consignment.objects.filter(opening_date__range=(date_from, date_until), status='s')
-        prod_cons = ProductInConsignment.objects.filter(consignment__in=consignments)
+        prod_cons = ProductInConsignment.objects.filter(consignment__opening_date__range=(date_from, date_until),
+                                                        consignment__status='s')
         pairs = {}
         for pc in prod_cons:
             pairs[pc.product.manufacturer] = (pairs.get(pc.product.manufacturer.name, 0) +
                                               pc.amount*pc.product.price)
-        data = [{"Manufacturer": ManufacturerSerializer(key).data, "Income": value} for key, value in pairs.items()
+        """
+        #data = [{"Manufacturer": ManufacturerSerializer(key).data, "Income": value} for key, value in pairs.items()
                 if value == max(pairs.values())]
+        """
+        data = []
+        for key, value in pairs.items():
+            if value == max(pairs.values()):
+                base_dict = ManufacturerSerializer(key).data
+                base_dict['income'] = value
+                data.append(base_dict)
+
         return Response({"TopPerformingManufacturer": data})
 
 
@@ -231,7 +238,6 @@ class ExpiredProductsAPIView(ListAPIView):
 class BrokerSalaryByCompanyAPIView(APIView):
     def get(self, request):
         company = request.query_params.get('company')
-        brokers = Broker.objects.filter(company=company)
-        data = [{"Broker": BrokerSerializer(b).data, "Salary": b.average_salary} for b in brokers]
-        return Response({f"BrokersFrom{company}": sorted(data, key=lambda x: -x["Salary"])})
-
+        queryset = Broker.objects.filter(company=company)
+        serializer = BrokerWithSalarySerializer(queryset, many=True)
+        return Response({f"BrokersFrom{company}": sorted(serializer.data, key=lambda x: -x["salary"])})
