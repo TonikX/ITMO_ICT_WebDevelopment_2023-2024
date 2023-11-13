@@ -48,3 +48,4 @@
 
     --8<-- "laboratory_work_2/hotelProject/hotel_app/views.py:11:27"
     ```
+
