@@ -9,9 +9,10 @@ class Hotel(models.Model):
     city = models.CharField(max_length=30)
     address = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, null=True, blank=True)
+    image = models.ImageField()
 
     def __str__(self):
-        return f'{self.name} in {self.city}'
+        return f'{self.city}'
 
 
 class Room(models.Model):
@@ -24,6 +25,7 @@ class Room(models.Model):
     description = models.CharField(max_length=1000)
     type = models.CharField(max_length=10, choices=TYPE_ROOM)
     cost = models.IntegerField()
+    image = models.ImageField()
     guest = models.ManyToManyField(User, through='Booking')
 
     def __str__(self):
