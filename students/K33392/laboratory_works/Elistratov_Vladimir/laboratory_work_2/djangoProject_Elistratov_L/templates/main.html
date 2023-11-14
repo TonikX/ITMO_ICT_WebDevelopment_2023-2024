@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/indexMyStyle.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <header class="rounded bg-dark p-4 text-light">
+        <div class="row mb-5">
+            <div class="col-12">
+                <button class="btn btn-lg btn-primary" onclick="location.href='registration/';">Регистрация</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-lg btn-primary" onclick="location.href='login/';">Вход</button>
+            </div>
+        </div>
+    </header>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
