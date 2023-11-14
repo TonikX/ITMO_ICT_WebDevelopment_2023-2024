@@ -1,3 +1,8 @@
+# Формы 
+Формы в Django — это классы, которые описывают данные, вводимые пользователем. Из них собираются формы на стороне frontend-а. Они хранятся в файле forms.py внутри приложения.
+
+В рамках данной лабораторной работы структура этого файла следующая:
+``` Python
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import Job, User
@@ -31,3 +36,6 @@ class UserForm(ModelForm):
             'username': forms.TextInput(attrs={'placeholder': 'логин', "title": "логин"}),
             'bio': forms.TextInput(attrs={'placeholder': 'био', "title": "био"}),
         }
+
+```
+

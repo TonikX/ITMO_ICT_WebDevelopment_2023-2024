@@ -1,3 +1,6 @@
+# Модели 
+Модели в Django — это классы, которые описывают структуру данных. Они хранятся в файле models.py внутри приложения. В рамках данной лабораторной работы структура этого файла следующая:
+``` Python
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -91,3 +94,5 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+```
