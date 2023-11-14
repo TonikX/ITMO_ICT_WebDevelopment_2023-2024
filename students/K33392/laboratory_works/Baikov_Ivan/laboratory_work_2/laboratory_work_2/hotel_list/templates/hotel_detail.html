@@ -29,6 +29,29 @@
       <button type="submit">Book Now</button>
     </form>
     {% endif %}
+    <!-- hotel_detail.html -->
+    <h1>{{ hotel.name }}</h1>
+    <!-- Display hotel details here -->
+
+    {% if user.is_authenticated %} {% if user_has_reservation %}
+    <a href="{% url 'leave_review' hotel.id %}">Leave a Review</a>
+    {% endif %} {% endif %}
+
+    <h2>Reviews</h2>
+    <ul>
+      {% for review in hotel.review_set.all %}
+      <li>
+        <p>Review by {{ review.user.username }}</p>
+        <p>Check-in Date: {{ review.check_in_date }}</p>
+        <p>Check-out Date: {{ review.check_out_date }}</p>
+        <p>Rating: {{ review.rating }}</p>
+        <p>{{ review.review_text }}</p>
+      </li>
+      {% empty %}
+      <li>No reviews available.</li>
+      {% endfor %}
+    </ul>
+
     <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
   </body>
 </html>

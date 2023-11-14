@@ -11,8 +11,15 @@ def hotel_list(request):
     return render(request, 'hotel_list.html', {'hotels': hotels})
 
 def hotel_detail(request, hotel_id):
-    hotel = get_object_or_404(Hotel, pk=hotel_id)
-    return render(request, 'hotel_detail.html', {'hotel': hotel})
+    hotel = Hotel.objects.get(id=hotel_id)
+    user_has_reservation = Reservation.objects.filter(user=request.user, hotel=hotel).exists()
+    
+    context = {
+        'hotel': hotel,
+        'user_has_reservation': user_has_reservation,
+    }
+    
+    return render(request, 'hotel_detail.html', context)
 
 def user_login(request):
     if request.method == 'POST':
@@ -89,6 +96,12 @@ def leave_review(request, hotel_id):
             review = form.save(commit=False)
             review.user = request.user
             review.hotel = hotel
+
+            reservation = Reservation.objects.filter(user=request.user, hotel=hotel).latest('check_in_date')
+
+            review.check_in_date = reservation.check_in_date
+            review.check_out_date = reservation.check_out_date
+
             review.save()
             # Handle successful review submission, e.g., redirect to the hotel's detail page
             return redirect('hotel_detail', hotel_id=hotel_id)

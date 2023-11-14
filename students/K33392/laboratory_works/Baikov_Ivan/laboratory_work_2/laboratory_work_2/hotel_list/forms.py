@@ -16,7 +16,8 @@ class ReservationForm(forms.ModelForm):
         model = Reservation
         fields = ['check_in_date', 'check_out_date', 'num_guests', 'additional_notes']
 
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['rating', 'review_text', 'additional_comments']
+        fields = ['review_text', 'rating']  
