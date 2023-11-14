@@ -13,6 +13,7 @@ urlpatterns = [
     path('hotel/<int:hotel_id>/reserve/', views.make_reservation, name='make_reservation'),
     path('reservation_confirmation/', views.reservation_confirmation, name='reservation_confirmation'),
     path('admin/', admin.site.urls),
+    path('last_month_guests/', views.last_month_guests, name='last_month_guests'),
     path('admin_login/', LoginView.as_view(), name='login'),
     path('admin_logout/', LogoutView.as_view(), name='logout'),
     path('login/', views.user_login, name='login'),

@@ -4,7 +4,7 @@ from .models import Hotel, Reservation, Review
 from .forms import ReservationForm, ReviewForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from datetime import date, timedelta
 
 def hotel_list(request):
     hotels = Hotel.objects.all()
@@ -86,6 +86,15 @@ def cancel_reservation(request, reservation_id):
 
     return render(request, 'cancel_reservation.html', {'reservation': reservation})
 
+def last_month_guests(request):
+    # Calculate the date for one month ago
+    one_month_ago = date.today() - timedelta(days=30)
+    
+    # Query the reservations for the last month
+    guests = Reservation.objects.filter(check_in_date__gte=one_month_ago)
+    
+    return render(request, 'last_month_guests.html', {'guests': guests})
+    
 @login_required
 def leave_review(request, hotel_id):
     hotel = Hotel.objects.get(id=hotel_id)

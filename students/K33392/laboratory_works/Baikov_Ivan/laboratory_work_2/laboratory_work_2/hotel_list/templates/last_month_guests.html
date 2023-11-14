@@ -1,0 +1,31 @@
+<!-- last_month_guests.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Last Month's Guests</title>
+  </head>
+  <body>
+    <h1>Last Month's Guests</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Guest Name</th>
+          <th>Hotel</th>
+          <th>Check-in Date</th>
+          <th>Check-out Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for guest in guests %}
+        <tr>
+          <td>{{ guest.user.username }}</td>
+          <td>{{ guest.hotel.name }}</td>
+          <td>{{ guest.check_in_date }}</td>
+          <td>{{ guest.check_out_date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

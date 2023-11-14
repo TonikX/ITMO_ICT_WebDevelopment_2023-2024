@@ -36,7 +36,8 @@
     {% if user.is_authenticated %} {% if user_has_reservation %}
     <a href="{% url 'leave_review' hotel.id %}">Leave a Review</a>
     {% endif %} {% endif %}
-
+    <a href="{% url 'last_month_guests' %}">Last Month's Guests</a>
+    <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
     <h2>Reviews</h2>
     <ul>
       {% for review in hotel.review_set.all %}
@@ -51,7 +52,5 @@
       <li>No reviews available.</li>
       {% endfor %}
     </ul>
-
-    <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
   </body>
 </html>
