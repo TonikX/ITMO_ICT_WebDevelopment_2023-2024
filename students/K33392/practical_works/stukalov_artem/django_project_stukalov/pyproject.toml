@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "lab-1"
+name = "django-project-stukalov"
 version = "0.1.0"
 description = ""
 authors = ["TUTOR03 <stukalov.dev@gmail.com>"]
@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-loguru = "^0.7.1"
+django = "^4.2.6"
 
 
 [build-system]

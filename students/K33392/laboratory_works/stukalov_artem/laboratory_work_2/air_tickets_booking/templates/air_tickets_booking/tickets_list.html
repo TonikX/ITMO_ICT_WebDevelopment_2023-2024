@@ -1,0 +1,29 @@
+{% extends 'air_tickets_booking/base.html' %} {% block content %}
+
+<h1>Ваши билеты</h1>
+
+<table class="table table-striped table-hover mb-5">
+  <thead>
+    <tr>
+      <th scope="col">Рейс</th>
+      <th scope="col">Место</th>
+      <th scope="col">Действия</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for ticket in tickets %}
+      <tr>
+        <td>{{ticket.flight.name}}</td>
+        <td>{{ticket.seat}}</td>
+        <td>
+          <a href="{% url 'ticket_update' ticket.id %}">Изменить</a>
+          <br>
+          <a href="{% url 'ticket_delete' ticket.id %}">Удалить</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
