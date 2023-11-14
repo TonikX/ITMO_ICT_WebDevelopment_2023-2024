@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/indexMyStyle.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <button class="btn btn-lg btn-primary" onclick="location.href='/TytTour/profile/{{ userInfo.id }}';">Отмена</button>
+    <header class="rounded bg-dark p-4 text-light">
+        <div class="row mb-4">
+            <nobr><h4 >Username: </h4> {{ userInfo.username }}</nobr> <br/>
+        </div>
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="row">
+                <div class="justify-f-e">
+                    <button class="btn btn-lg btn-primary" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </form>
+    </header>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

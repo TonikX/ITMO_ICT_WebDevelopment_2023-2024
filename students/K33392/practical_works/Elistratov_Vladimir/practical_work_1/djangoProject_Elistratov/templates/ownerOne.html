@@ -1,0 +1,23 @@
+<!-- carowner_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarOwners detail</title>
+</head>
+
+<body>
+    <div class="main">
+        Имя: {{ owner.firstName }}, Фамилия: {{ owner.lastName }} <br/>
+        Дата рождения: {{ owner.bornDate }} <br/>
+        Место проживания: {{ owner.homeAddress }} <br/>
+        Нация: {{ owner.nationality }} <br/>
+        Серия паспорта: {{ owner.passportSubNumber }} <br/>
+        Номер паспорта: {{ owner.passportNumber }} <br/>
+        <a href="/owner/">Назад...</a><br/>
+    </div>
+</body>
+</html>

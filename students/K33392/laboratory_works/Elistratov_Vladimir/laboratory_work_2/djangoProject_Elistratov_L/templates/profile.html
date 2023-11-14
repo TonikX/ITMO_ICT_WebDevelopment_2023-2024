@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/indexMyStyle.css' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <button class="btn btn-lg btn-primary" onclick="location.href='/TytTour/main';">На главную</button>
+    <header class="rounded bg-dark p-4 text-light">
+        <div class="row">
+            <nobr><h4 >Username: </h4> {{ object.username }}</nobr> <br/>
+            <nobr><h4>Full Name: </h4> {{ object.fullName }}</nobr><br/>
+            <nobr><h4>Birthdate: </h4> {{ object.birth_date }}</nobr><br/>
+            <nobr><h4>Pasport series: </h4> {{ object.pSeries }}</nobr><br/>
+            <nobr><h4>Pasport number: </h4> {{ object.pNumber }}</nobr><br/>
+        </div>
+        <div class="row">
+            <div class="justify-f-e">
+                <button class="btn btn-lg btn-primary" onclick="location.href='{{ object.id }}/update/';">Редактировать</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="bg-warning p-2">
+        <table class="table">
+            <tr>
+                <th>Tour ID</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Number of people</th>
+                <th>Cost</th>
+                <th>Status</th>
+                <td></td>
+                <td></td>
+            </tr>
+            {% for data in booking %}
+                <tr>
+                    <td><a href="/TytTour/tourinfo/{{ data.tourID.id }}">{{ data.tourID.id }}</a></td>
+                    <td>{{ data.startDate }}</td>
+                    <td>{{ data.endDate }}</td>
+                    <td>{{ data.pNum }}</td>
+                    <td>{{ data.cost }}</td>
+                    <td>{{ data.status }}</td>
+                    {% if data.status != 'e' %}
+                        <td>
+                            <button class="btn btn-sm btn-dark" onclick="location.href='/TytTour/order/update/{{ data.id }}';">Редактировать</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-dark" onclick="location.href='/TytTour/order/delete/{{ data.id }}';">Отменить</button>
+                        </td>
+                    {% else %}
+                        <td>
+
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-dark" onclick="location.href='/TytTour/comment/create/{{ data.id }}';">Оставить отзыв</button>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </main>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
