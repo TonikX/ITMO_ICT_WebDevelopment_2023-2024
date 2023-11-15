@@ -3,12 +3,16 @@ import requests
 
 if __name__ == "__main__":
     url = "http://localhost:3000"
-   
+    params = {
+        "discipline": "math",
+        "grade": "4"
+    }
+
     try:
-        response = requests.get(url)
+        response = requests.post(url, data=params)
 
         if response.status_code == 200:
-            print(response.text)
+            print("POST request successful")
         else:
             print(f"POST request failed with status code: {response.status_code}")
 

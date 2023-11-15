@@ -37,14 +37,19 @@ class MyHTTPServer:
 
     def handle_request(self, client, method, params):
         if method == "GET":
-            self.send_response(client, 200, "OK", self.grades_to_html())  
+            self.send_response(client, 200, "OK", self.grades_to_html())
         elif method == "POST":
             discipline = params.get("discipline")
             grade = params.get("grade")
-            self.grades[discipline] = grade 
-            self.send_response(client, 200, "OK", "Содержимое сохранено!")  
+            
+            if discipline in self.grades:
+                self.grades[discipline].append(grade)
+            else:
+                self.grades[discipline] = [grade]
+            
+            self.send_response(client, 200, "OK", "Содержимое сохранено!")
         else:
-            self.send_response(client, 404, "Not Found", "Некорректный метод, попробуйте снова.") 
+            self.send_response(client, 404, "Not Found", "Некорректный метод, попробуйте снова.")
 
     def send_response(self, client, code, reason, body):
         response = f"HTTP/1.1 {code} {reason}\nContent-Type: text/html\n\n{body}"
