@@ -16,6 +16,8 @@ urlpatterns = [
     path('reservations/delete/<int:reservation_id>/',
          reservation_delete, name='reservation_delete'),
 
+    path('reservation/create/', reservation_create, name='reservation_create'),
+
     path('login/', LoginView.as_view(template_name='login.html'),
          name='login'),
 
