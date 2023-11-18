@@ -35,6 +35,20 @@ def reservation_list(request):
 
 
 @login_required
+def reservation_create(request):
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = request.user
+            reservation.save()
+            return redirect('reservation_list')
+    else:
+        form = ReservationForm()
+    return render(request, 'reservation_create.html', {'form': form})
+
+
+@login_required
 def reservation_edit(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id,
                                     user=request.user)

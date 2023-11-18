@@ -1,5 +1,5 @@
 nav {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: #5DD0C0;
@@ -117,22 +117,6 @@ ul li p {
 }
 
 
-.reservation-delete {
-  background-color: #FFDC73;
-}
-
-.reservation-delete:hover {
-  background-color: #5DD0C0;
-}
-
-.reservation-review {
-  background-color: #FFDC73;
-}
-
-.reservation-review:hover {
-  background-color: #5DD0C0;
-}
-
 
 /*
 Hotel guests
@@ -200,3 +184,4 @@ form textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
