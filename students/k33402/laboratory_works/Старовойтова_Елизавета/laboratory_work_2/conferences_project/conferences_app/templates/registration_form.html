@@ -1,12 +1,12 @@
+{% extends 'base.html' %}
 
-  {% extends 'base.html' %}
+{% block content %}
+    <h2>Регистрация на конференцию</h2>
 
-  {% block content %}
-      <h2>Регистрация на конференцию</h2>
-      <form method="post" action="{% url 'register_author' pk=conference.pk %}">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit">Зарегистрироваться</button>
-      </form>
-  {% endblock %}
-
+    {% if user.is_authenticated %}
+        <p>Вы успешно зарегистрированы на конференцию!</p>
+    {% else %}
+        <p>Для регистрации на конференцию вам необходимо войти в систему.</p>
+        <a href="{% url 'login' %}">Войти</a>
+    {% endif %}
+{% endblock %}

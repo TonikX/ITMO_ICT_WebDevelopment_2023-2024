@@ -6,12 +6,20 @@
         <p><strong>Место проведения:</strong> {{ conference.location }}</p>
         <p><strong>Период проведения:</strong> {{ conference.date }}</p>
 
-        <h3>Зарегистрированные авторы</h3>
-        <ul>
-            {% for registration in registrations %}
-                <li>{{ registration.user.username }} ({{ registration.date_registered }})</li>
-            {% endfor %}
-        </ul>
+        <h3>Зарегистрированные авторы:</h3>
+           <ul>
+               {% for registration in registrations %}
+                   <li>
+                        {% if registration.user == user %}
+                            {{ registration.user.username }} - {{ registration.date_registered }} -
+                            <a href="{% url 'update_registration' pk=registration.pk %}">Edit</a> |
+                            <a href="{% url 'delete_registration' pk=registration.pk %}">Delete</a>
+                        {% else %}
+                            {{ registration.user.username }} - {{ registration.date_registered }}
+                        {% endif %}
+                   </li>
+               {% endfor %}
+           </ul>
 
         <h3>Комментарии</h3>
         <ul>
@@ -24,6 +32,7 @@
         </ul>
 
         <a href="{% url 'register_author' pk=conference.pk %}">Зарегистрироваться как автор</a>
+
         <a href="{% url 'write_comment' pk=conference.pk %}">Оставить комментарий</a>
     {% endblock %}
 
