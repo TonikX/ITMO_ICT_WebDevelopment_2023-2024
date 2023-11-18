@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import redirect, render, get_object_or_404
 
-from .models import Hotel, Reservation
-from .forms import VisitorCreationForm, ReservationForm
+from .models import Hotel, Reservation, Review
+from .forms import VisitorCreationForm, ReservationForm, ReviewForm
 
 
 def hotel_list(request):
@@ -74,13 +74,6 @@ def admin_reservation_list(request, user_id):
                   {'reservation': reservation, 'reserved_user': user})
 
 
-# views.py
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
-from .models import Reservation, Review
-from .forms import ReviewForm
-
 
 @login_required
 def review(request, reservation_id):
@@ -132,3 +125,7 @@ def hotel_guests(request):
 
     return render(request, 'hotel_guests.html',
                   {'hotels_with_guests': hotels_with_guests})
+
+
+def welcome_page(request):
+    return render(request, 'welcome.html')

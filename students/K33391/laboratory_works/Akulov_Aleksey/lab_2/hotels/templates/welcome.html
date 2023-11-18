@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Добро пожаловать</h2>
+  <div class="auth-links">
+    <a href="{% url 'register' %}">Регистрация</a>
+    <a href="{% url 'login' %}">Вход</a>
+    <a href="{% url 'reservation_list' %}">Перейти к бронированиям</a>
+  </div>
+{% endblock %}

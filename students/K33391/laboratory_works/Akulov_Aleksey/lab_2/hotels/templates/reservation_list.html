@@ -2,18 +2,19 @@
 
 {% block content %}
   <h2>Ваши резервации</h2>
-  <ul>
+  <ul class="reservations-list">
     {% for reservation in reservations %}
       <li>
-        <p>Отель: {{ reservation.room.hotel.name }}</p>
+        <p>Отель: {{ reservation.room_type.hotel.name }}</p>
         <p>Тип комнаты: {{ reservation.room_type }}</p>
         <p>Дата заезда: {{ reservation.start_date }}</p>
         <p>Дата выезда: {{ reservation.end_date }}</p>
-        <a href="{% url 'reservation_edit' reservation_id=reservation.pk %}">Редактировать</a>
-        <a href="{% url 'reservation_delete' reservation_id=reservation.pk %}">Удалить</a>
+        <a class="reservation-action reservation-edit" href="{% url 'reservation_edit' reservation_id=reservation.pk %}">Редактировать</a>
+        <a class="reservation-action reservation-delete" href="{% url 'reservation_delete' reservation_id=reservation.pk %}">Удалить</a>
+        <a class="reservation-action reservation-review" href="{% url 'review' reservation_id=reservation.pk %}">Оставить отзыв</a>
       </li>
     {% empty %}
-      <li>У вас нет активных резерваций.</li>
+      <li class="no-show">У вас нет активных резерваций.</li>
     {% endfor %}
   </ul>
 {% endblock %}
