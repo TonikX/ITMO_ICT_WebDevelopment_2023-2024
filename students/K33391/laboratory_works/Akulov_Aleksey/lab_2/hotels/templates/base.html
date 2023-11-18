@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Hotels</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 </head>
 <body>
+
 {% block content %}{% endblock %}
+<nav>
+    <ul>
+      <li><a href="{% url 'welcome_page' %}">Главная</a></li>
+      <li><a href="{% url 'hotel_list' %}">К списку отелей</a></li>
+    </ul>
+  </nav>
 </body>
 </html>

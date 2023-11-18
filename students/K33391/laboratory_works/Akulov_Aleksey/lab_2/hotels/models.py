@@ -34,7 +34,11 @@ class RoomType(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     capacity = models.IntegerField()
-    amenities = models.ManyToManyField(Amenity, related_name='room_types', blank=True)
+    amenities = models.ManyToManyField(Amenity,
+                                       related_name='room_types', blank=True)
+
+    def __str__(self):
+        return f'{self.hotel}-{self.name}'
 
 
 class Reservation(models.Model):
@@ -54,4 +58,5 @@ class Review(models.Model):
     stay_from = models.DateField()
     stay_to = models.DateField()
     author = models.ForeignKey(Visitor, on_delete=models.CASCADE)
+
 

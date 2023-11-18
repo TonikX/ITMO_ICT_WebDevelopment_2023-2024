@@ -16,12 +16,16 @@ urlpatterns = [
     path('reservations/delete/<int:reservation_id>/',
          reservation_delete, name='reservation_delete'),
 
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', LoginView.as_view(template_name='login.html'),
+         name='login'),
 
-    path('reservations/<int:user_id>/', admin_reservation_list, name='admin_reservation_list'),
+    path('reservations/<int:user_id>/',
+         admin_reservation_list, name='admin_reservation_list'),
 
     path('reservations/<int:reservation_id>/review/', review, name='review'),
 
     path('hotel-guests/', hotel_guests, name='hotel_guests'),
+
+    path('', welcome_page, name='welcome_page')
 
 ]
