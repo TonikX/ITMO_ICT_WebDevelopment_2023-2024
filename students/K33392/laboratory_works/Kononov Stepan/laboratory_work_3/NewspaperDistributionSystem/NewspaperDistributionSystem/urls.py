@@ -17,6 +17,36 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from distribution.views import (
+    NewspaperListCreateView,
+    NewspaperRetrieveUpdateDestroyView,
+    PrintingHouseListCreateView,
+    PrintingHouseRetrieveUpdateDestroyView, EditorListCreateView, EditorRetrieveUpdateDestroyView,
+    PrintRunListCreateView, PrintRunRetrieveUpdateDestroyView, PostOfficeListCreateView,
+    PostOfficeRetrieveUpdateDestroyView, PostalArrivalListCreateView, PostalArrivalRetrieveUpdateDestroyView)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('newspapers/', NewspaperListCreateView.as_view(), name='newspaper-list-create'),
+    path('newspapers/<int:pk>/', NewspaperRetrieveUpdateDestroyView.as_view(),
+         name='newspaper-retrieve-update-destroy'),
+
+    path('printinghouses/', PrintingHouseListCreateView.as_view(), name='printinghouse-list-create'),
+    path('printinghouses/<int:pk>/', PrintingHouseRetrieveUpdateDestroyView.as_view(),
+         name='printinghouse-retrieve-update-destroy'),
+
+    path('editors/', EditorListCreateView.as_view(), name='editor-list-create'),
+    path('editors/<int:pk>/', EditorRetrieveUpdateDestroyView.as_view(), name='editor-retrieve-update-destroy'),
+
+    path('printruns/', PrintRunListCreateView.as_view(), name='printrun-list-create'),
+    path('printruns/<int:pk>/', PrintRunRetrieveUpdateDestroyView.as_view(), name='printrun-retrieve-update-destroy'),
+
+    path('postoffices/', PostOfficeListCreateView.as_view(), name='postoffice-list-create'),
+    path('postoffices/<int:pk>/', PostOfficeRetrieveUpdateDestroyView.as_view(),
+         name='postoffice-retrieve-update-destroy'),
+
+    path('postalarrivals/', PostalArrivalListCreateView.as_view(), name='postalarrival-list-create'),
+    path('postalarrivals/<int:pk>/', PostalArrivalRetrieveUpdateDestroyView.as_view(),
+         name='postalarrival-retrieve-update-destroy'),
 ]
