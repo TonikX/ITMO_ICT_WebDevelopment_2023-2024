@@ -24,8 +24,8 @@ from distribution.views import (
     PrintingHouseRetrieveUpdateDestroyView, EditorListCreateView, EditorRetrieveUpdateDestroyView,
     PrintRunListCreateView, PrintRunRetrieveUpdateDestroyView, PostOfficeListCreateView,
     PostOfficeRetrieveUpdateDestroyView, PostalArrivalListCreateView, PostalArrivalRetrieveUpdateDestroyView,
-    NewspaperPrintingHouseSearchView, PrintingHouseChiefEditorView, NewspaperPriceGreaterPostOfficesView,
-    NewspaperCopiesLessDestinationsView, NewspaperPrintingHouseDestinationView)
+    PrintingHouseAddressesView,
+    MaxPrintRunEditorView, PostOfficeAddressesView, UnderstockedNewspapersView, NewspaperArrivalView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,17 +52,14 @@ urlpatterns = [
     path('postalarrivals/<int:pk>/', PostalArrivalRetrieveUpdateDestroyView.as_view(),
          name='postalarrival-retrieve-update-destroy'),
 
-    #-------------------------------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------------------------
 
+    path('newspapers/printing-houses/', PrintingHouseAddressesView.as_view(), name='printing_house_addresses'),
+    path('max_print_run_editor/', MaxPrintRunEditorView.as_view(), name='max_print_run_editor'),
 
-    path('newspapers/printing-houses/<int:id>/', NewspaperPrintingHouseSearchView.as_view(),
-         name='newspaper-printing-house-search'),
-    path('printinghouses/<int:id>/chief-editor/', PrintingHouseChiefEditorView.as_view(),
-         name='printing-house-chief-editor'),
-    path('newspapers/price-greater-than/<int:price>/post-offices/', NewspaperPriceGreaterPostOfficesView.as_view(),
-         name='newspaper-price-greater-post-offices'),
-    path('newspapers/copies-less-than/<int:count>/destinations/', NewspaperCopiesLessDestinationsView.as_view(),
+    path('newspapers/price-greater/', PostOfficeAddressesView.as_view(), name='newspaper-price-greater-post-offices'),
+    path('newspapers/copies-less-than/', UnderstockedNewspapersView.as_view(),
          name='newspaper-copies-less-destinations'),
-    path('newspapers/<int:newspaper_id>/printing-house/<int:printing_house_id>/',
-         NewspaperPrintingHouseDestinationView.as_view(), name='newspaper-printing-house-destination'),
+    path('newspaper_arrival/', NewspaperArrivalView.as_view(), name='newspaper_arrival'),
+
 ]
