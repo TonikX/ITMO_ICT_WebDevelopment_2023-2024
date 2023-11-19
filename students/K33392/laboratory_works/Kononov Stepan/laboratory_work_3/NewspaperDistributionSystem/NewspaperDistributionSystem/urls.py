@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
 
 from distribution.views import (
     NewspaperListCreateView,
@@ -62,4 +62,6 @@ urlpatterns = [
          name='newspaper-copies-less-destinations'),
     path('newspaper_arrival/', NewspaperArrivalView.as_view(), name='newspaper_arrival'),
 
+    path('auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]
