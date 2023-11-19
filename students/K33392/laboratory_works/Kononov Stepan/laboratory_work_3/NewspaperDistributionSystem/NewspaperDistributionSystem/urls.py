@@ -23,7 +23,9 @@ from distribution.views import (
     PrintingHouseListCreateView,
     PrintingHouseRetrieveUpdateDestroyView, EditorListCreateView, EditorRetrieveUpdateDestroyView,
     PrintRunListCreateView, PrintRunRetrieveUpdateDestroyView, PostOfficeListCreateView,
-    PostOfficeRetrieveUpdateDestroyView, PostalArrivalListCreateView, PostalArrivalRetrieveUpdateDestroyView)
+    PostOfficeRetrieveUpdateDestroyView, PostalArrivalListCreateView, PostalArrivalRetrieveUpdateDestroyView,
+    NewspaperPrintingHouseSearchView, PrintingHouseChiefEditorView, NewspaperPriceGreaterPostOfficesView,
+    NewspaperCopiesLessDestinationsView, NewspaperPrintingHouseDestinationView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,4 +51,18 @@ urlpatterns = [
     path('postalarrivals/', PostalArrivalListCreateView.as_view(), name='postalarrival-list-create'),
     path('postalarrivals/<int:pk>/', PostalArrivalRetrieveUpdateDestroyView.as_view(),
          name='postalarrival-retrieve-update-destroy'),
+
+    #-------------------------------------------------------------------------------------------------------------------
+
+
+    path('newspapers/printing-houses/<int:id>/', NewspaperPrintingHouseSearchView.as_view(),
+         name='newspaper-printing-house-search'),
+    path('printinghouses/<int:id>/chief-editor/', PrintingHouseChiefEditorView.as_view(),
+         name='printing-house-chief-editor'),
+    path('newspapers/price-greater-than/<int:price>/post-offices/', NewspaperPriceGreaterPostOfficesView.as_view(),
+         name='newspaper-price-greater-post-offices'),
+    path('newspapers/copies-less-than/<int:count>/destinations/', NewspaperCopiesLessDestinationsView.as_view(),
+         name='newspaper-copies-less-destinations'),
+    path('newspapers/<int:newspaper_id>/printing-house/<int:printing_house_id>/',
+         NewspaperPrintingHouseDestinationView.as_view(), name='newspaper-printing-house-destination'),
 ]
