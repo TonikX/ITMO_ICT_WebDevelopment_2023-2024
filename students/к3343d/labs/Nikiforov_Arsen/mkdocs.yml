@@ -5,6 +5,7 @@ theme:
 nav:
   - Главная: 'index.md'
   - Лабораторная работа 1:
+    - Main: 'lw1/index.md'  
     - task1: 'lw1/task1.md'
     - task2: 'lw1/task2.md'
     - task3: 'lw1/task3.md'    
@@ -12,6 +13,7 @@ nav:
     - task5: 'lw1/task5.md'  
     
   - Лабораторная работа 2:
+    - Main: 'lw2/index.md'  
     - Models:
         - Tour: 'lw2/tour.md' 
         - Reservation: 'lw2/reservation.md'
