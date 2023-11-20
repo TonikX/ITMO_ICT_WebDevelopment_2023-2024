@@ -1,0 +1,1 @@
+for file in models.py settings.py admin.py urls.py views.py; do echo "File: $file"; cat "$file"; done > newfile.txt

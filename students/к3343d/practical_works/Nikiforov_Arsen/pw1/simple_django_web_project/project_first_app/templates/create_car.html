@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Car</title>
+</head>
+<body>
+    <h1>Create a New Car</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} {# Вывод формы с полями в виде параграфов #}
+        <button type="submit">Create Car</button>
+        <a href="{% url 'car-list' %}">Cancel</a>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!-- templates/myapp/sold_tours.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sold Tours</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #009688;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #009688;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #009688;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Sold Tours</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Buyer</th>
+            <th>Tour</th>
+            <th>Sale Date</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sold_tour in sold_tours %}
+            <tr>
+                <td>{{ sold_tour.buyer.username }}</td>
+                <td>{{ sold_tour.tour.title }}</td>
+                <td>{{ sold_tour.sale_date }}</td>
+                <td>{{ sold_tour.price }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'tour_list' %}" class="back-link">Back to Tour List</a>
+
+</body>
+</html>

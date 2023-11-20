@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+<h2>Login or Register</h2>
+
+<form method="post" action="{% url 'home' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="{{ form_name }}">Submit</button>
+</form>
+
+<a href="{% url 'home' %}?register">Register</a>
+<a href="{% url 'home' %}">Login</a>
+
+<h2>Tours</h2>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+    </tr>
+    {% for tour in tours %}
+    <tr>
+        <td>{{ tour.title }}</td>
+        <td>{{ tour.description }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

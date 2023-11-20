@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список владельцев автомобилей</title>
+</head>
+<body>
+  <h1>Список владельцев автомобилей</h1>
+  
+  <form method="get" action="{% url 'owner_list' %}">
+    <label for="last_name">Фамилия:</label>
+    <input type="text" name="last_name">
+    
+    <label for="first_name">Имя:</label>
+    <input type="text" name="first_name">
+    
+    <input type="submit" value="Фильтровать">
+</form>
+
+
+<ul>
+  {% for owner in owners %}
+    <li>
+      <strong>Фамилия:</strong> {{ owner.last_name }}, 
+      <strong>Имя:</strong> {{ owner.first_name }}
+      {% if owner.birth_date %}
+        <strong>Дата рождения:</strong> {{ owner.birth_date|date:"Y-m-d" }}
+      {% else %}
+        <strong>Дата рождения:</strong> Не указана
+      {% endif %}
+    </li>
+  {% empty %}
+    <li>Нет владельцев автомобилей, соответствующих вашему запросу.</li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>
