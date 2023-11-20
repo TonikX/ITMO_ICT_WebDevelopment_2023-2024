@@ -1,0 +1,14 @@
+site_name: My Documentation
+nav:
+    - Home: index.md
+    - Models:
+        - Tour: tour.md
+        - Reservation: reservation.md
+        - Review: review.md
+        - SoldTour: soldtour.md
+        - TourReservation: tourreservation.md
+    - Admin: admin.md
+    - Forms: forms.md
+    - URLs: urls.md
+    - Views: views.md
+    - Templates: templates.md
