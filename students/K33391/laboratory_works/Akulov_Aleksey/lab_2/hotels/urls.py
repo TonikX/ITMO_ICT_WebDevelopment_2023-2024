@@ -21,7 +21,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='login.html'),
          name='login'),
 
-    path('reservations/<int:user_id>/',
+    path('admin-reservations',
          admin_reservation_list, name='admin_reservation_list'),
 
     path('reservations/<int:reservation_id>/review/', review, name='review'),
