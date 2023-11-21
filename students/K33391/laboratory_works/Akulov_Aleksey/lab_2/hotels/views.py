@@ -81,11 +81,10 @@ def is_admin(user):
 
 @login_required
 @user_passes_test(is_admin)
-def admin_reservation_list(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    reservation = Reservation.objects.filter(user=user)
-    return render(request, 'admin_reservations_list.html',
-                  {'reservation': reservation, 'reserved_user': user})
+def admin_reservation_list(request):
+    reservations = Reservation.objects.all()
+    return render(request, 'admin_reservation_list.html',
+                  {'reservations': reservations})
 
 
 
@@ -123,6 +122,8 @@ def review(request, reservation_id):
                   {'form': form, 'reservation': reservation})
 
 
+@login_required
+@user_passes_test(is_admin)
 def hotel_guests(request):
     today = datetime.now().date()
     first_day = today.replace(day=1)
