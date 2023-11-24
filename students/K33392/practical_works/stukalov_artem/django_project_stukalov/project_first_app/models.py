@@ -28,9 +28,14 @@ class Car(models.Model):
 
 
 class Ownership(models.Model):
-    car = models.ForeignKey("Car", null=True, on_delete=models.CASCADE)
+    car = models.ForeignKey(
+        "Car", null=True, on_delete=models.CASCADE, related_name="ownership"
+    )
     driver = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="ownership",
     )
     start = models.DateField()
     end = models.DateField(null=True, blank=True)
@@ -40,7 +45,9 @@ class Ownership(models.Model):
 
 
 class DriverLicense(models.Model):
-    driver = models.ForeignKey("Driver", on_delete=models.CASCADE)
+    driver = models.ForeignKey(
+        "Driver", on_delete=models.CASCADE, related_name="license"
+    )
     number = models.CharField(max_length=10)
     type = models.CharField(max_length=10)
     creation_date = models.DateField()

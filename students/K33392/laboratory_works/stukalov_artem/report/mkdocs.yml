@@ -51,3 +51,12 @@ nav:
       - lab2/urls.md
       - lab2/views.md
       - lab2/templates.md
+  - '№3.1: Практическая 3.1':
+      - prac3_1/task_1.md
+      - prac3_1/task_2.md
+      - prac3_1/task_3.md
+  - '№3: REST framework':
+      - lab3/configuration.md
+      - lab3/urls.md
+      - lab3/models.md
+      - lab3/views.md
