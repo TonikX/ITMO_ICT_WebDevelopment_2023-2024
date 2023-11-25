@@ -49,4 +49,4 @@
 
 # ER-диаграмма БД
 
-![er.png](res/er.png)
+![er](res/er.png)
