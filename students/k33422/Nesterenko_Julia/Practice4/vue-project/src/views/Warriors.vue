@@ -29,7 +29,6 @@ export default {
      try {
        const response = await axios.get('http://127.0.0.1:8000/war/warriors') // Выполнение GET-запроса Backend-серверу. Запрос вернет JSON.
        console.log(response.data.results)
-       console.log(response)
        this.warriors = response.data.Warriors // Массив данных warriors из блока(функции) data() получает значением результат только-что выполненного запроса
      } catch (e) {
        alert('Ошибка ' + e.toString())
