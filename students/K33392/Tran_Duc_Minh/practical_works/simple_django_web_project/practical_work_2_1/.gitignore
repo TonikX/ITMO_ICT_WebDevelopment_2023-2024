@@ -1,0 +1,8 @@
+/venv
+/db.sqlite3
+/manage.py
+/staticfiles
+/practical_work_2_1
+/.idea
+/django_first_app/migrations
+/django_first_app/static

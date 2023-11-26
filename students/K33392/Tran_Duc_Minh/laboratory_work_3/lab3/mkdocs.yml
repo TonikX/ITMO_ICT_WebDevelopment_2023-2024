@@ -1,0 +1,12 @@
+site_name: TDEE App API Documentation
+nav:
+  - Home: index.md
+  - Api:
+    - Users: users.md
+    - Activities: activities.md
+    - Foods: foods.md
+    - Profiles: profiles.md
+    - Daily Data: daily_data.md
+    - User Foods: user_food.md
+theme:
+  name: readthedocs
