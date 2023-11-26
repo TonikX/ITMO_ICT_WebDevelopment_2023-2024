@@ -1,5 +1,6 @@
 import random
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import get_object_or_404
@@ -173,7 +174,53 @@ class ParticipantViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(transform_data(serializer.data))
 
 
-class FavouriteViewSet(viewsets.ModelViewSet):
+# class FavouriteViewSet(viewsets.ModelViewSet):
+#     """ Возвращает информацию об избранном пользователя. Аутентификация обязательна """
+#     serializer_class = FavouriteSerializer
+#     pagination_class = StandardPagination
+#     filter_backends = [SearchFilter]
+#     search_fields = ('content_object__name', 'content_object__short_description')
+#     #permission_classes = (IsAuthenticated,)
+#
+#     def get_queryset(self, *args, **kwargs):
+#         user_id = self.kwargs.get('pk')
+#         #if user_id and str(self.request.user.id) == user_id:
+#         queryset = (
+#             Favourite.objects
+#             .filter(
+#                 user__id=user_id,
+#                 content_object__is_hidden=False,
+#                 content_object__datetime_published__lte=timezone.now(),
+#             )
+#             .order_by('content_object__release_date')
+#         )
+#         return queryset
+#         return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+#
+#     def create(self, request, *args, **kwargs):
+#         user_id = self.kwargs.get('pk')
+#         #if str(request.user.id) == user_id:
+#         content_object_id = request.data.get('content_object')
+#         content_object = get_object_or_404(ContentObject, id=content_object_id)
+#         existing_favourite = Favourite.objects.filter(user=request.user, content_object=content_object).first()
+#         if existing_favourite:
+#             return Response({'detail': 'Object already exists in favorites'}, status=status.HTTP_400_BAD_REQUEST)
+#         else:
+#             Favourite.objects.create(user=request.user, content_object=content_object)
+#             return Response({'detail': 'Favorite object created successfully'}, status=status.HTTP_201_CREATED)
+#         # else:
+#         #     return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+#
+#     def destroy(self, request, *args, **kwargs):
+#         user_id = self.kwargs.get('pk')
+#         if str(request.user.id) == user_id:
+#             instance = self.get_object()
+#             self.perform_destroy(instance)
+#             return Response({'detail': 'Объект избранного успешно удален'}, status=status.HTTP_200_OK)
+#         else:
+#             return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class FavouriteListView(generics.ListAPIView):
     """ Возвращает информацию об избранном пользователя. Аутентификация обязательна """
     serializer_class = FavouriteSerializer
     pagination_class = StandardPagination
@@ -183,7 +230,7 @@ class FavouriteViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self, *args, **kwargs):
         user_id = self.kwargs.get('pk')
-        if user_id and str(self.request.user.id) == user_id:
+        if user_id and self.request.user.id == user_id:
             queryset = (
                 Favourite.objects
                 .filter(
@@ -194,30 +241,44 @@ class FavouriteViewSet(viewsets.ModelViewSet):
                 .order_by('content_object__release_date')
             )
             return queryset
-        return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            raise PermissionDenied(detail='Unauthorized')
+
+
+class FavouriteCreateView(generics.CreateAPIView):
+    """ Ползволяет добавить объект в избранное пользователя. Аутентификация обязательна """
+    serializer_class = FavouriteCreateSerializer
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         user_id = self.kwargs.get('pk')
-        if str(request.user.id) == user_id:
+        if request.user.id == user_id:
+            user = request.user
             content_object_id = request.data.get('content_object')
             content_object = get_object_or_404(ContentObject, id=content_object_id)
-            existing_favourite = Favourite.objects.filter(user=request.user, content_object=content_object).first()
+            existing_favourite = Favourite.objects.filter(user=user, content_object=content_object).first()
             if existing_favourite:
                 return Response({'detail': 'Object already exists in favorites'}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                Favourite.objects.create(user=request.user, content_object=content_object)
+                Favourite.objects.create(user=user, content_object=content_object)
                 return Response({'detail': 'Favorite object created successfully'}, status=status.HTTP_201_CREATED)
         else:
-            return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+            raise PermissionDenied(detail='Unauthorized')
+
+
+class FavouriteDeleteView(generics.DestroyAPIView):
+    """ Позволяет удалить объект из избранного пользователя. Аутентификация обязательна """
+    queryset = Favourite.objects.all()
+    permission_classes = (IsAuthenticated,)
 
     def destroy(self, request, *args, **kwargs):
-        user_id = self.kwargs.get('pk')
-        if str(request.user.id) == user_id:
-            instance = self.get_object()
+        user_id = self.kwargs.get('user_pk')
+        instance = self.get_object()
+        if request.user.id == user_id and instance.user.id == user_id:
             self.perform_destroy(instance)
-            return Response({'detail': 'Объект избранного успешно удален'}, status=status.HTTP_200_OK)
+            return Response({'detail': 'Favorite object successfully deleted'}, status=status.HTTP_200_OK)
         else:
-            return Response({'detail': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+            raise PermissionDenied(detail='Unauthorized')
 
 
 class PublicationViewSet(viewsets.ReadOnlyModelViewSet):

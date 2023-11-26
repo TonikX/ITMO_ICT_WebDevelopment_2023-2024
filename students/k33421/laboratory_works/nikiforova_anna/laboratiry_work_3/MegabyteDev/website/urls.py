@@ -54,10 +54,12 @@ urlpatterns = [
     path(r'publication/<int:pk>/pages', PublicationPageViewSet.as_view({'get': 'retrieve'}),
          name='publication-pages'),
 
-    path(r'user/<int:pk>/participated', ParticipantViewSet.as_view({'get': 'list'}),
+    path(r'user/<int:pk>/participated/', ParticipantViewSet.as_view({'get': 'list'}),
          name='user-participated'),  # any user can see it
-    path(r'user/<int:pk>/favourites', FavouriteViewSet.as_view({'get': 'list'}),
-         name='user-favourites'),  # only the registered user can see their own favourites
+
+    path('user/<int:pk>/favourites/', FavouriteListView.as_view(), name='user-favourites'),
+    path('user/<int:pk>/favourites/create/', FavouriteCreateView.as_view(), name='user-create-favourite'),
+    path('user/<int:user_pk>/favourites/<int:pk>', FavouriteDeleteView.as_view(), name='user-delete-favourite'),
 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

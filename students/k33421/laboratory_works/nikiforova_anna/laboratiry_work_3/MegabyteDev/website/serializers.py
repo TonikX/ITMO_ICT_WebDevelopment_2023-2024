@@ -2,6 +2,8 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.db.models import Count
 from django.utils import timezone
 from rest_framework import serializers
+from rest_framework.generics import get_object_or_404
+
 from .models import *
 from djoser.serializers import UserCreateSerializer
 
@@ -114,6 +116,19 @@ class FavouriteSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Favourite
         fields = ['id', 'content_object']
+
+
+class FavouriteCreateSerializer(DynamicFieldsModelSerializer):
+
+    class Meta:
+        model = Favourite
+        fields = ['id', 'content_object']
+
+    def create(self, validated_data):
+        content_object = validated_data.pop('content_object')
+        content_object = get_object_or_404(ContentObject, id=content_object)
+        favourite = Favourite.objects.create(content_object=content_object)
+        return favourite
 
 
 class ArticleListSerializer(DynamicFieldsModelSerializer):
