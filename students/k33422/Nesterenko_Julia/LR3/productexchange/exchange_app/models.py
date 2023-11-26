@@ -10,7 +10,19 @@ class User(AbstractUser):
     """
     Пользователь
     """
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'role', 'manufacturer', 'broker']
+    role_types = (
+        ('b', 'broker'),
+        ('m', 'manufacturer'),
+        ('e', 'exchange-admin'),
+    )
+    role = models.CharField(max_length=1, choices=role_types, default='e')
+    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE,
+                                     related_name='manufacturer_account',
+                                     blank=True, null=True)
+    broker = models.ForeignKey('Broker', on_delete=models.CASCADE,
+                               related_name='broker_account',
+                               blank=True, null=True)
 
     def __str__(self):
         return self.username
@@ -54,8 +66,9 @@ class Product(models.Model):
     """
     type = models.ForeignKey('ProductType', on_delete=models.DO_NOTHING)
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING)
-    amount = models.PositiveIntegerField()
+    size = models.PositiveIntegerField(blank=True, null=True, default=1)
     price = models.DecimalField(decimal_places=2, max_digits=30, validators=[MinValueValidator(0)])
+    amount = models.PositiveIntegerField()
     manufacturing_date = models.DateTimeField()
 
     @property
@@ -103,7 +116,7 @@ class Consignment(models.Model):
         ('pp', 'prepay'),
         ('ap', 'afterpay'),
     )
-    status = models.CharField(max_length=1, choices=status_types, default='active')
+    status = models.CharField(max_length=1, choices=status_types, default='a', blank=True)
     terms = models.CharField(max_length=2, choices=terms_types)
     opening_date = models.DateTimeField(auto_now_add=True)
     delivery_date = models.DateTimeField()

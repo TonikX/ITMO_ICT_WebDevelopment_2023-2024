@@ -1,4 +1,5 @@
 import pytz
+import json
 from django.db.models import Sum
 from rest_framework.views import APIView, Response
 from rest_framework.generics import (CreateAPIView, ListAPIView, RetrieveAPIView,
@@ -15,6 +16,8 @@ def localize_isodate(date_string):
 # Все вью для производителя
 
 class ManufacturerListAPIView(ListAPIView):
+    authentication_classes = []
+    permission_classes = []
     serializer_class = ManufacturerSerializer
     queryset = Manufacturer.objects.all()
 
@@ -97,7 +100,12 @@ class BrokerEditAPIView(RetrieveUpdateAPIView):
 
 class ProductListAPIView(ListAPIView):
     serializer_class = ProductSerializer
-    queryset = Product.objects.all()
+
+    def get_queryset(self):
+        manufacturer = self.request.query_params.get('manufacturer')
+        if manufacturer:
+            return Product.objects.filter(manufacturer=manufacturer)
+        return Product.objects.all()
 
 
 class ProductCreateAPIView(CreateAPIView):
@@ -124,7 +132,12 @@ class ProductEditAPIView(RetrieveUpdateAPIView):
 
 class ConsignmentListAPIView(ListAPIView):
     serializer_class = ConsignmentSerializer
-    queryset = Consignment.objects.all()
+
+    def get_queryset(self):
+        broker = self.request.query_params.get('broker')
+        if broker:
+            return Consignment.objects.filter(broker=broker)
+        return Consignment.objects.all()
 
 
 class ConsignmentCreateAPIView(CreateAPIView):
@@ -151,12 +164,31 @@ class ConsignmentEditAPIView(RetrieveUpdateAPIView):
 
 class ProductInConsignmentListAPIView(ListAPIView):
     serializer_class = ProductInConsignmentSerializer
-    queryset = ProductInConsignment.objects.all()
+
+    def get_queryset(self):
+        manufacturer = self.request.query_params.get('manufacturer')
+        broker = self.request.query_params.get('broker')
+        consignment = self.request.query_params.get('consignment')
+        if manufacturer:
+            return ProductInConsignment.objects.filter(product__manufacturer=manufacturer)
+        if broker:
+            return ProductInConsignment.objects.filter(consignment__broker=broker)
+        if consignment:
+            return ProductInConsignment.objects.filter(consignment=consignment)
+        return ProductInConsignment.objects.all()
 
 
 class ProductInConsignmentCreateAPIView(CreateAPIView):
     serializer_class = ProductInConsignmentEditableSerializer
     queryset = ProductInConsignment.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        body = json.loads(request.body.decode('utf-8'))
+        print(body)
+        prod = Product.objects.get(id=body['product'])
+        prod.amount -= int(body['amount'])
+        prod.save()
+        return self.create(request, *args, **kwargs)
 
 
 class ProductInConsignmentOneAPIView(RetrieveAPIView):
@@ -168,10 +200,25 @@ class ProductInConsignmentDeleteAPIView(RetrieveDestroyAPIView):
     serializer_class = ProductInConsignmentSerializer
     queryset = ProductInConsignment.objects.all()
 
+    def delete(self, request, *args, **kwargs):
+        body = request.data
+        prod = Product.objects.get(id=body['product'])
+        prod.amount += int(body['amount'])
+        prod.save()
+        return self.create(request, *args, **kwargs)
+
 
 class ProductInConsignmentEditAPIView(RetrieveUpdateAPIView):
     serializer_class = ProductInConsignmentEditableSerializer
     queryset = ProductInConsignment.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        prod_con = ProductInConsignment.objects.get(id=kwargs['pk'])
+        body = request.data
+        prod = Product.objects.get(id=prod_con.product.id)
+        prod.amount += (prod_con.amount - int(body['amount']))
+        prod.save()
+        return self.partial_update(request, *args, **kwargs)
 
 
 # Подсчитать, сколько единиц товара каждого вида выставлено на продажу
