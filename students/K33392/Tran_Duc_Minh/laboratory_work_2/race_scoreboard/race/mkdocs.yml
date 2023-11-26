@@ -1,5 +1,0 @@
-site_name: Race scoreboard
-nav:
-  - Home: index.md
-  - Models: models.md
-  - Views: views.md
