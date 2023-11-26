@@ -1,0 +1,11 @@
+{% extends "app.html" %}
+
+{% block content %}
+<h1>Удалить водителя</h1>
+<p>Вы уверены?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+<a href="{% url 'driver_list' %}" class="btn btn-secondary">Отменить</a>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "app.html" %}
+
+{% block content %}
+    <h1>Выберите:</h1>
+    <ul>
+        <li><a href="{% url 'driver_list' %}" class="btn btn-warning">Водители</a></li>
+        <li><a href="{% url 'car_list' %}" class="btn btn-warning">Автомобили</a></li>
+    </ul>
+{% endblock %}
