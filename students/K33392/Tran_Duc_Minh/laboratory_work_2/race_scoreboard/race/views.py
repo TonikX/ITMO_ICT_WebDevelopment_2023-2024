@@ -60,7 +60,6 @@ def view_race(request, race_id):
     comment_form = CommentForm(request.POST)
 
     if request.method == 'POST':
-
         if form.is_valid():
             if not participant:
                 # Nếu người dùng chưa đăng ký, tạo đăng ký mới

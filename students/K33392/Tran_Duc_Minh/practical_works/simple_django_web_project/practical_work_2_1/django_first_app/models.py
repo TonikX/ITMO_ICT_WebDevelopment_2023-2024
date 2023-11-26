@@ -6,6 +6,9 @@ class Owner(models.Model):
     first_name = models.CharField(max_length=30)
     date_of_birth = models.DateTimeField()
 
+    def __str__(self):
+        return self.first_name
+
 class Car(models.Model):
     id_car = models.AutoField(primary_key=True)
     state_number = models.CharField(max_length=15)
@@ -13,12 +16,13 @@ class Car(models.Model):
     model = models.CharField(max_length=20)
     color = models.CharField(max_length=30)
     owners = models.ManyToManyField(Owner, through='Own')
+    def __str__(self):
+        return self.model
 
 class Own(models.Model):
     id_owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
     id_car = models.ForeignKey(Car, on_delete=models.CASCADE)
     date_star = models.DateTimeField()
-    date_end = models.DateTimeField()
 
 class Driver_license(models.Model):
     id_license = models.AutoField(primary_key=True)

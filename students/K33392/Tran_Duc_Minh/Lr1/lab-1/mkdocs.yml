@@ -1,8 +1,8 @@
 site_name: My Docs
-site_url: https://example.com/
+
 nav:
   - Home: index.md
-  - Tasks:
+  - Laboratory 1:
     - 'Task 1': 'task1.md'
     - 'Task 2': 'task2.md'
     - 'Task 3': 'task3.md'

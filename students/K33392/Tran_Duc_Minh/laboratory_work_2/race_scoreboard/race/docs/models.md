@@ -1,7 +1,6 @@
 
 # Models in `models.py`
 
-Below are the Django models defined in the `models.py` file of your project:
 
 ## Team
 
@@ -51,5 +50,3 @@ Below are the Django models defined in the `models.py` file of your project:
 - `comment_content` (TextField): The content of the comment.
 - `comment_type` (CharField with choices): Choices for different comment types.
 - `rating` (PositiveIntegerField with max value validation to 10): Rating for the comment.
-
-These models represent the structure of your Django application and define the relationships between different entities within your project.
