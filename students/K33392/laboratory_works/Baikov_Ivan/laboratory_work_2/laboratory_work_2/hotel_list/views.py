@@ -12,7 +12,9 @@ def hotel_list(request):
 
 def hotel_detail(request, hotel_id):
     hotel = Hotel.objects.get(id=hotel_id)
-    user_has_reservation = Reservation.objects.filter(user=request.user, hotel=hotel).exists()
+    user_has_reservation = False  
+    if request.user.is_authenticated:
+        user_has_reservation = Reservation.objects.filter(user=request.user, hotel=hotel).exists()
     
     context = {
         'hotel': hotel,
@@ -80,17 +82,14 @@ def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
 
     if request.method == 'POST':
-        # Handle reservation cancellation
         reservation.delete()
         return redirect('reservation_list')
 
     return render(request, 'cancel_reservation.html', {'reservation': reservation})
 
 def last_month_guests(request):
-    # Calculate the date for one month ago
     one_month_ago = date.today() - timedelta(days=30)
     
-    # Query the reservations for the last month
     guests = Reservation.objects.filter(check_in_date__gte=one_month_ago)
     
     return render(request, 'last_month_guests.html', {'guests': guests})
@@ -112,7 +111,6 @@ def leave_review(request, hotel_id):
             review.check_out_date = reservation.check_out_date
 
             review.save()
-            # Handle successful review submission, e.g., redirect to the hotel's detail page
             return redirect('hotel_detail', hotel_id=hotel_id)
     else:
         form = ReviewForm()

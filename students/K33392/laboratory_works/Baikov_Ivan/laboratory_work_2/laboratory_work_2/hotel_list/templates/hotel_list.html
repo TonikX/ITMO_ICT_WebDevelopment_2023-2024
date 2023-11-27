@@ -2,25 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Listing</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <h1>Hotels</h1>
-    <ul>
+    <h1 class="display-4">Hotels</h1>
+    <ul class="list-group">
       {% for hotel in hotels %}
-      <li>
+      <li class="list-group-item">
         <a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.name }}</a>
       </li>
       {% endfor %}
     </ul>
-    <div>
+    <div class="mt-4">
       {% if user.is_authenticated %}
-      <p>Welcome, {{ user.username }}!</p>
-      <a href="{% url 'logout' %}">Logout</a>
-      <a href="{% url 'reservation_list' %}">Check reservations</a>
+      <p>Welcome, <span class="font-weight-bold">{{ user.username }}</span>!</p>
+      <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+      <a class="btn btn-secondary ml-2" href="{% url 'reservation_list' %}">Check Reservations</a>
       {% else %}
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'register' %}">Register</a>
+      <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+      <a class="btn btn-success ml-2" href="{% url 'register' %}">Register</a>
       {% endif %}
     </div>
   </body>
