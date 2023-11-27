@@ -1,0 +1,28 @@
+ {% extends "base.html" %}
+ {% block title %}Cars{% endblock title %}
+ {% block content %}
+ <h1>Cars</h1>
+  <ul>
+ {% for car in object_list %}
+
+  <li>
+   <h3>Car number</h3> {{ car.governmental_number }}
+   <h3>Car model</h3> {{ car.model }}
+   <h3>Car stamp</h3> {{ car.stamp }}
+   <br>
+   <a href={% url "car_delete" car.id  %} >
+    
+    delete</a>
+    <a href={% url "car_update" car.id  %} >
+    
+   update</a>
+   <hr>
+  </li>
+
+
+ {% empty  %}
+ <h1> No available cars</h1>
+ {% endfor %}
+  </ul>
+ {% endblock content %}
+
