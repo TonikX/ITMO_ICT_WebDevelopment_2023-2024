@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from contracts_app.models import *
 from contracts_app.permissions import IsAdminOrReadOnly
@@ -92,3 +94,13 @@ class EmploymentContractDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = EmploymentContract.objects.all()
     serializer_class = EmploymentContractSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+
+class ContractReportView(APIView):
+    def get(self, request, pk):
+        try:
+            contract = Contract.objects.get(pk=pk)
+            serializer = ContractReportSerializer(contract)
+            return Response(serializer.data)
+        except Contract.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)

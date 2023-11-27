@@ -70,4 +70,9 @@ urlpatterns = [
         views.EmploymentContractDetailAPIView.as_view(),
         name="employment_contract-detail",
     ),
+    path(
+        "contracts/report/<int:pk>/",
+        views.ContractReportView.as_view(),
+        name="contract-report",
+    ),
 ]
