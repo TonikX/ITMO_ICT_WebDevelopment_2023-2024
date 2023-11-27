@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All car owners</title>
+</head>
+<body>
+
+    <div class="main">
+        <a href="/owner/create/">Add new owner</a>
+
+        {% for owner in owners %}
+
+        <h3>{{owner.first_name}} {{owner.last_name}}</h3>
+        <p>Birth date: {{ owner.birthday }}</p>
+        <p>Passport number: {{ owner.passport }}</p>
+        <p>Address: {{ owner.address }}</p>
+        <p>Nationality: {{ owner.nationality }}</p>
+        <a href="/owner/{{ owner.id }}/">Details</a>
+        <hr/>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>

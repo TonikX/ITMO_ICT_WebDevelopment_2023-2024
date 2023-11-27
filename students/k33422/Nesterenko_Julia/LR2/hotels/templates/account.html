@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+  {% block content %}
+    <section class="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h2 class="h1">{{ user.get_full_name }}</h2>
+            <br>
+              <p class="text-big"> username <strong>{{ user.username }}</strong> </p>
+              <p class="text-big"> email <strong>{{ user.email }}</strong> </p>
+              <p class="text-big"> country <strong>{{ user.country }}</strong> </p>
+              <p class="text-big"> joined <strong>{{ user.date_joined.date }}</strong> </p>
+            <br>
+            <form action="/logout/" enctype="multipart/form-data">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-secondary">Log out</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="image" style="width: 80%"><img src="{{ user.photo.url }}" alt="user photo" class="img-fluid rounded-circle"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Divider Section-->
+    <section style="background: url({% static 'img/bookings.jpg' %}); background-size: cover; background-position: center bottom" class="divider">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h2>Bookings</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Bookings -->
+    <section class="intro">
+      <div class="container">
+        <div class="row">
+          {% for book in user.bookings %}
+              <div class="post col-md-5" style="background-color: rgb(190,190,190); margin-left: 4%; margin-right: 4%;">
+                <a href="{% url 'room' id=book.room.pk %}">
+                <div class="post-thumbnail" style="margin-bottom: 5%; margin-top: 5%">
+                    <img src="{{ book.room.thumbnail.url }}" alt="room photo" class="img-fluid" style="width: 100%;">
+                </div>
+                <div class="post-details" style="padding-left: 20px">
+                  <h3 class="h4">{{ book.room.type }} room for {{ book.room.capacity }}
+                    {% if book.room.capacity == 1 %}person{% endif %}{% if book.room.capacity != 1 %}people{% endif %}
+                  </h3>
+                  <p class="text-big" style="color: black">at <b>{{ book.room.hotel.name }}</b> hotel
+                  <br>in <b>{{ book.room.hotel.location }}</b>
+                  <br>from <b>{{ book.date_from }}</b> to <b>{{ book.date_until }}</b>
+                  <br>total price <b>{{ book.total_price }}</b> rub</p>
+                  <p class="text-big" style="color: #1e6abc"><b>{{ book.status }}</b></p>
+                </div>
+                </a>
+                {% if book.status == 'Awaits' %}
+                    <form method="POST" action="/cancelbooking/{{ book.pk }}/" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group col-md-12 mt-5">
+                        <button type="submit" class="btn btn-secondary">Cancel booking</button>
+                      </div>
+                    </form>
+                {% endif %}
+                {% if book.status == 'Active' or book.status == 'Finished' %}
+                  <br>
+                    <form method="POST" action="/review/{{ book.pk }}/" enctype="multipart/form-data"
+                          style="padding: 5px 5px 5px 5px; background-color: #5a6268; margin-bottom: 20px">
+                      <br>
+                      <h3 class="h5" style="color: #FFFFFF; padding-left: 15px">Leave a review</h3>
+                      {% csrf_token %}
+                      <div class="form-group col-md-12">
+                        <label for="rating"><b>Rating</b></label><br>
+                        <input type="range" min="1" max="5" step="1" id="rating" name="rating">
+                        <br>
+                        <label for="rating">1 &nbsp;&nbsp;&nbsp; 2 &nbsp;&nbsp;&nbsp; 3 &nbsp;&nbsp;&nbsp; 4  &nbsp;&nbsp;&nbsp; 5</label>
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label for="body"><b>Thoughts</b></label><br>
+                        <textarea id="body" name="body" class="form-control" cols="40" rows="5"></textarea>
+                      </div>
+                      <div class="form-group col-md-12 mt-5">
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                      </div>
+                    </form>
+                {% endif %}
+
+              </div>
+          {% endfor %}
+        </div>
+        <!--
+        <ul style="list-style: none">
+          <li><a href="https://t.me/nesterenkojul"><p class="text-big"><i class="fa fa-telegram"></i>  Telegram </p></a></li>
+        </ul>
+        -->
+      </div>
+    </section>
+  {% endblock content %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grades manager</title>
+</head>
+<body>
+<h1>Grades manager</h1>
+<h3>Add grade</h3>
+<form action="/grades" method="POST">
+  <div>
+    <label for="postsubject">Enter the subject </label>
+    <input type="text" name="subject" id="postsubject" />
+  </div>
+  <br>
+  <div>
+    <label for="grade">Enter the grade </label>
+    <input type="text" name="grade" id="grade" />
+  </div>
+  <br>
+  <div>
+    <input type="submit" value="Confirm" ref/>
+  </div>
+</form>
+
+<br><br>
+<h3>See grades</h3>
+
+<form action="/grades" method="GET">
+  <div>
+    <label for="getsubject">Enter the subject</label>
+    <input type="text" name="subject" id="getsubject" />
+  </div>
+  <br>
+  <div>
+    <input type="submit" value="See grades" />
+  </div>
+</form>
+</body>
+</html>

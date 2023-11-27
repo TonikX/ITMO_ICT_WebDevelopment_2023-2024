@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Cars</title>
+</head>
+
+<body>
+  <h1>Cars</h1> <a href="/car/create/">Add a new car</a>
+  <ul>
+	{% for car in object_list %}
+	<li><strong>License plate number:</strong> {{ car.license_plate }} <a href="/car/{{ car.id }}/">Detail</a>
+  	<p><strong>Brand:</strong> {{ car.brand }}</p>
+  	<p><strong>Model:</strong> {{ car.model }}</p>
+    <p><strong>Color:</strong> {{ car.color }}</p>
+	</li>
+	{% empty %}
+	<li>No cars found.</li>
+	{% endfor %}
+  </ul>
+
+</body>
+
+</html>

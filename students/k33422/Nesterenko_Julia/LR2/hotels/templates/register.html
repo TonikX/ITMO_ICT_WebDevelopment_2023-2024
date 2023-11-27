@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+  {% block content %}
+
+    <div class="col-6 offset-3 mt-5 mb-5">
+        <h3>Register to access the <strong>hotelist</strong> </h3>
+        <br>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group col-md-6">
+                {{ form.username }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.email }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.password1 }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.password2 }}
+            </div>
+            <br>
+            <div class="form-group col-md-12">
+                {{ form.first_name }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.last_name }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.country }}
+            </div>
+            <br>
+            <div class="form-group col-md-12">
+                <p class="text-muted">profile picture {{ form.photo }}</p>
+            </div>
+
+            <div class="form-group col-md-12 mt-5">
+                <button type="submit" class="btn btn-secondary">Register</button>
+            </div>
+            <div class="form-group col-md-12 mt-5" style="color:#a10909">
+                {% for message in messages %}
+                    <p style="color:#a10909">{{ message }}</p>
+                {% endfor %}
+            </div>
+            <br>
+            <p>Already have an account? <a href="{% url 'login' %}"><b>Log in</b></a></p>
+        </form>
+    </div>
+    <script>
+        var form_fields = document.getElementsByTagName('input');
+        form_fields[2].placeholder = 'username';
+        form_fields[3].placeholder = 'email address';
+        form_fields[4].placeholder = 'create a password';
+        form_fields[5].placeholder = 'repeat the password';
+        form_fields[6].placeholder = 'first name';
+        form_fields[7].placeholder = 'last name';
+        form_fields[8].placeholder = 'country';
+        for (var field in form_fields){
+            form_fields[field].className += ' form-control'
+        }
+    </script>
+  {% endblock content %}
