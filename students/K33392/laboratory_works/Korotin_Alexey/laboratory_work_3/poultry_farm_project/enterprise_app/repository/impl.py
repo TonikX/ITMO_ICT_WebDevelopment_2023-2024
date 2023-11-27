@@ -1,14 +1,20 @@
-from enterprise_app.models import Worker, Cage, Facility
-from enterprise_app.repository import ORMRepository
+from enterprise_app.models import User, Cage, Facility
+from poultry_farm_project.repositories import ORMRepository
 
 
-class ORMWorkerRepository(ORMRepository):
-    model = Worker
+class ORMUserRepository(ORMRepository):
+
+    def __init__(self) -> None:
+        super().__init__(User)
 
 
 class ORMCageRepository(ORMRepository):
-    model = Cage
+
+    def __init__(self) -> None:
+        super().__init__(Cage)
 
 
 class ORMFacilityRepository(ORMRepository):
-    model = Facility
+
+    def __init__(self) -> None:
+        super().__init__(Facility)

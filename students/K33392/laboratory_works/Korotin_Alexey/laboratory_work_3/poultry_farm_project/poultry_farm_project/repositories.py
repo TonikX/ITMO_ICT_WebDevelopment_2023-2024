@@ -2,7 +2,7 @@ import abc
 from typing import Generic, TypeVar, Optional, List
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-
+from rest_framework.serializers import ModelSerializer
 T = TypeVar("T", bound=models.Model)
 ID = TypeVar("ID")
 
@@ -13,7 +13,7 @@ class Repository(Generic[T, ID], metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def save(self, entity: T) -> T:
+    def save(self, entity: [ModelSerializer, T]) -> T:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -28,9 +28,10 @@ class Repository(Generic[T, ID], metaclass=abc.ABCMeta):
         return self.find_by_id(index)
 
 
-class ORMRepository(Repository, metaclass=abc.ABCMeta):
+class ORMRepository(Repository):
 
-    model = None
+    def __init__(self, model):
+        self.model = model
 
     def find_by_id(self, identifier: ID) -> Optional[T]:
         try:
@@ -38,7 +39,7 @@ class ORMRepository(Repository, metaclass=abc.ABCMeta):
         except ObjectDoesNotExist:
             return None
 
-    def save(self, entity: T) -> T:
+    def save(self, entity: [ModelSerializer, T]) -> T:
         entity.save()
         return entity
 
