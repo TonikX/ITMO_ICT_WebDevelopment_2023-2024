@@ -64,8 +64,8 @@ class Product(models.Model):
     """
     Товар
     """
-    type = models.ForeignKey('ProductType', on_delete=models.DO_NOTHING)
-    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.DO_NOTHING)
+    type = models.ForeignKey('ProductType', on_delete=models.CASCADE)
+    manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE)
     size = models.PositiveIntegerField(blank=True, null=True, default=1)
     price = models.DecimalField(decimal_places=2, max_digits=30, validators=[MinValueValidator(0)])
     amount = models.PositiveIntegerField()
@@ -120,7 +120,7 @@ class Consignment(models.Model):
     terms = models.CharField(max_length=2, choices=terms_types)
     opening_date = models.DateTimeField(auto_now_add=True)
     delivery_date = models.DateTimeField()
-    broker = models.ForeignKey('Broker', on_delete=models.DO_NOTHING)
+    broker = models.ForeignKey('Broker', on_delete=models.CASCADE)
     products = models.ManyToManyField('Product', through='ProductInConsignment', blank=True)
 
     @property
