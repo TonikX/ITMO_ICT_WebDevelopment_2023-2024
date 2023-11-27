@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+
+{% extends 'aviasales/extend/navbar.html' %}
+{% block title %}
+    Flight Info
+{% endblock %}
+
+{% block body %}
+    {% if not user_flights %}
+        <h2>No approved tickets for that flight</h2>
+    {% else %}
+        <table>
+            <tr>
+                <th>Ticket number</th>
+                <th>Seat</th>
+                <th>Passenger profile</th>
+            </tr>
+
+
+            {% for user_flight in user_flights %}
+                <tr>
+                    <td>{{ user_flight.ticket_number }}</td>
+                    <td>{{ user_flight.seat_number }}</td>
+                    <td>
+                        <a href="{{ user_flight.user.get_absolute_url }}">
+                            click
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
