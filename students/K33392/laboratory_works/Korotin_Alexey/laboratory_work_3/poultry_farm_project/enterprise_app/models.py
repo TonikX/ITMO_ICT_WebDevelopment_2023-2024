@@ -13,7 +13,9 @@ class User(AbstractUser):
     passport = models.CharField(max_length=10)
     salary = models.IntegerField()
     employment_contract_id = models.IntegerField()
-    dismissal_agreement_id = models.IntegerField()
+    dismissal_agreement_id = models.IntegerField(null=True)
+
+    REQUIRED_FIELDS = ["password", "role", "passport", "salary", "employment_contract_id"]
 
     def __str__(self):
         return self.passport

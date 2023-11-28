@@ -8,5 +8,6 @@ urlpatterns = [
     path("breeds/", BreedAPIView.as_view()),
     path("breeds/<int:pk>", BreedExactAPIView.as_view()),
     path("diets/", DietAPIView.as_view()),
-    path("diets/<int:pk>", DietExactAPIView.as_view())
+    path("diets/<int:pk>", DietExactAPIView.as_view()),
+    path("breeds/statistics", get_differences_by_breed)
 ]

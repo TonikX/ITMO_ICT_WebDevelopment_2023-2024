@@ -1,4 +1,5 @@
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from .services import CRUDService
@@ -6,6 +7,9 @@ from typing import Type
 
 
 class BaseAPIView(APIView):
+
+    permission_classes = (IsAuthenticated, )
+
     def __init__(self, service: CRUDService, serializer: Type[ModelSerializer]) -> None:
         super().__init__()
         self.service = service
@@ -27,6 +31,8 @@ class BaseAPIView(APIView):
 
 
 class BaseExactAPIView(APIView):
+
+    permission_classes = (IsAuthenticated, )
 
     def __init__(self, service: CRUDService, serializer: Type[ModelSerializer]):
         super().__init__()

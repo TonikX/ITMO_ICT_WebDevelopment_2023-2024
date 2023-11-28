@@ -25,4 +25,4 @@ class Chicken(models.Model):
     birth_date = models.DateField()
     monthly_egg_rate = models.IntegerField()
     breed = models.ForeignKey(Breed, on_delete=models.DO_NOTHING)
-    cage = models.ForeignKey(Cage, on_delete=models.DO_NOTHING)
+    cage = models.ForeignKey(Cage, on_delete=models.DO_NOTHING, related_name="cage_chicken")
