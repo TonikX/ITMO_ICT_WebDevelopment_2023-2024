@@ -1,4 +1,4 @@
-# Endpoints
+# CRUD
 
 Endpoints доступны всем **авторизованным** пользователям при помощи Auth token 
 (заголовок _Authorization: Token {your token}_)

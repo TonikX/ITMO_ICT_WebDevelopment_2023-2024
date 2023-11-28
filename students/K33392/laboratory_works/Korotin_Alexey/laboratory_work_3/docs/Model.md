@@ -34,20 +34,29 @@ class Chicken(models.Model):
     birth_date = models.DateField()
     monthly_egg_rate = models.IntegerField()
     breed = models.ForeignKey(Breed, on_delete=models.DO_NOTHING)
-    cage = models.ForeignKey(Cage, on_delete=models.DO_NOTHING)
+    cage = models.ForeignKey(Cage, on_delete=models.DO_NOTHING, related_name="cage_chicken")
 ```
 
 # Enterprise_app
 ```python
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from .value_objects import Location
 
 
-class Worker(models.Model):
+class User(AbstractUser):
+    ROLE_CHOICES = (
+        ("W", "Worker"),
+        ("D", "Director")
+    )
+
+    role = models.CharField(choices=ROLE_CHOICES, max_length=1)
     passport = models.CharField(max_length=10)
     salary = models.IntegerField()
     employment_contract_id = models.IntegerField()
-    dismissal_agreement_id = models.IntegerField()
+    dismissal_agreement_id = models.IntegerField(null=True)
+
+    REQUIRED_FIELDS = ["password", "role", "passport", "salary", "employment_contract_id"]
 
     def __str__(self):
         return self.passport
@@ -75,7 +84,10 @@ class Cage(models.Model):
     facility = models.ForeignKey(Facility, on_delete=models.DO_NOTHING)
     row = models.IntegerField()
     column = models.IntegerField()
-    responsible = models.ForeignKey(Worker, on_delete=models.DO_NOTHING)
+    responsible = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f"row: {self.row}, column: {self.column}"
 ```
 В enterprise_app был выделен value object `Location`, который представляет собой координаты точки. 
 
