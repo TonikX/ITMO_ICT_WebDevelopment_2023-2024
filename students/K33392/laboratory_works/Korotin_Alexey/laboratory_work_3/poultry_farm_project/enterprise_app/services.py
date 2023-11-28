@@ -1,7 +1,8 @@
 from poultry_farm_project.services import DefaultCRUDService
 from .repository.impl import ORMUserRepository, ORMCageRepository, ORMFacilityRepository
 from .models import Cage, User
-from django.db.models import Count, Avg
+from chicken_app.models import Chicken, Breed
+from django.db.models import Count, Avg, Sum
 
 
 class UserService(DefaultCRUDService):
@@ -53,3 +54,20 @@ class FacilityService(DefaultCRUDService):
                 out[facility].append({breed: count})
 
         return out
+
+    def report(self):
+        out = {}
+        total_eggs = Chicken.objects.aggregate(total_eggs=Sum('monthly_egg_rate'))
+        total_chickens = Chicken.objects.count()
+
+        out["total_eggs"] = total_eggs["total_eggs"]
+        out["total_chickens"] = total_chickens
+
+        average_productivity_per_breed = Breed.objects.annotate(
+            average_productivity=Avg('chicken__monthly_egg_rate')
+        ).values('name', 'average_productivity').distinct()
+
+        out["average_productivity_per_breed"] = average_productivity_per_breed
+
+        return out
+

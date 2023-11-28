@@ -58,3 +58,11 @@ def average_eggs_by_worker(request) -> Response:
     data = service.get_average_by_worker()
 
     return Response(data=data, status=200)
+
+
+@api_view(["GET"])
+@permission_classes([IsDirectorPermission])
+def report(request) -> Response:
+    service = FacilityService()
+    data = service.report()
+    return Response(data=data, status=200)

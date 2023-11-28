@@ -51,3 +51,25 @@
     }
 ]
 ```
+
+## Отчет о производительности птицефабрики
+
+`GET /report`
+
+### Формат ответа
+```json
+{
+    "total_eggs": 15,
+    "total_chickens": 3,
+    "average_productivity_per_breed": [
+        {
+            "name": "breed_1",
+            "average_productivity": 5.0
+        },
+        {
+            "name": "breed_2",
+            "average_productivity": 5.0
+        }
+    ]
+}
+```
