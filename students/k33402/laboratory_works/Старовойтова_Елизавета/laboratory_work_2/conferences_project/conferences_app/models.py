@@ -19,7 +19,7 @@ class AuthorRegistration(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     date_registered = models.DateTimeField(auto_now=True)
-
+    presentation_title = models.CharField(max_length=255)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')

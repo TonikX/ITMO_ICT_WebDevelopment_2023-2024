@@ -4,7 +4,12 @@
     <h2>Регистрация на конференцию</h2>
 
     {% if user.is_authenticated %}
-        <p>Вы успешно зарегистрированы на конференцию!</p>
+        <form method="post" action="{% url 'register_author' pk=conference.pk %}">
+            {% csrf_token %}
+            <label>Название доклада:</label>
+            <input type="text" name="presentation_title" required>
+            <button type="submit">Зарегистрироваться</button>
+        </form>
     {% else %}
         <p>Для регистрации на конференцию вам необходимо войти в систему.</p>
         <a href="{% url 'login' %}">Войти</a>

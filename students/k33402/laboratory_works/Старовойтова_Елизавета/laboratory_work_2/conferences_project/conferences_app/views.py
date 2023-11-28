@@ -42,6 +42,7 @@ class ConferenceDetailView(DetailView):
 
 
 class RegisterAuthorView(LoginRequiredMixin, View):
+    template_name = 'registration_form.html'
 
     def get(self, request, *args, **kwargs):
         conference = get_object_or_404(Conference, pk=self.kwargs['pk'])
@@ -51,20 +52,17 @@ class RegisterAuthorView(LoginRequiredMixin, View):
         if is_registered:
             return redirect('conference_detail', pk=conference.pk)
         else:
-            # Если пользователь не зарегистрирован, создаем запись в AuthorRegistration
-            AuthorRegistration.objects.create(user=request.user, conference=conference)
-            return redirect('conference_detail', pk=conference.pk)
-
-    def get_success_url(self):
-        return reverse_lazy('conference_list')
+            context = {'conference': conference}
+            return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        print("Handling post request for registration")
         conference = get_object_or_404(Conference, pk=self.kwargs['pk'])
-        registration = AuthorRegistration.objects.create(user=request.user, conference=conference)
-        print(f"New registration created: {registration}")
+        presentation_title = request.POST.get('presentation_title')  # Получаем значение из формы
+        if not presentation_title:
+            return render(request, self.template_name, {'conference': conference, 'error': 'Введите название доклада'})
+        # Создаем объект AuthorRegistration с указанным названием доклада
+        AuthorRegistration.objects.create(user=request.user, conference=conference, presentation_title=presentation_title)
         return redirect('conference_detail', pk=conference.pk)
-
 class WriteCommentView(LoginRequiredMixin,CreateView):
     model = Comment
     form_class = CommentForm

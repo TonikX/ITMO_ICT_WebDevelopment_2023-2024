@@ -7,19 +7,33 @@
         <p><strong>Период проведения:</strong> {{ conference.date }}</p>
 
         <h3>Зарегистрированные авторы:</h3>
-           <ul>
-               {% for registration in registrations %}
-                   <li>
-                        {% if registration.user == user %}
-                            {{ registration.user.username }} - {{ registration.date_registered }} -
-                            <a href="{% url 'update_registration' pk=registration.pk %}">Edit</a> |
-                            <a href="{% url 'delete_registration' pk=registration.pk %}">Delete</a>
-                        {% else %}
-                            {{ registration.user.username }} - {{ registration.date_registered }}
-                        {% endif %}
-                   </li>
-               {% endfor %}
-           </ul>
+           <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Имя пользователя</th>
+                            <th>Дата регистрации</th>
+                            <th>Название проекта</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registration in registrations %}
+                            <tr>
+                                <td>{{ registration.user.username }}</td>
+                                <td>{{ registration.date_registered }}</td>
+                                <td>{{ registration.presentation_title }}</td>
+                                <td>
+                                    {% if registration.user == user %}
+                                        <a href="{% url 'update_registration' pk=registration.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{% url 'delete_registration' pk=registration.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
         <h3>Комментарии</h3>
         <ul>
