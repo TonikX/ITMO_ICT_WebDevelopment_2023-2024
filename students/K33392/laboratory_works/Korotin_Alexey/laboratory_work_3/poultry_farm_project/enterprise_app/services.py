@@ -1,7 +1,7 @@
 from poultry_farm_project.services import DefaultCRUDService
 from .repository.impl import ORMUserRepository, ORMCageRepository, ORMFacilityRepository
-from .models import Facility, Cage
-from django.db.models import Count
+from .models import Cage, User
+from django.db.models import Count, Avg
 
 
 class UserService(DefaultCRUDService):
@@ -12,6 +12,15 @@ class UserService(DefaultCRUDService):
 class CageService(DefaultCRUDService):
     def __init__(self):
         super().__init__(ORMCageRepository())
+
+    def get_average_by_worker(self):
+        average_eggs_per_worker = (
+            User.objects.filter(cage__cage_chicken__isnull=False)  # Убедимся, что есть связанные куры
+                .annotate(average_eggs=Avg('cage__cage_chicken__monthly_egg_rate'))
+                .values('id', 'username', 'average_eggs')
+        )
+
+        return average_eggs_per_worker
 
 
 class FacilityService(DefaultCRUDService):

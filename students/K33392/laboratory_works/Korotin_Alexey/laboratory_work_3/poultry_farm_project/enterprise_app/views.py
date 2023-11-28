@@ -49,3 +49,12 @@ def chickens_by_breed_in_facilities(request) -> Response:
     data = service.get_chickens_by_breed()
 
     return Response(data=data, status=200)
+
+
+@api_view(["GET"])
+@permission_classes([IsDirectorPermission])
+def average_eggs_by_worker(request) -> Response:
+    service = CageService()
+    data = service.get_average_by_worker()
+
+    return Response(data=data, status=200)
