@@ -15,3 +15,15 @@ nav:
       - views: lab2/views.md
       - urls: lab2/urls.md
       - Выводы: lab2/itog.md
+  - Практическая №3.1:
+      - Создание объектов: pract3/create.md
+      - Фильтрация объектов: pract3/filter.md
+      - Агрегация и аннотация: pract3/annotate.md
+  - Лаюораторная №3:
+      - models: lab3/models.md
+      - urls: lab3/urls.md
+      - filters: lab3/filters.md
+      - views: lab3/views.md
+      - serializers: lab3/serializers.md
+      - settings: lab3/settings.md
+      - Выводы: lab3/itog.md

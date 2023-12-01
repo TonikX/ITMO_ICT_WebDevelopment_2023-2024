@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
 {% if tickets.count != 0 %}
   <p>Всего мест:  {{tickets.first.flight_id.plane_id.seats_number}} Забронировано: {{ tickets.count}}</p>
 
@@ -29,4 +29,8 @@
 <p>На рейс пока никто не зарегистрировался</p>
 {% endif %}
 <a href="{% url 'home' %}" class="btn btn-dark">К рейсам</a>
+{% else %}
+<p>Войдите в систему, чтобы посмотреть таблицу</p></br>
+<a href="{% url 'home' %}" class="btn btn-dark">К рейсам</a>
+{% endif %}
 {% endblock %}

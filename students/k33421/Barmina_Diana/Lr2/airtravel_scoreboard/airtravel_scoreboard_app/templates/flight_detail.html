@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <h2> {{ flight.departure_site }} - {{ flight.landing_site }} </h2>
 <h3> {{ flight.departure_time }} - {{ flight.landing_time }} </h3>
 <p>
@@ -13,11 +14,11 @@
 <h5>ОТЗЫВЫ</h5>
 <br/>
 {% if not flight.comments.all %}
-    This post doesn't have any comments yet<a href="{% url 'add-comment' flight.pk %}">  Add first</a>
-    <br/><br/>
+    У этого рейса пока нет комментариев. Добавь первый!</br><a href="{% url 'add-comment' flight.pk %}">Добавить комментарий</a>
+<br/><br/>
     <hr>
 {% else %}
-    <a href="{% url 'add-comment' flight.pk %}">Add comment</a>
+    <a href="{% url 'add-comment' flight.pk %}">Добавить комментарий</a>
     <br/><br/>
     {% for comment in flight.comments.all %}
         <strong>{{ comment.author.first_name }}  {{ comment.author.last_name }}</strong><br/>

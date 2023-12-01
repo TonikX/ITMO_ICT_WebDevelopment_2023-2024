@@ -13,7 +13,8 @@ from django.views import generic
 
 
 def HomeSortView(request):
-    flights = Flight.objects.filter(departure_time__date__gt=datetime.now().date())
+    flights = Flight.objects.filter(departure_time__date__gt=datetime.now().date()).order_by('departure_time')
+    #flights = flights.objects.all().order_by('departure_time')
     return render(request, 'home.html', {'object_list': flights})
 
 
@@ -38,8 +39,8 @@ def UserWithFlightsView(request, user_id):
     for i in range(len(tickets)):
         tick.append(tickets[i].flight_id.pk)
     flights = Flight.objects.filter(pk__in=tick)
-    flights_1 = flights.filter(departure_time__date__gt=datetime.now().date())
-    flights_2 = flights.filter(departure_time__date__lte=datetime.now().date())
+    flights_1 = flights.filter(departure_time__date__gt=datetime.now().date()).order_by('departure_time')
+    flights_2 = flights.filter(departure_time__date__lte=datetime.now().date()).order_by('departure_time')
     user = get_object_or_404(Traveler, pk=user_id)
     return render(request, 'user_page.html', {'tickets': tickets, 'flights_1': flights_1, 'flights_2': flights_2, 'user': user})
 
