@@ -14,10 +14,11 @@ def RegistrationView(request):
         form = CustomUserCreationForm(request.POST)
         print(form, "CHECK")
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = form.save()
+            # login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            # username = form.cleaned_data.get('username')
+            # password = form.cleaned_data.get('password')
+            # user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('index')
     else:
