@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2> {{ user.first_name }} {{ user.last_name }} </h2></br>
+
+<hr>
+</br>
+<h4> Мои предстоящие рейсы: </h4>
+{% if flights_1.count != 0 %}
+    {% for f in flights_1 %}
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0 ">
+              <div class="card-body">
+                <h5 class="card-title">{{ f.departure_site }} - {{ f.landing_site }}</h5>
+                <p class="card-text">{{ f.departure_time }}-{{ f.landing_time}}</p>
+                <p class="card-text"><small class="text-body-secondary">Авиакомпания "{{ f.airline }}" Модель самолета: {{ f.plane_id.name}}</small></p>
+                  {% for t in tickets %}
+                  {% if f.pk == t.flight_id.pk %}
+                  <p class="card-text"><small class="text-body-secondary">Номер выхода: {{ f.gate }} Место: {{ t.seat_id.name }} Класс: {{ t.seat_id.category }}
+                      {% if t.baggage == True %} (с багажом) {% else %} (без багажа) {% endif %}</small></p>
+                      <a href="{% url 'delete-ticket' user_id=user.pk pk=t.pk %}" class="btn btn-outline-danger">Удалить билет</a>
+                      <a href="{% url 'update-ticket' user_id=user.pk pk=t.pk %}" class="btn btn-outline-warning">Изменить билет</a></br>
+                  {% endif %}
+                  {% endfor %}
+              </div>
+          </div>
+        </div>
+    {% endfor %}
+    </br>
+{% else %}
+ <p>У вас нет планируемых путешествий</p>
+{% endif %}
+
+<h4> Мои прошедшие рейсы: </h4>
+{% if flights_2.count != 0 %}
+    {% for f in flights_2 %}
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0 ">
+              <div class="card-body">
+                <h5 class="card-title">{{ f.departure_site }} - {{ f.landing_site }}</h5>
+                <p class="card-text">{{ f.departure_time }}-{{ f.landing_time}}</p>
+                <p class="card-text"><small class="text-body-secondary">Авиакомпания "{{ f.airline }}" Модель самолета: {{ f.plane_id.name}}</small></p>
+                <a href="{% url 'flight-detail' f.pk %}" class="btn btn-outline-primary">Отзывы</a></br>
+              </div>
+          </div>
+        </div>
+    {% endfor %}
+</br>
+{% else %}
+ <p>Вы пока никуда не летали</p>
+{% endif %}
+</br><hr></br>
+<a href="{% url 'home' %}" class="btn btn-dark">На главную</a>
+
+
+{% endblock %}

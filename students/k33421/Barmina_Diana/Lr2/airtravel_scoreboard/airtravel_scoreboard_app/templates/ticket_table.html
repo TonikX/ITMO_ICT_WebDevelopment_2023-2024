@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if tickets.count != 0 %}
+  <p>Всего мест:  {{tickets.first.flight_id.plane_id.seats_number}} Забронировано: {{ tickets.count}}</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Имя</th>
+        <th scope="col">Класс</th>
+        <th scope="col">Место</th>
+        <th scope="col">Наличие багажа</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for ticket in tickets %}
+      <tr>
+        <td>{{ ticket.traveler_id.first_name }} {{ ticket.traveler_id.last_name }}</td>
+        <td>{{ ticket.seat_id.category }}</td>
+        <td>{{ ticket.seat_id.name }}</td>
+        <td>{{ ticket.baggage }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<p>На рейс пока никто не зарегистрировался</p>
+{% endif %}
+<a href="{% url 'home' %}" class="btn btn-dark">К рейсам</a>
+{% endblock %}

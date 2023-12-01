@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Удалить билет</h1><br/>
+<p>Вы уверены, что хотите удалить билет?</p>
+<form method="post">
+    {% csrf_token %}
+    <br/><button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+<br/><a href="{% url 'user-page' user.pk %}" class="btn btn-dark">Назад в личный кабинет</a>
+
+{% endblock %}
