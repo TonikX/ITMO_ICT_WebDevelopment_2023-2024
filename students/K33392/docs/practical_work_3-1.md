@@ -104,7 +104,7 @@ for data in licenses_data:
 - Вывести всех владельцев красных машин (или любого другого цвета, который у вас присутствует)
 - Найти всех владельцев, чей год владения машиной начинается с 2010 (или любой другой год, который присутствует у вас в базе)
 
-1. Для получения всех автомобилей марки Toyota воспользуемся методом `Car.objects.filter`
+Для получения всех автомобилей марки Toyota воспользуемся методом `Car.objects.filter`
 
 ```python
 toyota_cars = Car.objects.filter(model="Toyota")
@@ -116,7 +116,7 @@ for car in toyota_cars:
   print("--------------------")
 ```
 
-2. Для поиска водителей с именем Alice воспользуемся методом ` CarOwner.objects.filter`
+Для поиска водителей с именем Alice воспользуемся методом ` CarOwner.objects.filter`
 ```python
 alice_drivers = CarOwner.objects.filter(first_name="Alice")
 for driver in alice_drivers:
@@ -125,7 +125,7 @@ for driver in alice_drivers:
   print("--------------------")
 ```
 
-3. Для фильтрации прав по владельцу выполним два запроса при помощи методов `CarOwner.objects.get` и `DriversLicence.objects.filter`
+Для фильтрации прав по владельцу выполним два запроса при помощи методов `CarOwner.objects.get` и `DriversLicence.objects.filter`
 ```python
 driver = CarOwner.objects.get(first_name="Jane")
 
@@ -141,7 +141,7 @@ for license in driver_licenses:
   print("--------------------")
 ```
 
-4. Для получения всех красных машин воспользуемся методом `Car.objects.filter`
+Для получения всех красных машин воспользуемся методом `Car.objects.filter`
 ```python
 # Query all car owners with red cars
 red_cars = Car.objects.filter(color="Red")
@@ -152,7 +152,7 @@ for car in red_cars:
   print("--------------------")
 ```
 
-5. Для получения всех владельцев, которые владеют автомобилем начиная с 2023 года воспользуемся методом `CarOwner.objects.filter`
+Для получения всех владельцев, которые владеют автомобилем начиная с 2023 года воспользуемся методом `CarOwner.objects.filter`
 ```python
 target_year = 2023
 owners_with_cars_from_year = CarOwner.objects.filter(
@@ -172,21 +172,21 @@ for owner in owners_with_cars_from_year:
 - Подсчитайте количество машин каждой марки
 - Отсортируйте всех автовладельцев по дате выдачи удостоверения 
 
-1. Вывод даты выдачи самого старшего водительского удостоверения
+Вывод даты выдачи самого старшего водительского удостоверения
 ```python
 # query the oldest drivers license
 oldest_license = DriversLicence.objects.order_by("issue_date").first()
 print(f"License Number: {oldest_license.number}")
 ```
 
-2. Укажите самую позднюю дату владения машиной, имеющую какую-то из существующих моделей в вашей базе
+Укажите самую позднюю дату владения машиной, имеющую какую-то из существующих моделей в вашей базе
 ```python
 # query the oldest ownership date
 oldest_ownership = Ownership.objects.order_by("start_date").first()
 print(f"Oldest ownership: {oldest_ownership.start_date}")
 ```
 
-3. Выведите количество машин для каждого водителя
+Выведите количество машин для каждого водителя
 ```python
 # query the number of cars for each driver using Count annotate
 owners_with_car_count = CarOwner.objects.annotate(car_count=Count("ownership"))
@@ -196,7 +196,7 @@ for owner in owners_with_car_count:
     print("--------------------")
 ```
 
-4. Подсчитайте количество машин каждой марки
+Подсчитайте количество машин каждой марки
 ```python
 # query number of cars by model
 cars_by_model = Car.objects.values("model").annotate(car_count=Count("ownership"))
@@ -206,7 +206,7 @@ for car in cars_by_model:
     print("--------------------")
 ```
 
-5. Отсортируйте всех автовладельцев по дате выдачи удостоверения 
+Отсортируйте всех автовладельцев по дате выдачи удостоверения 
 ```python
 # query all car owners sorted by drivers license issue date
 owners_by_license_issue_date = CarOwner.objects.order_by("driverslicence__issue_date")
