@@ -12,7 +12,7 @@ class CarOwner(AbstractUser):
 
 
 class DriversLicence(Model):
-    owner = ForeignKey(CarOwner, CASCADE)
+    owner = ForeignKey(CarOwner, CASCADE, related_name="driverslicence")
     number = CharField(max_length=10)
     _type = CharField(max_length=10)
     issue_date = DateTimeField()
