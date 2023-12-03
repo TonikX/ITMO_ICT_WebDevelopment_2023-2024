@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Alpinist, Guide, Mountain, Route
+from .models import Alpinist, Guide, Mountain, Route, Club
 
 
 class AlpinistSerializer(serializers.ModelSerializer):
@@ -28,4 +28,11 @@ class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Route
         fields = ['id', 'mountain_id', 'name', 'difficulty', 'length', 'peak_height', 'estimated_time', 'description']
+        read_only_fields = ['id']
+
+
+class ClubSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Club
+        fields = ['id', 'name', 'country', 'city', 'contact_person', 'email', 'phone', 'website', 'created_at']
         read_only_fields = ['id']

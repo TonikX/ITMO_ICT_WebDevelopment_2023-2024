@@ -1,9 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
 
-from .models import Alpinist, Guide, Mountain, Route
+from .models import Alpinist, Guide, Mountain, Route, Club
 from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly
-from .serializers import AlpinistSerializer, GuideSerializer, MountainSerializer, RouteSerializer
+from .serializers import AlpinistSerializer, GuideSerializer, MountainSerializer, RouteSerializer, ClubSerializer
 from .viewsets import BaseProfilesViewSet
 
 
@@ -71,7 +71,24 @@ class RouteViewSet(viewsets.ModelViewSet):
     queryset = Route.objects.all()
     serializer_class = RouteSerializer
     permission_classes = [IsAdminOrReadOnly]
-    
+
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['difficulty']
     search_fields = ['name', 'mountain__name']
+
+
+class ClubViewSet(viewsets.ModelViewSet):
+    """
+    Набор представлений для просмотра и редактирования экземпляров club.
+    Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
+    
+    * Требует аутентификации для чтения, изменение доступно только пользователям-администраторам
+    * Поддерживает фильтрацию и поиск.
+    """
+    queryset = Club.objects.all()
+    serializer_class = ClubSerializer
+    permission_classes = [IsAdminOrReadOnly]
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['country', 'city']
+    search_fields = ['name', 'contact_person', 'email', 'phone']
