@@ -1,17 +1,25 @@
-# Welcome to MkDocs
-
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+<div align="center">
+    Министерство науки и высшего образования Российской Федерации<br>
+    федеральное государственное автономное образовательное учреждение<br>
+    высшего образования<br>
+    <br>
+    «НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ ИТМО»<br>
+    <br>
+    <b>ОТЧЕТ</b><br>
+    <br>
+    по лабораторной работе «Реализация серверной части на Django REST Framework»<br>
+    по дисциплине «Web-программирование»<br>
+</div>
+<br>
+Отчет выполнила<br>
+<br>
+Студентка: Плеханова Дарья <br>
+Группа: К33422<br>
+Факультет: ИКТ<br>
+<br>
+Преподаватель: Говоров Антон<br>
+<br>
+<br>
+<div align="center">
+    Санкт-Петербург 2023
+</div>
