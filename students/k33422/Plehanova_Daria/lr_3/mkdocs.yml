@@ -1,0 +1,16 @@
+site_name: 'Mountaineering Club Project Documentation'
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Alpinists: alpinists.md
+      - Guides: guides.md
+      - Mountains: mountains.md
+      - Routes: routes.md
+      - Clubs: clubs.md
+      - Climbs: climbs.md
+      - Groups: groups.md
+      - Group Members: group_members.md
