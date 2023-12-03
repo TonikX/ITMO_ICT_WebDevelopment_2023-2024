@@ -1,0 +1,20 @@
+nav:
+  - [home](index.md): index.md
+  - lab 1:
+    - [task 1](lab1/task1.md)
+    - [task 2](lab1/task2.md)
+    - [task 3](lab1/task3.md)
+    - [task 4](lab1/task4.md)
+    - [task 5](lab1/task5.md)
+  - lab 2:
+    - [admin](lab2/admin.md)
+    - [forms](lab2/forms.md)
+    - [models](lab2/model.md)
+    - [settings](lab2/settings.md)
+    - [templates](lab2/templates.md)
+    - [urls](lab2/urls.md)
+    - [views](lab2/views.md)
+  - practice 3:
+    - [task1](lab3/task1.md)
+    - [task2](lab3/task2.md)
+    - [task3](lab3/task3.md)

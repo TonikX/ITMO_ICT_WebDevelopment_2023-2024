@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dbab94ba-03e9-45ab-bb5b-f10e5ad187c6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.1.1_after.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.1.1_after2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.1.1_before.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.5:one.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.2.5:two.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.3.1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.3.2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.3.3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.3.4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/practic3/3.3.5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/lab-reports.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/Activate.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/activate.csh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/activate.fish" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/django-admin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/pip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/pip3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/pip3.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/python" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/python3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/python3.9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/bin/sqlformat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/add_author.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/add_presentation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/add_registration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/add_review.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/author_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/authors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/conference_authors.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/conference_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/conferences.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/delete_registration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/edit_author.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/edit_presentation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/edit_registration.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/edit_review.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/presentation_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/presentations.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/registration_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/registrations.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/review_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/templates/reviews.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/conferences_app/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/conferences/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/labs-env/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/info.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task4.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task5.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab1/task5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/10edit-author.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/11add-author.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/12conference-authors.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/1home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/2admin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/3users.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/4registrations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/5presentations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/6review.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/7conference.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/8all-authors.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/9author-details.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/admin.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/forms.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/info.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/model.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/settings.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/templates.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/urls.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/docs/lab2/views.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/mkdocs.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/css/base.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/img/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/img/grid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/js/base.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/js/jquery-3.6.0.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/info/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task1/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task2/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task3/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task4/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab1/task5/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/10edit-author.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/11add-author.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/12conference-authors.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/1home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/2admin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/3users.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/4registrations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/5presentations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/6review.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/7conference.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/8all-authors.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/9author-details.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/admin/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/forms/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/info/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/model/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/settings/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/urls/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/lab2/views/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/search/lunr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/search/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/search/search_index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/search/worker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/sitemap.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab-reports/report/site/sitemap.xml.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab1/task5/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/students/k33421/redkina_lyubov/lab1/task5/server.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2XomGmOwzj16bSu2FV9rjNC58ZK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/lab3" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/mkdocs/report/docs/lab3" />
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/reports/docs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/reports/docs" />
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/docs" />
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/docs/reports" />
+      <recent name="$PROJECT_DIR$/students/k33421/redkina_lyubov/docs/web_docs/docs" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dbab94ba-03e9-45ab-bb5b-f10e5ad187c6" name="Changes" comment="" />
+      <created>1699303713064</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699303713064</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
