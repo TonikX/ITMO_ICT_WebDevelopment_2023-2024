@@ -1,3 +1,35 @@
-from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, viewsets
 
-# Create your views here.
+from .models import Alpinist
+from .permissions import CurrentUserOrAdmin
+from .serializers import AlpinistSerializer
+
+
+class AlpinistViewSet(viewsets.ModelViewSet):
+    """
+    Набор представлений для просмотра и редактирования экземпляров alpinist.
+    Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
+    
+    * Требует аутентификации для чтения и создания, обновлять и удалять профили могут
+    только их владельцы или пользователи-администраторы
+    * Поддерживает фильтрацию и поиск.
+    """
+    queryset = Alpinist.objects.all()
+    serializer_class = AlpinistSerializer
+    permission_classes = [CurrentUserOrAdmin]
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['level', 'club']
+    search_fields = ['user__email', 'address']
+    
+    def perform_create(self, serializer):
+        user_id = self.request.data.get('user_id')
+        current_user = self.request.user
+        
+        if user_id and (current_user.is_staff or current_user.is_superuser):
+            user = get_object_or_404(User, id=user_id)
+        else:
+            user = current_user
+        
+        serializer.save(user=user)
