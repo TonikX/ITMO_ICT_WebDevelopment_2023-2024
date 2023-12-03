@@ -8,3 +8,12 @@ class CurrentUserOrAdmin(IsAuthenticated):
 		
 		user = request.user
 		return user.is_staff or obj.user.pk == user.pk
+
+
+class IsAdminOrReadOnly(IsAuthenticated):
+	def has_permission(self, request, view):
+		if request.method in SAFE_METHODS:
+			return True
+		
+		user = request.user
+		return user.is_staff
