@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
 
-from .models import Alpinist, Guide, Mountain, Route, Club
-from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly
-from .serializers import AlpinistSerializer, GuideSerializer, MountainSerializer, RouteSerializer, ClubSerializer
+from .models import Alpinist, Climb, Club, Guide, Mountain, Route
+from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly, IsGuideOrAdmin
+from .serializers import AlpinistSerializer, ClimbSerializer, ClubSerializer, GuideSerializer, MountainSerializer, \
+    RouteSerializer
 from .viewsets import BaseProfilesViewSet
 
 
@@ -88,7 +90,36 @@ class ClubViewSet(viewsets.ModelViewSet):
     queryset = Club.objects.all()
     serializer_class = ClubSerializer
     permission_classes = [IsAdminOrReadOnly]
-    
+
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['country', 'city']
     search_fields = ['name', 'contact_person', 'email', 'phone']
+
+
+class ClimbViewSet(viewsets.ModelViewSet):
+    """
+    Набор представлений для просмотра и редактирования экземпляров climb.
+    Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
+    
+    * Требует аутентификации для чтения, изменение доступно только гидам и пользователям-администраторам
+    * Поддерживает фильтрацию и поиск.
+    """
+    queryset = Climb.objects.all()
+    serializer_class = ClimbSerializer
+    permission_classes = [IsGuideOrAdmin]
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['guide', 'route']
+    search_fields = ['guide__user__email', 'guide__user__first_name', 'guide__user__last_name',
+                     'route__name', 'route__mountain__name']
+    
+    def perform_create(self, serializer):
+        guide_id = self.request.data.get('guide_id')
+        current_user = self.request.user
+        
+        if guide_id and current_user.is_staff:
+            guide = get_object_or_404(Guide, id=guide_id)
+        else:
+            guide = get_object_or_404(Guide, user=current_user)
+        
+        serializer.save(guide=guide)
