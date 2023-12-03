@@ -1,9 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
 
-from .models import Alpinist, Guide, Mountain
+from .models import Alpinist, Guide, Mountain, Route
 from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly
-from .serializers import AlpinistSerializer, GuideSerializer, MountainSerializer
+from .serializers import AlpinistSerializer, GuideSerializer, MountainSerializer, RouteSerializer
 from .viewsets import BaseProfilesViewSet
 
 
@@ -54,7 +54,24 @@ class MountainViewSet(viewsets.ModelViewSet):
     queryset = Mountain.objects.all()
     serializer_class = MountainSerializer
     permission_classes = [IsAdminOrReadOnly]
-    
+
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['country', 'region']
     search_fields = ['name']
+
+
+class RouteViewSet(viewsets.ModelViewSet):
+    """
+    Набор представлений для просмотра и редактирования экземпляров route.
+    Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
+    
+    * Требует аутентификации для чтения, изменение доступно только пользователям-администраторам
+    * Поддерживает фильтрацию и поиск.
+    """
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
+    permission_classes = [IsAdminOrReadOnly]
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['difficulty']
+    search_fields = ['name', 'mountain__name']
