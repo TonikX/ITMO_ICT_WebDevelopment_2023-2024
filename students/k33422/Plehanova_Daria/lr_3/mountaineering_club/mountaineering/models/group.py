@@ -15,7 +15,7 @@ class Group(models.Model):
 class GroupMember(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='members')
     alpinist = models.ForeignKey(Alpinist, on_delete=models.CASCADE)
-    outcome = models.CharField(max_length=100)
+    outcome = models.CharField(max_length=100, null=True, blank=True)
     incident = models.TextField(null=True, blank=True)
     
     def __str__(self):

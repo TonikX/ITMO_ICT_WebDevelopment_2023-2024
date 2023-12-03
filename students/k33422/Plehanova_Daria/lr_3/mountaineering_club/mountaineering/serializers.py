@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Alpinist, Climb, Club, Group, Guide, Mountain, Route
+from .models import Alpinist, Climb, Club, Group, GroupMember, Guide, Mountain, Route
 
 
 class AlpinistSerializer(serializers.ModelSerializer):
@@ -58,4 +58,15 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['id', 'climb_id', 'member_count']
+        read_only_fields = ['id']
+
+
+class GroupMemberSerializer(serializers.ModelSerializer):
+    group_id = serializers.PrimaryKeyRelatedField(
+        queryset=Group.objects.all(), source='group', required=True, write_only=True
+    )
+    
+    class Meta:
+        model = GroupMember
+        fields = ['id', 'group_id', 'alpinist_id', 'outcome', 'incident']
         read_only_fields = ['id']

@@ -1,13 +1,44 @@
 from rest_framework.permissions import IsAuthenticated, SAFE_METHODS
 
 
-class CurrentUserOrAdmin(IsAuthenticated):
+class BaseCurrentUserOrAdmin(IsAuthenticated):
 	def has_object_permission(self, request, view, obj):
 		if request.method in SAFE_METHODS:
 			return True
 		
-		user = request.user
-		return user.is_staff or obj.user == user
+		return request.user.is_staff
+
+
+class CurrentUserOrAdminForProfiles(BaseCurrentUserOrAdmin):
+	def has_object_permission(self, request, view, obj):
+		if super().has_object_permission(request, view, obj):
+			return True
+		
+		if hasattr(obj, 'user'):
+			return obj.user == request.user
+		
+		return False
+
+
+class CurrentUserOrAdminForGroupMember(BaseCurrentUserOrAdmin):
+	def has_permission(self, request, view):
+		if not super().has_permission(request, view):
+			return False
+		
+		if view.action in ['create', 'update', 'partial_update', 'destroy']:
+			is_alpinist = hasattr(request.user, 'alpinist_profile') and request.user.alpinist_profile is not None
+			return is_alpinist or request.user.is_staff
+		
+		return True
+	
+	def has_object_permission(self, request, view, obj):
+		if super().has_object_permission(request, view, obj):
+			return True
+		
+		if hasattr(obj, 'alpinist'):
+			return obj.alpinist.user == request.user
+		
+		return False
 
 
 class IsAdminOrReadOnly(IsAuthenticated):
@@ -15,11 +46,10 @@ class IsAdminOrReadOnly(IsAuthenticated):
 		if request.method in SAFE_METHODS:
 			return True
 		
-		user = request.user
-		return user.is_staff
+		return request.user.is_staff
 
 
-class BaseIsGuideOrAdmin(IsAuthenticated):
+class BaseIsGuideOrAdmin(BaseCurrentUserOrAdmin):
 	def has_permission(self, request, view):
 		if not super().has_permission(request, view):
 			return False
@@ -29,9 +59,6 @@ class BaseIsGuideOrAdmin(IsAuthenticated):
 			return is_guide or request.user.is_staff
 		
 		return True
-	
-	def has_object_permission(self, request, view, obj):
-		return request.method in SAFE_METHODS
 
 
 class IsGuideOrAdminForClimb(BaseIsGuideOrAdmin):
@@ -40,7 +67,7 @@ class IsGuideOrAdminForClimb(BaseIsGuideOrAdmin):
 			return True
 		
 		if hasattr(obj, 'guide'):
-			return obj.guide.user == request.user or request.user.is_staff
+			return obj.guide.user == request.user
 		
 		return False
 
@@ -51,6 +78,6 @@ class IsGuideOrAdminForGroup(BaseIsGuideOrAdmin):
 			return True
 		
 		if hasattr(obj, 'climb'):
-			return obj.climb.guide.user == request.user or request.user.is_staff
+			return obj.climb.guide.user == request.user
 		
 		return False
