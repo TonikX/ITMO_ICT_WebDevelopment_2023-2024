@@ -6,7 +6,7 @@ from .models import Alpinist, Guide
 class AlpinistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alpinist
-        fields = ['id', 'date_of_birth', 'address', 'level', 'club']
+        fields = ['id', 'user_id', 'date_of_birth', 'address', 'level', 'club']
         read_only_fields = ['id']
 
 

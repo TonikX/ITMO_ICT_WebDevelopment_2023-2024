@@ -1,12 +1,13 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets
+from rest_framework import filters
 
 from .models import Alpinist, Guide
 from .permissions import CurrentUserOrAdmin
 from .serializers import AlpinistSerializer, GuideSerializer
+from .viewsets import BaseProfilesViewSet
 
 
-class AlpinistViewSet(viewsets.ModelViewSet):
+class AlpinistViewSet(BaseProfilesViewSet):
     """
     Набор представлений для просмотра и редактирования экземпляров alpinist.
     Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
@@ -21,21 +22,10 @@ class AlpinistViewSet(viewsets.ModelViewSet):
     
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['level', 'club']
-    search_fields = ['user__email', 'address']
-    
-    def perform_create(self, serializer):
-        user_id = self.request.data.get('user_id')
-        current_user = self.request.user
-    
-        if user_id and (current_user.is_staff or current_user.is_superuser):
-            user = get_object_or_404(User, id=user_id)
-        else:
-            user = current_user
-    
-        serializer.save(user=user)
+    search_fields = ['user__email', 'user__first_name', 'user__last_name', 'address']
 
 
-class GuideViewSet(viewsets.ModelViewSet):
+class GuideViewSet(BaseProfilesViewSet):
     """
     Набор представлений для просмотра и редактирования экземпляров guide.
     Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
@@ -51,14 +41,3 @@ class GuideViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['certification', 'years_of_experience']
     search_fields = ['user__email', 'user__first_name', 'user__last_name']
-    
-    def perform_create(self, serializer):
-        user_id = self.request.data.get('user_id')
-        current_user = self.request.user
-        
-        if user_id and current_user.is_staff:
-            user = get_object_or_404(User, id=user_id)
-        else:
-            user = current_user
-        
-        serializer.save(user=user)
