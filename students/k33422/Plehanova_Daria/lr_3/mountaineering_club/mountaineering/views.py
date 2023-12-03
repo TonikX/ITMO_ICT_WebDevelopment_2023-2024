@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets
+from rest_framework import filters, serializers, viewsets
 
-from .models import Alpinist, Climb, Club, Guide, Mountain, Route
-from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly, IsGuideOrAdmin
-from .serializers import AlpinistSerializer, ClimbSerializer, ClubSerializer, GuideSerializer, MountainSerializer, \
-    RouteSerializer
+from .models import Alpinist, Climb, Club, Group, Guide, Mountain, Route
+from .permissions import CurrentUserOrAdmin, IsAdminOrReadOnly, IsGuideOrAdminForClimb, \
+    IsGuideOrAdminForGroup
+from .serializers import AlpinistSerializer, ClimbSerializer, ClubSerializer, GroupSerializer, GuideSerializer, \
+    MountainSerializer, RouteSerializer
 from .viewsets import BaseProfilesViewSet
 
 
@@ -106,7 +107,7 @@ class ClimbViewSet(viewsets.ModelViewSet):
     """
     queryset = Climb.objects.all()
     serializer_class = ClimbSerializer
-    permission_classes = [IsGuideOrAdmin]
+    permission_classes = [IsGuideOrAdminForClimb]
     
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['guide', 'route']
@@ -116,10 +117,44 @@ class ClimbViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         guide_id = self.request.data.get('guide_id')
         current_user = self.request.user
-        
+    
         if guide_id and current_user.is_staff:
             guide = get_object_or_404(Guide, id=guide_id)
         else:
             guide = get_object_or_404(Guide, user=current_user)
-        
+    
         serializer.save(guide=guide)
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    Набор представлений для просмотра и редактирования экземпляров group.
+    Предоставляет действия для list, create, retrieve, update, partial_update и destroy.
+    
+    * Требует аутентификации для чтения, изменение доступно только гидам и пользователям-администраторам
+    * Поддерживает фильтрацию и поиск.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [IsGuideOrAdminForGroup]
+    
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['climb']
+    search_fields = ['climb__route__name', 'climb__route__mountain__name', 'climb__guide__user__email',
+                     'climb__guide__user__first_name', 'climb__guide__user__last_name']
+    
+    def perform_create(self, serializer):
+        climb = serializer.validated_data['climb']
+        
+        member_count = self.request.data.get('member_count')
+        current_user = self.request.user
+        
+        # Проверка, что гид climb совпадает с текущим пользователем
+        if climb.guide.user != self.request.user and not self.request.user.is_staff:
+            raise serializers.ValidationError({'climb': 'You are not a guide for this climb.'})
+        
+        # Если member_count предоставлен и пользователь является администратором
+        if member_count and current_user.is_staff:
+            serializer.save(member_count=member_count)
+        else:
+            serializer.save()

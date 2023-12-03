@@ -7,7 +7,7 @@ class CurrentUserOrAdmin(IsAuthenticated):
 			return True
 		
 		user = request.user
-		return user.is_staff or obj.user.pk == user.pk
+		return user.is_staff or obj.user == user
 
 
 class IsAdminOrReadOnly(IsAuthenticated):
@@ -19,10 +19,7 @@ class IsAdminOrReadOnly(IsAuthenticated):
 		return user.is_staff
 
 
-from rest_framework import permissions
-
-
-class IsGuideOrAdmin(permissions.IsAuthenticated):
+class BaseIsGuideOrAdmin(IsAuthenticated):
 	def has_permission(self, request, view):
 		if not super().has_permission(request, view):
 			return False
@@ -34,7 +31,26 @@ class IsGuideOrAdmin(permissions.IsAuthenticated):
 		return True
 	
 	def has_object_permission(self, request, view, obj):
-		if request.method in permissions.SAFE_METHODS:
+		return request.method in SAFE_METHODS
+
+
+class IsGuideOrAdminForClimb(BaseIsGuideOrAdmin):
+	def has_object_permission(self, request, view, obj):
+		if super().has_object_permission(request, view, obj):
 			return True
 		
-		return obj.guide.user == request.user or request.user.is_staff
+		if hasattr(obj, 'guide'):
+			return obj.guide.user == request.user or request.user.is_staff
+		
+		return False
+
+
+class IsGuideOrAdminForGroup(BaseIsGuideOrAdmin):
+	def has_object_permission(self, request, view, obj):
+		if super().has_object_permission(request, view, obj):
+			return True
+		
+		if hasattr(obj, 'climb'):
+			return obj.climb.guide.user == request.user or request.user.is_staff
+		
+		return False

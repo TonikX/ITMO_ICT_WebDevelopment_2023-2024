@@ -6,7 +6,7 @@ from .climb import Climb
 
 class Group(models.Model):
     climb = models.ForeignKey(Climb, on_delete=models.CASCADE, related_name='groups')
-    member_count = models.PositiveIntegerField()
+    member_count = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return f"Group for {self.climb}"
