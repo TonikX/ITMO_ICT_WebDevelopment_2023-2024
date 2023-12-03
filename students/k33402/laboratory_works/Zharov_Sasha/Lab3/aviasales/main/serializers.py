@@ -17,7 +17,9 @@ class CrewMemberSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CrewSerializer(serializers.ModelSerializer):
-    members = CrewMemberSerializer(many=True, read_only=True)
+    class Meta:
+        model = Crew
+        fields = '__all__'
 
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
