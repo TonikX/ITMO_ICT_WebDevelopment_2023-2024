@@ -92,3 +92,4 @@ class SetToFoundation(models.Model):
 
     def __str__(self):
         return f'{self.set} in {self.foundation}'
+
