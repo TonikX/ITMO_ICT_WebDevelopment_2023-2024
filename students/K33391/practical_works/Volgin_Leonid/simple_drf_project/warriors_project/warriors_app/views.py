@@ -1,12 +1,14 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework import generics
+from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from warriors_app.models import *
 from warriors_app.serializers import WarriorSerializer, ProfessionCreateSerializer, SkillSerializer, \
-    SkillCreateSerializer
+    SkillCreateSerializer, OneWarriorSerializer, WarriorProfessionSerializer, WarriorSkillSerializer
 
 
 class WarriorAPIView(APIView):
@@ -15,6 +17,33 @@ class WarriorAPIView(APIView):
        serializer = WarriorSerializer(warriors, many=True)
        return Response({"Warriors": serializer.data})
 
+class WarriorListAPIView(generics.ListAPIView):
+   serializer_class = WarriorSerializer
+   queryset = Warrior.objects.all()
+
+class ProfessionCreateAPIView(generics.CreateAPIView):
+   serializer_class = ProfessionCreateSerializer
+   queryset = Profession.objects.all()
+
+class ShowWarriorAPIView(generics.RetrieveAPIView):
+    serializer_class = OneWarriorSerializer
+    queryset = Warrior.objects.all()
+
+class DeleteWarriorAPIView(generics.DestroyAPIView):
+    serializer_class = OneWarriorSerializer
+    queryset = Warrior.objects.all()
+
+class UpdateWarriorAPIView(UpdateAPIView):
+    serializer_class = OneWarriorSerializer
+    queryset = Warrior.objects.all()
+
+class WarriorProfessionListAPIView(generics.ListAPIView):
+    serializer_class = WarriorProfessionSerializer
+    queryset = Warrior.objects.all()
+
+class WarriorSkillListApiView(generics.ListAPIView):
+    serializer_class = WarriorSkillSerializer
+    queryset = Warrior.objects.all()
 
 
 
