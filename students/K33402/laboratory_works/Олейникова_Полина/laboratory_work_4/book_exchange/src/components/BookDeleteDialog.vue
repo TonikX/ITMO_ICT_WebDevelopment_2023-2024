@@ -37,6 +37,10 @@ export default {
         getBooks: {
             type: Function,
             default: () => { }
+        },
+        deleteCallback: {
+            type: Function,
+            default: () => { }
         }
     },
 
@@ -53,7 +57,7 @@ export default {
         const onSubmit = async () => {
             const res = await booksStore.removeBook(props.book.id)
             if (res) {
-                props.getBooks()
+                props.deleteCallback()
                 onDialogHide()
             }
         }

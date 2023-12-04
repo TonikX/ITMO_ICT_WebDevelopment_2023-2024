@@ -8,37 +8,14 @@
       @blur="searchChanged"
     />
 
-    <q-card
+    <book-info
       v-for="(book, i) in books.results"
       :key="i"
+      :book="book"
+      :get-books="getBooks"
+      :delete-callback="getBooks"
       class="q-mt-md"
-    >
-      <q-card-section>
-        <div class="text-h6">{{ book.title }}</div>
-        <div class="text-subtitle">{{ book.author }}</div>
-        <div class="text-subtitle text-grey">
-          Owner: {{ book.owner.first_name }} {{ book.owner.last_name }},
-          {{ book.owner.location }}
-        </div>
-      </q-card-section>
-
-      <q-card-section>
-        <div class="max-lines-3">
-          {{ book.description }}
-        </div>
-      </q-card-section>
-
-      <q-separator dark />
-
-      <q-card-actions v-if="user && user.username !== book.owner.username">
-        <q-btn
-          flat
-          @click="createRequest(book)"
-        >
-          Request
-        </q-btn>
-      </q-card-actions>
-    </q-card>
+    />
 
     <div class="flex justify-center q-mt-lg">
       <q-pagination
@@ -48,6 +25,7 @@
       />
     </div>
 
+    <not-found v-if="books.count === 0" />
 
     <q-inner-loading :showing="isLoading">
       <q-spinner-gears
@@ -61,23 +39,20 @@
 <script>
 import { reactive, ref, watch, onMounted } from 'vue'
 import { useBooksStore } from '../stores/books'
-import { useUserStore } from '../stores/user'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useQuasar } from 'quasar'
-import RequestDialog from '../components/RequestDialog.vue'
+import BookInfo from '../components/BookInfo.vue'
+import NotFound from '../components/NotFound.vue'
 
 export default {
-  setup() {
-    const $q = useQuasar()
+  components: { BookInfo, NotFound },
 
+  setup() {
     const router = useRouter()
     const route = useRoute()
 
     const booksStore = useBooksStore()
-    const userStore = useUserStore()
     const { books, isLoading } = storeToRefs(booksStore)
-    const { user } = storeToRefs(userStore)
 
     const page = ref(1)
     const filter = reactive({
@@ -93,12 +68,14 @@ export default {
 
     onMounted(() => getQuery())
 
-    const getBooks = async () => {
+    const getBooks = async (isScroll = false) => {
       await booksStore.getBooks(filter)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      if (isScroll) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
+      }
     }
 
     const getQuery = () => {
@@ -110,7 +87,7 @@ export default {
         filter.offset = 0
       }
       filter.search = route.query.search || null
-      getBooks()
+      getBooks(true)
     }
 
     const addQuery = () => {
@@ -133,21 +110,15 @@ export default {
       addQuery()
     }
 
-    const createRequest = book => {
-      $q.dialog({ component: RequestDialog, componentProps: { book } })
-    }
-
-
     return {
       isLoading,
-      user,
       books,
       page,
       filter,
       addQuery,
       pageChanged,
       searchChanged,
-      createRequest
+      getBooks
     }
   }
 }

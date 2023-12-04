@@ -19,39 +19,16 @@
       </q-btn>
     </div>
 
-    <q-card
+    <book-info
       v-for="(book, i) in myBooks.results"
       :key="i"
+      :book="book"
+      :get-books="getBooks"
+      :delete-callback="getBooks"
       class="q-mt-md"
-    >
-      <q-card-section>
-        <div class="text-h6">{{ book.title }}</div>
-        <div class="text-subtitle2">{{ book.author }}</div>
-      </q-card-section>
-
-      <q-card-section>
-        <div class="max-lines-3">
-          {{ book.description }}
-        </div>
-      </q-card-section>
-
-      <q-separator dark />
-
-      <q-card-actions>
-        <q-btn
-          flat
-          @click="deleteBook(book)"
-        >
-          Delete
-        </q-btn>
-        <q-btn
-          flat
-          @click="updateBook(book)"
-        >
-          Update
-        </q-btn>
-      </q-card-actions>
-    </q-card>
+    />
+    
+    <not-found v-if="myBooks.count === 0" />
 
     <div class="flex justify-center q-mt-lg">
       <q-pagination
@@ -73,14 +50,16 @@
 <script>
 import { reactive, ref, watch, onMounted } from 'vue'
 import { useBooksStore } from '../stores/books'
-import { useUserStore } from '../stores/user'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import BookDialog from '../components/BookDialog.vue'
-import BookDeleteDialog from '../components/BookDeleteDialog.vue'
 import { useQuasar } from 'quasar'
+import BookInfo from '../components/BookInfo.vue'
+import NotFound from '../components/NotFound.vue'
 
 export default {
+  components: { BookInfo, NotFound },
+
   setup() {
     const $q = useQuasar()
 
@@ -88,9 +67,7 @@ export default {
     const route = useRoute()
 
     const booksStore = useBooksStore()
-    const userStore = useUserStore()
     const { myBooks, isLoading } = storeToRefs(booksStore)
-    const { user } = storeToRefs(userStore)
 
     const page = ref(1)
     const filter = reactive({
@@ -106,12 +83,14 @@ export default {
 
     onMounted(() => getQuery())
 
-    const getBooks = async () => {
+    const getBooks = async (isScroll = false) => {
       await booksStore.getMyBooks(filter)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      if (isScroll) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })
+      }
     }
 
     const getQuery = () => {
@@ -123,7 +102,7 @@ export default {
         filter.offset = 0
       }
       filter.search = route.query.search || null
-      getBooks()
+      getBooks(true)
     }
 
     const addQuery = () => {
@@ -150,26 +129,16 @@ export default {
       $q.dialog({ component: BookDialog, componentProps: { getBooks } })
     }
 
-    const updateBook = book => {
-      $q.dialog({ component: BookDialog, componentProps: { book, getBooks } })
-    }
-
-    const deleteBook = book => {
-      $q.dialog({ component: BookDeleteDialog, componentProps: { book, getBooks } })
-    }
-
     return {
       isLoading,
-      user,
       myBooks,
       page,
       filter,
+      getBooks,
       addQuery,
       pageChanged,
       searchChanged,
-      createBook,
-      updateBook,
-      deleteBook
+      createBook
     }
   }
 }

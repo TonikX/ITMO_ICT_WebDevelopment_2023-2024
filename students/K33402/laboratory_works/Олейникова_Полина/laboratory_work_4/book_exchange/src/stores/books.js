@@ -47,6 +47,7 @@ export const useBooksStore = defineStore('books', {
     async getBook(payload) {
       this.isLoading = true
       try {
+        console.log(payload)
         const response = await api.get(`/api/books/${payload}/`)
         if (response.status === 200) {
           this.book = response.data
