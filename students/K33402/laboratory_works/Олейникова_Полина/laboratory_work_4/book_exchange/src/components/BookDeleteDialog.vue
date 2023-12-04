@@ -34,10 +34,6 @@ export default {
             type: Object,
             default: () => null
         },
-        getBooks: {
-            type: Function,
-            default: () => { }
-        },
         deleteCallback: {
             type: Function,
             default: () => { }
