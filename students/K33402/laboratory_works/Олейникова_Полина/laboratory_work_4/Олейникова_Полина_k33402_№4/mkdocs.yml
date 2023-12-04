@@ -1,0 +1,11 @@
+site_name: Олейникова_Полина_k33402_№4
+dev_addr: '127.0.0.1:9000'
+nav:
+  - info: info.md
+  - screens: screens.md
+  - router: router.md
+  - store: store.md
+  - code: code.md
+plugins:
+  - render_swagger:
+      allow_arbitrary_locations : true
