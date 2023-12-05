@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ tour.name }}</h2>
+  <p>{{ tour.description }}</p>
+  <a href="{% url 'reserve_tour' tour.id %}">Забронировать тур</a>
+{% endblock %}
