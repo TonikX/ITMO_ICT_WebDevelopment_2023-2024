@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Car Owners</title>
+</head>
+<body>
+<h1>All Car Owners</h1>
+<ul>
+    {% for owner in owners %}
+        <li>
+            <p>First Name: {{ owner.first_name }}</p>
+            <p>Last Name: {{ owner.last_name }}</p>
+            <p>Date of Birth: {{ owner.birth_date }}</p>
+            <p>Passport Number: {{ owner.passport_number }}</p>
+            <p>Home Address: {{ owner.home_address }}</p>
+            <p>Nationality: {{ owner.nationality }}</p>
+            <h4>Cars Owned:</h4>
+            <ul>
+                {% for car in owner.cars.all %}
+                    <li>{{ car.brand }} {{ car.model }} (Registration Number: {{ car.registration_number }})</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

@@ -1,0 +1,11 @@
+site_name: Newspaper Distribution API Documentation
+
+nav:
+  - Home: index.md
+  - Endpoints:
+    - Newspapers: endpoints/newspapers.md
+    - Post Offices: endpoints/post_offices.md
+    - Postal Arrivals: endpoints/postal_arrivals.md
+theme:
+ name: gitbook
+

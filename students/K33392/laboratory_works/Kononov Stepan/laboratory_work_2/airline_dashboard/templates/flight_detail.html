@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о рейсе</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4">Подробности о рейсе</h2>
+    <div class="content mt-4">
+        <ul class="list-unstyled">
+            <li>Номер рейса: {{ flight.flight_number }}</li>
+            <li>Авиакомпания: {{ flight.airline }}</li>
+            <li>Город отправления: {{ flight.departure_city }}</li>
+            <li>Город прибытия: {{ flight.arrival_city }}</li>
+        </ul>
+
+        <h3 class="mt-4">Пассажиры на борту:</h3>
+        <ul class="list-unstyled">
+            {% for passenger in flight.reservation_set.all %}
+                <li>{{ passenger.passenger.user.username }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3 class="mt-4">Места для посадки:</h3>
+        <div class="seating-plan">
+            <div class="row">
+                {% for seat in total_seats %}
+                    <div class="col-3 mb-3">
+                        <div class="text-center rounded"
+                             style="width: 50px; height: 50px; line-height: 50px;
+                                     {% if seat not in reserved_seats %}background-color: #f0e68c; color: #000; font-weight: bold;{% else %}background-color: #add8e6; color: #000; font-weight: bold;{% endif %}">
+                            {{ seat }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h3 class="mt-4">Забронировать место:</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ seat_form.as_p }}
+            <button type="submit" class="btn btn-primary">Забронировать место</button>
+        </form>
+
+        <h3 class="mt-4">Отзывы о рейсе:</h3>
+        <ul class="list-unstyled">
+            {% for review in reviews %}
+                <li>{{ review.commentator.user.username }} - {{ review.rating }}/5 - {{ review.text }}</li>
+            {% empty %}
+                <li>Пока нет отзывов.</li>
+            {% endfor %}
+        </ul>
+
+        <h3 class="mt-4">Добавить отзыв:</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+        </form>
+
+        <a href="{% url 'view_flights' %}" class="btn btn-secondary mt-4">Вернуться к списку рейсов</a>
+    </div>
+</div>
+</body>
+</html>
