@@ -10,8 +10,7 @@
     <h1>Hotels</h1>
     <ul>
         {% for hotel in hotels %}
-            <!-- Wrap the hotel name with an anchor tag pointing to the room_reserve URL, passing the hotel's id -->
-            <li><a href="{% url 'room_reserve' hotel.id %}">{{ hotel.name }}</a></li>
+            <li><a href="{% url 'room_reserve' hotel.id %}">{{ hotel.name }}  /</a> <a href="{% url 'write_review' hotel.id %}">Оставить отзыв</a></li>
         {% endfor %}
     </ul>
 </body>

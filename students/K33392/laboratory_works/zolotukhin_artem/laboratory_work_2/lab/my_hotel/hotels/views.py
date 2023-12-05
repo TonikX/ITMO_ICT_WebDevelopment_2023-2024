@@ -48,7 +48,7 @@ def write_review(request, hotel_id):
             review.user = request.user
             review.room_type = RoomType.objects.filter(hotel_id=hotel_id).first()
             review.save()
-            return redirect('hotel_list')
+            return redirect('starting_page')
     else:
         form = ReviewForm()
     return render(request, 'write_review.html', {'form': form})
