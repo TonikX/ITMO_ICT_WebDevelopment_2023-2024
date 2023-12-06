@@ -1,13 +1,13 @@
 from django.db import models
 
 class Warrior(models.Model):
-    race_types = {
-        "a": "student",
-        "d": "developer",
-        "t":"teamlead"
-    }
+    race_types = (
+        ("a", "student"),
+        ("d", "developer"),
+        ("t", "teamlead")
+    )
 
-    race = models.CharField(max_length=1, choices=race_types, verbose_name="Pacca")
+    race = models.CharField(max_length=1, choices=race_types, verbose_name="Расса")
     name = models.CharField(max_length=120, verbose_name="Имя")
     level = models.IntegerField(verbose_name="Уровень", default=1)
     skill = models.ManyToManyField("Skill", verbose_name="Умения", through="SkillOfWarrior",
