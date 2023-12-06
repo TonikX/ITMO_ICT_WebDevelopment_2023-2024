@@ -45,7 +45,6 @@ class Room(models.Model):
 
 
 class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations')
     room_type = models.ForeignKey(RoomType, on_delete=models.CASCADE, related_name='reservations')
     start_date = models.DateField()
     end_date = models.DateField()

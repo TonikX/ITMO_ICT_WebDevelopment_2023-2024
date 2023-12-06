@@ -1,5 +1,5 @@
 from mathModule import MathModule
-from Lab1.serverConfigurator import ServerConfigurator
+from serverConfigurator import ServerConfigurator
 from socket import *
 from messages import *
 

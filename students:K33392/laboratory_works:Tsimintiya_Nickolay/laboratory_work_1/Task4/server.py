@@ -1,4 +1,4 @@
-from Lab1.serverConfigurator import ServerConfigurator
+from serverConfigurator import ServerConfigurator
 from threading import Thread
 
 class Server:

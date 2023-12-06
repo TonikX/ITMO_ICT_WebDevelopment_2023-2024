@@ -1,4 +1,4 @@
-from Lab1.serverConfigurator import *
+from serverConfigurator import *
 
 configuration = ServerConfigurator()
 configuration.default_configuration()

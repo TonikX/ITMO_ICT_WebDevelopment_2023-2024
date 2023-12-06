@@ -1,5 +1,4 @@
-from Lab1.serverConfigurator import ServerConfigurator
-
+from serverConfigurator import ServerConfigurator
 
 class Server:
     def __init__(self):

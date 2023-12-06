@@ -1,5 +1,6 @@
 from socket import *
-from Lab1.serverConfigurator import *
+from .serverConfigurator import *
+
 
 host_configuration = ServerConfigurator()
 host = host_configuration.default_configuration()
