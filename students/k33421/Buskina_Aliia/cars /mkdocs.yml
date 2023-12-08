@@ -1,0 +1,4 @@
+site_name: cars
+nav:
+- Home: index.md
+
