@@ -84,9 +84,9 @@ class GradesHTTPServer:
         response = f"""HTTP/1.1 {code}
 Content-Type: text/html; charset=utf-8
 Content-Length: {len(body.encode("utf-8"))}
+
 {body}
 """
-        print(response)
         sock.send(response.encode("utf-8"))
 
     @staticmethod
