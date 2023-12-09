@@ -11,3 +11,14 @@ class WarriorAPIView(APIView):
         serializer = WarriorSerialazer(warriors, many=True)
 
         return Response({"Warriors": serializer.data})
+
+    def post(self, request):
+        serializer = WarriorSerialazer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
+
+
