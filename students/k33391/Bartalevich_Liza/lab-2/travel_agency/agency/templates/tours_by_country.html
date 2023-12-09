@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th>Страна</th>
+      <th>Проданные туры</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for country, tours in tours_by_country.items %}
+    <tr>
+      <td>{{ country }}</td>
+      <td>
+        <ul>
+          {% for tour in tours %}
+          <li>{{ tour.name }} ({{ tour.start_date }} - {{ tour.end_date }})</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="2">Туры не найдены.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
