@@ -1,4 +1,5 @@
 # ITMO_ICT_WebDevelopment_2023-2024
+<<<<<<< Updated upstream
 Репозиторий для реализации дистанционного обучения по дисциплине "Web-программирование".
 
 [Учебный журнал]() по дисциплине. Тут доступна информация о сроках сдачи работ, о текущей успеваемости студентов и описаны все материалы необходимые для реализации курса.
@@ -279,3 +280,7 @@ https://drive.google.com/file/d/1QxQo5jln6soFUj6EmOVEo1yauCo375PP/view?usp=shari
 Все работы сдаются средствами создания Pull Requests в папку students в этом репозитории.
 
 Еще один мануал о том, как сделать Pull Request описано [тут](https://rustycrate.ru/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0/2016/03/07/contributing.html).
+=======
+
+Ссылка на отчет: https://maksnick.github.io/ITMO_ICT_WebDevelopment_2023-2024/
+>>>>>>> Stashed changes
