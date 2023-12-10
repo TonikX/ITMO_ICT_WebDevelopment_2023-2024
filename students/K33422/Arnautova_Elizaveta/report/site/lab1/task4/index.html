@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Task 4 - Отчет по лабораторным работам</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Task 4";
+        var mkdocs_page_input_path = "lab1/task4.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Отчет по лабораторным работам
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Лабораторная №1</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Title</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task1/">Task 1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task2/">Task 2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task3/">Task 3</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Task 4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task5/">Task 5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная №2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/models/">models</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/forms/">forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/views/">views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/urls/">urls</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/itog/">Выводы</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Отчет по лабораторным работам</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Лабораторная №1</li>
+      <li class="breadcrumb-item active">Task 4</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p><strong>Задание:</strong> 4. Реализовать двухпользовательский или многопользовательский чат. Реализация многопользовательского часа позволяет получить максимальное количество баллов.</p>
+<p>Обязательно использовать библиотеку <em>threading</em>. </p>
+<p>Реализовать с помощью протокола TCP – 100% баллов, с помощью UDP – 80%.</p>
+<ul>
+<li>Для реализации с помощью UDP, thearding использовать для получения сообщений у клиента.</li>
+<li>Для применения с TCP необходимо запускать клиентские подключения И прием и отправку сообщений всем юзерам на сервере в потоках. Не забудьте сохранять юзеров, чтобы потом отправлять им сообщения. </li>
+</ul>
+<p><strong>Код сервера:</strong></p>
+<pre><code class="language-python">import socket
+import threading
+
+HOST = '127.0.0.1'
+SERVER_PORT = 14901
+BUFF_SIZE = 16384
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((HOST, SERVER_PORT))
+server.listen()
+
+clients = []
+names = []
+
+
+def broadcast(message, sender):  # рассылает сообщение всем клиентам, кроме отправителя:
+    for client in clients:
+        if sender != client:
+            client.send(message)
+
+
+def handle(client):  # обрабатывает соединение с клиентом
+    while True:  # ожидает получение сообщения от клиента.
+        try:  # Если получено сообщение, вызывается функция broadcast для рассылки сообщения всем клиентам.
+            message = client.recv(BUFF_SIZE)
+            broadcast(message, client)
+
+        except:  # Если возникает ошибка (например, клиент отключается), происходит удаление клиента из списков
+            # clients и names, закрытие соединения с клиентом и выход из цикла.
+            name = names[clients.index(client)]
+            clients.remove(client)
+            names.remove(name)
+            client.close()
+            break
+
+
+def receive():  # принимает входящие соединения от клиентов
+    while True:  # ожидает подключения клиентов к серверу
+        client, address = server.accept()
+        print(&quot;Connected with {}&quot;.format(str(address)))  # При подключении клиента, выводится сообщение о подключении
+
+        client.send('name'.encode('utf-8'))  # отправляется запрос имени пользователя.
+        name = client.recv(BUFF_SIZE).decode('utf-8')
+        names.append(name)  # имя добавляется в список names
+        clients.append(client)  # сокет клиента добавляется в список clients.
+
+        # Отправляется сообщение всем клиентам о присоединении нового пользователя.
+        print(&quot;Name is {}&quot;.format(name))
+        broadcast(&quot;{} joined!&quot;.format(name).encode('utf-8'), client)
+
+        # Клиенту отправляется приветственное сообщение и инструкция по завершению соединения.
+        client.send('You are connected!\nTo terminate the connection to the server, enter leave'.encode('utf-8'))
+
+        # Запускается новый поток, в котором вызывается функция handle для обработки соединения с клиентом
+        thread = threading.Thread(target=handle, args=(client,))
+        thread.start()
+
+
+receive()
+
+
+</code></pre>
+<p><strong>Код клиента:</strong></p>
+<pre><code class="language-python">import socket
+import threading
+
+HOST = '127.0.0.1'
+SERVER_PORT = 14901
+BUFF_SIZE = 16384
+
+name = input(&quot;What is your name? &quot;)  # запрос имени пользователя
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # создание TCP сокета клиента
+client.connect((HOST, SERVER_PORT))  # подключение клиента к указанному хосту и порту
+
+
+def input_information():  # обрабатывает входящую информацию от сервера
+    while True:  # ожидает получение сообщения от сервера
+        try:
+            message = client.recv(BUFF_SIZE).decode('utf-8')
+            if message == 'name':  # Если получено сообщение 'name', клиент отправляет свое имя на сервер
+                client.send(name.encode('utf-8'))
+            else:  # В противном случае, сообщение выводится в консоль
+                print(message)
+
+        except:
+            client.close()
+            break
+
+
+def output_information():  # обрабатывает исходящую информацию от клиента
+    while True:
+        message = input('')  # ожидает ввод сообщения от пользователя
+        if message == 'leave':                              # Если введено сообщение 'leave',
+            client.send(f'*{name} left*'.encode('utf-8'))   # клиент отправляет сообщение о своем уходе на сервер
+            client.close()                                  # и закрывает соединение
+            break
+
+        message = '{}: {}'.format(name, message)    # иначе сообщение форматируется как &quot;{имя}: {сообщение}&quot;
+        client.send(message.encode('utf-8'))        # и отправляется на сервер
+
+
+receive_thread = threading.Thread(target=input_information)  # создание потока для функции input_information
+receive_thread.start()
+
+write_thread = threading.Thread(target=output_information)  # создание потока для функции output_information
+write_thread.start()
+
+
+</code></pre>
+<p><strong>Скринкаст:</strong></p>
+<p>Клиент-серверное взаимодействие:</p>
+<p>На стороне клиентов:
+<img alt="" src="/screenshots/4-client1.png" /></p>
+<p><img alt="" src="/screenshots/4-client2.png" />
+Демонстрируется, когда кто-то подключился и сообщения с именем. Если пользователь отключается, используя команду, остальным приходит уведомление об этом.</p>
+<p>На стороне сервера:
+<img alt="" src="/screenshots/4-server.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../task3/" class="btn btn-neutral float-left" title="Task 3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../task5/" class="btn btn-neutral float-right" title="Task 5">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../task3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../task5/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

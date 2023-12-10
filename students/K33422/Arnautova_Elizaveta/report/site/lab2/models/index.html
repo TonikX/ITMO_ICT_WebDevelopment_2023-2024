@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>models - Отчет по лабораторным работам</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "models";
+        var mkdocs_page_input_path = "lab2/models.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Отчет по лабораторным работам
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Лабораторная №1</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/">Title</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/task1/">Task 1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/task2/">Task 2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/task3/">Task 3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/task4/">Task 4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab1/task5/">Task 5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная №2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">models</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../forms/">forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../views/">views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../urls/">urls</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../itog/">Выводы</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Отчет по лабораторным работам</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Лабораторная №2</li>
+      <li class="breadcrumb-item active">models</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">Создание базы данных</h1>
+<blockquote>
+<p>Табло отображения информации об авиаперелетах.
+Хранится информация о номере рейса, авиакомпании, отлете, прилете, типе
+(прилет, отлет), номере гейта.
+Необходимо реализовать следующий функционал:
+<br/>1) Регистрация новых пользователей.
+<br/>2) Просмотр и резервирование мест на рейсах. Пользователь должен иметь
+возможность редактирования и удаления своих резервирований.
+<br/>3) Администратор должен иметь возможность зарегистрировать на рейс
+пассажира и вписать в систему номер его билета средствами Django-admin.
+<br/>4) В клиентской части должна формироваться таблица, отображающая всех
+пассажиров рейса.
+<br/>5) Написание отзывов к рейсам. При добавлении комментариев, должны
+сохраняться дата рейса, текст комментария, рейтинг (1-10), информация о
+комментаторе.</p>
+</blockquote>
+<p><strong>Flight - рейсы</strong>
+</br>С подключенными выпадающими списками для тех случаев, когда это возможно</p>
+<pre><code>
+class Flight(models.Model):
+    class Meta:
+        db_table = 'flight'
+
+    class FlightType(models.TextChoices):
+        ARRIVAL = 'ARR', 'Arrival'
+        DEPARTURE = 'DEP', 'Departure'
+
+    class City(models.TextChoices):
+        AMSTERDAM = 'AMS', 'Amsterdam'
+        BERLIN = 'BER', 'Berlin'
+        COPENHAGEN = 'CPH', 'Copenhagen'
+        DUBLIN = 'DUB', 'Dublin'
+        HELSINKI = 'HEL', 'Helsinki'
+        MOSCOW = 'SVO', 'Moscow (Sheremetyevo)'
+        LONDON = 'LHR', 'London (Heathrow)'
+        SAINT_PETERSBURG = 'LED', 'Saint-Petersburg (Pulkovo)'
+
+    class Airline(models.TextChoices):
+        AEROFLOT = 'AEROFLOT', 'Aeroflot'
+        BRIT_AIR = 'BRIT_AIR', 'British Airlines'
+        LUFTHANSA = 'LUFTHANSA', 'Lufthansa'
+        TURK_AIR = 'TURK_AIR', 'Turkish Airlines'
+        AIR_FRANCE = 'AIR_FRANCE', 'Air France'
+
+    flight_number = models.CharField(max_length=16, unique=True)
+    airline_name = models.CharField(max_length=32, choices=Airline.choices)
+    departure = models.DateTimeField()
+    arrival = models.DateTimeField()
+    origin = models.CharField(max_length=3, choices=City.choices)
+    destination = models.CharField(max_length=3, choices=City.choices)
+    type = models.CharField(max_length=9, choices=FlightType.choices)
+    gate_number = models.CharField(max_length=8)
+    passengers = models.ManyToManyField(User, through='Reservation')
+
+</code></pre>
+<p><strong>Reservatin - Связь пассажир-рейс</strong>
+</br>Хранит информацию о пользователе (имя, номер места), рейсе (номер рейса), и статусе (зарегистрирован/нет, номер билета)</p>
+<pre><code>
+class Reservation(models.Model):
+    class Meta:
+        db_table = 'reservation'
+        unique_together = [['flight', 'seat_number']]
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(User, on_delete=models.CASCADE)
+    seat_number = models.CharField(max_length=4, null=True, blank=True)
+    ticket_number = models.CharField(max_length=16, unique=True, null=True, blank=True)
+    checked_in = models.BooleanField(default=False)
+
+</code></pre>
+<p><strong>Review - комментарии пользователя к рейсам</strong>
+</br> Комментарии оставляют пользователи для конкретного рейса и выставляют рейтинг</p>
+<pre><code>
+class Review(models.Model):
+    class Meta:
+        db_table = 'review'
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    passenger = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    rating = models.IntegerField(
+        default=10,
+        validators=[
+            MaxValueValidator(10),
+            MinValueValidator(1)
+        ]
+    )
+
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../lab1/task5/" class="btn btn-neutral float-left" title="Task 5"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../forms/" class="btn btn-neutral float-right" title="forms">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../lab1/task5/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../forms/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
