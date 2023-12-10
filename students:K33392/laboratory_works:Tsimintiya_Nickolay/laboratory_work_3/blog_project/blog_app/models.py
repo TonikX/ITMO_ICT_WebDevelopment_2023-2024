@@ -27,4 +27,4 @@ class Like(models.Model):
 
 class Subscriptions(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE)
-    following = models.ForeignKey(User, on_delete=models.CASCADE)
+    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Followings")
