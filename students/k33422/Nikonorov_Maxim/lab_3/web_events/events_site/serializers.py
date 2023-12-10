@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
-from .models import EventsUser, EventCard, EventTypeList, Place, UsersEventsList, SubscribedEmail, About
+from .models import EventsUser, EventCard, EventTypeList, Place, UsersEventsList, SubscribedEmail
 
 class EventsUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,7 +10,7 @@ class EventsUserSerializer(serializers.ModelSerializer):
 class EventCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventCard
-        fields = ['id', 'PostTitle', 'EventType', 'Description', 'DateOfPublication', 'EventPlace', 'NumberOfParticipants', 'AgeRestriction', 'Status']
+        fields = ['id', 'PostTitle', 'EventType', 'Description', 'DateOfEvent', 'EventPlace', 'NumberOfParticipants', 'AgeRestriction', 'Status']
 
 class EventTypeListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,7 +32,3 @@ class SubscribedEmailSerializer(serializers.ModelSerializer):
         model = SubscribedEmail
         fields = ['id', 'User', 'Email']
 
-class AboutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = About
-        fields = ['id', 'AboutTitle', 'Description', 'TelegramLink']

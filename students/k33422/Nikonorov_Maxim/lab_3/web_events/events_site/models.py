@@ -18,7 +18,7 @@ class EventCard(models.Model):
     PostTitle = models.CharField(null=False, max_length=70)
     EventType = models.ForeignKey('EventTypeList', null=False, on_delete=models.CASCADE)
     Description = RichTextField(null=False)
-    DateOfPublication = models.DateField(null=False, default=timezone.now)
+    DateOfEvent = models.DateField(null=False, default=timezone.now)
     EventPlace = models.ForeignKey('Place', null=False, on_delete=models.CASCADE)
     NumberOfParticipants = models.PositiveIntegerField(null=False) 
     restictions = (
@@ -60,11 +60,22 @@ class Place(models.Model):
     
 class UsersEventsList(models.Model):
     EventUser = models.ForeignKey('EventsUser', null=False, on_delete=models.CASCADE)
-    EventCard = models.ForeignKey('EventCard', null=False, on_delete=models.CASCADE)
+    EventCard = models.ForeignKey('EventCard', null=False, on_delete=models.CASCADE, related_name='events_users_list')
     TimeOfRegistration = models.DateField(null=False, default=timezone.now)
     
+    class Meta:
+        unique_together = ('EventUser', 'EventCard')
+        
     def __str__(self):
         return f"{self.EventUser} {self.EventCard}"
+    
+    def clean(self):
+        if self.EventCard.NumberOfParticipants <= self.EventCard.events_users_list.count():
+            raise ValidationError("Registration is closed due to lack of available places")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
     
 class SubscribedEmail(models.Model):
     User = models.OneToOneField('EventsUser', on_delete=models.CASCADE)
@@ -72,11 +83,4 @@ class SubscribedEmail(models.Model):
     
     def __str__(self):
         return self.Email
-    
-class About(models.Model):
-    AboutTitle = models.CharField(null=False, max_length=50)
-    Description = RichTextField(null=False)
-    TelegramLink = models.CharField(null=False, max_length=70)
-    
-    def __str__(self):
-        return self.AboutTitle
+
