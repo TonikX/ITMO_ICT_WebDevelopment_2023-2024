@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Меню приложения Warriors</title>
+</head>
+<body>
+    <h1>Меню приложения Warriors</h1>
+    <ul>
+        <li><a href="{% url 'warriors_app:warriors_with_professions' %}">Войны с профессиями</a></li>
+        <li><a href="{% url 'warriors_app:create_profession' %}">Создать профессию</a></li>
+        <li><a href="{% url 'warriors_app:warriors_with_skills' %}">Войны с умениями</a></li>
+        <li><a href="{% url 'warriors_app:warrior_details' pk=1 %}">Детали война (замените 1 на актуальный pk)</a></li>
+        <li><a href="{% url 'warriors_app:warrior_delete' pk=1 %}">Удалить война (замените 1 на актуальный pk)</a></li>
+        <li><a href="{% url 'warriors_app:warrior_update' pk=1 %}">Обновить война (замените 1 на актуальный pk)</a></li>
+    </ul>
+</body>
+</html>

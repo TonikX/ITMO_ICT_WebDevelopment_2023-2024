@@ -1,0 +1,15 @@
+<!-- templates/review_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Детали отзыва</title>
+</head>
+<body>
+    <h1>Отзыв</h1>
+    <p>Пользователь: {{ review.users.username }}</p>
+    <p>Тур: {{ review.tour.name }}</p>
+    <p>Текст: {{ review.text }}</p>
+    <p>Рейтинг: {{ review.rating }}</p>
+    <p>Дата создания: {{ review.created_at }}</p>
+</body>
+</html>
