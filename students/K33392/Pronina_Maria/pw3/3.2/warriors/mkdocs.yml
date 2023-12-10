@@ -1,0 +1,7 @@
+site_name: Warriors
+
+nav:
+  - Api:
+      - "warriors professions": warriors/professions.md
+      - "warriors skills": warriors/skills.md
+      - "warriors": warriors/info.md
