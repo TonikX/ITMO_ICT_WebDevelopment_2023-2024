@@ -1,0 +1,28 @@
+site_name: 'Лабораторные работы по веб-программированию'
+theme:
+  name: 'readthedocs'  
+
+nav:
+  - Главная: 'index.md'
+  - Лабораторная работа 1:
+    - task1: 'lw1/task1.md'
+    - task2: 'lw1/task2.md'
+    - task3: 'lw1/task3.md'    
+    - task4: 'lw1/task4.md'    
+    - task5: 'lw1/task5.md'  
+    
+  - Лабораторная работа 2:
+    - Models:
+        - Tour: 'lw2/tour.md' 
+        - Reservation: 'lw2/reservation.md'
+        - Review: 'lw2/review.md'
+        - SoldTour: 'lw2/soldtour.md'
+        - TourReservation: 'lw2/tourreservation.md'
+    - Admin: 'lw2/admin.md'
+    - Forms: 'lw2/forms.md'
+    - URLs: 'lw2/urls.md'
+    - Views: 'lw2/views.md'
+    - Templates: 'lw2/templates.md'
+
+extra:
+  img_dir: 'img'
