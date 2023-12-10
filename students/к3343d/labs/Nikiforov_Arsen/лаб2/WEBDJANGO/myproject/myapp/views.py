@@ -286,17 +286,17 @@ def reserve_tour(request, tour_id):
 
 
 
-def register(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
+# def register(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
             
-            return redirect('login')  
-    else:
-        form = RegistrationForm()
+#             return redirect('login')  
+#     else:
+#         form = RegistrationForm()
 
-    return render(request, 'registration/register.html', {'form': form})
+#     return render(request, 'registration/register.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':

@@ -25,6 +25,13 @@ nav:
     - URLs: 'lw2/urls.md'
     - Views: 'lw2/views.md'
     - Templates: 'lw2/templates.md'
+    
+  - Лабораторная работа 3:
+    - "Практическая часть":
+        - pw3/index.md
+    - "Основная часть":
+        - Main: 'lw3/index.md'
+
 
 extra:
   img_dir: 'img'

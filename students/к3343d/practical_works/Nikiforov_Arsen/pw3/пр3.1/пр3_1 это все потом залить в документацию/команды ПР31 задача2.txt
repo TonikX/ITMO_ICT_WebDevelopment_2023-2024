@@ -1,0 +1,107 @@
+Фильтрация и получение объектов
+
+C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3\myproject>python manage.py shell
+Python 3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from myapp.models import Warrior
+
+
+Получить всех воинов:
+>>> warriors = Warrior.objects.all()
+>>> print(warriors)
+<QuerySet [<Warrior: Warrior object (1)>, <Warrior: Warrior object (2)>, <Warrior: Warrior object (3)>]>
+
+
+Фильтрация по уровню 20:
+>>> warriors_level_20 = Warrior.objects.filter(level=20)
+>>> print(warriors_level_20)
+<QuerySet [<Warrior: Warrior object (1)>]>
+
+
+Доступ к первому воину в результате фильтрации:
+>>> first_warrior = warriors_level_20.first()
+>>> print(first_warrior)
+Warrior object (1)
+>>> print(first_warrior.name)
+Николай Леонтьев
+
+
+Использование функции get(): 
+эта штука используется для получения единственного объекта
+
+>>> specific_warrior = Warrior.objects.get(level=20, name="Николай Леонтьев")
+>>> print(specific_warrior)
+Warrior object (1)
+
+
+используется для фильтрации объектов, исключая те, которые соответствуют определенным условиям. 
+>>> warriors_not_level_20 = Warrior.objects.exclude(level=20)
+>>> print(warriors_not_level_20)
+<QuerySet [<Warrior: Warrior object (2)>, <Warrior: Warrior object (3)>]>
+>>>
+
+
+Queryset и цепочки фильтров
+>>> from myapp.models import Warrior
+>>> # Создаем нового воина "Дмитрий Урбан"
+>>> powerful_warrior = Warrior.objects.create(name="Дмитрий Урбан", level=11, race="d")
+>>> # Создаем нового воина "Никита Михайловский"
+>>> cute_warrior = Warrior.objects.create(name="Никита Михайловский", level=15, race="s")
+>>> from myapp.models import Warrior
+>>> # Используем цепочку фильтров
+>>> filtered_warriors = Warrior.objects.exclude(level=20).filter(race="s")
+>>> for warrior in filtered_warriors:
+...     print(warrior)
+...
+Warrior object (2)
+Warrior object (5)
+
+
+Функции применяемые к полям и поиск через отношения
+
+>>> from myapp.models import Skill, SkillOfWarrior
+>>> # Создадим несколько умений
+>>> gaming = Skill.objects.create(title="Умение играть во все подряд")
+>>>
+>>> # Привяжем умения к воинам
+>>> powerful_warrior.skill.add(gaming)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Warrior' object has no attribute 'skill'
+>>> cute_warrior.skill.add(gaming)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Warrior' object has no attribute 'skill'
+>>> # Привяжем умения к воинам через модель SkillOfWarrior
+>>> SkillOfWarrior.objects.create(warrior=powerful_warrior, skill=gaming, level=0)
+<SkillOfWarrior: SkillOfWarrior object (4)>
+>>> SkillOfWarrior.objects.create(warrior=cute_warrior, skill=gaming, level=0)
+<SkillOfWarrior: SkillOfWarrior object (5)>
+
+
+>>> from myapp.models import Skill, Warrior, SkillOfWarrior
+>>>
+>>> # Создаем умение
+>>> gaming = Skill.objects.create(title="Умение играть во все подряд")
+>>>
+>>> # Привязываем умение к воинам
+>>> powerful_warrior = Warrior.objects.create(name="Могучий воин", level=20)
+>>> cute_warrior = Warrior.objects.create(name="Милый воин", level=15)
+>>>
+>>> powerful_skill = SkillOfWarrior.objects.create(skill=gaming, warrior=powerful_warrior, level=22)
+>>> cute_skill = SkillOfWarrior.objects.create(skill=gaming, warrior=cute_warrior, level=12)
+>>>
+>>>
+>>> # Получить воинов, у которых имя содержит "Дмитрий"
+>>> Warrior.objects.filter(name__contains="Дмитрий")
+<QuerySet [<Warrior: Warrior object (4)>]>
+>>>
+>>> # Получить воинов с уровнем больше или равным 20
+>>> Warrior.objects.filter(level__gte=20)
+<QuerySet [<Warrior: Warrior object (1)>, <Warrior: Warrior object (2)>, <Warrior: Warrior object (3)>, <Warrior: Warrior object (6)>]>
+>>>
+>>> # Получить воинов, обладающих умением "Умение играть во все подряд" и имеющих уровень умения больше 13
+>>> Warrior.objects.filter(skillofwarrior__level__gt=13, skillofwarrior__skill__title__icontains="играть")
+<QuerySet [<Warrior: Warrior object (6)>]>
+>>>
