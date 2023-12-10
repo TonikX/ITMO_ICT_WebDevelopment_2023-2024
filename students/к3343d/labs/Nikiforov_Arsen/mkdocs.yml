@@ -30,7 +30,19 @@ nav:
     - "Практическая часть":
         - pw3/index.md
     - "Основная часть":
-        - Main: 'lw3/index.md'
+        - Main: 'lw3/index.md'        
+        - Swagger: 'lw3/swagger.md'        
+        - Readme: 'lw3/readme.md'        
+        - Models: 'lw3/models.md'        
+        - Serializer: 'lw3/serializer.md        
+
+        
+
+
+
+
+
+
 
 
 extra:
