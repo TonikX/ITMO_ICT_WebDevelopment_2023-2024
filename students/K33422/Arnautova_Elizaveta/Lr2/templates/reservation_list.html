@@ -1,0 +1,36 @@
+<h1>My reservations</h1>
+{% if reservations %}
+    <table>
+        <tr>
+            <th>Flight Number</th>
+            <th>Seat</th>
+            <th>Ticker Number</th>
+            <th>Checked In</th>
+            <th/>
+        </tr>
+        {% for res in reservations %}
+            <tr>
+                <th>{{ res.flight.flight_number }}</th>
+                <th>{{ res.seat_number }}</th>
+                <th>{{ res.ticket_number }}</th>
+                <th>{{ res.checked_in }}</th>
+                <th>
+                    <form action="http://127.0.0.1:8000/airport/make_reservation/{{ res.flight_id }}/{{ res.id }}">
+                        <input type="submit" value="Edit" />
+                    </form>
+                </th>
+                <th>
+                    <form action="http://127.0.0.1:8000/airport/delete_reservation/{{ res.id }}">
+                        <input type="submit" value="Delete" />
+                    </form>
+                </th>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>You have no flight reservations.</p>
+{% endif %}
+
+<form action="http://127.0.0.1:8000/airport">
+    <input type="submit" value="Return to the main page" />
+</form>
