@@ -2,7 +2,7 @@ from rest_framework import serializers
 from blog_app.models import User, Post, Comment, Follow
 from django.contrib.auth.hashers import make_password
 
-class UserSerializer(serializers.ModelSerializer):
+class MyUserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = (
@@ -17,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
     )
   def create(self, validated_data):
     return super().create({**validated_data, "password": make_password(validated_data["password"])})
-
 
 class PostSerializer(serializers.ModelSerializer):
   class Meta:

@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from blog_app.models import User, Post, Comment, Follow
 from blog_app.serializers import (
-  UserSerializer,
+  MyUserSerializer,
   PostSerializer,
   CommentSerializer,
   FollowSerializer,
@@ -9,7 +9,7 @@ from blog_app.serializers import (
 
 class UserViewSet(viewsets.ModelViewSet):
   queryset = User.objects.all()
-  serializer_class = UserSerializer
+  serializer_class = MyUserSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
   queryset = Post.objects.all()

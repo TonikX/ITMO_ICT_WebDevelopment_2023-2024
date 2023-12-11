@@ -43,11 +43,12 @@ INSTALLED_APPS = [
   "rest_framework.authtoken",
   "djoser",
   "django_extensions",
+  "drf_yasg",
 ]
 
 DJOSER = {
   "SERIALIZERS": {
-    "user_create": "blog_app.serializers.UserSerializer",
+    "user_create": "blog_app.serializers.MyUserSerializer",
   },
 }
 REST_FRAMEWORK = {
