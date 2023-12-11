@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Post, User
-from .serializers import PostSerializer
+from .models import Post, User, Comment
+from .serializers import PostSerializer, CommentariesSerializer
 # Create your views here.
 
 
@@ -29,3 +29,15 @@ class PostListAPIView(APIView):
             response = self.get_all_posts()
 
         return Response({"Posts": response.data})
+
+
+class CommentariesAPIView(APIView):
+
+    def get(self, request):
+        post_id = int(request.GET.get("id"))
+
+        if post_id:
+            post = Post.objects.get(id=post_id)
+            commentaries = Comment.objects.filter(post=post)
+            serialized_comment = CommentariesSerializer(commentaries, many=True)
+            return Response({"Commentaries": serialized_comment.data})
