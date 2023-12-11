@@ -52,8 +52,8 @@ class EventParticipantsView(generics.ListAPIView):
         participants_list = []
         for event in events:
             participants = event.events_users_list.all()
-            participants_data = {'EventCardID': event.id, 'Participants': participants}
-            participants_list.append(participants_data)
+            participants_ = {'EventID': event.id, 'Participants': participants}
+            participants_list.append(participants_)
 
         return participants_list
 

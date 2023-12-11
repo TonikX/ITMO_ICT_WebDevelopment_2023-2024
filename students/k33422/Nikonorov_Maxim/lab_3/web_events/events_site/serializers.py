@@ -38,7 +38,7 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         fields = ['EventUser']
 
 class EventParticipantsSerializer(serializers.Serializer):
-    EventCardID = serializers.IntegerField()
+    EventID = serializers.IntegerField()
     Participants = EventRegistrationSerializer(many=True)
     TotalParticipants = serializers.SerializerMethodField()
 
