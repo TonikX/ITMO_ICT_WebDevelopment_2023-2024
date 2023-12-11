@@ -22,8 +22,6 @@ class PostListAPIView(APIView):
         return serialized_posts
 
     def get(self, request):
-        response = {}
-
         author_name = request.GET.get(self.author_name_parameter)
         if author_name:
             response = self.get_posts_by_author(author_name)
