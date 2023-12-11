@@ -16,16 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
 from django.urls import re_path
 from django.views.static import serve
 
 urlpatterns = [
   path("admin/", admin.site.urls),
   path("api/", include("blog_app.urls")),
-]
-
-urlpatterns += [
+  path("auth/", include("djoser.urls")),
+  path("auth/", include("djoser.urls.authtoken")),
   re_path(
     r"^profile_pics/(?P<path>.*)$",
     serve,

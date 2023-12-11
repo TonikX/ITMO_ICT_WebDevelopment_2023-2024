@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import User, Post, Comment, Follow
-from .serializers import (
+from blog_app.models import User, Post, Comment, Follow
+from blog_app.serializers import (
   UserSerializer,
   PostSerializer,
   CommentSerializer,

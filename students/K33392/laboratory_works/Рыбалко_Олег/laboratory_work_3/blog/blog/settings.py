@@ -40,8 +40,21 @@ INSTALLED_APPS = [
   "django.contrib.staticfiles",
   "blog_app",
   "rest_framework",
+  "rest_framework.authtoken",
+  "djoser",
   "django_extensions",
 ]
+
+DJOSER = {
+  "SERIALIZERS": {
+    "user_create": "blog_app.serializers.UserSerializer",
+  },
+}
+REST_FRAMEWORK = {
+  "DEFAULT_AUTHENTICATION_CLASSES": [
+    "rest_framework.authentication.TokenAuthentication",
+  ],
+}
 
 MIDDLEWARE = [
   "django.middleware.security.SecurityMiddleware",
