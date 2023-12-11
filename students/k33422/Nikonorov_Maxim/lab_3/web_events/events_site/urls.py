@@ -8,7 +8,8 @@ from .views import (
     EventTypeListView,
     PlaceListView, PlaceDetailView,
     UsersEventsListView,
-    SubscribedEmailListView
+    SubscribedEmailListView,
+    EventParticipantsView
 )
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
     path('places/<int:pk>/', PlaceDetailView.as_view(), name='place-detail'),
 
     path('users-events/', UsersEventsListView.as_view(), name='users-events-list'),
+    path('event-list/', EventParticipantsView.as_view(), name='event-card-list'),
     
     path('subscribed-emails/', SubscribedEmailListView.as_view(), name='subscribed-email-list'),
 ]

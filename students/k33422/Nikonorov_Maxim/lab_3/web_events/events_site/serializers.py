@@ -31,4 +31,17 @@ class SubscribedEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubscribedEmail
         fields = ['id', 'User', 'Email']
+        
+class EventRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsersEventsList
+        fields = ['EventUser']
+
+class EventParticipantsSerializer(serializers.Serializer):
+    EventCardID = serializers.IntegerField()
+    Participants = EventRegistrationSerializer(many=True)
+    TotalParticipants = serializers.SerializerMethodField()
+
+    def get_TotalParticipants(self, obj):
+        return len(obj['Participants'])
 

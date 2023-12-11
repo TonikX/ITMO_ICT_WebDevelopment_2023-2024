@@ -3,7 +3,8 @@ from django.db.models import Count
 from .models import EventsUser, EventCard, EventTypeList, Place, UsersEventsList, SubscribedEmail
 from .serializers import (
     EventsUserSerializer, EventCardSerializer, EventTypeListSerializer,
-    PlaceSerializer, UsersEventsListSerializer, SubscribedEmailSerializer
+    PlaceSerializer, UsersEventsListSerializer, SubscribedEmailSerializer,
+    EventParticipantsSerializer
 )
 
 class EventsUserListView(generics.ListCreateAPIView):
@@ -38,19 +39,23 @@ class UsersEventsListView(generics.ListAPIView):
     queryset = UsersEventsList.objects.all()
     serializer_class = UsersEventsListSerializer
     
-    def get(self, request, *args, **kwargs):
-        event_registrations = UsersEventsList.objects.values('EventCard').annotate(registrations_count=Count('EventCard'))
-
-        for registration in event_registrations:
-            event_card_id = registration['EventCard']
-            registrations_count = registration['registrations_count']
-            print(f"Event {event_card_id}: registered {registrations_count} user(s)")
-            
-        return super().get(request, *args, **kwargs)
-        
 class SubscribedEmailListView(generics.ListAPIView):
     queryset = SubscribedEmail.objects.all()
     serializer_class = SubscribedEmailSerializer
+    
+class EventParticipantsView(generics.ListAPIView):
+    serializer_class = EventParticipantsSerializer
+
+    def get_queryset(self):
+        events = EventCard.objects.all()
+
+        participants_list = []
+        for event in events:
+            participants = event.events_users_list.all()
+            participants_data = {'EventCardID': event.id, 'Participants': participants}
+            participants_list.append(participants_data)
+
+        return participants_list
 
 
 
