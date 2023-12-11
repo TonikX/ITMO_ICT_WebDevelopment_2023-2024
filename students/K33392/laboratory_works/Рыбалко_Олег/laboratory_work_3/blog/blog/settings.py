@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-*vr6gx!g74lzsh9l4zci7%uc6$55a6!oqpq---pub=m^(jj&i6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = "blog_app.User"
 
 
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
   "django.contrib.messages",
   "django.contrib.staticfiles",
   "blog_app",
-  "django_extensions"
+  "rest_framework",
+  "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GRAPH_MODELS = {
-  "app_labels": ["blog_app"]
-}
+GRAPH_MODELS = {"app_labels": ["blog_app"]}
