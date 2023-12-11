@@ -41,6 +41,9 @@ class EventCard(models.Model):
     def clean(self):
         if self.NumberOfParticipants > self.EventPlace.PlaceCapacity:
             raise ValidationError("Number of participants can't exceed place capacity.")
+        
+        if self.DateOfEvent < timezone.now().date():
+            raise ValidationError("Event date cannot be earlier than today.")
 
 class EventTypeList(models.Model):
     TypeTitle = models.CharField(null=False, max_length=20)
