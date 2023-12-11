@@ -14,17 +14,20 @@ class PostListAPIView(APIView):
         author = User.objects.get(username=author_name)
         posts = Post.objects.filter(author = author)
         serialized_posts = PostSerializer(posts, many=True)
-        return Response({"Posts": serialized_posts.data})
+        return serialized_posts
+
+    def get_all_posts(self):
+        posts = Post.objects.all()
+        serialized_posts = PostSerializer(posts, many=True)
+        return serialized_posts
 
     def get(self, request):
+        response = {}
+
         author_name = request.GET.get(self.author_name_parameter)
         if author_name:
-            return self.get_posts_by_author(author_name)
+            response = self.get_posts_by_author(author_name)
+        else:
+            response = self.get_all_posts()
 
-        posts = Post.objects.all()
-        single_post = posts[0]
-        author = single_post.author
-        print(author.username)
-        serializer = PostSerializer(posts, many=True)
-
-        return Response({"Posts": serializer.data})
+        return Response({"Posts": response.data})
