@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Post, User, Comment
-from .serializers import PostSerializer, CommentariesSerializer
+from .serializers import PostSerializer, CommentariesSerializer, AuthorsSerializer
 # Create your views here.
 
 
@@ -41,3 +41,10 @@ class CommentariesAPIView(APIView):
             commentaries = Comment.objects.filter(post=post)
             serialized_comment = CommentariesSerializer(commentaries, many=True)
             return Response({"Commentaries": serialized_comment.data})
+
+
+class AuthorsAPIView(APIView):
+    def get(self, request):
+        authors = User.objects.all()
+        serialized_authors = AuthorsSerializer(authors, many=True)
+        return Response({"Authors": serialized_authors.data})
