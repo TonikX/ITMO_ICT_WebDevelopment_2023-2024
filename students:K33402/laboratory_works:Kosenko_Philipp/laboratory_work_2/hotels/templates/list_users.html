@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2>Passengers</h2>
+<div class="row mb-5">
+  <div class="col-md-5">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Seat</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ticket in tickets %}
+          <tr>
+            <td class="align-middle">{{ticket.passenger.last_name}} {{ticket.passenger.first_name}} </td>
+            <td class="align-middle">{{ticket.seat}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{%endblock%}
