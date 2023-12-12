@@ -58,3 +58,10 @@ nav:
       - lw2/models.md
       - lw2/forms.md
       - lw2/views.md
+
+  - "№3: REST API":
+      - lw3/intro.md
+      - lw3/databaseScheme.md
+      - "API":
+          - lw3/API/posts.md
+      -
