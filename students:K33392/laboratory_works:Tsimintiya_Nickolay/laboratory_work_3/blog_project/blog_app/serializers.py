@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Comment, User
+from .models import Post, Comment, User, Subscriptions
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -21,3 +21,10 @@ class AuthorsSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ["is_superuser"]
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscriptions
+        fields = "__all__"
+
