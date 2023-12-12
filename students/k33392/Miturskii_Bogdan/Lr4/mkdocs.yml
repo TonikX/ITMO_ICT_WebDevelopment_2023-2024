@@ -1,0 +1,27 @@
+site_name: Митурский Богдан K33392
+theme:
+  name: material
+  features:
+    - navigation.indexes
+  palette:
+    scheme: slate
+    primary: black
+    accent: indigo
+nav:
+  - Лабораторная работа №4:
+      - Оглавление: lab4/index.md
+      - Задание №1: lab4/task1.md
+      - Задание №2: lab4/task2.md
+      - Задание №3: lab4/task3.md
+      - Задание №4: lab4/task4.md
+      - Результат: lab4/result/index.md
+      - Вывод: lab4/conclusion.md
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - attr_list
+  - md_in_html
+plugins:
+  - glightbox
