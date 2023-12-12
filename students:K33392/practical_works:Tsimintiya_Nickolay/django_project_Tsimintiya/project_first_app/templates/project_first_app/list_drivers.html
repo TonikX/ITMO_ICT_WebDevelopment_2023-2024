@@ -1,0 +1,15 @@
+{% extends 'project_first_app/base.html' %} {% block content %}
+<h1>Водители:</h1>
+<ul>
+  {% for driver in drivers %}
+  <li>
+    <h4>Имя: {{driver.first_name}}</h4>
+    <h4>Фамилия: {{driver.last_name}}</h4>
+    <h4>Дата рождения: {{driver.date_of_birth}}</h4>
+    <h4>Паспорт: {{driver.passport}}</h4>
+    <h4>Адрес: {{driver.address}}</h4>
+    <h4>Национальность: {{driver.nationality}}</h4>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
