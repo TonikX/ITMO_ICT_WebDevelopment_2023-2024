@@ -39,8 +39,9 @@ class CommentariesAPIView(APIView):
         if post_id:
             post = Post.objects.get(id=post_id)
             commentaries = Comment.objects.filter(post=post)
+            comm_count = commentaries.count()
             serialized_comment = CommentariesSerializer(commentaries, many=True)
-            return Response({"Commentaries": serialized_comment.data})
+            return Response({"Commentaries": serialized_comment.data, "Count": str(comm_count)})
 
 
 class AuthorsAPIView(APIView):
