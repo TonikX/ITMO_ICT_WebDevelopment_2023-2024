@@ -27,23 +27,7 @@ class RouteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class FlightSerializer(serializers.ModelSerializer):
-    airplanes = AirplaneSerializer(many=True)
-    crew = CrewSerializer(many=True)
-
     class Meta:
         model = Flight
         fields = '__all__'
 
-    def create(self, validated_data):
-        airplanes_data = validated_data.pop('airplanes', [])
-        crew_data = validated_data.pop('crew', [])
-
-        flight = Flight.objects.create(**validated_data)
-
-        for airplane_data in airplanes_data:
-            Airplane.objects.create(flight=flight, **airplane_data)
-
-        for crew_member_data in crew_data:
-            CrewMember.objects.create(flight=flight, **crew_member_data)
-
-        return flight

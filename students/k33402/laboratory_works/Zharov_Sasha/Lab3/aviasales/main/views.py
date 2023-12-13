@@ -35,6 +35,11 @@ class AirlineCompanyUpdateView(generics.UpdateAPIView):
     serializer_class = AirlineCompanySerializer
     permission_classes = [permissions.IsAuthenticated,]
 
+class AirlineCompanyDeleteView(generics.DestroyAPIView):
+    queryset = AirlineCompany.objects.all()
+    serializer_class = AirlineCompanySerializer
+    permission_classes = [permissions.IsAuthenticated,]
+
 
 # Airplane Views
 class AirplaneListView(generics.ListAPIView):
@@ -53,6 +58,11 @@ class AirplaneCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 class AirplaneUpdateView(generics.UpdateAPIView):
+    queryset = Airplane.objects.all()
+    serializer_class = AirplaneSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class AirplaneDeleteView(generics.DestroyAPIView):
     queryset = Airplane.objects.all()
     serializer_class = AirplaneSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -80,6 +90,11 @@ class CrewUpdateView(generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class CrewDeleteView(generics.DestroyAPIView):
+    queryset = Crew.objects.all()
+    serializer_class = CrewSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 # Crew Member Views
 class CrewMemberListView(generics.ListAPIView):
     queryset = CrewMember.objects.all()
@@ -100,6 +115,12 @@ class CrewMemberUpdateView(generics.UpdateAPIView):
     queryset = CrewMember.objects.all()
     serializer_class = CrewMemberSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class CrewMemberDeleteView(generics.DestroyAPIView):
+    queryset = CrewMember.objects.all()
+    serializer_class = CrewMemberSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 # Route Views
 class RouteListView(generics.ListAPIView):
@@ -122,6 +143,12 @@ class RouteUpdateView(generics.UpdateAPIView):
     serializer_class = RouteSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class RouteDeleteView(generics.DestroyAPIView):
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
 # Flight Views
 class FlightListView(generics.ListAPIView):
     queryset = Flight.objects.all()
@@ -139,6 +166,11 @@ class FlightCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 class FlightUpdateView(generics.UpdateAPIView):
+    queryset = Flight.objects.all()
+    serializer_class = FlightSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class FlightDeleteView(generics.DestroyAPIView):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
     permission_classes = [permissions.IsAuthenticated]
