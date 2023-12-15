@@ -16,7 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from warriors_app.views import SkillListView, WarriorProfessionInfoView, WarriorSkillInfoView, SingleWarriorInfoView, WarriorDeleteView, WarriorUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('skills/', SkillListView.as_view(), name='skill-list'),
+    path('warrior_prof_info/', WarriorProfessionInfoView.as_view(), name='warrior_prof_info'),
+    path('warrior_skill_info/', WarriorSkillInfoView.as_view(), name='warrior_skill_info'),
+    path('warriors/<int:id>/', SingleWarriorInfoView.as_view(), name='single-warrior-info'),
+    path('warriors/delete/<int:id>/', WarriorDeleteView.as_view(), name='delete-warrior'),
+    path('warriors/update/<int:id>/', WarriorUpdateView.as_view(), name='update-warrior'),
 ]
