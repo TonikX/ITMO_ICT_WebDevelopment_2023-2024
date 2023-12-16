@@ -1,7 +1,7 @@
 cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3\myproject2
 
 
-Выведем все машины марки "Toyota":
+Выведем все машины марки " Toyota ":
 >>> from myapp.models import Car
 >>>
 >>> # Запрос на вывод всех машин марки Toyota
