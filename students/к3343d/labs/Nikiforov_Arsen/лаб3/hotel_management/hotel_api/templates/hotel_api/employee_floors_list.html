@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Floors List</title>
+</head>
+<body>
+    <h1>Employee Floors List</h1>
+    <ul>
+        {% for ef in employee_floors %}
+            <li>{{ ef.employee.first_name }} {{ ef.employee.last_name }} - Floor: {{ ef.floor.number }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

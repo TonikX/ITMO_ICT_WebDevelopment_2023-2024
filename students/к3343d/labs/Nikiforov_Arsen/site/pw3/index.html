@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Практическое занятие №3.1 - Лабораторные работы по веб-программированию</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u041f\u0440\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0435 \u0437\u0430\u043d\u044f\u0442\u0438\u0435 \u21163.1";
+        var mkdocs_page_input_path = "pw3\\index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Лабораторные работы по веб-программированию
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Главная</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 1</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/task1/">task1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/task2/">task2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/task3/">task3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/task4/">task4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw1/task5/">task5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Models</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../lw2/tour/">Tour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw2/reservation/">Reservation</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw2/review/">Review</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw2/soldtour/">SoldTour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw2/tourreservation/">TourReservation</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/admin/">Admin</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/forms/">Forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/urls/">URLs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/views/">Views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../lw2/templates/">Templates</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 3</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Практическая часть</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Практическое занятие №3.1</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#1">Задача 1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2">Задача 2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3">Задача 3</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Основная часть</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../lw3/">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw3/swagger/">Swagger</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw3/readme/">Readme</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw3/models/">Models</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../lw3/serializer/">Serializer</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Лабораторные работы по веб-программированию</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Лабораторная работа 3 &raquo;</li>
+          <li>Практическая часть &raquo;</li>
+      <li class="breadcrumb-item active">Практическое занятие №3.1</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="no31">Практическое занятие №3.1</h1>
+<h2 id="1">Задача 1</h2>
+<p>Шаг 1:
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3</p>
+<p>Шаг 2:
+ manage.py shell</p>
+<p>Шаг 3: импорт
+from your_app.models import Warrior, Skill, SkillOfWarrior</p>
+<p>Шаг 4: новый воин
+short_warrior = Warrior(race="s", name="Николай Леонтьев", level=20)
+short_warrior.save()</p>
+<p>Шаг 5: новый навык
+new_skill = Skill.objects.create(title="Взлом компьютера")</p>
+<p>Шаг 6: Привязал новый навык к созданному воину
+skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=15)</p>
+<p>Шаг 7: Вывод инфы
+from myapp.models import Warrior</p>
+<p>warriors = Warrior.objects.all()
+for warrior in warriors:
+    print(warrior.name, warrior.race, warrior.level)</p>
+<p>теория:
+SkillOfWarrior.objects.create: Это создание нового объекта модели SkillOfWarrior. 
+SkillOfWarrior.objects - менеджер запросов, который позволяет взаимодействовать с объектами модели SkillOfWarrior. 
+Метод create создает новый объект в базе данных.</p>
+<p>skill=new_skill: Это присвоение полю skill нового объекта Skill. 
+Мы создали предварительно новый навык (new_skill) и теперь связываем его с создаваемым объектом SkillOfWarrior.</p>
+<p>warrior=short_warrior: Аналогично предыдущему, это присвоение полю warrior объекта short_warrior. 
+Мы связываем создаваемый объект с воином (short_warrior).</p>
+<p>level=15: Это присвоение полю level значения 15. 
+Мы указываем уровень навыка для создаваемого объекта.</p>
+<p>Создается новый объект модели SkillOfWarrior, 
+который связывает новый навык (new_skill) с созданным воином 
+(short_warrior) и указывает уровень навыка (level=15).</p>
+<p><img alt="результат 1" src="../img/332.JPG" />
+<img alt="результат 2" src="../img/333.JPG" /></p>
+<p>Пример:</p>
+<pre><code>&gt;&gt;&gt; short_warrior = Warrior(race=&quot;s&quot;, name=&quot;Арсен Никифоров&quot;, level=100)
+&gt;&gt;&gt; short_warrior.save()
+&gt;&gt;&gt; new_skill = Skill.objects.create(title=&quot;Взлом баз данных пентагона&quot;)
+&gt;&gt;&gt; skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=800)
+&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; warriors = Warrior.objects.all()
+&gt;&gt;&gt; for warrior in warriors:
+...     print(warrior.name, warrior.race, warrior.level)
+...
+</code></pre>
+<p>Николай Леонтьев s 20
+Арсен Никифоров s 100</p>
+<pre><code>&gt;&gt;&gt; tall_warrior = Warrior(race=&quot;t&quot;, name=&quot;Артур Пирожков&quot;, level=1000)
+&gt;&gt;&gt; tall_warrior.save()
+&gt;&gt;&gt; skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=1800)
+&gt;&gt;&gt; warriors = Warrior.objects.all()
+&gt;&gt;&gt; for warrior in warriors:
+...     print(warrior.name, warrior.race, warrior.level)
+...
+</code></pre>
+<p>Николай Леонтьев s 20
+Арсен Никифоров s 100
+Артур Пирожков t 1000</p>
+<h2 id="2">Задача 2</h2>
+<p>Фильтрация и получение объектов</p>
+<p>C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3\myproject&gt;python manage.py shell
+Python 3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Warrior
+</code></pre>
+<p>Получить всех воинов:</p>
+<pre><code>&gt;&gt;&gt; warriors = Warrior.objects.all()
+&gt;&gt;&gt; print(warriors)
+&lt;QuerySet [&lt;Warrior: Warrior object (1)&gt;, &lt;Warrior: Warrior object (2)&gt;, &lt;Warrior: Warrior object (3)&gt;]&gt;
+</code></pre>
+<p>Фильтрация по уровню 20:</p>
+<pre><code>&gt;&gt;&gt; warriors_level_20 = Warrior.objects.filter(level=20)
+&gt;&gt;&gt; print(warriors_level_20)
+&lt;QuerySet [&lt;Warrior: Warrior object (1)&gt;]&gt;
+</code></pre>
+<p>Доступ к первому воину в результате фильтрации:</p>
+<pre><code>&gt;&gt;&gt; first_warrior = warriors_level_20.first()
+&gt;&gt;&gt; print(first_warrior)
+Warrior object (1)
+&gt;&gt;&gt; print(first_warrior.name)
+</code></pre>
+<p>Николай Леонтьев</p>
+<p>Использование функции get(): 
+эта штука используется для получения единственного объекта</p>
+<pre><code>&gt;&gt;&gt; specific_warrior = Warrior.objects.get(level=20, name=&quot;Николай Леонтьев&quot;)
+&gt;&gt;&gt; print(specific_warrior)
+</code></pre>
+<p>Warrior object (1)</p>
+<p>используется для фильтрации объектов, исключая те, которые соответствуют определенным условиям. </p>
+<pre><code>&gt;&gt;&gt; warriors_not_level_20 = Warrior.objects.exclude(level=20)
+&gt;&gt;&gt; print(warriors_not_level_20)
+&lt;QuerySet [&lt;Warrior: Warrior object (2)&gt;, &lt;Warrior: Warrior object (3)&gt;]&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Queryset и цепочки фильтров</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; # Создаем нового воина &quot;Дмитрий Урбан&quot;
+&gt;&gt;&gt; powerful_warrior = Warrior.objects.create(name=&quot;Дмитрий Урбан&quot;, level=11, race=&quot;d&quot;)
+&gt;&gt;&gt; # Создаем нового воина &quot;Никита Михайловский&quot;
+&gt;&gt;&gt; cute_warrior = Warrior.objects.create(name=&quot;Никита Михайловский&quot;, level=15, race=&quot;s&quot;)
+&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; # Используем цепочку фильтров
+&gt;&gt;&gt; filtered_warriors = Warrior.objects.exclude(level=20).filter(race=&quot;s&quot;)
+&gt;&gt;&gt; for warrior in filtered_warriors:
+...     print(warrior)
+...
+</code></pre>
+<p>Warrior object (2)
+Warrior object (5)</p>
+<p>Функции применяемые к полям и поиск через отношения</p>
+<pre><code>
+&gt;&gt;&gt; # Привяжем умения к воинам через модель SkillOfWarrior
+&gt;&gt;&gt; SkillOfWarrior.objects.create(warrior=powerful_warrior, skill=gaming, level=0)
+&lt;SkillOfWarrior: SkillOfWarrior object (4)&gt;
+&gt;&gt;&gt; SkillOfWarrior.objects.create(warrior=cute_warrior, skill=gaming, level=0)
+&lt;SkillOfWarrior: SkillOfWarrior object (5)&gt;
+</code></pre>
+<pre><code>&gt;&gt;&gt; from myapp.models import Skill, Warrior, SkillOfWarrior
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Создаем умение
+&gt;&gt;&gt; gaming = Skill.objects.create(title=&quot;Умение играть во все подряд&quot;)
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Привязываем умение к воинам
+&gt;&gt;&gt; powerful_warrior = Warrior.objects.create(name=&quot;Могучий воин&quot;, level=20)
+&gt;&gt;&gt; cute_warrior = Warrior.objects.create(name=&quot;Милый воин&quot;, level=15)
+&gt;&gt;&gt;
+&gt;&gt;&gt; powerful_skill = SkillOfWarrior.objects.create(skill=gaming, warrior=powerful_warrior, level=22)
+&gt;&gt;&gt; cute_skill = SkillOfWarrior.objects.create(skill=gaming, warrior=cute_warrior, level=12)
+&gt;&gt;&gt;
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Получить воинов, у которых имя содержит &quot;Дмитрий&quot;
+&gt;&gt;&gt; Warrior.objects.filter(name__contains=&quot;Дмитрий&quot;)
+&lt;QuerySet [&lt;Warrior: Warrior object (4)&gt;]&gt;
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Получить воинов с уровнем больше или равным 20
+&gt;&gt;&gt; Warrior.objects.filter(level__gte=20)
+&lt;QuerySet [&lt;Warrior: Warrior object (1)&gt;, &lt;Warrior: Warrior object (2)&gt;, &lt;Warrior: Warrior object (3)&gt;, &lt;Warrior: Warrior object (6)&gt;]&gt;
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Получить воинов, обладающих умением &quot;Умение играть во все подряд&quot; и имеющих уровень умения больше 13
+&gt;&gt;&gt; Warrior.objects.filter(skillofwarrior__level__gt=13, skillofwarrior__skill__title__icontains=&quot;играть&quot;)
+&lt;QuerySet [&lt;Warrior: Warrior object (6)&gt;]&gt;
+</code></pre>
+<h2 id="3">Задача 3</h2>
+<p>Агрегация:
+Допустим, у нас есть модель Warrior с полем level, и хотим найти средний уровень воинов.</p>
+<pre><code>&gt;&gt;&gt; from django.db.models import Avg
+&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Рассчитаем средний уровень воинов
+&gt;&gt;&gt; average_level = Warrior.objects.aggregate(Avg(&quot;level&quot;))
+&gt;&gt;&gt;
+&gt;&gt;&gt; print(&quot;Средний уровень воинов:&quot;, average_level['level__avg'])
+</code></pre>
+<p>Средний уровень воинов: 168.71428571428572</p>
+<p>Аннотация:
+Теперь предположим, что у нас есть модели Warrior, Skill и связь между ними через ManyToManyField. Мы хотим узнать количество умений у каждого воина.</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; # Аннотируем каждого воина количеством его умений
+&gt;&gt;&gt; annotated_warriors = Warrior.objects.annotate(skill_count=models.Count('warrior_skill'))
+Traceback (most recent call last):
+  File &quot;&lt;console&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name 'models' is not defined
+&gt;&gt;&gt;
+&gt;&gt;&gt;
+&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; from django.db.models import Count
+&gt;&gt;&gt; # Аннотируем каждого воина количеством его умений
+&gt;&gt;&gt; annotated_warriors = Warrior.objects.annotate(skill_count=Count('warrior_skill'))
+&gt;&gt;&gt;
+&gt;&gt;&gt; for warrior in annotated_warriors:
+...     print(f&quot;Воин {warrior.name} имеет {warrior.skill_count} умений.&quot;)
+...
+</code></pre>
+<p>Воин Николай Леонтьев имеет 1 умений.
+Воин Арсен Никифоров имеет 2 умений.
+Воин Артур Пирожков имеет 0 умений.
+Воин Дмитрий Урбан имеет 1 умений.
+Воин Никита Михайловский имеет 1 умений.
+Воин Могучий воин имеет 1 умений.
+Воин Милый воин имеет 1 умений.</p>
+<blockquote>
+<blockquote>
+<blockquote></blockquote>
+</blockquote>
+</blockquote>
+<p>Группировка с .values() и упорядочивание:
+Допустим, у нас есть поле race в модели Warrior, и Мы хотим узнать количество воинов разных рас.</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Warrior
+&gt;&gt;&gt; from django.db.models import Count
+&gt;&gt;&gt; # Группировка по расе и подсчет количества воинов каждой расы
+&gt;&gt;&gt; grouped_warriors = Warrior.objects.values('race').annotate(warrior_count=Count('id')).order_by('race')
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Вывод результата
+&gt;&gt;&gt; for group in grouped_warriors:
+...     print(f&quot;Раса: {group['race']}, Количество воинов: {group['warrior_count']}&quot;)
+...
+</code></pre>
+<p>Раса: , Количество воинов: 2
+Раса: d, Количество воинов: 1
+Раса: s, Количество воинов: 3
+Раса: t, Количество воинов: 1</p>
+<blockquote>
+<blockquote>
+<blockquote></blockquote>
+</blockquote>
+</blockquote>
+<p>В этом примере мы используем метод .values("race") для группировки по полю race и метод annotate для подсчета количества воинов каждой расы.</p>
+<p>Упорядочивание:
+Упорядочим воинов по их уровню.</p>
+<pre><code>&gt;&gt;&gt; # Пример использования .order_by() для сортировки воинов по уровню
+&gt;&gt;&gt; sorted_warriors = Warrior.objects.order_by(&quot;level&quot;)
+&gt;&gt;&gt;
+&gt;&gt;&gt; for warrior in sorted_warriors:
+...     print(f&quot;{warrior.name} - Уровень: {warrior.level}&quot;)
+...
+</code></pre>
+<p>Дмитрий Урбан - Уровень: 11
+Никита Михайловский - Уровень: 15
+Милый воин - Уровень: 15
+Николай Леонтьев - Уровень: 20
+Могучий воин - Уровень: 20
+Арсен Никифоров - Уровень: 100
+Артур Пирожков - Уровень: 1000</p>
+<blockquote>
+<blockquote>
+<blockquote></blockquote>
+</blockquote>
+</blockquote>
+<p>Здесь мы используем метод order_by("level"), чтобы упорядочить воинов по их уровню.</p>
+<h1 id="1_1">Практическое задание 1</h1>
+<pre><code>&gt;&gt;&gt; from myapp.models import Owner
+&gt;&gt;&gt; owner1 = Owner.objects.create(last_name=&quot;Иванов&quot;, first_name=&quot;Иван&quot;, birth_date=&quot;1990-01-01&quot;)
+&gt;&gt;&gt; owner2 = Owner.objects.create(last_name=&quot;Петров&quot;, first_name=&quot;Петр&quot;, birth_date=&quot;1995-03-15&quot;)
+&gt;&gt;&gt; owner3 = Owner.objects.create(last_name=&quot;Сидоров&quot;, first_name=&quot;Сидор&quot;, birth_date=&quot;1985-07-20&quot;)
+&gt;&gt;&gt; owner4 = Owner.objects.create(last_name=&quot;Смирнова&quot;, first_name=&quot;Мария&quot;, birth_date=&quot;1988-11-30&quot;)
+&gt;&gt;&gt; owner5 = Owner.objects.create(last_name=&quot;Козлов&quot;, first_name=&quot;Александр&quot;, birth_date=&quot;1992-06-05&quot;)
+&gt;&gt;&gt; owner6 = Owner.objects.create(last_name=&quot;Николаев&quot;, first_name=&quot;Николай&quot;, birth_date=&quot;1987-09-10&quot;)
+&gt;&gt;&gt; owner7 = Owner.objects.create(last_name=&quot;Тихонова&quot;, first_name=&quot;Екатерина&quot;, birth_date=&quot;1993-04-25&quot;)
+&gt;&gt;&gt;
+</code></pre>
+<pre><code>&gt;&gt;&gt; from myapp.models import Car
+&gt;&gt;&gt;
+&gt;&gt;&gt; car1 = Car.objects.create(license_plate=&quot;ABC123&quot;, brand=&quot;Toyota&quot;, model=&quot;Camry&quot;, color=&quot;Blue&quot;)
+&gt;&gt;&gt; car2 = Car.objects.create(license_plate=&quot;XYZ789&quot;, brand=&quot;Honda&quot;, model=&quot;Civic&quot;, color=&quot;Red&quot;)
+&gt;&gt;&gt; car3 = Car.objects.create(license_plate=&quot;DEF456&quot;, brand=&quot;Ford&quot;, model=&quot;Focus&quot;, color=&quot;Green&quot;)
+&gt;&gt;&gt; car4 = Car.objects.create(license_plate=&quot;GHI789&quot;, brand=&quot;Chevrolet&quot;, model=&quot;Malibu&quot;, color=&quot;Silver&quot;)
+&gt;&gt;&gt; car5 = Car.objects.create(license_plate=&quot;JKL012&quot;, brand=&quot;Nissan&quot;, model=&quot;Altima&quot;, color=&quot;Black&quot;)
+&gt;&gt;&gt; car6 = Car.objects.create(license_plate=&quot;MNO345&quot;, brand=&quot;Volkswagen&quot;, model=&quot;Jetta&quot;, color=&quot;White&quot;)
+</code></pre>
+<pre><code>from myapp.models import Ownership, Car
+
+# Автовладелец 1
+ownership1 = Ownership.objects.create(owner=owner1, car=car1, start_date=&quot;2022-01-01&quot;, end_date=&quot;2023-01-01&quot;)
+ownership2 = Ownership.objects.create(owner=owner1, car=car2, start_date=&quot;2022-02-15&quot;, end_date=&quot;2023-02-15&quot;)
+ownership3 = Ownership.objects.create(owner=owner1, car=car3, start_date=&quot;2022-03-20&quot;, end_date=&quot;2023-03-20&quot;)
+
+# Автовладелец 2
+ownership4 = Ownership.objects.create(owner=owner2, car=car2, start_date=&quot;2022-04-10&quot;, end_date=&quot;2023-04-10&quot;)
+ownership5 = Ownership.objects.create(owner=owner2, car=car4, start_date=&quot;2022-05-25&quot;, end_date=&quot;2023-05-25&quot;)
+
+# Автовладелец 3
+ownership6 = Ownership.objects.create(owner=owner3, car=car1, start_date=&quot;2022-06-30&quot;, end_date=&quot;2023-06-30&quot;)
+ownership7 = Ownership.objects.create(owner=owner3, car=car3, start_date=&quot;2022-07-05&quot;, end_date=&quot;2023-07-05&quot;)
+ownership8 = Ownership.objects.create(owner=owner3, car=car5, start_date=&quot;2022-08-10&quot;, end_date=&quot;2023-08-10&quot;)
+
+
+
+
+
+# проверка результатов созданных объектов:
+
+from myapp.models import Owner, Car, DriverLicense, Ownership
+&gt;&gt;&gt; # Вывод данных об автовладельцах
+&gt;&gt;&gt; owners = Owner.objects.all()
+&gt;&gt;&gt; for owner in owners:
+...     print(f&quot;Owner: {owner.first_name} {owner.last_name}, Birth Date: {owner.birth_date}&quot;)
+...
+</code></pre>
+<p>Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Петр Петров, Birth Date: 1995-03-15
+Owner: Сидор Сидоров, Birth Date: 1985-07-20
+Owner: Мария Смирнова, Birth Date: 1988-11-30
+Owner: Александр Козлов, Birth Date: 1992-06-05
+Owner: Николай Николаев, Birth Date: 1987-09-10
+Owner: Екатерина Тихонова, Birth Date: 1993-04-25</p>
+<pre><code>&gt;&gt;&gt; # Вывод данных об автомобилях
+&gt;&gt;&gt; cars = Car.objects.all()
+&gt;&gt;&gt; for car in cars:
+...     print(f&quot;Car: {car.brand} {car.model}, License Plate: {car.license_plate}, Color: {car.color}&quot;)
+...
+</code></pre>
+<p>Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Honda Civic, License Plate: XYZ789, Color: Red
+Car: Ford Focus, License Plate: DEF456, Color: Green
+Car: Chevrolet Malibu, License Plate: GHI789, Color: Silver
+Car: Nissan Altima, License Plate: JKL012, Color: Black
+Car: Volkswagen Jetta, License Plate: MNO345, Color: White</p>
+<p>Водительские удостоверения (создание)</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import DriverLicense, Owner
+&gt;&gt;&gt;
+&gt;&gt;&gt; dl1 = DriverLicense.objects.create(owner=owner1, license_number=&quot;12345&quot;, license_type=&quot;A&quot;, issue_date=&quot;2022-01-01&quot;)
+&gt;&gt;&gt; dl2 = DriverLicense.objects.create(owner=owner2, license_number=&quot;67890&quot;, license_type=&quot;B&quot;, issue_date=&quot;2022-02-15&quot;)
+&gt;&gt;&gt; dl3 = DriverLicense.objects.create(owner=owner3, license_number=&quot;54321&quot;, license_type=&quot;C&quot;, issue_date=&quot;2022-03-20&quot;)
+&gt;&gt;&gt; dl4 = DriverLicense.objects.create(owner=owner4, license_number=&quot;98765&quot;, license_type=&quot;B&quot;, issue_date=&quot;2022-04-10&quot;)
+&gt;&gt;&gt; dl5 = DriverLicense.objects.create(owner=owner5, license_number=&quot;13579&quot;, license_type=&quot;A&quot;, issue_date=&quot;2022-05-25&quot;)
+&gt;&gt;&gt; dl6 = DriverLicense.objects.create(owner=owner6, license_number=&quot;24680&quot;, license_type=&quot;C&quot;, issue_date=&quot;2022-06-30&quot;)
+&gt;&gt;&gt; dl7 = DriverLicense.objects.create(owner=owner7, license_number=&quot;11223&quot;, license_type=&quot;A&quot;, issue_date=&quot;2022-07-05&quot;)
+&gt;&gt;&gt;
+
+
+
+
+
+
+Вывод удостоверений
+&gt;&gt;&gt; driver_licenses = DriverLicense.objects.all()
+&gt;&gt;&gt; for dl in driver_licenses:
+...      print(f&quot;Driver's License: {dl.owner.first_name} {dl.owner.last_name}, Number: {dl.license_number}, Type: {dl.license_type}&quot;)
+...
+Driver's License: Иван Иванов, Number: 12345, Type: A
+Driver's License: Петр Петров, Number: 67890, Type: B
+Driver's License: Сидор Сидоров, Number: 54321, Type: C
+Driver's License: Мария Смирнова, Number: 98765, Type: B
+Driver's License: Александр Козлов, Number: 13579, Type: A
+Driver's License: Николай Николаев, Number: 24680, Type: C
+Driver's License: Екатерина Тихонова, Number: 11223, Type: A
+&gt;&gt;&gt;
+
+
+&gt;&gt;&gt; # Вывод данных о владениях автомобилями
+&gt;&gt;&gt; ownerships = Ownership.objects.all()
+&gt;&gt;&gt; for ownership in ownerships:
+...     print(f&quot;{ownership.owner.first_name} {ownership.owner.last_name} owns {ownership.car.brand} {ownership.car.model} from {ownership.start_date} to {ownership.end_date}&quot;)
+...
+</code></pre>
+<p>Иван Иванов owns Toyota Camry from 2022-01-01 to 2023-01-01
+Иван Иванов owns Honda Civic from 2022-02-15 to 2023-02-15
+Иван Иванов owns Ford Focus from 2022-03-20 to 2023-03-20
+Петр Петров owns Honda Civic from 2022-04-10 to 2023-04-10
+Петр Петров owns Chevrolet Malibu from 2022-05-25 to 2023-05-25
+Сидор Сидоров owns Toyota Camry from 2022-06-30 to 2023-06-30
+Сидор Сидоров owns Ford Focus from 2022-07-05 to 2023-07-05
+Сидор Сидоров owns Nissan Altima from 2022-08-10 to 2023-08-10</p>
+<p>через метод add()</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Ownership
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Добавляем даты начала и окончания владения
+&gt;&gt;&gt; ownership1 = Ownership.objects.create(owner=owner1, car=car1, start_date=&quot;2022-01-01&quot;, end_date=&quot;2022-05-01&quot;)
+&gt;&gt;&gt; ownership2 = Ownership.objects.create(owner=owner1, car=car2, start_date=&quot;2022-01-01&quot;, end_date=&quot;2022-06-15&quot;)
+&gt;&gt;&gt; ownership3 = Ownership.objects.create(owner=owner2, car=car3, start_date=&quot;2022-02-15&quot;, end_date=&quot;2022-08-01&quot;)
+&gt;&gt;&gt; ownership4 = Ownership.objects.create(owner=owner3, car=car1, start_date=&quot;2022-03-20&quot;, end_date=&quot;2022-10-30&quot;)
+&gt;&gt;&gt; ownership5 = Ownership.objects.create(owner=owner3, car=car3, start_date=&quot;2022-03-20&quot;, end_date=&quot;2022-09-15&quot;)
+&gt;&gt;&gt; # Пробуем добавить автомобили владельцам через метод .add()
+&gt;&gt;&gt; owner1.cars.add(car1, car2)
+&gt;&gt;&gt; owner2.cars.add(car3)
+&gt;&gt;&gt; owner3.cars.add(car1, car3)
+
+
+&gt;&gt;&gt; for owner in latest_owners:
+...     print(f&quot;Владелец: {owner.last_name}, Дата рождения: {owner.birth_date}&quot;)
+...
+</code></pre>
+<p>Владелец: Сидоров, Дата рождения: 1985-07-20
+Владелец: Петров, Дата рождения: 1995-03-15
+Владелец: Иванов, Дата рождения: 1990-01-01</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import DriverLicense
+
+&gt;&gt;&gt; # Вывод последних добавленных водительских удостоверений
+&gt;&gt;&gt; latest_licenses = DriverLicense.objects.order_by('-id')[:10]
+&gt;&gt;&gt; for license in latest_licenses:
+...     print(f&quot;Водительское удостоверение: {license.license_number}, Тип: {license.license_type}&quot;)
+...
+</code></pre>
+<p>Водительское удостоверение: 11223, Тип: A
+Водительское удостоверение: 24680, Тип: C
+Водительское удостоверение: 13579, Тип: A
+Водительское удостоверение: 98765, Тип: B
+Водительское удостоверение: 54321, Тип: C
+Водительское удостоверение: 67890, Тип: B
+Водительское удостоверение: 12345, Тип: A</p>
+<h1 id="2_1">Практическое задание 2</h1>
+<p>cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3\myproject2</p>
+<p>добавить relate_name
+related_name='ownerships'</p>
+<p>Выведем все машины марки "Toyota":</p>
+<pre><code>&gt;&gt;&gt; from myapp.models import Car
+&gt;&gt;&gt;
+&gt;&gt;&gt; # Запрос на вывод всех машин марки Toyota
+&gt;&gt;&gt; toyota_cars = Car.objects.filter(brand=&quot;Toyota&quot;)
+&gt;&gt;&gt; for car in toyota_cars:
+...     print(f&quot;Car: {car.brand} {car.model}, License Plate: {car.license_plate}, Color: {car.color}&quot;)
+...
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+&gt;&gt;&gt;
+</code></pre>
+<p>Запрос на поиск водителей с именем "Сидор" (Вначале хотел поискать Олегов, но их не было)
+ ```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>oleg_drivers = DriverLicense.objects.filter(owner__first_name="Сидор")
+for driver in oleg_drivers:
+...      print(f"Driver's License: {driver.owner.first_name} {driver.owner.last_name}, Number: {driver.license_number}, Type: {driver.license_type}")
+...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Driver's License: Сидор Сидоров, Number: 54321, Type: C
+
+
+
+Возьмем любого случайного владельца, получим его id и затем получим экземпляр удостоверения:
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import random</p>
+<h1 id="_1">Получение случайного владельца</h1>
+<p>random_owner = random.choice(Owner.objects.all())</p>
+<h1 id="id">Вывод id владельца</h1>
+<p>print(f"Owner ID: {random_owner.id}")
+Owner ID: 3</p>
+<h1 id="id_1">Получение экземпляра удостоверения по id владельца</h1>
+<p>driver_license = DriverLicense.objects.get(owner=random_owner)
+print(f"Driver's License: {driver_license.owner.first_name} {driver_license.owner.last_name}, Number: {driver_license.license_number}, Type: {driver_license.license_type}")
+Driver's License: Сидор Сидоров, Number: 54321, Type: C
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>
+Выведем всех владельцев красных машин (или любого другого цвета):
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>red_car_owners = Owner.objects.filter(cars__color="Red")
+for owner in red_car_owners:
+...     print(f"Owner: {owner.first_name} {owner.last_name}, Birth Date: {owner.birth_date}")
+...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Петр Петров, Birth Date: 1995-03-15
+Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Иван Иванов, Birth Date: 1990-01-01
+
+
+Найдем всех владельцев, чей год владения машиной начинается с 2010 (или любой другой год после 2010):
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from myapp.models import Ownership
+year_start = 2010
+ownership_2010 = Ownership.objects.filter(start_date__year__gte=year_start)
+for ownership in ownership_2010:
+...     print(f"{ownership.owner.first_name} {ownership.owner.last_name} owns {ownership.car.brand} {ownership.car.model} from {ownership.start_date} to {ownership.end_date}")
+...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Иван Иванов owns Toyota Camry from 2022-01-01 to 2023-01-01
+Иван Иванов owns Honda Civic from 2022-02-15 to 2023-02-15
+Иван Иванов owns Ford Focus from 2022-03-20 to 2023-03-20
+Петр Петров owns Honda Civic from 2022-04-10 to 2023-04-10
+Петр Петров owns Chevrolet Malibu from 2022-05-25 to 2023-05-25
+Сидор Сидоров owns Toyota Camry from 2022-06-30 to 2023-06-30
+Сидор Сидоров owns Ford Focus from 2022-07-05 to 2023-07-05
+Сидор Сидоров owns Nissan Altima from 2022-08-10 to 2023-08-10
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2022-12-31
+Иван Иванов owns Honda Civic from 2022-02-01 to 2022-12-31
+Петр Петров owns Ford Focus from 2022-03-01 to 2022-12-31
+Сидор Сидоров owns Toyota Camry from 2022-04-01 to 2022-12-31
+Сидор Сидоров owns Ford Focus from 2022-05-01 to 2022-12-31
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2022-05-01
+Иван Иванов owns Honda Civic from 2022-01-01 to 2022-06-15
+Петр Петров owns Ford Focus from 2022-02-15 to 2022-08-01
+Сидор Сидоров owns Toyota Camry from 2022-03-20 to 2022-10-30
+Сидор Сидоров owns Ford Focus from 2022-03-20 to 2022-09-15
+&gt;&gt;&gt;
+
+
+
+
+
+#Практическое задание 3
+#Практическое задание 3: 
+Необходимо реализовать следующие запросы c применением описанных методов:
+
+
+
+
+Вывод даты выдачи самого старшего водительского удостоверения
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from myapp.models import DriverLicense
+oldest_license = DriverLicense.objects.order_by('issue_date').first()
+print("Самое старшее водительское удостоверение выдано:", oldest_license.issue_date)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Самое старшее водительское удостоверение выдано: 2022-01-01
+
+
+Укажите самую позднюю дату владения машиной, имеющую какую-то из существующих моделей в вашей базе
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from myapp.models import Ownership, Car</p>
+<p>latest_car_ownership = Ownership.objects.filter(car__isnull=False).order_by('-end_date').first()
+print("Самая поздняя дата владения машиной:", latest_car_ownership.end_date)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Самая поздняя дата владения машиной: 2023-08-10
+
+
+Выведите количество машин для каждого водителя
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<h1 id="_2">Выведите количество машин для каждого водителя</h1>
+<p>owners_car_count = Owner.objects.annotate(car_count=Count('cars'))
+for owner in owners_car_count:
+...     print(f"{owner}: {owner.car_count} машин(ы)")
+...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Иванов Иван: 5 машин(ы)
+Петров Петр: 3 машин(ы)
+Сидоров Сидор: 5 машин(ы)
+Смирнова Мария: 0 машин(ы)
+Козлов Александр: 0 машин(ы)
+Николаев Николай: 0 машин(ы)
+Тихонова Екатерина: 0 машин(ы)
+Иванов Иван: 0 машин(ы)
+Петров Петр: 0 машин(ы)
+Сидоров Сидор: 0 машин(ы)
+Иванов Иван: 2 машин(ы)
+Петров Петр: 1 машин(ы)
+Сидоров Сидор: 2 машин(ы)
+
+
+Подсчитайте количество машин каждой марки
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<h1 id="_3">Подсчитайте количество машин каждой марки</h1>
+<p>car_brand_count = Car.objects.values('brand').annotate(brand_count=Count('brand'))
+for car in car_brand_count:
+...     print(f"{car['brand']}: {car['brand_count']} машин(ы)")
+...</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>Chevrolet: 1 машин(ы)
+Ford: 3 машин(ы)
+Honda: 3 машин(ы)
+Nissan: 1 машин(ы)
+Toyota: 3 машин(ы)
+Volkswagen: 1 машин(ы)
+
+
+Отсортируйте всех автовладельцев по дате выдачи удостоверения (Примечание: чтобы не выводить несколько раз одни и те же таблицы воспользуйтесь методом .distinct()
+</code></pre>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from django.db.models import Count, Min
+owners_sorted_by_license_date = Owner.objects.annotate(earliest_license_date=Min('driverlicense__issue_date')).order_by('earliest_license_date').distinct()
+for owner in owners_sorted_by_license_date:
+...     print(f"{owner}: самое раннее удостоверение выдано {owner.earliest_license_date}")
+...
+```
+Иванов Иван: самое раннее удостоверение выдано None
+Петров Петр: самое раннее удостоверение выдано None
+Сидоров Сидор: самое раннее удостоверение выдано None
+Иванов Иван: самое раннее удостоверение выдано None
+Петров Петр: самое раннее удостоверение выдано None
+Сидоров Сидор: самое раннее удостоверение выдано None
+Иванов Иван: самое раннее удостоверение выдано 2022-01-01
+Петров Петр: самое раннее удостоверение выдано 2022-02-15
+Сидоров Сидор: самое раннее удостоверение выдано 2022-03-20
+Смирнова Мария: самое раннее удостоверение выдано 2022-04-10
+Козлов Александр: самое раннее удостоверение выдано 2022-05-25
+Николаев Николай: самое раннее удостоверение выдано 2022-06-30
+Тихонова Екатерина: самое раннее удостоверение выдано 2022-07-05</p>
+</blockquote>
+</blockquote>
+</blockquote>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../lw2/templates/" class="btn btn-neutral float-left" title="Templates"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../lw3/" class="btn btn-neutral float-right" title="Main">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../lw2/templates/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../lw3/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

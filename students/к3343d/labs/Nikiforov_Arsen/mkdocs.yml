@@ -34,7 +34,7 @@ nav:
         - Swagger: 'lw3/swagger.md'        
         - Readme: 'lw3/readme.md'        
         - Models: 'lw3/models.md'        
-        - Serializer: 'lw3/serializer.md        
+        - Serializer: 'lw3/serializer.md'        
 
         
 
