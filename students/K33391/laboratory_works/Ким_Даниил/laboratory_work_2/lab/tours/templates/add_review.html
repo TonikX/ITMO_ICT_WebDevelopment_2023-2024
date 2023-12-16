@@ -4,6 +4,51 @@
     <title>Add Review</title>
 </head>
 <body>
+<style>
+    /* base.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #007bff;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    margin-top: 10px;
+}
+
+</style>
     <h2>Add Review for {{ tour.title }}</h2>
     <form method="post">
         {% csrf_token %}
@@ -12,5 +57,9 @@
         {{ form.rating }}
         <button type="submit">Add Review</button>
     </form>
+<a href="{% url 'login' %}">login</a> <br>
+<a href="{% url 'home' %}">home</a> <br>
+<a href="{% url 'reservations_list' %}">reservations_list</a> <br>
+<a href="{% url 'tours_with_reservation_count' %}">tours_with_reservation_count</a> <br>
 </body>
 </html>

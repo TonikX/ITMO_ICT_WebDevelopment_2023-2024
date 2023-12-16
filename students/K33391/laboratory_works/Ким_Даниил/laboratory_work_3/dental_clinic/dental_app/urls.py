@@ -4,7 +4,7 @@ from .views import (
     PatientListView, PatientDetailView,
     ServiceListView, ServiceDetailView,
     VisitListView, VisitDetailView,
-    PaymentListView, PaymentDetailView
+    PaymentListView, PaymentDetailView, PaymentInfoView
 )
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     path('visits/<int:pk>/', VisitDetailView.as_view(), name='visit-detail'),
     path('payments/', PaymentListView.as_view(), name='payment-list'),
     path('payments/<int:pk>/', PaymentDetailView.as_view(), name='payment-detail'),
+    path('payment/<int:payment_id>/', PaymentInfoView.as_view(), name='payment_info'),
 ]
