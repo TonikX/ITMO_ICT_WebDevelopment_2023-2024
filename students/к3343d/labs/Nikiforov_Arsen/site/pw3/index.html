@@ -255,19 +255,7 @@ Warrior object (1)
 <p>Warrior object (2)
 Warrior object (5)</p>
 <p>Функции применяемые к полям и поиск через отношения</p>
-<pre><code>&gt;&gt;&gt; from myapp.models import Skill, SkillOfWarrior
-&gt;&gt;&gt; # Создадим несколько умений
-&gt;&gt;&gt; gaming = Skill.objects.create(title=&quot;Умение играть во все подряд&quot;)
-&gt;&gt;&gt;
-&gt;&gt;&gt; # Привяжем умения к воинам
-&gt;&gt;&gt; powerful_warrior.skill.add(gaming)
-Traceback (most recent call last):
-  File &quot;&lt;console&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: 'Warrior' object has no attribute 'skill'
-&gt;&gt;&gt; cute_warrior.skill.add(gaming)
-Traceback (most recent call last):
-  File &quot;&lt;console&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: 'Warrior' object has no attribute 'skill'
+<pre><code>
 &gt;&gt;&gt; # Привяжем умения к воинам через модель SkillOfWarrior
 &gt;&gt;&gt; SkillOfWarrior.objects.create(warrior=powerful_warrior, skill=gaming, level=0)
 &lt;SkillOfWarrior: SkillOfWarrior object (4)&gt;

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Management Menu</title>
+</head>
+<body>
+    <h1>Welcome to the Hotel Management System</h1>
+    <ul>
+        <li><a href="{% url 'rooms_list' %}">Rooms</a></li>
+        <li><a href="{% url 'clients_list' %}">Clients</a></li>
+        <li><a href="{% url 'employees_list' %}">Employees</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+    </ul>
+</body>
+</html>
