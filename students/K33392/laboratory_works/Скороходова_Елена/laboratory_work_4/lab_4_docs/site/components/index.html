@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Components - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Components</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../login/" class="nav-link">Login</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../main_page/" class="nav-link">Main page</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../register/" class="nav-link">Register</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../router/" class="nav-link">Роутинг</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../login/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Компоненты</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="_1">Компоненты</h2>
+<p>Были созданы Vue компоненты для страниц профиля, добавления самолетов, полетов, экипажа и сотрудников.</p>
+<p>На примере Aircrafts.vue объясню работу компонентов:</p>
+<p>Страница состоит из таблицы с уже записанными самолетам, и формы с добавлением нового самолета.</p>
+<p>В секции скрипта, я определяю данные компонента, включая массив 
+aircrafts для хранения списка воздушных судов и объект newAircraft 
+для хранения данных нового воздушного судна.</p>
+<p>mounted(): Хук жизненного цикла Vue.js. Когда компонент был добавлен в DOM, 
+вызывается метод mounted. В этом методе происходит 
+вызов другого метода fetchAircrafts(). </p>
+<p>Методы:
+fetchAircrafts(): Выполняет GET-запрос к серверу для получения списка воздушных судов и обновляет данные в массиве aircrafts.</p>
+<p>addAircraft(): Выполняет POST-запрос для добавления нового воздушного судна на сервер. После успешного добавления обновляет данные и сбрасывает значения полей формы.</p>
+<p>deleteAircraft(aircraftId): Выполняет DELETE-запрос для удаления воздушного судна с указанным идентификатором на сервере. После успешного удаления обновляет данные.</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Aircraft List&lt;/h2&gt;
+    &lt;table class="aircraft-table"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Number&lt;/th&gt;
+          &lt;th&gt;Type&lt;/th&gt;
+          &lt;th&gt;Seats&lt;/th&gt;
+          &lt;th&gt;Speed&lt;/th&gt;
+          &lt;th&gt;Carrier&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr v-for="aircraft in aircrafts" :key="aircraft.id"&gt;
+          &lt;td&gt;{{ aircraft.number }}&lt;/td&gt;
+          &lt;td&gt;{{ aircraft.type }}&lt;/td&gt;
+          &lt;td&gt;{{ aircraft.seats }}&lt;/td&gt;
+          &lt;td&gt;{{ aircraft.speed }}&lt;/td&gt;
+          &lt;td&gt;{{ aircraft.carrier }}&lt;/td&gt;
+          &lt;button @click="deleteAircraft(aircraft.id)"&gt;Delete&lt;/button&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;h3&gt;Add New Aircraft&lt;/h3&gt;
+    &lt;form @submit.prevent="addAircraft" class="add-aircraft-form"&gt;
+      &lt;label&gt;
+        Number:
+        &lt;input v-model="newAircraft.number" type="text" required class="input-field" /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        Type:
+        &lt;input v-model="newAircraft.type" type="text" required class="input-field" /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        Seats:
+        &lt;input v-model="newAircraft.seats" type="number" required class="input-field" /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        Speed:
+        &lt;input v-model="newAircraft.speed" type="number" required class="input-field" /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        Carrier:
+        &lt;input v-model="newAircraft.carrier" type="text" required class="input-field" /&gt;
+      &lt;/label&gt;
+      &lt;button type="submit" class="add-button"&gt;Add Aircraft&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;div&gt;
+      &lt;router-link to="/crewmembers"&gt;
+        &lt;button&gt;Crew Members&lt;/button&gt;
+      &lt;/router-link&gt;
+      &lt;router-link to="/flights"&gt;
+        &lt;button&gt;Flights&lt;/button&gt;
+      &lt;/router-link&gt;
+      &lt;router-link to="/employees"&gt;
+        &lt;button&gt;Employees&lt;/button&gt;
+      &lt;/router-link&gt;
+      &lt;router-link to="/profile"&gt;
+        &lt;button&gt;Back to Profile&lt;/button&gt;
+      &lt;/router-link&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      aircrafts: [],
+      newAircraft: {
+        number: '',
+        type: '',
+        seats: 0,
+        speed: 0,
+        carrier: '',
+      },
+    };
+  },
+  mounted() {
+    this.fetchAircrafts();
+  },
+  methods: {
+    fetchAircrafts() {
+      axios.get('http://localhost:8000/my_avia_app/api/aircrafts/')
+        .then(response =&gt; {
+          this.aircrafts = response.data;
+        })
+        .catch(error =&gt; {
+          console.error(error);
+        });
+    },
+    addAircraft() {
+      axios.post('http://localhost:8000/my_avia_app/api/aircrafts/', this.newAircraft)
+        .then(() =&gt; {
+          this.newAircraft = {
+            number: '',
+            type: '',
+            seats: 0,
+            speed: 0,
+            carrier: '',
+          };
+          this.fetchAircrafts();
+        })
+        .catch(error =&gt; {
+          console.error(error);
+        });
+    },
+     deleteAircraft(aircraftId) {
+      axios.delete(`http://localhost:8000/my_avia_app/api/aircrafts/${aircraftId}/`)
+        .then(() =&gt; {
+          this.fetchAircrafts();
+        })
+        .catch(error =&gt; {
+          console.error(error);
+        });
+    },
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+
+.aircraft-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.aircraft-table th,
+.aircraft-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.aircraft-table th {
+  background-color: #f4f4f4;
+}
+
+.add-aircraft-form {
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 200px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+
+button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+&lt;/style&gt;
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
