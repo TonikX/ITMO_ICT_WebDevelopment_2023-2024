@@ -1,4 +1,4 @@
-# god_help_me
+# mb_client
 
 ## Project setup
 ```
