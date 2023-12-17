@@ -23,7 +23,7 @@ schema_view = get_swagger_view(title='Poultry farm API', url='/')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),  # djoser token-based authentication
-    re_path('auth/', include('djoser.urls.authtoken')),
+    re_path('auth/', include('djoser.urls.jwt')),
     path("", include("enterprise_app.urls")),
     path("", include("chicken_app.urls")),
     path('swagger', schema_view)
