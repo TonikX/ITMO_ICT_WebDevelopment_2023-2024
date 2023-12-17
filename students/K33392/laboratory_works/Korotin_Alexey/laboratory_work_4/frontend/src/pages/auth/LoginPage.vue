@@ -1,4 +1,10 @@
 
+import { useAuthStore } from '@/stores/authStore';
+
+import { mapActions } from 'pinia';
+
+import { useAuthStore } from '@/stores/authStore';
+
 import { pushScopeId } from 'vue';
 
 import router from '@/router';
@@ -8,8 +14,7 @@ import router from '@/router';
             <p class="text-h3">Login</p>
             <q-form ref="form" @submit.prevent="tryLogin" class="login-container q-gutter-y-md column">
                 <q-input label-color="white" input-class="input-field" type="text" v-model="form.username" label="Login"
-                    placeholder="example@example.com" error-message="Please enter a valid email"
-                    ></q-input>
+                    placeholder="example@example.com" error-message="Please enter a valid email"></q-input>
                 <q-input label-color="white" input-class="input-field" type="password" v-model="form.password"
                     label="Password"></q-input>
                 <q-btn text-color="primary" type="submit" color="secondary">Login</q-btn>
@@ -20,7 +25,8 @@ import router from '@/router';
 </template>
 <script>
 import { emailValidator } from '@/mixins/email';
-import { AuthService } from '@/services/AuthService';
+import { useAuthStore } from '@/stores/authStore';
+import { mapActions } from 'pinia';
 export default {
     mixins: [emailValidator],
     data() {
@@ -33,9 +39,10 @@ export default {
     },
 
     methods: {
+        ...mapActions(useAuthStore, ['login']),
+
         async tryLogin() {
-            const service = new AuthService();
-            const response = await service.login(this.form);
+            const response = await this.login(this.form);
 
             if (response.status === 200) {
                 this.$router.push('/');

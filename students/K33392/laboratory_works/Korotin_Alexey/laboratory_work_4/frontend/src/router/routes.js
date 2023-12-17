@@ -20,6 +20,12 @@ const routes = [
                 component: () => import("@/pages/auth/LoginPage.vue"),
                 meta: { requiresAuth: false },
             },
+            {
+                name: "Register",
+                path: "register",
+                component: () => import("@/pages/auth/SignUpPage.vue"),
+                meta: { requiresAuth: false },
+            },
         ],
     },
 
