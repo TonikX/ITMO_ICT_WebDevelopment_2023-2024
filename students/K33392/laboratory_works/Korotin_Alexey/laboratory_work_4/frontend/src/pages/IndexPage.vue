@@ -5,13 +5,22 @@
       src="~assets/quasar-logo-vertical.svg"
       style="width: 200px; height: 200px"
     >
+    <q-btn @click="apiCall">Hello</q-btn>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+export default {
+  data() {
+    return ({
 
-export default defineComponent({
-  name: 'IndexPage'
-})
+    });
+  },
+
+  methods: {
+    apiCall() {
+      this.$api.get('/report');
+    }
+  }
+}
 </script>
