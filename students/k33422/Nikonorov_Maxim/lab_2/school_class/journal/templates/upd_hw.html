@@ -1,0 +1,23 @@
+{% extends 'strap.html' %}
+{% block title %}Edit homework{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+{% if user.id == object.tutor.id %}
+<h1>Update Homework</h1>
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</br>
+<a href="{% url 'delete-homework' object.pk %}" class="btn btn-danger">Delete homework</a>
+{% else %}
+<h4>There's nothing to do</h4>
+{% endif %}
+{% endblock %}

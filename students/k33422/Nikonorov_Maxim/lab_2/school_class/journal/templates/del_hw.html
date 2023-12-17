@@ -1,0 +1,21 @@
+{% extends 'strap.html' %}
+{% block title %}Delete homework{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+{% if user.id == object.tutor.id %}
+<h1>Delete Homework</h1>
+
+<h3>You are deleting {{ object.subject}} homework. Are you sure?</h3>
+
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a href="{% url 'home' %}" class="btn btn-secondary">No, back home</a>
+  </form>
+</div>
+{% endif %}
+{% endblock %}
