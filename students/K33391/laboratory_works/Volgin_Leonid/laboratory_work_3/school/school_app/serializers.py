@@ -2,7 +2,13 @@ from rest_framework import serializers
 
 from .models import *
 
+class CabinetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cabinets
+        fields = '__all__'
+
 class TeacherSerializer(serializers.ModelSerializer):
+    #cabinet = CabinetSerializer(many=False)
     class Meta:
         model = Teachers
         fields = '__all__'
@@ -37,7 +43,3 @@ class ScheduleSerializer(serializers.ModelSerializer):
         model = Schedules
         fields = '__all__'
 
-class CabinetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cabinets
-        fields = '__all__'

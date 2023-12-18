@@ -46,7 +46,6 @@ class ProfessionSerializer(serializers.ModelSerializer):
 class OneWarriorSerializer(serializers.ModelSerializer,):
     skill = SkillSerializer(many=True)
     profession = ProfessionSerializer(many=False)
-
     class Meta:
         model = Warrior
         fields = "__all__"

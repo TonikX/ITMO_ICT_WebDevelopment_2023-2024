@@ -7,15 +7,14 @@ class Classes(models.Model):
        ('B', 'Б'),
        ('C', 'Ц'),
    )
-   classroom_teacher = models.ForeignKey('Teachers', on_delete=models.CASCADE, verbose_name='Учителя', blank=True, null=True)
+   classroom_teacher = models.ForeignKey('Teachers', on_delete=models.CASCADE, verbose_name='Классный руководитель', blank=True, null=True)
    year = models.IntegerField(verbose_name='Год обучения')
    litera = models.CharField(max_length=1, choices=litera_types, verbose_name='Буква')
    teachings = models.ManyToManyField('Teachings', verbose_name='Преподавания', through='Schedules', related_name='class_teachings')
 
 
 class Teachers(models.Model):
-    classroom_teacher = models.ForeignKey('Teachers', on_delete=models.CASCADE, verbose_name='Учитель', blank=True, null=True)
-    cabinet = models.OneToOneField('Cabinets', on_delete=models.CASCADE,primary_key=True)
+    cabinet = models.OneToOneField('Cabinets', on_delete=models.CASCADE,primary_key=False,blank=True, null=True)
     FIO = models.CharField(max_length=120, verbose_name='ФИО')
     subjects = models.ManyToManyField('Subjects', verbose_name='Предметы', through='Teachings', related_name='teacher_subjects')
 
@@ -34,9 +33,8 @@ class Subjects(models.Model):
         ('Languanges','Языки'),
         ('Literature','Литература')
     )
-    FIO = models.CharField(max_length=120, verbose_name='ФИО')
     teachers = models.ManyToManyField('Teachers', verbose_name='Учителя', through='Teachings',related_name='subject_teachers')
-    subject = models.CharField(max_length=50, choices=subject_types, verbose_name='Название')
+    subject = models.CharField(max_length=50, choices=subject_types, verbose_name='Название', unique=True)
     description = models.TextField(verbose_name='Описание')
 
 
