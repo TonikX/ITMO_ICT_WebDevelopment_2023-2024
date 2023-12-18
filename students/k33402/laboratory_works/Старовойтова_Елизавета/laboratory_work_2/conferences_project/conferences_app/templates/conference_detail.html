@@ -1,0 +1,52 @@
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <h2>{{ conference.name }}</h2>
+        <p><strong>Место проведения:</strong> {{ conference.location }}</p>
+        <p><strong>Период проведения:</strong> {{ conference.date }}</p>
+
+        <h3>Зарегистрированные авторы:</h3>
+           <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Имя пользователя</th>
+                            <th>Дата регистрации</th>
+                            <th>Название проекта</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registration in registrations %}
+                            <tr>
+                                <td>{{ registration.user.username }}</td>
+                                <td>{{ registration.date_registered }}</td>
+                                <td>{{ registration.presentation_title }}</td>
+                                <td>
+                                    {% if registration.user == user %}
+                                        <a href="{% url 'update_registration' pk=registration.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{% url 'delete_registration' pk=registration.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        <h3>Комментарии</h3>
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <strong>{{ comment.user.username }}:</strong>
+                    {{ comment.text }} ({{ comment.date_created }})
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'register_author' pk=conference.pk %}">Зарегистрироваться как автор</a>
+
+        <a href="{% url 'write_comment' pk=conference.pk %}">Оставить комментарий</a>
+    {% endblock %}
+

@@ -1,0 +1,13 @@
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+        <h2>Удалить регистрацию</h2>
+        <p>Вы уверены, что хотите удалить регистрацию?</p>
+        <form method="post" action="{% url 'delete_registration' pk=registration.pk %}">
+            {% csrf_token %}
+            <button type="submit">Да, удалить</button>
+        </form>
+        <a href="{% url 'conference_detail' pk=registration.conference.pk %}">Отмена</a>
+    {% endblock %}
+
