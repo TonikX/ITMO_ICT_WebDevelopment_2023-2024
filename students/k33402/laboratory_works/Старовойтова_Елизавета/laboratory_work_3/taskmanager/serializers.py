@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import User, Task, Comment, Aim, Category, TaskUserRelation
 
-
 class CommentSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.username')
     task_title = serializers.ReadOnlyField(source='task_user_relation.task.title')
@@ -39,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
+        ref_name = 'UserSerializer'
 
 class TaskDetailSerializer(serializers.ModelSerializer):
     aim = serializers.SerializerMethodField()

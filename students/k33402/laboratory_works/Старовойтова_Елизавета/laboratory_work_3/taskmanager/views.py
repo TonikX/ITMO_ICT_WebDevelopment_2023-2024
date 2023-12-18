@@ -7,22 +7,6 @@ from rest_framework import status
 from django.db.models import F
 
 
-class UserRetrieveView(generics.RetrieveAPIView):
-    """
-    Представление для просмотра пользователя
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserCreateView(generics.CreateAPIView):
-    """
-    Представление для создания пользователя
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class TaskByUncompletedAimView(generics.ListAPIView):
     """
     Выводит все задачи, где цель не достигнута
@@ -72,7 +56,7 @@ class UserTasksStatusView(APIView):
 
 class TaskDetailView(generics.RetrieveAPIView):
     """
-    Представление для просмотра одной задачи с информацией о цели, категории и комментариях.
+    Представление для просмотра одной задачи с информацией о цели, категории.
     """
     queryset = Task.objects.all()
     serializer_class = TaskDetailSerializer

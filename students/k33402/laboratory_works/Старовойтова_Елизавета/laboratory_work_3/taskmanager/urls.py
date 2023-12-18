@@ -1,7 +1,5 @@
 from django.urls import path
 from .views import (
-    UserRetrieveView,
-    UserCreateView,
     TaskByUncompletedAimView,
     UserTasksStatusView,
     TaskDetailView,
@@ -17,8 +15,6 @@ from .views import (
 
 urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
-    path('users/<int:pk>/', UserRetrieveView.as_view(), name='user-retrieve'),
-    path('users/create/', UserCreateView.as_view(), name='user-create'),
     path('tasks/by-category/<str:category_name>/', TaskByCategoryListView.as_view(), name='task-by-category-list'),
     path('tasks/uncompleted-aims/', TaskByUncompletedAimView.as_view(), name='task-uncompleted-aims'),
     path('users/<int:user_id>/tasks/status/', UserTasksStatusView.as_view(), name='user-tasks-status'),
