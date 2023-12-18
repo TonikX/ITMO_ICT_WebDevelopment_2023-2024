@@ -1,14 +1,30 @@
 const routes = [
     {
-        path: "/",
-        component: () => import("layouts/MainLayout.vue"),
+        path: "/facilities",
+        component: () => import("@/layouts/MainLayout.vue"),
         children: [
             {
                 path: "",
-                component: () => import("pages/IndexPage.vue"),
+                component: () => import("@/pages/facilities/AllPage.vue"),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: ":id",
+                component: () => import("@/pages/facilities/FacilityPage.vue"),
                 meta: { requiresAuth: true },
             },
         ],
+    },
+    {
+        path: "/statistics",
+        component: () => import("@/layouts/MainLayout.vue"),
+        children: [
+            {
+                path: "",
+                component: () => import("@/pages/statistics/StatisticsPage.vue"),
+                meta: { requiresAuth: true },
+            }
+        ]
     },
     {
         path: "/auth",

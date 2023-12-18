@@ -65,7 +65,7 @@ export default {
                 const response = await this.login(this.form);
 
                 if (response.status === 200) {
-                    this.$router.push('/');
+                    this.$router.push('/facilities');
                 }
             }
         }

@@ -1,1 +1,21 @@
 // app global css in SCSS form
+@import '@/css/quasar.variables.scss';
+
+.text {
+    color: $text;
+}
+
+.border-hover:hover {
+    border-color: $secondary;
+}
+
+.border-hover {
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.input-field {
+    font-size: 20px !important;
+    color: $text !important;
+    appearance: textfield;
+}

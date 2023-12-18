@@ -1,13 +1,3 @@
-
-import { useAuthStore } from '@/stores/authStore';
-
-import { mapActions } from 'pinia';
-
-import { useAuthStore } from '@/stores/authStore';
-
-import { pushScopeId } from 'vue';
-
-import router from '@/router';
 <template>
     <q-page>
         <div class="container q-pa-md column flex-center bg-primary">
@@ -27,13 +17,14 @@ import router from '@/router';
 import { emailValidator } from '@/mixins/email';
 import { useAuthStore } from '@/stores/authStore';
 import { mapActions } from 'pinia';
+
 export default {
     mixins: [emailValidator],
     data() {
         return {
             form: {
-                username: null,
-                password: null
+                username: '',
+                password: ''
             }
         }
     },
@@ -45,7 +36,7 @@ export default {
             const response = await this.login(this.form);
 
             if (response.status === 200) {
-                this.$router.push('/');
+                this.$router.push('/facilities');
             }
         }
     }
