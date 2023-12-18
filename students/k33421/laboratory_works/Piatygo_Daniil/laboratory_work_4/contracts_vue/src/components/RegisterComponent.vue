@@ -5,11 +5,16 @@ import {useAuthStore} from "@/stores";
 
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
+let email = ref('');
 let username = ref('');
 let password = ref('');
 let confirmPassword = ref('');
 let valid = ref(false);
 
+const emailRules = [
+  v => !!v || 'Email is required',
+  v => /.+@.+\..+/.test(v) || 'Email must be valid',
+];
 const usernameRules = [v => !!v || 'Username is required'];
 const passwordRules = [
   v => !!v || 'Password is required',
@@ -22,11 +27,17 @@ const confirmPasswordRules = [
 
 const submit = async () => {
   if (valid.value) {
-    const response = await fetchWrapper.post(`${baseUrl}/auth/users/`, {username: username.value, password: password.value});
+    const response = await fetchWrapper.post(`${baseUrl}/auth/users/`, {
+      email: email.value,
+      username: username.value,
+      password: password.value
+    });
 
     if (response.id) {
       const authStore = useAuthStore();
       return authStore.login(username.value, password.value)
+    } else if (response.password) {
+      alert(response.password)
     }
   }
 }
@@ -42,6 +53,14 @@ const submit = async () => {
           </v-toolbar>
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
+              <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                label="Email"
+                name="email"
+                type="email"
+              ></v-text-field>
+
               <v-text-field
                 v-model="username"
                 :rules="usernameRules"

@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { useAuthStore } from '@/stores';
-import { LoginComponent, RegisterComponent, HomeComponent } from "@/components";
+import { LoginComponent, RegisterComponent, HomeComponent, AddContractComponent } from "@/components";
 
 const routes = [
   { path: '/login', component: LoginComponent },
   { path: '/register', component: RegisterComponent },
   { path: '/', component: HomeComponent },
+  { path: '/add_contract', component: AddContractComponent }
 ]
 
 export const router = createRouter({

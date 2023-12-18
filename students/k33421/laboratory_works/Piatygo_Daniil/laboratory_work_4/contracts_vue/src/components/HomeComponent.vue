@@ -94,7 +94,9 @@ onMounted(async () => {
             <p>We currently manage contracts for {{ numEmployees }} employees and {{ numContracts }} contracts.</p>
 
             <v-text-field v-model="contractId" label="Enter contract ID" type="number"></v-text-field>
-            <v-btn :disabled="!contractId" color="primary" @click="loadReport">Load Contract Report</v-btn>
+            <v-btn :disabled="!contractId" color="primary" @click="loadReport" class="mr-2">Load Contract Report</v-btn>
+
+            <v-btn color="success" to="/add_contract">Add New Contract</v-btn>
 
             <v-alert v-if="errorMsg" type="error" class="mt-5">{{ errorMsg }}</v-alert>
           </v-card-text>
