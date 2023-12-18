@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Models - Лабораторные работы по веб-программированию</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Models";
+        var mkdocs_page_input_path = "lw3\\models.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Лабораторные работы по веб-программированию
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Главная</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 1</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task1/">task1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task2/">task2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task3/">task3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task4/">task4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task5/">task5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Models</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw2/tour/">Tour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw2/reservation/">Reservation</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw2/review/">Review</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw2/soldtour/">SoldTour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw2/tourreservation/">TourReservation</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/admin/">Admin</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/forms/">Forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/urls/">URLs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/views/">Views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw2/templates/">Templates</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 3</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="#">Практическая часть</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../pw3/">Практическое занятие №3.1</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Основная часть</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../swagger/">Swagger</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../readme/">Readme</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Models</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#warrior">Warrior (Воин):</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#profession">Profession (Профессия):</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#skill">Skill (Умение):</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#skillofwarrior">SkillOfWarrior (Умение война):</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../serializer/">Serializer</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Лабораторные работы по веб-программированию</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Лабораторная работа 3 &raquo;</li>
+          <li>Основная часть &raquo;</li>
+      <li class="breadcrumb-item active">Models</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="modelspy">models.py</h1>
+<p>Этот код использует фреймворк Django для создания моделей данных. 
+Он определяет структуру базы данных для хранения информации о воинах, их профессиях и умениях.</p>
+<h2 id="warrior">Warrior (Воин):</h2>
+<ul>
+<li>Содержит информацию о воинах, такую как их имя, уровень, расса (студент, разработчик, руководитель), профессия и умения.</li>
+<li>Использует поле CharField для рассы, CharField для имени, IntegerField для уровня.</li>
+<li>Связан с профессиями и умениями через внешние ключи и многие ко многим отношения.</li>
+</ul>
+<h2 id="profession">Profession (Профессия):</h2>
+<ul>
+<li>Содержит информацию о профессиях воинов, такую как название и описание.</li>
+<li>Использует CharField для названия и TextField для описания.</li>
+</ul>
+<h2 id="skill">Skill (Умение):</h2>
+<ul>
+<li>Описывает умения, которыми владеют воины.</li>
+<li>Использует CharField для наименования умения.</li>
+</ul>
+<h2 id="skillofwarrior">SkillOfWarrior (Умение война):</h2>
+<ul>
+<li>Связывает воинов с их умениями и указывает уровень освоения умения.</li>
+<li>Использует внешние ключи для связи с воинами и умениями, а также IntegerField для уровня.</li>
+</ul>
+<p>Эти модели представляют схему БД для моего проекта, где воины имеют профессии и умения.</p>
+<pre><code>from django.db import models
+
+class Warrior(models.Model):
+   &quot;&quot;&quot;
+   Описание война
+   &quot;&quot;&quot;
+
+   race_types = (
+       ('s', 'student'),
+       ('d', 'developer'),
+       ('t', 'teamlead'),
+   )
+   race = models.CharField(max_length=1, choices=race_types, verbose_name='раса')
+   name = models.CharField(max_length=120, verbose_name='Имя')
+   level = models.IntegerField(verbose_name='Уровень', default=0)
+   skills = models.ManyToManyField('Skill', verbose_name='Умения', through='SkillOfWarrior',
+                                  related_name='warrior_skils')
+   profession = models.ForeignKey('Profession', on_delete=models.CASCADE, verbose_name='Профессия',
+                                  blank=True, null=True)
+
+
+class Profession(models.Model):
+   &quot;&quot;&quot;
+   Описание профессии
+   &quot;&quot;&quot;
+
+   title = models.CharField(max_length=120, verbose_name='Название')
+   description = models.TextField(verbose_name='Описание')
+
+
+class Skill(models.Model):
+   &quot;&quot;&quot;
+   Описание умений
+   &quot;&quot;&quot;
+
+   title = models.CharField(max_length=120, verbose_name='Наименование')
+
+   def __str__(self):
+       return self.title
+
+
+class SkillOfWarrior(models.Model):
+   &quot;&quot;&quot;
+   Описание умений война
+   &quot;&quot;&quot;
+
+   skill = models.ForeignKey('Skill', verbose_name='Умение', on_delete=models.CASCADE)
+   warrior = models.ForeignKey('Warrior', verbose_name='Воин', on_delete=models.CASCADE)
+   level = models.IntegerField(verbose_name='Уровень освоения умения')
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../readme/" class="btn btn-neutral float-left" title="Readme"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../serializer/" class="btn btn-neutral float-right" title="Serializer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../readme/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../serializer/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

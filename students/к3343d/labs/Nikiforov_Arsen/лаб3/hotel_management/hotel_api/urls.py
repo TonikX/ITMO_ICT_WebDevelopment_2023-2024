@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
@@ -33,4 +33,6 @@ urlpatterns = [
     path('bookings/', views.bookings_list, name='bookings_list'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
     path('api/', include(router.urls)),  # Пути API
+    path('auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 ]

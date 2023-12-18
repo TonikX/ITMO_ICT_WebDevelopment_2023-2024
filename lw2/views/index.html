@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Views - Лабораторные работы по веб-программированию</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Views";
+        var mkdocs_page_input_path = "lw2\\views.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Лабораторные работы по веб-программированию
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Главная</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 1</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task1/">task1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task2/">task2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task3/">task3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task4/">task4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw1/task5/">task5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 2</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Models</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../tour/">Tour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../reservation/">Reservation</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../review/">Review</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../soldtour/">SoldTour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../tourreservation/">TourReservation</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../admin/">Admin</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../forms/">Forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../urls/">URLs</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Views</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../templates/">Templates</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 3</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Практическая часть</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../pw3/">Практическое занятие №3.1</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Основная часть</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw3/">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw3/swagger/">Swagger</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw3/readme/">Readme</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw3/models/">Models</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../lw3/serializer/">Serializer</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Лабораторные работы по веб-программированию</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Лабораторная работа 2 &raquo;</li>
+      <li class="breadcrumb-item active">Views</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="viewsmd">views.md</h1>
+<p>Краткое объяснение кода
+Функция add_review</p>
+<pre><code>Описание: Добавляет отзыв к туру.
+Действие: Если метод запроса - POST, создает объект отзыва (Review) для указанного тура и текущего пользователя, используя данные из формы. Затем формирует HTML-страницу с отзывами и возвращает ее. Если tour_id не указан, возвращает пустую страницу с отзывами.
+Используемые модули и функции:
+    render, redirect: для отображения страниц и перенаправления.
+    get_object_or_404: для получения объекта из базы данных или возврата 404, если объект не найден.
+    Tour, Review: модели данных.
+    render_to_string: для формирования HTML-страницы с отзывами.
+</code></pre>
+<p>Функция menu</p>
+<pre><code>Описание: Отображает страницу меню.
+Действие: Просто возвращает страницу меню.
+Используемые модули и функции:
+    render: для отображения страницы.
+</code></pre>
+<p>Функция home</p>
+<pre><code>Описание: Отображает домашнюю страницу с возможностью регистрации и входа пользователя.
+Действие: Если метод запроса - POST, обрабатывает регистрацию или вход пользователя в зависимости от выбора в форме. Если метод запроса - GET, отображает форму регистрации или входа. Возвращает страницу домашней страницы с формой и списком туров.
+Используемые модули и функции:
+    render, redirect: для отображения страниц и перенаправления.
+    UserCreationForm, AuthenticationForm: формы для регистрации и входа.
+    Tour: модель данных тура.
+</code></pre>
+<p>Функция user_login</p>
+<pre><code>Описание: Обрабатывает вход пользователя.
+Действие: Если метод запроса - POST, проверяет введенные данные и, если они верны, выполняет вход пользователя. Возвращает страницу входа с формой. Если метод запроса - GET, просто отображает форму входа.
+Используемые модули и функции:
+    render, redirect: для отображения страниц и перенаправления.
+    AuthenticationForm: форма для входа.
+</code></pre>
+<p>Функция buy_tour</p>
+<pre><code>Описание: Обрабатывает покупку тура.
+Действие: Если метод запроса - POST, создает объект SoldTour для указанного тура и текущего пользователя, устанавливает фиксированную цену и помечает тур как проданный. Возвращает страницу со списком туров после успешной покупки.
+Используемые модули и функции:
+    Tour, SoldTour: модели данных тура и проданного тура.
+    redirect: для перенаправления.
+</code></pre>
+<p>Функция tour_list</p>
+<pre><code>Описание: Отображает список туров и обрабатывает добавление отзыва.
+Действие: Если метод запроса - POST, обрабатывает форму добавления отзыва. Возвращает страницу со списком туров и формой для добавления отзыва.
+Используемые модули и функции:
+    Tour, Review: модели данных тура и отзыва.
+    render, redirect: для отображения страниц и перенаправления.
+    ReviewForm: форма для добавления отзыва.
+</code></pre>
+<p>Функция reserve_tour</p>
+<pre><code>Описание: Обрабатывает бронирование тура.
+Действие: Если метод запроса - POST, обрабатывает форму бронирования. Возвращает страницу со списком туров после успешного бронирования.
+Используемые модули и функции:
+    Tour, Reservation: модели данных тура и бронирования.
+    render, redirect: для отображения страниц и перенаправления.
+    ReservationForm: форма для бронирования.
+</code></pre>
+<p>Функции sell_tour, sold_tours, tour_detail</p>
+<pre><code>Описание: Обрабатывают продажу тура, отображение проданных туров и детали тура соответственно.
+Действие: Реализуют аналогичные операции с использованием моделей SoldTour и Tour.
+</code></pre>
+<p>Функции user_reservations, edit_reservation, delete_reservation, confirm_reservation, reject_reservation</p>
+<pre><code>Описание: Отображают список бронирований пользователя, позволяют редактировать, удалять, подтверждать и отклонять бронирования соответственно.
+Действие: Реализуют аналогичные операции с использованием моделей TourReservation и Reservation.
+</code></pre>
+<p>Функция tour_detail</p>
+<pre><code>Описание: Отображает детали тура и обрабатывает добавление отзыва.
+Действие: Если метод запроса - POST, обрабатывает форму добавления отзыва. Возвращает страницу с деталями тура и отзывами.
+Используемые модули и функции:
+    Tour, Review: модели данных тура и отзыва.
+    render, redirect: для отображения страниц и перенаправления.
+    ReviewForm: форма для добавления отзыва.
+</code></pre>
+<p>Функция register</p>
+<pre><code>Описание: Обрабатывает регистрацию нового пользователя.
+Действие: Если метод запроса - POST, обрабатывает форму регистрации и создает нового пользователя. Возвращает страницу входа. Если метод запроса - GET, отображает форму регистрации.
+Используемые модули и функции:
+    RegistrationForm: форма для регистрации.
+    render, redirect: для отображения страниц и перенаправления.
+</code></pre>
+<p>Функция reserve_tour</p>
+<pre><code>Описание: Обрабатывает бронирование тура.
+Действие: Если метод запроса - POST, обрабатывает форму бронирования. Возвращает страницу со списком туров после успешного бронирования.
+Используемые модули и функции:
+    Tour, Reservation: модели данных тура и бронирования.
+    render, redirect: для отображения страниц и перенаправления.
+    ReservationForm: форма для бронирования.
+</code></pre>
+<p>Функции review_tour, user_reservations</p>
+<pre><code>Описание: Обрабатывают добавление отзыва к туру и отображение списка бронирований пользователя соответственно.
+Действие: Реализуют аналогичные операции с использованием моделей Review и Reservation.
+</code></pre>
+<p>Функции edit_reservation, delete_reservation, confirm_reservation, reject_reservation</p>
+<pre><code>Описание: Обрабатывают редактирование, удаление, подтверждение и отклонение бронирования соответственно.
+Действие: Реализуют аналогичные операции с использованием модели Reservation.
+</code></pre>
+<p>Функция sell_tour</p>
+<pre><code>Описание: Обрабатывает продажу тура.
+Действие: Если метод запроса - POST, обрабатывает форму продажи тура. Возвращает страницу с проданными турами после успешной продажи.
+Используемые модули и функции:
+    SoldTourForm: форма для продажи тура.
+    redirect: для перенаправления.
+</code></pre>
+<p>Функция sold_tours</p>
+<pre><code>Описание: Отображает страницу с проданными турами пользователя.
+Действие: Возвращает страницу со списком проданных туров пользователя.
+Используемые модули и функции:
+    SoldTour: модель данных проданного тура.
+    render: для отображения страницы.
+</code></pre>
+<p>Функции confirm_reservation, reject_reservation</p>
+<pre><code>Описание: Подтверждают или отклоняют бронирование тура.
+Действие: Изменяют соответствующий флаг в объекте бронирования и перенаправляют на страницу со списком туров.
+Используемые модули и функции:
+    redirect: для перенаправления.
+</code></pre>
+<p>Функция tour_detail</p>
+<pre><code>Описание: Отображает детали тура и обрабатывает добавление отзыва.
+Действие: Если метод запроса - POST, обрабатывает форму добавления отзыва. Возвращает страницу с деталями тура и отзывами.
+Используемые модули и функции:
+    Tour, Review: модели данных тура и отзыва.
+    render, redirect: для отображения страниц и перенаправления.
+    ReviewForm: форма для добавления отзыва.
+</code></pre>
+<p>Функция reserve_tour</p>
+<pre><code>Описание: Обрабатывает бронирование тура.
+Действие: Если метод запроса - POST, обрабатывает форму бронирования. Возвращает страницу со списком туров после успешного бронирования.
+Используемые модули и функции:
+    Tour, Reservation: модели данных тура и бронирования.
+    render, redirect: для отображения страниц и перенаправления.
+    ReservationForm: форма для бронирования.
+</code></pre>
+<p>Функции user_reservations, edit_reservation, delete_reservation</p>
+<pre><code>Описание: Отображают список бронирований пользователя, позволяют редактировать и удалять бронирования соответственно.
+</code></pre>
+<p>Действие: Реализуют аналогичные операции с использованием модели Reservation.</p>
+<pre><code class="language-python">from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login as auth_login, authenticate
+from django.contrib import messages
+from .models import Tour, Reservation, Review, SoldTour, TourReservation
+from .forms import ReservationForm, ReviewForm, SoldTourForm, RegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.template.loader import render_to_string
+
+def add_review(request, tour_id=None):
+    if request.method == 'POST':
+        if tour_id is not None:
+            tour = get_object_or_404(Tour, pk=tour_id)
+            review_text = request.POST.get('review_text', '')
+            review = Review.objects.create(tour=tour, user=request.user, text=review_text)
+
+            reviews_html = render_to_string('reviews.html', {'reviews': tour.review_set.all()})
+
+            return render(request, 'reviews.html', {'reviews': tour.review_set.all()})
+        else:
+            return render(request, 'reviews.html', {'reviews': []})
+    else:
+        return render(request, 'reviews.html', {'reviews': []})
+
+
+def menu(request):
+    return render(request, 'menu.html')
+
+
+
+def home(request):
+    if request.method == 'POST':
+        if 'register' in request.POST:
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('login')
+        elif 'login' in request.POST:
+            form = AuthenticationForm(request, request.POST)
+            if form.is_valid():
+                user = form.get_user()
+                auth_login(request, user)
+                return redirect('tour_list')
+    else:
+        form = UserCreationForm() if 'register' in request.GET else AuthenticationForm()
+
+    tours = Tour.objects.all()  
+    form_name = 'register' if isinstance(form, UserCreationForm) else 'login'
+    return render(request, 'home.html', {'form': form, 'tours': tours, 'form_name': form_name})
+
+
+
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('user_login')  
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'login.html', {'form': form})
+
+
+
+@login_required
+def buy_tour(request, tour_id):
+    if request.method == 'POST':
+        # Обработка POST-запроса для покупки тура
+        tour = Tour.objects.get(id=tour_id)
+        user = request.user
+
+
+        price = tour.price  
+
+        SoldTour.objects.create(tour=tour, buyer=user, price=price)
+
+        # После успешной покупки редиректите пользователя на страницу с турами или другую страницу
+        return redirect('tour_list')
+
+
+
+
+def tour_list(request):
+    tours = Tour.objects.all()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.tour = Tour.objects.get(id=request.POST.get('tour_id'))
+            review.save()
+            return redirect('tour_list')
+    else:
+        form = ReviewForm()
+
+    return render(request, 'tour_list.html', {'tours': tours, 'form': form})
+
+
+
+def reserve_tour(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = request.user
+            reservation.tour = tour
+            reservation.save()
+            messages.success(request, 'Tour reserved successfully!')
+            return redirect('tour_list')
+    else:
+        form = ReservationForm()
+
+    return render(request, 'myapp/reserve_tour.html', {'form': form, 'tour': tour})
+
+
+
+
+def buy_tour(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+
+    if request.method == 'POST':
+        form = SoldTourForm(request.POST)
+        if form.is_valid():
+            sold_tour = form.save(commit=False)
+            sold_tour.buyer = request.user
+            sold_tour.tour = tour
+            # Устанавливаем фиксированное значение цены, например, 100.00
+            sold_tour.price = 100.00
+            sold_tour.save()
+
+            # Помечаем тур как проданный
+            tour.is_sold = True
+            tour.save()
+
+            messages.success(request, 'Tour purchased successfully!')
+            return redirect('tour_list')
+    else:
+        form = SoldTourForm()
+
+    return render(request, 'myapp/buy_tour.html', {'form': form, 'tour': tour})
+
+
+
+
+def sell_tour(request, tour_id):
+    if request.method == 'POST':
+        form = SoldTourForm(request.POST)
+        if form.is_valid():
+            sold_tour = form.save(commit=False)
+            sold_tour.user = request.user
+            sold_tour.tour_id = tour_id
+            sold_tour.save()
+            return redirect('sold_tours')  # Перенаправить на страницу с проданными турами
+    else:
+        form = SoldTourForm()
+
+    return render(request, 'sell_tour.html', {'form': form})
+
+
+
+
+
+
+def sold_tours(request):
+    sold_tours = SoldTour.objects.filter(buyer=request.user)
+    return render(request, 'myapp/sold_tours.html', {'sold_tours': sold_tours})
+
+
+
+
+
+def tour_detail(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+    reviews = Review.objects.filter(tour=tour)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.tour = tour
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Review added successfully!')
+            return redirect('tour_detail', tour_id=tour_id)
+    else:
+        form = ReviewForm()
+
+    context = {
+        'tour': tour,
+        'reviews': reviews,
+        'form': form,
+    }
+
+    return render(request, 'myapp/tour_detail.html', context)
+
+
+
+
+
+def reserve_tour(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.tour = tour
+            reservation.user = request.user
+            reservation.save()
+            return redirect('user_reservations')
+    else:
+        form = ReservationForm()
+
+    return render(request, 'myapp/reserve_tour.html', {'form': form, 'tour': tour})
+
+
+
+
+def user_reservations(request):
+    user = request.user
+    reservations = TourReservation.objects.filter(user=user)
+    return render(request, 'user_reservations.html', {'reservations': reservations})
+
+
+
+def edit_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id, user=request.user)
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            return redirect('user_reservations')
+    else:
+        form = ReservationForm(instance=reservation)
+
+    return render(request, 'edit_reservation.html', {'form': form, 'reservation': reservation})
+
+
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id, user=request.user)
+
+    if request.method == 'POST':
+        reservation.delete()
+        return redirect('user_reservations')
+
+    return render(request, 'delete_reservation.html', {'reservation': reservation})
+
+
+def confirm_reservation(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.is_confirmed = True
+    reservation.save()
+    return redirect('tour_list')
+
+def reject_reservation(request, reservation_id):
+    reservation = Reservation.objects.get(pk=reservation_id)
+    reservation.delete()
+    return redirect('tour_list')
+
+
+
+
+def reserve_tour(request, tour_id):
+    if request.method == 'POST':
+        tour = Tour.objects.get(pk=tour_id)
+        reservation = Reservation(tour=tour, user=request.user)
+        reservation.save()
+        return redirect('tour_list')
+
+    tour = Tour.objects.get(pk=tour_id)
+    return render(request, 'reserve_tour.html', {'tour': tour})
+
+
+
+
+
+
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect('login')  
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, 'Registration successful!')
+            return redirect('home')
+    else:
+        form = RegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+
+@login_required
+def reserve_tour(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = request.user
+            reservation.tour = tour
+            reservation.save()
+            messages.success(request, 'Tour reserved successfully!')
+            return redirect('tour_list')
+    else:
+        form = ReservationForm()
+
+    return render(request, 'reserve_tour.html', {'form': form, 'tour': tour})
+
+@login_required
+def review_tour(request, tour_id):
+    tour = Tour.objects.get(pk=tour_id)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.tour = tour
+            review.save()
+            messages.success(request, 'Review added successfully!')
+            return redirect('tour_list')
+    else:
+        form = ReviewForm()
+
+    return render(request, 'review_tour.html', {'form': form, 'tour': tour})
+
+@login_required
+def user_reservations(request):
+    reservations = Reservation.objects.filter(user=request.user)
+    return render(request, 'user_reservations.html', {'reservations': reservations})
+
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../urls/" class="btn btn-neutral float-left" title="URLs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../templates/" class="btn btn-neutral float-right" title="Templates">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../urls/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../templates/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
