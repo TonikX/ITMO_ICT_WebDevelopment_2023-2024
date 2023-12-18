@@ -1,6 +1,5 @@
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import *
 
 urlpatterns = [
@@ -52,4 +51,8 @@ urlpatterns = [
     path('grades/create/', GradeCreateView.as_view(), name='grade_create'),
     path('grades/update/<int:pk>/', GradeUpdateView.as_view(), name='grade_update'),
     path('grades/delete/<int:pk>/', GradeDeleteView.as_view(), name='grade_delete'),
+
+    path('auth/', include('djoser.urls')),
+    path('auth/token', obtain_auth_token, name='token'),
+    path('logout', LogOut.as_view()),
 ]
