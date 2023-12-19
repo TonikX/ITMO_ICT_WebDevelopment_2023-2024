@@ -2,12 +2,60 @@
 <html>
 <head>
     <title>Rooms List</title>
+    <style>
+        /* Add your CSS styles here */
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        form {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            margin: 5px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <a href="http://localhost:8000/" class="back-button">Back to Home</a>
+    
     <h1>Rooms List</h1>
 
     <form method="get">
-        <!-- Фильтр по типу комнаты -->
+        <!-- Filter by Room Type -->
         <label for="room_type">Room Type:</label>
         <select name="room_type" id="room_type">
             <option value="">--Select a Type--</option>
@@ -16,7 +64,7 @@
             <option value="suite">Suite</option>
         </select>
     
-        <!-- Фильтр по статусу комнаты -->
+        <!-- Filter by Room Status -->
         <label for="room_status">Room Status:</label>
         <select name="room_status" id="room_status">
             <option value="">--Select a Status--</option>
@@ -27,10 +75,6 @@
     
         <input type="submit" value="Filter">
     </form>
-    
-    
-    
-    
 
     <table>
         <thead>

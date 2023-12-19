@@ -99,6 +99,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     # URL для страницы входа
     path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('alternative_login/', views.alternative_login_view, name='alternative_login'),
     # URL для страницы регистрации
     path('register/', views.register_view, name='register'),    
     path('rooms/', views.rooms_list, name='rooms_list'),
@@ -116,6 +117,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    
 ]
 
 
@@ -333,6 +335,25 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import CustomUser
 from .serializers import UserSerializer
+from django.contrib.auth import authenticate, login
+
+def alternative_login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            print("с днем рождения!")
+            pass
+    # В случае GET-запроса или если аутентификация не удалась
+    form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -727,6 +748,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
+# Путь к статическим файлам (CSS, JavaScript, Images)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'hotel_api', 'static'),
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -834,10 +868,17 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/registration/login.html
 
+{% load static %}
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <h2>Login</h2>
@@ -847,30 +888,14 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
         <input type="submit" value="Login">
     </form>
 
+    <!-- Кнопка для авторизации без токена -->
+    <form method="post" action="{% url 'alternative_login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Авторизация без токена">
+    </form>
+
     <!-- Кнопка регистрации -->
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/forms.py
-
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('phone',)
