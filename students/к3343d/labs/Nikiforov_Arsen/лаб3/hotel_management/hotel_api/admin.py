@@ -2,6 +2,9 @@
 from django.contrib import admin
 from django import forms
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
+from .models import CustomUser
+
+
 
 class RoomAdminForm(forms.ModelForm):
     class Meta:
@@ -13,7 +16,8 @@ class RoomAdminForm(forms.ModelForm):
 
 class RoomAdmin(admin.ModelAdmin):
     form = RoomAdminForm
-
+    
+admin.site.register(CustomUser)
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Client)
 admin.site.register(ClientInfo)

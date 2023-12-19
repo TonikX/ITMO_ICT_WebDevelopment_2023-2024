@@ -11,4 +11,5 @@ urlpatterns = [
     path('hotel_api/', include('hotel_api.urls')),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     
+    
 ]

@@ -1,3 +1,13 @@
+### views.py
+
+
+# Обзор views.py
+
+Файл `views.py` содержит определения представлений для обработки запросов пользователей. Он включает в себя как функциональные, так и классовые представления.
+
+## Импорты
+
+```python
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -5,28 +15,23 @@ from django.contrib.auth import login, authenticate
 from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo
 from rest_framework import viewsets
 from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer, DaySerializer, EmployeeFloorSerializer, EmployeeDaySerializer, ClientInfoSerializer
-from .forms import CustomUserCreationForm
+```
 
-def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+Эти импорты включают функции и классы Django для работы с представлениями, аутентификацией и моделями.
 
+## Представления
 
-
-
+```python
 @login_required(login_url='/login/') 
 def home(request):
     return render(request, 'hotel_api/home.html')
+```
 
+Это представление `home` доступно только аутентифицированным пользователям. Оно возвращает главную страницу приложения.
 
+### Представления для входа и регистрации
 
+```python
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -38,8 +43,23 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
 
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+```
 
+Эти функции обрабатывают запросы на вход и регистрацию пользователей.
 
+### Представления для API
+
+```python
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
@@ -71,7 +91,13 @@ class EmployeeDayViewSet(viewsets.ModelViewSet):
 class ClientInfoViewSet(viewsets.ModelViewSet):
     queryset = ClientInfo.objects.all()
     serializer_class = ClientInfoSerializer
+```
 
+Класс `RoomViewSet` и подобные ему являются частью REST API, обеспечивающей CRUD-операции над моделями.
+
+### Другие представления
+
+```python
 def rooms_list(request):
     room_type_query = request.GET.get('room_type', '').strip()
     room_status_query = request.GET.get('room_status', '').strip()
@@ -131,3 +157,9 @@ def employee_floors_list(request):
 def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
+
+```
+
+Эти функции отвечают за отображение страниц со списками сущностей, таких как комнаты и клиенты.
+
+

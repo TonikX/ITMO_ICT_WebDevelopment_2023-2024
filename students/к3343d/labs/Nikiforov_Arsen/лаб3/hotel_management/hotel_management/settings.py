@@ -38,6 +38,7 @@ AUTH_USER_MODEL = 'hotel_api.CustomUser'
 
 
 
+
 INSTALLED_APPS = [
     'hotel_api', 
     'django.contrib.admin',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +146,17 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {},
+        'SERIALIZERS': {
+        'user_create': 'hotel_api.serializers.UserSerializer',
+        'user': 'hotel_api.serializers.UserSerializer',
+        'current_user': 'hotel_api.serializers.UserSerializer',
+    },
 }
+
+
+
+
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
