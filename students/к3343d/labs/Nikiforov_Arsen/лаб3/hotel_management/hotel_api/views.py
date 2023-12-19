@@ -1,12 +1,76 @@
-from django.shortcuts import render
-from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo
-from rest_framework import viewsets
-from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo
+from rest_framework import viewsets
+from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer, DaySerializer, EmployeeFloorSerializer, EmployeeDaySerializer, ClientInfoSerializer
+from .forms import CustomUserCreationForm
+
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+
+
+@login_required(login_url='/login/') 
+def home(request):
+    return render(request, 'hotel_api/home.html')
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
+class RoomViewSet(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class FloorViewSet(viewsets.ModelViewSet):
+    queryset = Floor.objects.all()
+    serializer_class = FloorSerializer
+
+class DayViewSet(viewsets.ModelViewSet):
+    queryset = Day.objects.all()
+    serializer_class = DaySerializer
+
+class EmployeeFloorViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeFloor.objects.all()
+    serializer_class = EmployeeFloorSerializer
+
+class EmployeeDayViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeDay.objects.all()
+    serializer_class = EmployeeDaySerializer
+
+class ClientInfoViewSet(viewsets.ModelViewSet):
+    queryset = ClientInfo.objects.all()
+    serializer_class = ClientInfoSerializer
 
 def rooms_list(request):
     room_type_query = request.GET.get('room_type', '').strip()
@@ -26,50 +90,13 @@ def rooms_list(request):
     }
     return render(request, 'hotel_api/rooms_list.html', context)
 
-
-
-
-
-
-
-
-
-
-
-
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  
-    else:
-        form = UserCreationForm()
-    return render(request, 'hotel_api/register.html', {'form': form})
-
-
-
-
-@login_required
-def home(request):
-    return render(request, 'hotel_api/menu.html')
-
-
-
 def clients_list(request):
     clients = Client.objects.all()
     return render(request, 'hotel_api/client_list.html', {'clients': clients})
 
-
-# для списка сотрудников
 def employees_list(request):
     employees = Employee.objects.all()
     return render(request, 'hotel_api/employee_list.html', {'employees': employees})
-
-
-def home(request):
-    return render(request, 'hotel_api/menu.html')
 
 def bookings_list(request):
     # Логика для списка бронирований
@@ -92,8 +119,6 @@ def settings(request):
 def client_info_list(request):
     client_info = ClientInfo.objects.all()
     return render(request, 'hotel_api/client_info_list.html', {'client_info': client_info})
-
-# Добавленные представления для недостающих моделей
 
 def days_list(request):
     days = Day.objects.all()

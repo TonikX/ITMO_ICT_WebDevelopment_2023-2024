@@ -27,7 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGOUT_REDIRECT_URL = '/'
+
+
 # Application definition
+LOGIN_REDIRECT_URL = '/hotel_api/'  
+
+AUTH_USER_MODEL = 'hotel_api.CustomUser'
+
+
+
+
 
 INSTALLED_APPS = [
     'hotel_api', 
@@ -38,7 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -56,9 +68,7 @@ ROOT_URLCONF = 'hotel_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'hotel_api', 'templates'),
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +132,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+# Djoser settings
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+        'SERIALIZERS': {
+        'user_create': 'hotel_api.serializers.UserSerializer',
+        'user': 'hotel_api.serializers.UserSerializer',
+        'current_user': 'hotel_api.serializers.UserSerializer',
+    },
+}
+
+
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page - Hotel Management System</title>
+</head>
+<body>
+    <h1>Welcome to the Hotel Management System</h1>
+
+    <!-- Навигационное меню -->
+    <ul>
+        <li><a href="{% url 'rooms_list' %}">Rooms</a></li>
+        <li><a href="{% url 'clients_list' %}">Clients</a></li>
+        <li><a href="{% url 'employees_list' %}">Employees</a></li>
+    </ul>
+
+    <!-- Кнопка регистрации -->
+    {% if not user.is_authenticated %}
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+
+    <!-- Кнопка входа -->
+    {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}">Login</a>
+    {% else %}
+        <a href="{% url 'logout' %}">Logout</a>
+    {% endif %}
+
+</body>
+</html>

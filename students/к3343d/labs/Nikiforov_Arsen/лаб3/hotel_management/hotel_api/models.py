@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class CustomUser(AbstractUser):
+    phone = models.CharField(max_length=15, blank=True)
 
 class Floor(models.Model):
     number = models.IntegerField()
@@ -10,31 +14,20 @@ class Room(models.Model):
     ROOM_TYPES = (
         ('single', 'Single'),
         ('double', 'Double'),
-        ('suite', 'Suite')
+        ('suite', 'Suite'),
     )
-
     ROOM_STATUSES = (
         ('available', 'Available'),
         ('occupied', 'Occupied'),
-        ('cleaning', 'Cleaning')
+        ('cleaning', 'Cleaning'),
     )
-
-
     room_type = models.CharField(max_length=100, choices=ROOM_TYPES)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     status = models.CharField(max_length=100, choices=ROOM_STATUSES)
 
-
-   
-
     def __str__(self):
         return f"{self.get_room_type_display()} on Floor {self.floor.number}"
-
-
-
-
-
 
 class ClientInfo(models.Model):
     passport_number = models.CharField(max_length=50)
