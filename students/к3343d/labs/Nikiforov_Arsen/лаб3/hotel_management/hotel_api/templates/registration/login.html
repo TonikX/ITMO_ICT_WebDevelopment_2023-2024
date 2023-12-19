@@ -11,6 +11,13 @@
         <input type="submit" value="Login">
     </form>
 
+    <!-- Кнопка для авторизации без токена -->
+    <form method="post" action="{% url 'alternative_login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Авторизация без токена">
+    </form>
+
     <!-- Кнопка регистрации -->
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
 </body>

@@ -8,7 +8,9 @@ from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import UserViewSet
 
 
 schema_view = get_schema_view(
@@ -23,6 +25,8 @@ schema_view = get_schema_view(
 
 
 router = DefaultRouter()
+
+router.register(r'users', UserViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'employees', EmployeeViewSet)
@@ -37,6 +41,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     # URL для страницы входа
     path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('alternative_login/', views.alternative_login_view, name='alternative_login'),
     # URL для страницы регистрации
     path('register/', views.register_view, name='register'),    
     path('rooms/', views.rooms_list, name='rooms_list'),
@@ -54,4 +59,5 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    
 ]

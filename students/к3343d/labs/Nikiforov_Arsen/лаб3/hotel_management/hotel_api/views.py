@@ -6,6 +6,58 @@ from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeD
 from rest_framework import viewsets
 from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer, DaySerializer, EmployeeFloorSerializer, EmployeeDaySerializer, ClientInfoSerializer
 from .forms import CustomUserCreationForm
+from rest_framework import viewsets
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
+from rest_framework import viewsets
+from rest_framework import viewsets
+from .models import CustomUser
+from .serializers import UserSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from .models import CustomUser
+from .serializers import UserSerializer
+from django.contrib.auth import authenticate, login
+
+def alternative_login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            print("с днем рождения!")
+            pass
+    # В случае GET-запроса или если аутентификация не удалась
+    form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    http_method_names = ['get', 'post', 'put', 'patch', 'delete']
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
+
+
+    
+User = get_user_model()
+
+
+
+
+
 
 def register_view(request):
     if request.method == 'POST':

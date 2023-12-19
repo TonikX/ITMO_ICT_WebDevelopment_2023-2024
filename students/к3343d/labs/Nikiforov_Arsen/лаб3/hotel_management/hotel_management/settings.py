@@ -33,7 +33,7 @@ LOGOUT_REDIRECT_URL = '/'
 # Application definition
 LOGIN_REDIRECT_URL = '/hotel_api/'  
 
-AUTH_USER_MODEL = 'hotel_api.CustomUser'
+
 
 
 
@@ -154,7 +154,7 @@ DJOSER = {
 }
 
 
-
+AUTH_USER_MODEL = 'hotel_api.CustomUser'
 
 
 
