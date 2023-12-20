@@ -16,6 +16,9 @@ class Owner(AbstractUser):
 
     cars = models.ManyToManyField('Car', through='CarOwnership')
 
+    def __str__(self):
+        return ''
+
 
 class DriverLicense(models.Model):
     owner_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
