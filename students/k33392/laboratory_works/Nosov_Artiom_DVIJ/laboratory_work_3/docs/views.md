@@ -1,6 +1,11 @@
-from django.shortcuts import render
+# Представления
+Представления в Django —это то, что в классическом паттерне MVC называется контроллерами. Это место, где происходит обработка запросов и формирование ответов. Они определяются в файле views.py.
 
-# Create your views here.
+В рамках данной лабораторной работы структура этого файла следующая:
+
+``` Python
+# *** пока что представления только с rest api ***
+
 
 from projects.models import File, ProjectTopic, Project, GradeReport, \
 ProjectOfUser, Teacher, Student, Grade, ProjectMeeting, Meeting
@@ -224,3 +229,5 @@ class MeetingCreateAPIView(generics.CreateAPIView):
    serializer_class = MeetingSerializer
    queryset = Meeting.objects.all()
    permission_classes = [permissions.IsAdminUser, IsOwnerOrReadOnly]
+
+```

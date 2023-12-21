@@ -26,7 +26,7 @@ class WarriorSerializer(serializers.ModelSerializer):
 class ProfessionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Profession
-		fields = ["title", "description"]
+		fields = "__all__" # ["title", "description"]
 
 class SkillOfWarriorSerializer(serializers.ModelSerializer):
 
