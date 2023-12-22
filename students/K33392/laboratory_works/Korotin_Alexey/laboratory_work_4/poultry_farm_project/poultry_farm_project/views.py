@@ -58,3 +58,11 @@ class BaseExactAPIView(APIView):
             self.service.save(serializer)
 
         return Response(serializer.data)
+
+    def delete(self, request, pk):
+        existing = self.service.find_by_id(pk)
+        if existing is None:
+            return Response(status=404)
+
+        self.service.delete_by_id(pk)
+        return Response(status=204)
