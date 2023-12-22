@@ -18,6 +18,19 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+api.interceptors.response.use(
+    (r) => r,
+    async (error) => {
+        if (error.response.status === 401) {
+            const auth = useAuthStore();
+            auth.refresh();
+            return api(error.config);
+        }
+
+        return error;
+    }
+);
+
 export default boot(({ app }) => {
     // for use inside Vue files (Options API) through this.$axios and this.$api
 
