@@ -1,6 +1,7 @@
-from socket import *
+import socket
 from threading import Thread
 from datetime import datetime
+from serverConfigurator import ServerConfigurator
 
 
 def listen_for_messages():
@@ -8,9 +9,10 @@ def listen_for_messages():
         message = s.recv(1024).decode()
         print("\n" + message)
 
+conf = ServerConfigurator()
 separator_token = "<SEP>"
-s = socket()
-s.connect(('localhost', 10000))
+s = socket.socket()
+s.connect(conf.default_configuration())
 print("[+] Connected.")
 
 name = input("Enter your name: ")

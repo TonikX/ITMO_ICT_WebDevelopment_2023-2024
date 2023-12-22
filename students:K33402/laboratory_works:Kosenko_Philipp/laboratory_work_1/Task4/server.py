@@ -1,14 +1,18 @@
-from serverConfigurator import ServerConfigurator
+from socket import *
 from threading import Thread
 
 class Server:
+    host = 'localhost'
+    port = 10000
     client_sockets = set()
     separator_token = "<SEP>"
 
     def __init__(self):
-        configuration = ServerConfigurator()
-        configuration.default_configuration()
-        self.socket = configuration.config_tcp()
+        server_socket = socket(AF_INET, SOCK_STREAM)
+        server_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        server_socket.bind((self.host, self.port))
+        server_socket.listen()
+        self.socket = server_socket
 
     def run(self):
         while True:
@@ -32,5 +36,7 @@ class Server:
             for client_socket in self.client_sockets:
                 client_socket.send(msg.encode())
 
-server = Server()
-server.run()
+
+if __name__ == "__main__":
+    server = Server()
+    server.run()
