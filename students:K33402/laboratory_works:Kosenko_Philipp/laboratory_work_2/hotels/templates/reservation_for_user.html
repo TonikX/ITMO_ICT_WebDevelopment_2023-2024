@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4">Your reservations</h2>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Hotel</th>
+        <th scope="col">Room</th>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
+        <th scope="col">Room</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations %}
+    <tr>
+        <td>{{ reservation.room.hotel.name}}</td>
+        <td>{{ reservation.room.number}}</td>
+        <td>{{ reservation.date_start}}</td>
+        <td>{{ reservation.date_finish}}</td>
+        <td>{{ reservation.room.type.cost }}</td>
+        <td><a href="{% url 'hotel_detail' reservation.room.hotel.id %}" class="btn btn-primary">More</a></td>
+        <td><a href="{% url 'reservation_update' reservation.id %}" class="btn btn-primary">Change</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

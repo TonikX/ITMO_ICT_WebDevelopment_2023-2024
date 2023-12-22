@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+
+{% if capacity %}
+  <h1 class="text-center">Hotels, which have free rooms with capacity >= {{capacity}}</h1>
+{% else %}
+  <h1 class="text-center">Hotels</h1>
+{% endif %}
+
+<form method="GET" class='mb-5'>
+
+  <div class='mb-3'>
+    <label for="capacitySearchSelect" class="form-label">Capacity: </label>
+    <select id="capacitySearchSelect" name="capacity" class="form-select form-select-lg ">
+      <option value="">Choose:</option>
+      {% for available_cap in available_capacities %}
+        <option
+          value="{{available_cap}}"
+          {% if capacity == available_cap %} selected {% endif %}
+        >
+          {{available_cap}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Find</button>
+</form>
+
+<table class="table table-striped table-hover mb-5">
+  <thead>
+    <tr>
+      <th scope="col">Hotel:</th>
+      <th scope="col">Owner:</th>
+      <th scope="col">Address:</th>
+      <th scope="col">Extra:</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for hotel in hotels %}
+      <tr>
+        <td>{{hotel.name}}</td>
+        <td>{{hotel.owner}}</td>
+        <td>{{hotel.address}}</td>
+        <td><a href="{% url 'hotel_detail' hotel.id %}">Details</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
