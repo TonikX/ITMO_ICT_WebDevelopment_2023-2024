@@ -36,6 +36,20 @@ export const useAuthStore = defineStore("auth", {
             return response;
         },
 
+        async refresh() {
+            const payload = {
+                'refresh': this.refreshToken
+            };
+
+            const response = await api.post('/auth/jwt/refresh', payload);
+
+            if (response.status === 200) {
+                this.accessToken = response.data.access;
+            }
+
+            return response;
+        },
+
         logout() {
             this.accessToken = null;
             this.refreshToken = null;

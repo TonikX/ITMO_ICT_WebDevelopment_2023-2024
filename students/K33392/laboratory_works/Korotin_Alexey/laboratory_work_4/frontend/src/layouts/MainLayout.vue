@@ -12,7 +12,7 @@
         </q-tabs>
       </q-toolbar>
       <div class="row items-center q-mr-md">
-        <q-btn color="secondary" label="Logout" @click="onLogout" />
+        <q-btn color="secondary" text-color="primary" label="Logout" @click="onLogout" />
       </div>
     </q-header>
     <q-page-container>
@@ -21,13 +21,15 @@
   </q-layout>
 </template>
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, getActivePinia } from 'pinia';
 import { useAuthStore } from '@/stores/authStore';
 export default {
   methods: {
     ...mapActions(useAuthStore, ['logout']),
+
     onLogout() {
       this.logout();
+      getActivePinia()._s.forEach((store) => store.$reset());
       this.$router.push("/auth/login");
     }
   }

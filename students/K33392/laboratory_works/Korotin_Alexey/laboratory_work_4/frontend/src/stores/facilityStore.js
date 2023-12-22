@@ -23,6 +23,13 @@ export const useFacilityStore = defineStore("facility", {
             const response = await api.delete(`/facilities/${id}`);
             this.facilities = this.facilities.filter((f) => f.id != id);
             return response;
-        }
+        },
+        async edit(payload = { name, _longitude, _latitude }, id) {
+            const response = await api.put(`/facilities/${id}`, payload);
+            if (response.status === 200) {
+                const index = this.facilities.findIndex((f) => f.id == id);
+                this.facilities[index] = response.data;
+            }
+        },
     },
 });

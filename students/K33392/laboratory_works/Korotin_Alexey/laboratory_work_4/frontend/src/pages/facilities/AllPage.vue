@@ -30,13 +30,13 @@
         <div class="row justify-between flex-center">
             <div class="text text-h6 q-mt-xs">All facilities</div>
             <div>
-                <q-btn color="secondary" icon="add" label="Add" @click="modal = true;" />
+                <q-btn color="secondary" text-color="primary" icon="add" label="Add" @click="modal = true;" />
             </div>
         </div>
 
         <div class="row q-mt-xl">
             <FacilityCard v-for="facility in facilities" v-bind:key="facility.id" :id="facility.id" :name="facility.name"
-                :latitude="facility._latitude" :longitude="facility._longitude"  @click="push(facility.id)" />
+                :latitude="facility._latitude" :longitude="facility._longitude"  @click="push(facility.id)" class="border-hover"/>
         </div>
     </q-page>
 </template>

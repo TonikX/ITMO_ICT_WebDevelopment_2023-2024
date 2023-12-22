@@ -1,18 +1,27 @@
 <template>
-    <q-page class="column bg-primary flex-center" padding>
-        <div class="q-mb-sm">
-            <q-btn color="secondary" class="text" icon="delete" label="Delete" @click="onDelete" />
+    <q-page class="column bg-primary " padding>
+        <div class="q-mb-sm row justify-between">
+            <q-btn color="secondary" text-color="primary" label="Back" @click="$router.push({ path: '/facilities' })" />
+            <q-btn color="secondary" text-color="primary" class="text" icon="delete" label="Delete" @click="onDelete" />
         </div>
-        <div class="column">
-            <FacilityCard v-model="facility" :id="facility.id" :name="facility.name" :longitude="facility._longitude"
-                :latitude="facility._latitude" />
+        <div class="column flex-center">
+            <q-form @submit.prevent="editFacility" ref="facilityForm">
+                <q-input label-color="white" label="Name" placeholder="Facility name" input-class="input-field" type="text"
+                    v-model="facility.name"></q-input>
+                <q-input label-color="white" label="Longitude" placeholder="Facility longitude" input-class="input-field"
+                    type="number" v-model="facility._longitude"></q-input>
+                <q-input label-color="white" label="Latitude" placeholder="Facility latitude" input-class="input-field"
+                    type="number" v-model="facility._latitude"></q-input>
+
+                <q-btn flat label="Edit" type="submit" color="secondary" v-close-popup />
+            </q-form>
+
         </div>
     </q-page>
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import { useFacilityStore } from '@/stores/facilityStore';
-import FacilityCard from '@/components/FacilityCard.vue';
 
 export default {
     data() {
@@ -34,10 +43,14 @@ export default {
     },
 
     methods: {
-        ...mapActions(useFacilityStore, ['fetchAll', 'delete']),
+        ...mapActions(useFacilityStore, ['fetchAll', 'delete', 'edit']),
 
         async onDelete() {
             await this.delete(this.id);
+            this.$router.push('/facilities');
+        },
+        async editFacility() {
+            await this.edit(this.facility, this.id);
             this.$router.push('/facilities');
         }
     },
@@ -45,13 +58,10 @@ export default {
     async beforeMount() {
         await this.fetchAll();
         const id = this.id;
-        console.log(id);
         const facility = this.facilities.find((f) => f.id == id);
-        console.log(facility);
         this.facility = facility;
     },
 
-    components: { FacilityCard }
 }
 </script>
 <style lang="scss">
