@@ -14,7 +14,6 @@ export default {
     return this.authStore.userData
   },
   methods: {
-    getUserData() {},
     updateUserData() {
       api.patch(`api/username/${this.username}/`, {
         email: this.email,
