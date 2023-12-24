@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Добавление комментария</h1>
+    <br/>
+    <br/>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br/>
+            <button class="btn btn-success">Добавить комментарий</button>
+            <br/>
+            <br/>
+            <a href="{% url 'user-page' user.pk %}" class="btn btn-dark">Назад</a>
+        </form>
+    </div>
+
+
+{% endblock %}

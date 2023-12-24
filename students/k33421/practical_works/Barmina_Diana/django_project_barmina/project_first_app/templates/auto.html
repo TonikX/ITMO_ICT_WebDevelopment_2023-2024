@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Госномер: {{object.state_number}} Брэнд: {{object.brand}} Модель: {{object.model}}</h3>
+<a href="{% url 'update-auto' object.pk%}">Update auto</a></br>
+<a href="{% url 'delete-auto' object.pk%}">Delete auto</a></br>
+</br>
+<a href="{% url 'all-autos' %}">Back to list</a>
+
+{% endblock %}
