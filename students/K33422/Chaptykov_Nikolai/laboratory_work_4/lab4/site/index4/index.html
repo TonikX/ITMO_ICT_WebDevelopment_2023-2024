@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>ЛР3 - lab_work_3</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">lab_work_3</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../index1/" class="nav-link">ПР3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../index2/" class="nav-link">ПР3.2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../index3/" class="nav-link">ПР3.3</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">ЛР3</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../index3/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#3" class="nav-link">Лабораторная работа 3</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Модель базы данных</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">Сериалайзеры</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#urlspy" class="nav-link">Файл urls.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#viewpy" class="nav-link">Файл View.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="3">Лабораторная работа 3</h1>
+<h2 id="_1">Модель базы данных</h2>
+<p>Хорошей идеей в начале показалось разграничить лекции на несколько сущностей, однако в дальнейшем это принесло много бед</p>
+<pre><code class="language-Python">from django.db import models
+
+
+DAYS_OF_WEEK = (
+    (0, 'Monday'),
+    (1, 'Tuesday'),
+    (2, 'Wednesday'),
+    (3, 'Thursday'),
+    (4, 'Friday'),
+    (5, 'Saturday'),
+    (6, 'Sunday'),
+)
+
+
+class Tutor(models.Model):
+    surname = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f&quot;{self.name} {self.surname}&quot;
+
+
+class AcademicGroup(models.Model):
+    group_name = models.CharField(max_length=30)
+    faculty = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f&quot;{self.group_name}, {self.faculty}&quot;
+
+
+class Student(models.Model):
+    surname = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+    group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f&quot;{self.name} {self.surname} {self.group}&quot;
+
+
+&quot;&quot;&quot;
+    Discipline хранит название дисциплины, преподавателя и закрепленный
+    за ним кабинет. Учитывать проведение лекций и практик в разных 
+    аудиториях можно с помощью введения поля для маркера, также можно 
+    добавлять уточняющий префикс к названию дисциплины: 'Вышмат лекция'
+    и 'Вышмат практика'
+&quot;&quot;&quot;
+class Discipline(models.Model):
+    lecturer = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    discipline_name = models.CharField(max_length=30)
+    room = models.CharField(max_length=30, blank=True)
+
+    def __str__(self):
+        return f&quot;каб. {self.room}, {self.discipline_name}, ведет {self.lecturer}&quot;
+
+
+&quot;&quot;&quot;
+    По одному предмету может быть несколько занятий в разное время,
+    введем сущность Lecture чтобы не дублировать данные дисциплин
+&quot;&quot;&quot;
+class Lecture(models.Model):
+    discipline = models.ForeignKey(Discipline, related_name='lecture', on_delete=models.CASCADE)
+    day = models.IntegerField(choices=DAYS_OF_WEEK, default=0)
+    time = models.TimeField(null=True)
+
+    def __str__(self):
+        return f&quot;{DAYS_OF_WEEK[self.day][1]} {self.discipline}&quot;
+
+
+&quot;&quot;&quot;
+    На одном занятии может находится несколько групп, введем
+    ассоциативную сущность между лекцией и группой чтобы это учитывать
+&quot;&quot;&quot;
+class AssignedLecture(models.Model):
+    group = models.ForeignKey(AcademicGroup, on_delete=models.CASCADE, primary_key=True)
+    lecture = models.ManyToManyField(Lecture)
+
+    def __str__(self):
+        return f&quot;{self.group}&quot; + f&quot;{self.lecture}&quot;
+
+
+class AcademicPerformance(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Discipline, on_delete=models.CASCADE)
+    grade = models.CharField(max_length=10)
+
+
+
+</code></pre>
+<h2 id="_2">Сериалайзеры</h2>
+<pre><code class="language-Python">from lab_app.models import *
+from rest_framework import serializers
+
+
+class LectureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lecture
+        fields = ('time', 'discipline')
+
+
+class AssignedLectureSerializer(serializers.ModelSerializer):
+    lecture = LectureSerializer(many=True, read_only=True)
+    group_str = serializers.StringRelatedField(source='group')
+
+    class Meta:
+        model = AssignedLecture
+        fields = ('group', 'group_str', 'lecture')
+
+
+class TutorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tutor
+        fields = ('__all__')
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'surname', 'group']
+
+
+class StudentCountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['id', 'name', 'surname', 'group']
+
+
+class AcademicPerformanceSerializer(serializers.ModelSerializer):
+    student_str = serializers.StringRelatedField(source='student')
+    subject_str = serializers.StringRelatedField(source='subject')
+
+    class Meta:
+        model = AcademicPerformance
+        fields = ['student', 'student_str', 'subject', 'subject_str', 'grade']
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicGroup
+        fields = ('__all__')
+
+</code></pre>
+<h2 id="urlspy">Файл urls.py</h2>
+<pre><code class="language-Python">&quot;&quot;&quot;laboratory_work_3 URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+&quot;&quot;&quot;
+from django.contrib import admin
+from django.urls import path
+from lab_app.views import *
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title=&quot;API&quot;,
+      default_version='Conversion, software version 7.0',
+      description=&quot;Looking at life through the eyes of a tire hub &quot;,
+      terms_of_service=&quot;Пользуйтесь на здоровье&quot;,
+      contact=openapi.Contact(email=&quot;Не пишите, но если уже начали - не прекращайте, nick.chaptykov@gmail.com&quot;),
+      license=openapi.License(name=&quot;Лицензия на продажу рыболовных снастей&quot;),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('group/', GroupList.as_view()),
+    path('group/&lt;int:pk&gt;', GroupDetail.as_view()),
+    path('group/&lt;int:pk1&gt;/&lt;int:pk&gt;', StudentDetail.as_view()),
+    path('tutor/', TutorList.as_view()),
+    path('tutor/&lt;int:pk&gt;', TutorDetail.as_view()),
+    path('group/&lt;int:pk&gt;/tutors', GroupTutorsList.as_view()),
+    path('group/&lt;int:pk&gt;/cnt', CountStudents.as_view()),
+    path('group/timetable/&lt;int:pk1&gt;/&lt;int:pk&gt;', GetTimetable.as_view()),
+    path('group/timetable/&lt;int:pk2&gt;/&lt;int:pk1&gt;/&lt;int:pk&gt;', GetTimetableDeeper.as_view()),
+    path('tutor/groups/&lt;int:pk1&gt;/&lt;int:pk&gt;', GroupByTutor.as_view()),
+    path('group/list_lessons/&lt;int:pk&gt;', ListGroupLessons.as_view()),
+    path('group/list_lessons/&lt;int:pk1&gt;/&lt;int:pk&gt;', GroupLessonDetail.as_view()),
+    path('group/list_lessons/schedule/&lt;int:pk&gt;', ScheduleGroupLesson.as_view()),
+    path('group/list_lessons/create', CreateGroupLesson.as_view()),
+    path('student/performance/&lt;int:pk&gt;', StudentPerformance.as_view()),
+    path('doc/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('doc/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
+]
+</code></pre>
+<h2 id="viewpy">Файл View.py</h2>
+<pre><code class="language-Python">from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework import generics, status
+from rest_framework.generics import get_object_or_404
+from .serializers import *
+from .models import *
+from django.contrib.auth.models import User, Group
+
+
+class TutorList(generics.ListCreateAPIView):
+    serializer_class = TutorSerializer
+    queryset = Tutor.objects.all()
+
+
+class TutorDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TutorSerializer
+    queryset = Tutor.objects.all()
+
+
+class GroupList(generics.ListCreateAPIView):
+    serializer_class = GroupSerializer
+
+    def get_queryset(self):
+        queryset = AcademicGroup.objects.all()
+        return queryset
+
+
+class GroupDetail(generics.ListCreateAPIView):
+    serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        queryset = Student.objects.all().filter(group=self.kwargs['pk'])
+        return queryset
+
+
+class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = StudentSerializer
+
+    def get_queryset(self):
+        queryset = Student.objects.all().filter(group=self.kwargs['pk1'], id=self.kwargs['pk'])
+        return queryset
+
+
+# list of tutors for a group
+class GroupTutorsList(generics.ListAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get(self, request, pk, format=None):
+        user_count = AssignedLecture.objects.filter(group=self.kwargs['pk']).values_list(&quot;lecture&quot;)
+        user_count = Lecture.objects.filter(pk__in=user_count).values_list(&quot;discipline&quot;).distinct()
+        user_count = Discipline.objects.filter(pk__in=user_count).values(&quot;lecturer__name&quot;, &quot;lecturer__surname&quot;, &quot;discipline_name&quot;)
+        return Response({&quot;res&quot;: user_count})
+
+
+# timetable from day of week
+class GetTimetable(generics.ListAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get(self, request, pk1, pk, format=None):
+        user_count = AssignedLecture.objects.filter(group=pk1).values_list(&quot;lecture&quot;)
+        user_count = Lecture.objects.filter(pk__in=user_count, day=pk).values(&quot;discipline__discipline_name&quot;, &quot;day&quot;, &quot;time&quot;)
+        return Response({&quot;res&quot;: user_count})
+
+
+class GetTimetableDeeper(generics.ListAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get(self, request, pk2, pk1, pk, format=None):
+        user_count = AssignedLecture.objects.filter(group=pk1).values_list(&quot;lecture&quot;)
+        user_count = Lecture.objects.filter(pk__in=user_count, day=pk).order_by(&quot;time&quot;).values(&quot;discipline__discipline_name&quot;, &quot;day&quot;, &quot;time&quot;)
+        try: 
+            return Response({&quot;res&quot;: user_count[pk2]})
+        except Exception:
+            return Response({&quot;res&quot;: &quot;Что-то пошло не так&quot;}) 
+
+
+class GroupByTutor(generics.ListAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get(self, request, pk1, pk, format=None):
+        user_count = AssignedLecture.objects.filter(lecture__discipline__lecturer_id=pk1, lecture__discipline_id=pk).values(&quot;group__group_name&quot;).distinct()
+        return Response({&quot;res&quot;: user_count})
+
+from django.db.models import Count
+from rest_framework import status
+from rest_framework.response import Response
+
+
+class CountStudents(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentCountSerializer
+
+    def get(self, request, pk, format=None):
+        user_count = Student.objects.filter(group=self.kwargs['pk']).count()
+        content = {'student_count': user_count}
+        return Response(content)
+
+
+class ListGroupLessons(generics.ListAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get(self, request, pk, format=None):
+        user_count = AssignedLecture.objects.filter(group=pk).values(
+                &quot;lecture__id&quot;,
+                &quot;lecture__discipline__lecturer__name&quot;,
+                &quot;lecture__discipline__lecturer__surname&quot;,
+                &quot;lecture__discipline__discipline_name&quot;)
+        return Response({&quot;res&quot;: user_count})
+
+
+class GroupLessonDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = LectureSerializer
+
+    def get_queryset(self):
+        queryset = Lecture.objects.filter(id=self.kwargs['pk'])
+        # queryset = queryset.values()
+        return queryset
+
+
+class ScheduleGroupLesson(generics.ListCreateAPIView):
+    serializer_class = LectureSerializer
+
+    def get_queryset(self):
+        queryset = Lecture.objects.filter(id=self.kwargs['pk'])
+        # queryset = queryset.values()
+        return queryset
+
+
+class CreateGroupLesson(generics.ListCreateAPIView):
+    serializer_class = AssignedLectureSerializer
+
+    def get_queryset(self):
+        queryset = [AssignedLecture.objects.first()]
+        # queryset = queryset.values()
+        return queryset
+
+
+class StudentPerformance(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AcademicPerformanceSerializer
+
+    def get_queryset(self):
+        queryset = AcademicPerformance.objects.filter(student=self.kwargs['pk'])
+        # queryset = queryset.values()
+        return queryset
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

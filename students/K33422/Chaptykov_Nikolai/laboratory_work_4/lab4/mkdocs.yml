@@ -1,0 +1,7 @@
+site_name: lab_work_3
+nav:
+ - ПР4.2: index.md
+ - ПР4.3: index2.md
+ - ЛР4: index3.md
+theme:
+ name: mkdocs
