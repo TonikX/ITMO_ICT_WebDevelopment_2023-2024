@@ -7,7 +7,7 @@ const instance = axios.create({
   },
 })
 instance.interceptors.request.use(function (cfg) {
-  cfg.headers.Authorization = localStorage.getItem("token")
+  cfg.headers.Authorization = `Token ${localStorage.getItem("auth_token")}`
   return cfg
 }, function (error) {
   return Promise.reject(error)
