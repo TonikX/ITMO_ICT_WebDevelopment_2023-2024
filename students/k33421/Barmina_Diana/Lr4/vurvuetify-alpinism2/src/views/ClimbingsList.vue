@@ -106,7 +106,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn variant="text" v-if="auth" color="black" @click="$router.push(`/climbings/${c.id}/`)"> Подробнее </v-btn>
+            <v-btn variant="tonal" v-if="auth" color="pink-darken-4" @click="$router.push(`/climbings/${c.id}/`)"> Подробнее </v-btn>
           </v-card-actions>
 
         </v-card>
