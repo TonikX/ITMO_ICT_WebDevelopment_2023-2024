@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AuthView from "@/views/AuthView.vue"
 import ProfileView from "@/views/ProfileView.vue"
 import PostsView from "@/views/PostsView.vue"
+import PostView from "@/views/PostView.vue"
 import NewPostView from "@/views/NewPostView.vue"
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/posts',
       name: 'posts',
       component: PostsView
+    },
+    {
+      path: '/posts/:id',
+      name: 'post',
+      component: PostView
     },
     {
       path: '/newpost',
