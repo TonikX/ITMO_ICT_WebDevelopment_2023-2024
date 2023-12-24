@@ -1,5 +1,6 @@
 <script>
 import api from '@/api'
+import CommentsView from './CommentsView.vue'
 export default {
   data() {
     return { post: { id: this.$route.params.id, title: '', content: '' } }
@@ -16,11 +17,16 @@ export default {
   beforeMount() {
     this.fetchPost()
   },
+  components: [CommentsView],
+  components: { CommentsView },
 }
 </script>
 
 <template>
   <h1>{{ post.title }}</h1>
-  <textarea name="content" cols="30" rows="10">{{ post.content }}</textarea>
+  <textarea name="content" cols="30" rows="10" readonly>{{
+    post.content
+  }}</textarea>
+  <CommentsView :post="post" />
 </template>
 

@@ -32,12 +32,26 @@ class PostViewSet(viewsets.ModelViewSet):
   queryset = Post.objects.all().order_by('-created_at')
   serializer_class = PostSerializer
 
-  def create(self, request):
+  def create(self, request: Request):
     request.data["author_id"] = request.user.pk
     post = Post()
     post.__dict__.update(request.data)
     post.save()
     serializer = PostSerializer(post)
+    return Response(serializer.data)
+  
+class PostCommentsViewSet(viewsets.ViewSet):
+  def retrieve(self, _, pk=None):
+    queryset = Comment.objects.all().filter(post=pk)
+    serializer = CommentSerializer(queryset, many=True)
+    return Response(serializer.data)
+  def create(self, request: Request):
+    comment = Comment()
+    comment.author = request.user
+    comment.content = request.data["content"]
+    comment.post = get_object_or_404(Post.objects.all(), pk=request.data["post"])
+    comment.save()
+    serializer = CommentSerializer(comment)
     return Response(serializer.data)
   
 class CommentViewSet(viewsets.ModelViewSet):
