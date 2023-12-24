@@ -7,7 +7,11 @@ const instance = axios.create({
   },
 })
 instance.interceptors.request.use(function (cfg) {
-  cfg.headers.Authorization = `Token ${localStorage.getItem("auth_token")}`
+  const authToken = localStorage.getItem("auth_token")
+  if (authToken !== null && authToken !== "undefined") {
+    cfg.headers.Authorization = `Token ${authToken}`
+
+  }
   return cfg
 }, function (error) {
   return Promise.reject(error)

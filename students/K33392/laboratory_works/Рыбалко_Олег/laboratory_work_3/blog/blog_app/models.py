@@ -7,9 +7,10 @@ class User(AbstractUser):
 
 class Post(models.Model):
   author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+  title = models.TextField(blank=True)
   content = models.TextField()
   created_at = models.DateTimeField(auto_now_add=True)
-  likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
+  likes = models.IntegerField(default=0)
 
 class Comment(models.Model):
   post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")

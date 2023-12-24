@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.request import Request
 from blog_app.models import User, Post, Comment, Follow
@@ -11,6 +12,7 @@ from blog_app.serializers import (
 )
 
 class UserViewSet(viewsets.ModelViewSet):
+  permission_classes = [AllowAny]
   queryset = User.objects.all()
   serializer_class = MyUserSerializer
 
@@ -27,9 +29,17 @@ class UsernameViewSet(viewsets.ViewSet):
     return Response(serializer.data)
 
 class PostViewSet(viewsets.ModelViewSet):
-  queryset = Post.objects.all()
+  queryset = Post.objects.all().order_by('-created_at')
   serializer_class = PostSerializer
 
+  def create(self, request):
+    request.data["author_id"] = request.user.pk
+    post = Post()
+    post.__dict__.update(request.data)
+    post.save()
+    serializer = PostSerializer(post)
+    return Response(serializer.data)
+  
 class CommentViewSet(viewsets.ModelViewSet):
   queryset = Comment.objects.all()
   serializer_class = CommentSerializer

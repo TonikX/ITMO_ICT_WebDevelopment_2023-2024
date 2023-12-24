@@ -19,9 +19,10 @@ class MyUserSerializer(serializers.ModelSerializer):
     return super().create({**validated_data, "password": make_password(validated_data["password"])})
 
 class PostSerializer(serializers.ModelSerializer):
+  author = MyUserSerializer()
   class Meta:
     model = Post
-    fields = ("id", "author", "content", "created_at", "likes")
+    fields = ("id", "author", "title", "content", "created_at", "likes")
 
 class CommentSerializer(serializers.ModelSerializer):
   class Meta:
