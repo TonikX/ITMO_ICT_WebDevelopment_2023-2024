@@ -27,17 +27,24 @@ const confirmPasswordRules = [
 
 const submit = async () => {
   if (valid.value) {
-    const response = await fetchWrapper.post(`${baseUrl}/auth/users/`, {
-      email: email.value,
-      username: username.value,
-      password: password.value
-    });
+    try {
+      const response = await fetchWrapper.post(`${baseUrl}/auth/users/`, {
+        email: email.value,
+        username: username.value,
+        password: password.value
+      });
 
-    if (response.id) {
-      const authStore = useAuthStore();
-      return authStore.login(username.value, password.value)
-    } else if (response.password) {
-      alert(response.password)
+      if (response.id) {
+        const authStore = useAuthStore();
+        return authStore.login(username.value, password.value);
+      }
+    } catch (error) {
+      if (error.status === 400 && error.data && error.data.password) {
+        const passwordErrors = error.data.password.join(' ');
+        alert(passwordErrors);
+      } else {
+        alert('An unexpected error occurred.');
+      }
     }
   }
 }

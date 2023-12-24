@@ -15,8 +15,16 @@ const usernameRules = [v => !!v || 'Username is required'];
 
 const submit = async () => {
   if (valid.value) {
+    try {
       const authStore = useAuthStore();
-      return authStore.login(username.value, password.value)
+      await authStore.login(username.value, password.value)
+    } catch (error) {
+      if (error.data && error.data.detail) {
+        alert(error.data.detail);
+      } else {
+        alert('An unexpected error occurred.');
+      }
+    }
   }
 }
 </script>

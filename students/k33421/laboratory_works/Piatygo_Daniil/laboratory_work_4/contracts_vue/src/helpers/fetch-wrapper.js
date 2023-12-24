@@ -44,7 +44,10 @@ async function handleResponse(response) {
         await authStore.logout();
       }
 
-      return (data && data.message) || response.statusText;
+      const error = new Error(response.statusText);
+      error.status = response.status;
+      error.data = data;
+      throw error;
     }
 
     return data;

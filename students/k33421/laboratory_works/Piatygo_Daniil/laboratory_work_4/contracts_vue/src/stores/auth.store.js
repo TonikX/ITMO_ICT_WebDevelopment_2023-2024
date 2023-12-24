@@ -12,14 +12,18 @@ export const useAuthStore = defineStore({
   }),
   actions: {
     async login(username, password) {
-      const data = await fetchWrapper.post(`${baseUrl}/auth/jwt/create/`, { username: username, password: password });
-      this.access = data.access;
-      this.refresh = data.refresh;
+      try {
+        const data = await fetchWrapper.post(`${baseUrl}/auth/jwt/create/`, {username: username, password: password});
+        this.access = data.access;
+        this.refresh = data.refresh;
 
-      localStorage.setItem('access', JSON.stringify(data.access));
-      localStorage.setItem('refresh', JSON.stringify(data.refresh));
+        localStorage.setItem('access', JSON.stringify(data.access));
+        localStorage.setItem('refresh', JSON.stringify(data.refresh));
 
-      await router.push('/');
+        await router.push('/');
+      } catch (error) {
+        throw error;
+      }
     },
     async logout() {
       this.access = null;
