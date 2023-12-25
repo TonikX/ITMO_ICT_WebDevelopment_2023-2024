@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %} 
+{% block content %}
+<hr>
+{% for key, value in marks.items %}
+<div>
+  <span>{{ key }}:</span>
+  {% for item in value %}
+    <span> {{ item }}</span>
+  {% endfor %}
+</div>
+<hr>
+{% endfor %}
+<div style="margin-left: 10px;">
+    <a href="/" class="btn btn-primary">На главную</a>
+</div>
+{% endblock %}

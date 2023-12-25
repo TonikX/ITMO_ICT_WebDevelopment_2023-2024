@@ -1,0 +1,12 @@
+{% extends 'car_rent/layout.html' %}
+
+{% block title %}
+  Водители
+{% endblock %}
+
+{% block content %}
+  <div>Водители</div>
+  {% for object in object_list %}
+    <div>{{ object.first_name }}  {{ object.last_name }}</div>
+  {% endfor %}
+{% endblock %}

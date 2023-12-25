@@ -1,0 +1,9 @@
+{% block content %}
+  <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete car "{{ object.number }}"?</p>
+    <input type="submit" value="Confirm">
+  </form>
+  <br>
+  <br>
+  <a href="/publisher/list/">Get back</a>
+{% endblock %}
