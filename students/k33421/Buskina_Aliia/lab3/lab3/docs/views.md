@@ -1,3 +1,5 @@
+### views.py
+```python
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
@@ -315,3 +317,4 @@ class GuestCreateView(View):
             return redirect('success_url')
 
         return render(request, self.template_name, {'form': form, 'error': 'Invalid form submission'})
+```

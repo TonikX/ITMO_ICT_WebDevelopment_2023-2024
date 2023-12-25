@@ -1,3 +1,6 @@
+### serializers.py
+
+```python
 from rest_framework import serializers
 from .models import *
 
@@ -66,3 +69,5 @@ class ReportSerializer(serializers.Serializer):
         data = super().to_representation(instance)
         data['total_income'] = self.context['total_income']
         return data
+
+```

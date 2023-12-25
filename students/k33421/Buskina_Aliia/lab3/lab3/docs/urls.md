@@ -1,3 +1,16 @@
+### lab3/urls.py
+```python
+from django.urls import path, include
+from django.contrib import admin
+from hotel.views import *
+
+urlpatterns = [
+    path('admin/', admin.site.urls, name='admin'),
+    path('api/', include('hotel.urls')),
+]
+```
+### lab3/hotel/urls.py
+```python
 from django.urls import path
 
 from hotel.views import *
@@ -18,3 +31,5 @@ urlpatterns = [
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('guest_create/', GuestCreateView.as_view(), name='create_guest'),
 ]
+
+```
