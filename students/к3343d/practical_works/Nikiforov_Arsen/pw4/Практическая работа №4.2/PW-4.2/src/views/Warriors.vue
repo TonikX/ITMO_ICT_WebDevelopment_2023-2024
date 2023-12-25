@@ -1,38 +1,43 @@
-
-
 <template>
-  <!-- ваш шаблон -->
-  <button @click="fetchWarriors">Загрузить воинов</button>
-  <div v-for="warrior in warriors" :key="warrior.name">
-    {{ warrior.name }}
+  <div class="app">
+    <h1>Портал информации о войнах в онлайн РПГ</h1>
+    <button @click="fetchWarriors">Получить список воинов</button>
+    <warrior-form @warriorAdded="fetchWarriors" />
+    <div v-for="warrior in warriors" :key="warrior.id">
+      <div>Имя: {{ warrior.name }}</div>
+      <div>Расса: {{ warrior.race }}</div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import WarriorForm from "@/components/WarriorForm.vue";
+import axios from "axios";
 
 export default {
+  components: {
+    WarriorForm,
+  },
   data() {
     return {
-      warriors: []
+      warriors: [],
     };
   },
   methods: {
     fetchWarriors() {
-      axios.get('http://localhost:3000/api/warriors')
+      axios.get("http://localhost:3000/api/warriors") // Измените порт на тот, который вы указали в сервере
         .then(response => {
           this.warriors = response.data;
         })
         .catch(error => console.error(error));
-    }
+    },
   },
   mounted() {
     this.fetchWarriors();
-  }
+  },
 };
 </script>
 
-
 <style>
-/* ваш стиль */
+/* Стилизация по  усмотрению */
 </style>

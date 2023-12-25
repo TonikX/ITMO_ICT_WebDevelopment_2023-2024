@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent>
     <h1>Создание война</h1>
     <input
       v-model="warrior.name"
@@ -13,7 +13,7 @@
       type="text"
       placeholder="Расса"
     />
-    <button class="btn" type="submit">Создать</button>
+    <button class="btn" @click="createWarrior">Cоздать</button>
   </form>
 </template>
 
@@ -26,21 +26,25 @@ export default {
     return {
       warrior: {
         name: "",
-        race: "",
-      },
+        race: ""
+      }
     };
   },
   methods: {
-    onSubmit() {
-      axios.post("http://62.109.28.95:8890/warrior/create1", {
-        name: this.warrior.name,
-        race: this.warrior.race,
-      });
-    },
-  },
+    createWarrior() {
+      axios.post("http://localhost:3000/api/warriors/create", this.warrior)
+  .then(response => {
+    this.$emit('warriorAdded');
+    this.warrior.name = "";
+    this.warrior.race = "";
+  })
+  .catch(error => console.error(error));
+
+    }
+  }
 };
 </script>
 
 <style scoped>
-
+/* Стили для компонента WarriorForm.vue */
 </style>
