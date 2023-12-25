@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clients List</title>
+</head>
+<body>
+    <h1>Clients List</h1>
+    <ul>
+        {% for client in clients %}
+            <li>{{ client.client_info.first_name }} {{ client.client_info.last_name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

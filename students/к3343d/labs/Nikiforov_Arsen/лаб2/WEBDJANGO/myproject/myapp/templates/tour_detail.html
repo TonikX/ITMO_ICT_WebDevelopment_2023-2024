@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        h2 {
+            text-align: justify;
+            margin-top: 20px;
+            color: #009688;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form p {
+            margin-bottom: 10px;
+        }
+        form button {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #009688;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        form button:hover {
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <h2>Review Form</h2>
+
+    {% for review in reviews %}
+        <p>{{ review.user.username }}: {{ review.text }}</p>
+    {% endfor %}
+
+    <form method="post" action="{% url 'tour_detail' tour.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Review</button>
+        <a href="{% url 'tour_list' %}">
+            <button type="button">Назад к списку туров</button>
+        </a>
+    </form>
+</body>
+</html>

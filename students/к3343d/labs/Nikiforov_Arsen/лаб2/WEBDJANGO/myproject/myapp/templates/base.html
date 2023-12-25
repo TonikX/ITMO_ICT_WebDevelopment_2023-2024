@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django App{% endblock %}</title>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'tour_list' %}">Список туров</a></li>
+        <li><a href="{% url 'reserve_tour' %}">Забронировать тур</a></li>
+        <li><a href="{% url 'review_tour' %}">Оставить отзыв</a></li>
+        <li><a href="{% url 'user_reservations' %}">Мои бронирования</a></li>
+    </ul>
+</nav>
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

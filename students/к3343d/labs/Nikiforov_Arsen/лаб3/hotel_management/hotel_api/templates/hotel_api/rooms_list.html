@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rooms List</title>
+    <style>
+        /* Add your CSS styles here */
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        form {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            margin: 5px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <a href="http://localhost:8000/" class="back-button">Back to Home</a>
+    
+    <h1>Rooms List</h1>
+
+    <form method="get">
+        <!-- Filter by Room Type -->
+        <label for="room_type">Room Type:</label>
+        <select name="room_type" id="room_type">
+            <option value="">--Select a Type--</option>
+            <option value="single">Single</option>
+            <option value="double">Double</option>
+            <option value="suite">Suite</option>
+        </select>
+    
+        <!-- Filter by Room Status -->
+        <label for="room_status">Room Status:</label>
+        <select name="room_status" id="room_status">
+            <option value="">--Select a Status--</option>
+            <option value="available">Available</option>
+            <option value="occupied">Occupied</option>
+            <option value="cleaning">Cleaning</option>
+        </select>
+    
+        <input type="submit" value="Filter">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room Type</th>
+                <th>Floor Number</th>
+                <th>Status</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.get_room_type_display }}</td>
+                <td>{{ room.floor.number }}</td>
+                <td>{{ room.get_status_display }}</td>
+                <td>{{ room.cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

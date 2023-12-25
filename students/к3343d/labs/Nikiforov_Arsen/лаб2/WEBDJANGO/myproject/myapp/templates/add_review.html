@@ -1,0 +1,18 @@
+<!-- Ваш add_review.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Review</title>
+</head>
+<body>
+
+<h2>Add Review for {{ tour.title }}</h2>
+
+<form method="post" action="{% url 'add_review' tour.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+
+</body>
+</html>

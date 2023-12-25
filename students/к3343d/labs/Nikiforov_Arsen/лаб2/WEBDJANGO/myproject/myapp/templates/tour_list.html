@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #009688;
+        }
+        .tour {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .tour:hover {
+            transform: scale(1.02);
+        }
+        .tour h3, .tour a, .tour button {
+            color: #009688;
+        }
+        .tour h3 {
+            margin-top: 0;
+        }
+        .tour p {
+            margin-bottom: 10px;
+        }
+        .tour a, .tour button {
+            display: inline-block;
+            margin-right: 10px;
+            margin-top: 10px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #009688;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .tour a:hover, .tour button:hover {
+            background-color: #00796b;
+        }
+        .tour .reviews {
+            margin-top: 20px;
+        }
+        .reviews h4 {
+            color: #009688;
+        }
+        .reviews p {
+            margin: 5px 0;
+        }
+        .sold-link {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    text-decoration: none;
+    color: #fff;
+    background-color: #009688;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.sold-link:hover {
+    background-color: #00796b;
+}
+
+        .logout-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #009688;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .logout-btn:hover {
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <h2>Tour List</h2>
+
+    {% for tour in tours %}
+        <div class="tour">
+            <h3>{{ tour.title }}</h3>
+            <p>{{ tour.description }}</p>
+            <p>Period: {{ tour.period }}</p>
+            <p>Payment Conditions: {{ tour.payment_conditions }}</p>
+
+            <a href="{% url 'tour_detail' tour.id %}">Details</a>
+
+            <form method="post" action="{% url 'reserve_tour' tour.id %}">
+                {% csrf_token %}
+                <button type="submit">Reserve</button>
+            </form>
+
+            <form method="post" action="{% url 'buy_tour' tour.id %}">
+                {% csrf_token %}
+                <button type="submit">Buy</button>
+            </form>
+
+            <div class="reviews">
+                <h4>Reviews:</h4>
+                {% for review in tour.review_set.all %}
+                    <p>{{ review.user.username }} - {{ review.text }} - {{ review.rating }}/10</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- Кнопка "Your Sold Tours" -->
+    <a href="{% url 'sold_tours' %}" class="sold-link">Your Sold Tours</a>
+
+    <!-- Кнопка выхода из аккаунта -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="logout-btn" type="submit">Logout</button>
+    </form>
+</body>
+</html>

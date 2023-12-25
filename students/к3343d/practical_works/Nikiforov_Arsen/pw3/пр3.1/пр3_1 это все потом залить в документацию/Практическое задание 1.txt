@@ -1,0 +1,167 @@
+>>> from myapp.models import Owner
+>>> owner1 = Owner.objects.create(last_name="Иванов", first_name="Иван", birth_date="1990-01-01")
+>>> owner2 = Owner.objects.create(last_name="Петров", first_name="Петр", birth_date="1995-03-15")
+>>> owner3 = Owner.objects.create(last_name="Сидоров", first_name="Сидор", birth_date="1985-07-20")
+>>> owner4 = Owner.objects.create(last_name="Смирнова", first_name="Мария", birth_date="1988-11-30")
+>>> owner5 = Owner.objects.create(last_name="Козлов", first_name="Александр", birth_date="1992-06-05")
+>>> owner6 = Owner.objects.create(last_name="Николаев", first_name="Николай", birth_date="1987-09-10")
+>>> owner7 = Owner.objects.create(last_name="Тихонова", first_name="Екатерина", birth_date="1993-04-25")
+>>>
+
+
+>>> from myapp.models import Car
+>>>
+>>> car1 = Car.objects.create(license_plate="ABC123", brand="Toyota", model="Camry", color="Blue")
+>>> car2 = Car.objects.create(license_plate="XYZ789", brand="Honda", model="Civic", color="Red")
+>>> car3 = Car.objects.create(license_plate="DEF456", brand="Ford", model="Focus", color="Green")
+>>> car4 = Car.objects.create(license_plate="GHI789", brand="Chevrolet", model="Malibu", color="Silver")
+>>> car5 = Car.objects.create(license_plate="JKL012", brand="Nissan", model="Altima", color="Black")
+>>> car6 = Car.objects.create(license_plate="MNO345", brand="Volkswagen", model="Jetta", color="White")
+
+
+
+from myapp.models import Ownership, Car
+
+# Автовладелец 1
+ownership1 = Ownership.objects.create(owner=owner1, car=car1, start_date="2022-01-01", end_date="2023-01-01")
+ownership2 = Ownership.objects.create(owner=owner1, car=car2, start_date="2022-02-15", end_date="2023-02-15")
+ownership3 = Ownership.objects.create(owner=owner1, car=car3, start_date="2022-03-20", end_date="2023-03-20")
+
+# Автовладелец 2
+ownership4 = Ownership.objects.create(owner=owner2, car=car2, start_date="2022-04-10", end_date="2023-04-10")
+ownership5 = Ownership.objects.create(owner=owner2, car=car4, start_date="2022-05-25", end_date="2023-05-25")
+
+# Автовладелец 3
+ownership6 = Ownership.objects.create(owner=owner3, car=car1, start_date="2022-06-30", end_date="2023-06-30")
+ownership7 = Ownership.objects.create(owner=owner3, car=car3, start_date="2022-07-05", end_date="2023-07-05")
+ownership8 = Ownership.objects.create(owner=owner3, car=car5, start_date="2022-08-10", end_date="2023-08-10")
+
+
+
+
+
+# проверка результатов созданных объектов:
+
+from myapp.models import Owner, Car, DriverLicense, Ownership
+>>> # Вывод данных об автовладельцах
+>>> owners = Owner.objects.all()
+>>> for owner in owners:
+...     print(f"Owner: {owner.first_name} {owner.last_name}, Birth Date: {owner.birth_date}")
+...
+
+
+Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Петр Петров, Birth Date: 1995-03-15
+Owner: Сидор Сидоров, Birth Date: 1985-07-20
+Owner: Мария Смирнова, Birth Date: 1988-11-30
+Owner: Александр Козлов, Birth Date: 1992-06-05
+Owner: Николай Николаев, Birth Date: 1987-09-10
+Owner: Екатерина Тихонова, Birth Date: 1993-04-25
+>>> # Вывод данных об автомобилях
+>>> cars = Car.objects.all()
+>>> for car in cars:
+...     print(f"Car: {car.brand} {car.model}, License Plate: {car.license_plate}, Color: {car.color}")
+...
+
+
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Honda Civic, License Plate: XYZ789, Color: Red
+Car: Ford Focus, License Plate: DEF456, Color: Green
+Car: Chevrolet Malibu, License Plate: GHI789, Color: Silver
+Car: Nissan Altima, License Plate: JKL012, Color: Black
+Car: Volkswagen Jetta, License Plate: MNO345, Color: White
+
+
+Водительские удостоверения (создание)
+>>> from myapp.models import DriverLicense, Owner
+>>>
+>>> dl1 = DriverLicense.objects.create(owner=owner1, license_number="12345", license_type="A", issue_date="2022-01-01")
+>>> dl2 = DriverLicense.objects.create(owner=owner2, license_number="67890", license_type="B", issue_date="2022-02-15")
+>>> dl3 = DriverLicense.objects.create(owner=owner3, license_number="54321", license_type="C", issue_date="2022-03-20")
+>>> dl4 = DriverLicense.objects.create(owner=owner4, license_number="98765", license_type="B", issue_date="2022-04-10")
+>>> dl5 = DriverLicense.objects.create(owner=owner5, license_number="13579", license_type="A", issue_date="2022-05-25")
+>>> dl6 = DriverLicense.objects.create(owner=owner6, license_number="24680", license_type="C", issue_date="2022-06-30")
+>>> dl7 = DriverLicense.objects.create(owner=owner7, license_number="11223", license_type="A", issue_date="2022-07-05")
+>>>
+
+
+
+
+
+
+Вывод удостоверений
+>>> driver_licenses = DriverLicense.objects.all()
+>>> for dl in driver_licenses:
+...      print(f"Driver's License: {dl.owner.first_name} {dl.owner.last_name}, Number: {dl.license_number}, Type: {dl.license_type}")
+...
+Driver's License: Иван Иванов, Number: 12345, Type: A
+Driver's License: Петр Петров, Number: 67890, Type: B
+Driver's License: Сидор Сидоров, Number: 54321, Type: C
+Driver's License: Мария Смирнова, Number: 98765, Type: B
+Driver's License: Александр Козлов, Number: 13579, Type: A
+Driver's License: Николай Николаев, Number: 24680, Type: C
+Driver's License: Екатерина Тихонова, Number: 11223, Type: A
+>>>
+
+
+>>> # Вывод данных о владениях автомобилями
+>>> ownerships = Ownership.objects.all()
+>>> for ownership in ownerships:
+...     print(f"{ownership.owner.first_name} {ownership.owner.last_name} owns {ownership.car.brand} {ownership.car.model} from {ownership.start_date} to {ownership.end_date}")
+...
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2023-01-01
+Иван Иванов owns Honda Civic from 2022-02-15 to 2023-02-15
+Иван Иванов owns Ford Focus from 2022-03-20 to 2023-03-20
+Петр Петров owns Honda Civic from 2022-04-10 to 2023-04-10
+Петр Петров owns Chevrolet Malibu from 2022-05-25 to 2023-05-25
+Сидор Сидоров owns Toyota Camry from 2022-06-30 to 2023-06-30
+Сидор Сидоров owns Ford Focus from 2022-07-05 to 2023-07-05
+Сидор Сидоров owns Nissan Altima from 2022-08-10 to 2023-08-10
+
+
+
+
+
+
+
+
+
+через метод add()
+
+>>> from myapp.models import Ownership
+>>>
+>>> # Добавляем даты начала и окончания владения
+>>> ownership1 = Ownership.objects.create(owner=owner1, car=car1, start_date="2022-01-01", end_date="2022-05-01")
+>>> ownership2 = Ownership.objects.create(owner=owner1, car=car2, start_date="2022-01-01", end_date="2022-06-15")
+>>> ownership3 = Ownership.objects.create(owner=owner2, car=car3, start_date="2022-02-15", end_date="2022-08-01")
+>>> ownership4 = Ownership.objects.create(owner=owner3, car=car1, start_date="2022-03-20", end_date="2022-10-30")
+>>> ownership5 = Ownership.objects.create(owner=owner3, car=car3, start_date="2022-03-20", end_date="2022-09-15")
+>>> # Пробуем добавить автомобили владельцам через метод .add()
+>>> owner1.cars.add(car1, car2)
+>>> owner2.cars.add(car3)
+>>> owner3.cars.add(car1, car3)
+
+
+>>> for owner in latest_owners:
+...     print(f"Владелец: {owner.last_name}, Дата рождения: {owner.birth_date}")
+...
+Владелец: Сидоров, Дата рождения: 1985-07-20
+Владелец: Петров, Дата рождения: 1995-03-15
+Владелец: Иванов, Дата рождения: 1990-01-01
+
+
+
+>>> from myapp.models import DriverLicense
+
+>>> # Вывод последних добавленных водительских удостоверений
+>>> latest_licenses = DriverLicense.objects.order_by('-id')[:10]
+>>> for license in latest_licenses:
+...     print(f"Водительское удостоверение: {license.license_number}, Тип: {license.license_type}")
+...
+Водительское удостоверение: 11223, Тип: A
+Водительское удостоверение: 24680, Тип: C
+Водительское удостоверение: 13579, Тип: A
+Водительское удостоверение: 98765, Тип: B
+Водительское удостоверение: 54321, Тип: C
+Водительское удостоверение: 67890, Тип: B
+Водительское удостоверение: 12345, Тип: A

@@ -1,0 +1,28 @@
+<!-- C:\WEBDJANGO\myproject\myapp\templates\reserve_tour.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reserve Tour</title>
+</head>
+<body>
+
+<h2>Reserve Tour</h2>
+
+<h3>{{ tour.title }}</h3>
+<p>{{ tour.description }}</p>
+<p>Period: {{ tour.period }}</p>
+<p>Payment Conditions: {{ tour.payment_conditions }}</p>
+
+<!-- Форма для подтверждения/отклонения резервирования -->
+<form method="post" action="{% url 'confirm_reservation' reservation.id %}">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+</form>
+
+<form method="post" action="{% url 'reject_reservation' reservation.id %}">
+    {% csrf_token %}
+    <button type="submit">Reject</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- C:\WEBDJANGO\myproject\myapp\templates\myapp\user_reservations.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Reservations</title>
+</head>
+<body>
+
+<h2>Your Reservations</h2>
+
+{% for reservation in reservations %}
+    <p>{{ reservation.tour.title }} - {% if reservation.is_confirmed %}Confirmed{% else %}Pending{% endif %}</p>
+{% endfor %}
+
+</body>
+</html>

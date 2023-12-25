@@ -1,0 +1,18 @@
+<!-- C:\WEBDJANGO\myproject\myapp\templates\myapp\buy_tour.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Tour</title>
+</head>
+<body>
+
+<h2>Buy Tour: {{ tour.title }}</h2>
+
+<form method="post" action="{% url 'buy_tour' tour.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Buy Tour</button>
+</form>
+
+</body>
+</html>

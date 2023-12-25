@@ -1,0 +1,141 @@
+Вывод полной информации о всех войнах и их профессиях (в одном запросе).
+
+# warriors_app/serializers.py
+class WarriorWithProfessionSerializer(serializers.ModelSerializer):
+    profession = ProfessionCreateSerializer()
+
+    class Meta:
+        model = Warrior
+        fields = "__all__"
+
+
+# warriors_app/views.py
+class WarriorWithProfessionAPIView(APIView):
+    def get(self, request):
+        warriors = Warrior.objects.all()
+        serializer = WarriorWithProfessionSerializer(warriors, many=True)
+        return Response({"Warriors": serializer.data})
+
+
+# warriors_app/urls.py
+urlpatterns = [
+    path('warriors-with-professions/', WarriorWithProfessionAPIView.as_view(), name='warriors_with_professions'),
+    
+]
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+
+Вывод полной информации о всех воинах и их скилах (в одном запросе):
+
+# warriors_app/serializers.py
+class WarriorWithSkillsSerializer(serializers.ModelSerializer):
+    skills = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Warrior
+        fields = "__all__"
+
+
+# warriors_app/views.py
+class WarriorWithSkillsAPIView(APIView):
+    def get(self, request):
+        warriors = Warrior.objects.all()
+        serializer = WarriorWithSkillsSerializer(warriors, many=True)
+        return Response({"Warriors": serializer.data})
+
+
+# warriors_app/urls.py
+urlpatterns = [
+    path('warriors-with-skills/', WarriorWithSkillsAPIView.as_view(), name='warriors_with_skills'),
+   
+
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+
+Вывод полной информации о войне (по id), его профессиях и скилах:
+
+# warriors_app/views.py
+class WarriorDetailsAPIView(APIView):
+    def get(self, request, pk):
+        warrior = get_object_or_404(Warrior, pk=pk)
+        serializer = WarriorWithProfessionSerializer(warrior)
+        return Response(serializer.data)
+
+
+# warriors_app/urls.py
+urlpatterns = [
+    path('warriors/<int:pk>/', WarriorDetailsAPIView.as_view(), name='warrior_details'),
+  
+]
+
+
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+
+
+Удаление война по id:
+
+# warriors_app/views.py
+class WarriorDeleteAPIView(APIView):
+    def delete(self, request, pk):
+        warrior = get_object_or_404(Warrior, pk=pk)
+        warrior.delete()
+        return Response({"Success": f"Warrior with id {pk} deleted successfully."})
+
+
+# warriors_app/urls.py
+urlpatterns = [
+    path('warriors/<int:pk>/delete/', WarriorDeleteAPIView.as_view(), name='warrior_delete'),
+    
+]
+
+
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+
+Редактирование информации о войне:
+
+# warriors_app/views.py
+class WarriorUpdateAPIView(APIView):
+    def put(self, request, pk):
+        warrior = get_object_or_404(Warrior, pk=pk)
+        serializer = WarriorCreateUpdateSerializer(warrior, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"Success": f"Warrior with id {pk} updated successfully."})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# warriors_app/urls.py
+urlpatterns = [
+    path('warriors/<int:pk>/update/', WarriorUpdateAPIView.as_view(), name='warrior_update'),
+    
+]
+
+
+
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+
+# warriors_app/admin.py
+
+from django.contrib import admin
+from .models import Warrior, Profession, Skill, SkillOfWarrior
+
+admin.site.register(Warrior)
+admin.site.register(Profession)
+admin.site.register(Skill)
+admin.site.register(SkillOfWarrior)
+
+
+]
