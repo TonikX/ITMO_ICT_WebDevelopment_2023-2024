@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Tour List</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Agency</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tour in tours %}
+            <tr>
+                <td>{{ tour.title }}</td>
+                <td>{{ tour.agency }}</td>
+                <td>{{ tour.start_date }}</td>
+                <td>{{ tour.end_date }}</td>
+                <td>
+                    <a href="{% url 'tour_detail' tour.id %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'reserve_tour' tour.id %}" class="btn btn-success">Reserve</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
