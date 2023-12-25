@@ -41,8 +41,11 @@ class PostViewSet(viewsets.ModelViewSet):
     return Response(serializer.data)
   
 class PostCommentsViewSet(viewsets.ViewSet):
-  def retrieve(self, _, pk=None):
+  def retrieve(self, req:Request, pk=None):
     queryset = Comment.objects.all().filter(post=pk)
+    if (page := req.query_params.get("page")) is not None:
+      page, per_page = int(page), int(req.query_params.get("perPage", 2))
+      queryset = queryset[page*per_page:page*per_page+per_page]
     serializer = CommentSerializer(queryset, many=True)
     return Response(serializer.data)
   def create(self, request: Request):
