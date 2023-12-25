@@ -60,7 +60,7 @@ from django.urls import path, include, re_path
 from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
-from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, 
+from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, FloorOccupancyViewSet,
                     DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet, NestedClientViewSet)
                     
 from drf_yasg.views import get_schema_view
@@ -83,7 +83,7 @@ schema_view = get_schema_view(
 
 
 router = DefaultRouter()
-
+router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'clients', ClientViewSet)
@@ -142,11 +142,35 @@ from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloo
 from .models import CustomUser, Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework import serializers
+from .models import Floor, Room
+
+#/api/floor_occupancy/
+class FloorOccupancySerializer(serializers.ModelSerializer):
+    occupied_rooms_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Floor
+        fields = ['number', 'occupied_rooms_count']
+
+    def get_occupied_rooms_count(self, floor):
+        # Считаем количество занятых комнат на этаже
+        return Room.objects.filter(floor=floor, status='occupied').count()
+
+
+
+
+
+
+
+
+
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = '__all__'
+        fields = '__all__'  
+
         
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -175,46 +199,34 @@ class NestedClientSerializer(serializers.ModelSerializer):
         fields = ['id', 'room', 'client_info']
 
 
+
+
+
+class EmployeeFloorSerializer(serializers.ModelSerializer):
+    # Добавлю сюда сериализатор для Employee
+    employee = EmployeeSerializer(read_only=True)
+
+    class Meta:
+        model = EmployeeFloor
+        fields = ['employee', 'floor', 'room'] 
+
+
+
 """""
+ сложный запрос:
 Получить список всех комнат, которые заняты, 
 вместе с информацией о клиентах, проживающих в них, 
 и сотрудниках, ответственных за уборку комнаты.
 """""
 class ComplexRoomSerializer(serializers.ModelSerializer):
     clients = NestedClientSerializer(many=True, read_only=True)
-    employees = EmployeeSerializer(source='employee_floor_set', many=True, read_only=True)
+    
+    #используем сериализатор для EmployeeFloor вместо Employee
+    employees = EmployeeFloorSerializer(source='employee_floor_set', many=True, read_only=True)
 
     class Meta:
         model = Room
         fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees']
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -268,10 +280,7 @@ class DaySerializer(serializers.ModelSerializer):
         model = Day
         fields = '__all__'
 
-class EmployeeFloorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EmployeeFloor
-        fields = '__all__'
+
 
 class EmployeeDaySerializer(serializers.ModelSerializer):
     class Meta:
@@ -422,6 +431,20 @@ from rest_framework.response import Response
 from .models import CustomUser
 from .serializers import UserSerializer, ComplexRoomSerializer, NestedClientSerializer
 from django.contrib.auth import authenticate, login
+from rest_framework import viewsets
+from .models import Floor
+from .serializers import FloorOccupancySerializer
+
+
+
+#это для статистики
+class FloorOccupancyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Floor.objects.all()
+    serializer_class = FloorOccupancySerializer
+
+
+
+
 
 
 class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
@@ -800,7 +823,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGOUT_REDIRECT_URL = '/'
-
+CORS_ALLOWED_ORIGINS = ['http://localhost:8080']
 
 # Application definition
 LOGIN_REDIRECT_URL = '/hotel_api/'  
@@ -809,7 +832,7 @@ LOGIN_REDIRECT_URL = '/hotel_api/'
 
 
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = [
     'hotel_api', 
@@ -823,10 +846,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
+    'corsheaders',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

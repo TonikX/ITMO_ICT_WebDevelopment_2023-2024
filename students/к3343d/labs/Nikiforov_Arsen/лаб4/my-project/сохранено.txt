@@ -1,0 +1,242 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/main.js
+
+import { createApp } from 'vue'; 
+import App from './App.vue';
+import router from './router';
+
+const app = createApp(App);
+app.use(router);
+
+app.mount('#app');
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/App.vue
+
+<template>
+  <div>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <router-link to="/registration">Регистрация</router-link>
+    <router-link to="/login">Вход</router-link>
+    <router-link to="/user-profile">Профиль пользователя</router-link>
+    <router-view></router-view>
+    
+
+    <RegistrationPage />
+  </div>
+</template>
+
+<script>
+import RegistrationPage from './components/RegistrationPage.vue';
+
+export default {
+  name: 'App',
+  components: {
+    RegistrationPage,
+  },
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/router/index.js
+
+import { createRouter, createWebHistory } from 'vue-router'; // Используйте createRouter и createWebHistory
+import RegistrationPage from '../components/RegistrationPage.vue';
+import LoginPage from '../components/LoginPage.vue';
+import UserProfile from '../components/UserProfile.vue';
+
+const routes = [
+  { path: '/registration', component: RegistrationPage },
+  { path: '/login', component: LoginPage },
+  { path: '/user-profile', component: UserProfile },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/HelloWorld.vue
+
+<template>
+  <!-- Содержимое компонента HelloWorld.vue -->
+</template>
+
+<script>
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  }
+}
+</script>
+
+<style scoped>
+/* Стили для компонента HelloWorld.vue */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
+
+<!-- src/components/RegistrationForm.vue -->
+
+<template>
+    <div>
+      <h2>Регистрация</h2>
+      <form @submit.prevent="register">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" v-model="userData.username" required>
+  
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" v-model="userData.email" required>
+  
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" v-model="userData.password" required>
+  
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  </template>
+  
+  <script>
+  import { registerUser } from '@/api/auth.js';
+  
+  export default {
+    data() {
+      return {
+        userData: {
+          username: '',
+          email: '',
+          password: '',
+        },
+      };
+    },
+    methods: {
+      async register() {
+        try {
+          const response = await registerUser(this.userData);
+          console.log('Успешно зарегистрирован:', response.data);
+          
+        } catch (error) {
+          console.error('Ошибка регистрации:', error);
+          
+        }
+      },
+    },
+  };
+  </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
+
+<template>
+    <div>
+      <h2>Вход</h2>
+      <form @submit.prevent="login">
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" v-model="userData.email" required>
+  
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" v-model="userData.password" required>
+  
+        <button type="submit">Войти</button>
+      </form>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        userData: {
+          email: '',
+          password: '',
+        },
+      };
+    },
+    methods: {
+      async login() {
+        // Логика входа пользователя
+        try {
+
+          
+          console.log('Успешный вход:', this.userData.email);
+        } catch (error) {
+          // Обработка ошибок входа
+          console.error('Ошибка входа:', error);
+        }
+      },
+    },
+  };
+  </script>
+  

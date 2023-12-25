@@ -28,7 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGOUT_REDIRECT_URL = '/'
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",  
+]
 
 # Application definition
 LOGIN_REDIRECT_URL = '/hotel_api/'  
@@ -37,7 +39,7 @@ LOGIN_REDIRECT_URL = '/hotel_api/'
 
 
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = [
     'hotel_api', 
@@ -51,10 +53,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
+    'corsheaders',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,6 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Путь к статическим файлам (CSS, JavaScript, Images)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'hotel_api', 'static'),
+    'C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/hotel-management/dist',
 ]
 
 
