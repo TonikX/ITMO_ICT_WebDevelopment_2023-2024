@@ -2,8 +2,8 @@ from django.urls import path, include, re_path
 from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
-from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, 
-                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet)
+from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, FloorOccupancyViewSet,
+                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet, NestedClientViewSet)
                     
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -25,7 +25,7 @@ schema_view = get_schema_view(
 
 
 router = DefaultRouter()
-
+router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'clients', ClientViewSet)
@@ -35,6 +35,9 @@ router.register(r'days', DayViewSet)
 router.register(r'employee_floors', EmployeeFloorViewSet)
 router.register(r'employee_days', EmployeeDayViewSet)
 router.register(r'client_info', ClientInfoViewSet)
+router.register(r'complex_rooms', ComplexRoomViewSet)
+router.register(r'nested_clients', NestedClientViewSet)
+
 
 urlpatterns = [    
     # URL для главной страницы

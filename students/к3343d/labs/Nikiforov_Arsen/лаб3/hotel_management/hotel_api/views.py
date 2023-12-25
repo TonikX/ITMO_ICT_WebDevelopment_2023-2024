@@ -16,12 +16,43 @@ from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from django.shortcuts import render
+from .models import Client, Room
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import CustomUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ComplexRoomSerializer, NestedClientSerializer
 from django.contrib.auth import authenticate, login
+from rest_framework import viewsets
+from .models import Floor
+from .serializers import FloorOccupancySerializer
+
+
+
+#это для статистики
+class FloorOccupancyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Floor.objects.all()
+    serializer_class = FloorOccupancySerializer
+
+
+
+
+
+
+class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Room.objects.filter(status='occupied').prefetch_related('clients', 'employee_floor_set')
+    serializer_class = ComplexRoomSerializer
+
+class NestedClientViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Client.objects.select_related('room', 'client_info')
+    serializer_class = NestedClientSerializer
+
+
+
+
+
+
+
 
 def alternative_login_view(request):
     if request.method == 'POST':
@@ -37,6 +68,7 @@ def alternative_login_view(request):
     # В случае GET-запроса или если аутентификация не удалась
     form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
+
 
 
 

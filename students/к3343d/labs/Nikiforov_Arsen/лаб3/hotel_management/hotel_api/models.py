@@ -35,6 +35,9 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     status = models.CharField(max_length=100, choices=ROOM_STATUSES)
 
+
+
+
     def __str__(self):
         return f"{self.get_room_type_display()} on Floor {self.floor.number}"
 
@@ -73,6 +76,8 @@ class Day(models.Model):
 class EmployeeFloor(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='employee_floor_set')  # связал с комнатами
+
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on Floor {self.floor.number}"

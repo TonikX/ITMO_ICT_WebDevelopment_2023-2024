@@ -111,14 +111,6 @@
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="./">URL Routes</a>
     <ul class="current">
-    <li class="toctree-l3"><a class="reference internal" href="#warrior">Warrior (Воин):</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#profession">Profession (Профессия):</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#skill">Skill (Умение):</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#skillofwarrior">SkillOfWarrior (Умение война):</a>
-    </li>
     </ul>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../serializers/">Serializers</a>
@@ -155,81 +147,60 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="modelspy">models.py</h1>
-<p>Этот код использует фреймворк Django для создания моделей данных. 
-Он определяет структуру базы данных для хранения информации о воинах, их профессиях и умениях.</p>
-<h2 id="warrior">Warrior (Воин):</h2>
-<ul>
-<li>Содержит информацию о воинах, такую как их имя, уровень, расса (студент, разработчик, руководитель), профессия и умения.</li>
-<li>Использует поле CharField для рассы, CharField для имени, IntegerField для уровня.</li>
-<li>Связан с профессиями и умениями через внешние ключи и многие ко многим отношения.</li>
-</ul>
-<h2 id="profession">Profession (Профессия):</h2>
-<ul>
-<li>Содержит информацию о профессиях воинов, такую как название и описание.</li>
-<li>Использует CharField для названия и TextField для описания.</li>
-</ul>
-<h2 id="skill">Skill (Умение):</h2>
-<ul>
-<li>Описывает умения, которыми владеют воины.</li>
-<li>Использует CharField для наименования умения.</li>
-</ul>
-<h2 id="skillofwarrior">SkillOfWarrior (Умение война):</h2>
-<ul>
-<li>Связывает воинов с их умениями и указывает уровень освоения умения.</li>
-<li>Использует внешние ключи для связи с воинами и умениями, а также IntegerField для уровня.</li>
-</ul>
-<p>Эти модели представляют схему БД для моего проекта, где воины имеют профессии и умения.</p>
-<pre><code>from django.db import models
-
-class Warrior(models.Model):
-   &quot;&quot;&quot;
-   Описание война
-   &quot;&quot;&quot;
-
-   race_types = (
-       ('s', 'student'),
-       ('d', 'developer'),
-       ('t', 'teamlead'),
-   )
-   race = models.CharField(max_length=1, choices=race_types, verbose_name='раса')
-   name = models.CharField(max_length=120, verbose_name='Имя')
-   level = models.IntegerField(verbose_name='Уровень', default=0)
-   skills = models.ManyToManyField('Skill', verbose_name='Умения', through='SkillOfWarrior',
-                                  related_name='warrior_skils')
-   profession = models.ForeignKey('Profession', on_delete=models.CASCADE, verbose_name='Профессия',
-                                  blank=True, null=True)
-
-
-class Profession(models.Model):
-   &quot;&quot;&quot;
-   Описание профессии
-   &quot;&quot;&quot;
-
-   title = models.CharField(max_length=120, verbose_name='Название')
-   description = models.TextField(verbose_name='Описание')
-
-
-class Skill(models.Model):
-   &quot;&quot;&quot;
-   Описание умений
-   &quot;&quot;&quot;
-
-   title = models.CharField(max_length=120, verbose_name='Наименование')
-
-   def __str__(self):
-       return self.title
-
-
-class SkillOfWarrior(models.Model):
-   &quot;&quot;&quot;
-   Описание умений война
-   &quot;&quot;&quot;
-
-   skill = models.ForeignKey('Skill', verbose_name='Умение', on_delete=models.CASCADE)
-   warrior = models.ForeignKey('Warrior', verbose_name='Воин', on_delete=models.CASCADE)
-   level = models.IntegerField(verbose_name='Уровень освоения умения')
+                <h3 id="urlspy">urls.py</h3>
+<h1 id="urlspy_1">Обзор urls.py</h1>
+<p>Файл <code>urls.py</code> отвечает за маршрутизацию в Django-приложении. Здесь определяются URL-адреса для различных представлений, включая те, что используются в REST API.</p>
+<h2 id="_1">Импорты</h2>
+<pre><code class="language-python">from django.urls import path, include, re_path
+from . import views
+from django.contrib.auth import views as auth_views
+from rest_framework.routers import DefaultRouter
+from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, 
+                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet)
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework.permissions import AllowAny
 </code></pre>
+<p>Здесь мы импортируем необходимые модули для маршрутизации, включая <code>path</code> и <code>include</code> из <code>django.urls</code>, а также <code>DefaultRouter</code> из <code>rest_framework.routers</code>.</p>
+<h2 id="api">Настройка роутера для API</h2>
+<p>Это маршрутизация в Django REST Framework для автоматического определения URL-адресов API на основе представлений. 
+В данном случае, создается объект DefaultRouter, к которому регистрируются ViewSet (наборы представлений) для моделей, такие как RoomViewSet, ClientViewSet, EmployeeViewSet и другие. 
+После этого, через urlpatterns эти URL-адреса включаются в основной URL-конфигурационный файл Django. 
+Маршрутизаторы в Django REST Framework позволяют автоматически создавать URL-адреса на основе зарегистрированных представлений.</p>
+<pre><code class="language-python">router = DefaultRouter()
+router.register(r'rooms', RoomViewSet)
+router.register(r'clients', ClientViewSet)
+router.register(r'employees', EmployeeViewSet)
+router.register(r'floors', FloorViewSet)
+router.register(r'days', DayViewSet)
+router.register(r'employee_floors', EmployeeFloorViewSet)
+router.register(r'employee_days', EmployeeDayViewSet)
+router.register(r'client_info', ClientInfoViewSet)
+</code></pre>
+<p><code>DefaultRouter</code> автоматически создает маршруты для CRUD-операций на основе представлений, созданных с помощью <code>viewsets</code> из Django REST Framework.</p>
+<h2 id="url-">URL-маршруты</h2>
+<pre><code class="language-python">urlpatterns = [    
+    path('', views.home, name='home'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('register/', views.register_view, name='register'),    
+    path('rooms/', views.rooms_list, name='rooms_list'),
+    path('clients/', views.clients_list, name='clients_list'),
+    path('employees/', views.employees_list, name='employees_list'),
+    path('floors/', views.floors_list, name='floors_list'),
+    path('client-info/', views.client_info_list, name='client_info_list'),
+    path('days/', views.days_list, name='days_list'),
+    path('employee-floors/', views.employee_floors_list, name='employee_floors_list'),
+    path('employee-days/', views.employee_days_list, name='employee_days_list'),
+    path('bookings/', views.bookings_list, name='bookings_list'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
+    path('api/', include(router.urls)),  # Пути API
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
+]
+</code></pre>
+<p><code>urlpatterns</code> определяет URL-адреса для приложения. Включены как стандартные представления Django, так и представления API, а также документация API с помощью <code>swagger</code> и <code>redoc</code>.</p>
               
             </div>
           </div><footer>

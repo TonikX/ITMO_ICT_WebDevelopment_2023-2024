@@ -61,7 +61,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, 
-                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet)
+                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet, NestedClientViewSet)
                     
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -93,6 +93,9 @@ router.register(r'days', DayViewSet)
 router.register(r'employee_floors', EmployeeFloorViewSet)
 router.register(r'employee_days', EmployeeDayViewSet)
 router.register(r'client_info', ClientInfoViewSet)
+router.register(r'complex_rooms', ComplexRoomViewSet)
+router.register(r'nested_clients', NestedClientViewSet)
+
 
 urlpatterns = [    
     # URL для главной страницы
@@ -136,12 +139,89 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 from rest_framework import serializers
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
-from rest_framework import serializers
 from .models import CustomUser, Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+        
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = '__all__'
+
+class ClientInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClientInfo
+        fields = '__all__'
+
+
+
+
+
+
+
+#Создание сериализатора для вложенного запроса:
+class NestedClientSerializer(serializers.ModelSerializer):
+    room = RoomSerializer(read_only=True)
+    client_info = ClientInfoSerializer(read_only=True)
+
+    class Meta:
+        model = Client
+        fields = ['id', 'room', 'client_info']
+
+
+"""""
+Получить список всех комнат, которые заняты, 
+вместе с информацией о клиентах, проживающих в них, 
+и сотрудниках, ответственных за уборку комнаты.
+"""""
+class ComplexRoomSerializer(serializers.ModelSerializer):
+    clients = NestedClientSerializer(many=True, read_only=True)
+    employees = EmployeeSerializer(source='employee_floor_set', many=True, read_only=True)
+
+    class Meta:
+        model = Room
+        fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 User = get_user_model()
 
@@ -156,15 +236,7 @@ class UserSerializer(serializers.ModelSerializer):
     
 
 
-class RoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        fields = '__all__'
 
-class ClientInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ClientInfo
-        fields = '__all__'
 
 class ClientSerializer(serializers.ModelSerializer):
     client_info = ClientInfoSerializer()
@@ -173,10 +245,18 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = '__all__'
 
-class EmployeeSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        client_info_data = validated_data.pop('client_info')
+        client_info = ClientInfo.objects.create(**client_info_data)
+        client = Client.objects.create(client_info=client_info, **validated_data)
+        return client
+
+
     class Meta:
-        model = Employee
+        model = Client
         fields = '__all__'
+
+
 
 class FloorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -249,6 +329,9 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     status = models.CharField(max_length=100, choices=ROOM_STATUSES)
 
+
+
+
     def __str__(self):
         return f"{self.get_room_type_display()} on Floor {self.floor.number}"
 
@@ -287,6 +370,8 @@ class Day(models.Model):
 class EmployeeFloor(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='employee_floor_set')  # связал с комнатами
+
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on Floor {self.floor.number}"
@@ -330,12 +415,29 @@ from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from django.shortcuts import render
+from .models import Client, Room
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import CustomUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ComplexRoomSerializer, NestedClientSerializer
 from django.contrib.auth import authenticate, login
+
+
+class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Room.objects.filter(status='occupied').prefetch_related('clients', 'employee_floor_set')
+    serializer_class = ComplexRoomSerializer
+
+class NestedClientViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Client.objects.select_related('room', 'client_info')
+    serializer_class = NestedClientSerializer
+
+
+
+
+
+
+
 
 def alternative_login_view(request):
     if request.method == 'POST':
@@ -351,6 +453,7 @@ def alternative_login_view(request):
     # В случае GET-запроса или если аутентификация не удалась
     form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
+
 
 
 
@@ -516,12 +619,60 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 <html>
 <head>
     <title>Rooms List</title>
+    <style>
+        /* Add your CSS styles here */
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        form {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            margin: 5px;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <a href="http://localhost:8000/" class="back-button">Back to Home</a>
+    
     <h1>Rooms List</h1>
 
     <form method="get">
-        <!-- Фильтр по типу комнаты -->
+        <!-- Filter by Room Type -->
         <label for="room_type">Room Type:</label>
         <select name="room_type" id="room_type">
             <option value="">--Select a Type--</option>
@@ -530,7 +681,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
             <option value="suite">Suite</option>
         </select>
     
-        <!-- Фильтр по статусу комнаты -->
+        <!-- Filter by Room Status -->
         <label for="room_status">Room Status:</label>
         <select name="room_status" id="room_status">
             <option value="">--Select a Status--</option>
@@ -541,10 +692,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     
         <input type="submit" value="Filter">
     </form>
-    
-    
-    
-    
 
     <table>
         <thead>
@@ -587,20 +734,25 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 <html>
 <head>
     <title>Hotel Management Menu</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Welcome to the Hotel Management System</h1>
-    <ul>
-        <li><a href="{% url 'rooms_list' %}">Rooms</a></li>
-        <li><a href="{% url 'clients_list' %}">Clients</a></li>
-        <li><a href="{% url 'employees_list' %}">Employees</a></li>
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-        {% endif %}
-    </ul>
-    
+    <header>
+        <h1>Welcome to the Hotel Management System</h1>
+    </header>
+
+    <nav class="menu">
+        <ul>
+            <li><a href="{% url 'rooms_list' %}">Rooms</a></li>
+            <li><a href="{% url 'clients_list' %}">Clients</a></li>
+            <li><a href="{% url 'employees_list' %}">Employees</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 </body>
 </html>
 
@@ -671,6 +823,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -899,3 +1052,26 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/forms.py
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('phone',)

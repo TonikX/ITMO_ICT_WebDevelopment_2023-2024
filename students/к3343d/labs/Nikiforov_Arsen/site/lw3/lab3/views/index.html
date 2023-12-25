@@ -224,8 +224,7 @@ class ClientInfoViewSet(viewsets.ModelViewSet):
     serializer_class = ClientInfoSerializer
 </code></pre>
 <p>Класс <code>RoomViewSet</code> и подобные ему являются частью REST API, обеспечивающей CRUD-операции над моделями.</p>
-<h3 id="_4">Другие пред</h3>
-<p>ставления</p>
+<h3 id="_4">Другие представления</h3>
 <pre><code class="language-python">def rooms_list(request):
     room_type_query = request.GET.get('room_type', '').strip()
     room_status_query = request.GET.get('room_status', '').strip()
