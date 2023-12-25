@@ -1,52 +1,130 @@
 from rest_framework import serializers
-from .models import Museum, Author, Set, Item, Foundation, Exhibition, ItemToExhibition, SetToFoundation
+from .models import *
 
 
 class MuseumSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Museum
-        fields = ['id', 'name', 'address', 'director']
+        fields = '__all__'
 
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
-        fields = ['id', 'name', 'birth_date', 'country']
+        fields = '__all__'
 
 
-class SetSerializer(serializers.ModelSerializer):
+class CardSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer()
+
     class Meta:
-        model = Set
-        fields = ['id', 'name', 'author']
+        model = Card
+        fields = '__all__'
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    card = CardSerializer()
+
     class Meta:
         model = Item
-        fields = ['id', 'name', 'inventory_number', 'set', 'author', 'creation_date', 'is_date_exact',
-                  'country', 'description', 'image']
+        fields = '__all__'
 
 
 class FoundationSerializer(serializers.ModelSerializer):
+    museum = MuseumSerializer()
+    card = CardSerializer(many=True)
+
     class Meta:
         model = Foundation
-        fields = ['id', 'name', 'address', 'museum', 'curator', 'set']
+        fields = '__all__'
 
 
 class ExhibitionSerializer(serializers.ModelSerializer):
+    museum = MuseumSerializer()
+    item = ItemSerializer(many=True)
+
     class Meta:
         model = Exhibition
-        fields = ['id', 'name', 'museum', 'description', 'contact_name', 'contact_phone', 'address', 'open_date',
-                  'close_date']
+        fields = '__all__'
 
 
 class ItemToExhibitionSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+    exhibition = ExhibitionSerializer()
+
     class Meta:
         model = ItemToExhibition
-        fields = ['id', 'item', 'exhibition', 'send_date', 'return_date', 'director_signature', 'curator_signature']
+        fields = '__all__'
 
 
-class SetToFoundationSerializer(serializers.ModelSerializer):
+class CardToFoundationSerializer(serializers.ModelSerializer):
+    card = CardSerializer()
+    foundation = FoundationSerializer()
+
     class Meta:
-        model = SetToFoundation
-        fields = ['id', 'set', 'foundation', 'send_date', 'return_date', 'director_signature', 'curator_signature']
+        model = CardToFoundation
+        fields = '__all__'
+
+
+class ItemCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+
+class CardCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Card
+        fields = '__all__'
+
+
+class ItemToExhibitionCreateSerializer(serializers.ModelSerializer):
+    item = ItemSerializer()
+    exhibition = ExhibitionSerializer()
+
+    class Meta:
+        model = ItemToExhibition
+        fields = ['id', 'item', 'exhibition', 'send_date', 'return_date']
+
+
+class CardToFoundationCreateSerializer(serializers.ModelSerializer):
+    card = CardSerializer()
+    foundation = FoundationSerializer()
+
+    class Meta:
+        model = CardToFoundation
+        fields = ['id', 'set', 'foundation', 'send_date', 'return_date']
+
+
+class FoundationExhibitionSerializer(serializers.ModelSerializer):
+    num_exhibitions = serializers.IntegerField()
+
+    class Meta:
+        model = Foundation
+        fields = ['id', 'name', 'num_exhibitions']
+
+
+class CardItemSerializer(serializers.ModelSerializer):
+    num_items = serializers.IntegerField()
+
+    class Meta:
+        model = Foundation
+        fields = ['id', 'name', 'num_items']
+
+
+class FoundationRatioSerializer(serializers.ModelSerializer):
+    percentage = serializers.IntegerField()
+
+    class Meta:
+        model = Foundation
+        fields = ['id', 'name', 'percentage']
+
+
+class ItemCommonExhibitionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'exhibition']

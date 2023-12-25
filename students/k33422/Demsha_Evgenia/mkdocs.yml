@@ -39,4 +39,11 @@ nav:
       - lab2/models.md
       - lab2/forms.md
       - lab2/views.md
-
+  - "Бекенд на django rest":
+      - lab3/task3-1.md
+      - lab3/description.md
+      - lab3/models.md
+      - lab3/serializers.md
+      - lab3/views.md
+      - lab3/urls.md
+      - lab3/auth.md
