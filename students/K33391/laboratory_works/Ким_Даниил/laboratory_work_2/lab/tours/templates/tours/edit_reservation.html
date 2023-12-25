@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактировать резервацию</title>
+</head>
+<body>
+    <h1>Редактировать резервацию</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'reservations_list' %}">Вернуться к списку резерваций</a>
+</body>
+</html>

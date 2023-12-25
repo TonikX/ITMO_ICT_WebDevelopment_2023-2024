@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список резерваций</title>
+</head>
+<body>
+    <h1>Список ваших резерваций</h1>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                {{ reservation.tour.title }}
+                {% if reservation.confirmed %}
+                    (Подтверждено)
+                {% else %}
+                    (Не подтверждено)
+                {% endif %}
+                <a href="{% url 'edit_reservation' reservation.id %}">Редактировать</a>
+                <a href="{% url 'delete_reservation' reservation.id %}">Удалить</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_reservation' %}">Создать новую резервацию</a>
+</body>
+</html>
