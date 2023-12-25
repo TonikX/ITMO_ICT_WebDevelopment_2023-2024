@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>Review</title>
+{% endblock %}
+
+{% block body %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Review of the tour: {{ tour_date.tour.name }}</h3>
+        {{ form.as_p }}
+        <input type="submit" value="Write">
+    </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>Reserved</title>
+{% endblock %}
+
+{% block body %}
+    <h3>You reserved {{ tour_date.tour.name }} for {{ tour_date.start_date }}</h3>
+    <p>Check your reservations in the profile page</p>
+{% endblock %}
