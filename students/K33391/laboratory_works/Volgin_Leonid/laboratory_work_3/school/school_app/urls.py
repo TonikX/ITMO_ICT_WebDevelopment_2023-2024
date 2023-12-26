@@ -55,4 +55,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/token', obtain_auth_token, name='token'),
     path('logout', LogOut.as_view()),
+
+
+    path('goodboy/<int:pk>/', GoodClassRetrieveView.as_view(), name='goodboy'),
 ]

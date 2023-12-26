@@ -34,7 +34,7 @@ class Subjects(models.Model):
         ('Literature','Литература')
     )
     teachers = models.ManyToManyField('Teachers', verbose_name='Учителя', through='Teachings',related_name='subject_teachers')
-    subject = models.CharField(max_length=50, choices=subject_types, verbose_name='Название', unique=True)
+    subject = models.CharField(max_length=50, choices=subject_types, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
 
 

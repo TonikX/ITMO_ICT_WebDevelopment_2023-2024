@@ -23,6 +23,12 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Students
         fields = '__all__'
 
+class GoodClassSerializer(serializers.ModelSerializer):
+    students_set = StudentSerializer(many=True)
+    class Meta:
+        model = Classes
+        fields = '__all__'
+
 class TeachingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teachings

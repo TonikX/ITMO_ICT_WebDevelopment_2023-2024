@@ -75,6 +75,12 @@ class ClassRetrieveView(generics.RetrieveAPIView):
     serializer_class = ClassSerializer
     permission_classes = [permissions.IsAuthenticated, ]
 
+
+class GoodClassRetrieveView(generics.RetrieveAPIView):
+    queryset = Classes.objects.all()
+    serializer_class = GoodClassSerializer
+    #permission_classes = [permissions.IsAuthenticated, ]
+
 class ClassCreateView(generics.CreateAPIView):
     queryset = Classes.objects.all()
     serializer_class = ClassSerializer
@@ -172,6 +178,7 @@ class TeachingDeleteView(generics.DestroyAPIView):
     queryset = Teachings.objects.all()
     serializer_class = TeachingSerializer
     permission_classes = [permissions.IsAuthenticated, ]
+
 
 
 
