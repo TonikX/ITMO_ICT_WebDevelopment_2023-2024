@@ -1,45 +1,78 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <nav class="navigation-links">
-      <router-link to="/registration">Регистрация</router-link>
-      <router-link to="/login">Вход</router-link>
-      <router-link to="/user-profile">Профиль пользователя</router-link>
-    </nav>
-    <router-view></router-view>
-    <RegistrationPage />
+  <div class="app-container">
+    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+    <div class="menu">
+      <h1>Добро пожаловать в наш отель!</h1>
+      <button @click="showComponent = 'login'">Вход</button>
+      <button @click="showComponent = 'registration'">Регистрация</button>
+    </div>
+    <component v-if="showComponent" :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
 import RegistrationPage from './components/RegistrationPage.vue';
+import LoginPage from './components/LoginPage.vue';
 
 export default {
   name: 'App',
-  components: {
-    RegistrationPage,
+  data() {
+    return {
+      showComponent: null
+    };
   },
+  computed: {
+    currentComponent() {
+      switch (this.showComponent) {
+        case 'login': return LoginPage;
+        case 'registration': return RegistrationPage;
+        default: return null;
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
-.navigation-links {
-  /* Стили для контейнера навигационных ссылок */
+.app-container {
   text-align: center;
+  background: linear-gradient(to right, #b4ffb0, #b19dff); 
+  min-height: 100vh;
+}
+
+.logo {
+  max-width: 220px;
+  margin: 20px auto;
+  height: auto;
+}
+
+
+
+
+.menu h1 {
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
-.navigation-links a {
-  /* Стили для самих ссылок */
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.navigation-links a:hover {
-  /* Стили для ссылок при наведении */
-  color: #007bff;
-  text-decoration: underline;
+button:hover {
+  background-color: #0056b3;
 }
 </style>

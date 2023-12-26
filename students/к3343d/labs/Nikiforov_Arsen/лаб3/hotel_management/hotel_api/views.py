@@ -3,33 +3,52 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo
-from rest_framework import viewsets
 from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer, DaySerializer, EmployeeFloorSerializer, EmployeeDaySerializer, ClientInfoSerializer
 from .forms import CustomUserCreationForm
-from rest_framework import viewsets
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
-from rest_framework import viewsets
-from rest_framework import viewsets
 from .models import CustomUser
-from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from django.shortcuts import render
-from .models import Client, Room
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import CustomUser
-from .serializers import UserSerializer, ComplexRoomSerializer, NestedClientSerializer
-from django.contrib.auth import authenticate, login
-from rest_framework import viewsets
+from .serializers import ComplexRoomSerializer, NestedClientSerializer
 from .models import Floor
 from .serializers import FloorOccupancySerializer
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 import json
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user = authenticate(username=data['username'], password=data['password'])
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error'}, status=401)
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+
+
+@csrf_exempt
+def api_login(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'status': 'success', 'username': username})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid credentials'}, status=401)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
 
 @csrf_exempt  # Отключение CSRF для данного view
 def register_user(request):
@@ -42,6 +61,11 @@ def register_user(request):
         )
         return JsonResponse({'id': user.id, 'username': user.username}, status=201)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+def login_redirect(request):
+    return redirect("http://localhost:8080/login")
+
 
 
 #это для статистики

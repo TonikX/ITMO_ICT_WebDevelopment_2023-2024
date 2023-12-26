@@ -15,7 +15,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 import { createApp } from 'vue'; 
 import App from './App.vue';
-import router from './router';
+import router from './router'; 
 
 const app = createApp(App);
 app.use(router);
@@ -37,28 +37,71 @@ app.mount('#app');
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/App.vue
 
 <template>
-  <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <router-link to="/registration">Регистрация</router-link>
-    <router-link to="/login">Вход</router-link>
-    <router-link to="/user-profile">Профиль пользователя</router-link>
-    <router-view></router-view>
-    
+  <div class="app-container">
+    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+    <div class="menu">
+      <button @click="showComponent = 'login'">Вход</button>
+      <button @click="showComponent = 'registration'">Регистрация</button>
+    </div>
 
-    <RegistrationPage />
+    <component v-if="showComponent" :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
 import RegistrationPage from './components/RegistrationPage.vue';
+import LoginPage from './components/LoginPage.vue';
 
 export default {
   name: 'App',
-  components: {
-    RegistrationPage,
+  data() {
+    return {
+      showComponent: null
+    };
   },
+  computed: {
+    currentComponent() {
+      switch (this.showComponent) {
+        case 'login': return LoginPage;
+        case 'registration': return RegistrationPage;
+        default: return null;
+      }
+    }
+  }
 };
 </script>
+
+<style scoped>
+.app-container {
+  text-align: center;
+}
+
+.logo {
+  max-width: 150px;
+  margin: 20px auto;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
 
 
 
@@ -74,7 +117,7 @@ export default {
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/router/index.js
 
-import { createRouter, createWebHistory } from 'vue-router'; // Используйте createRouter и createWebHistory
+import { createRouter, createWebHistory } from 'vue-router';
 import RegistrationPage from '../components/RegistrationPage.vue';
 import LoginPage from '../components/LoginPage.vue';
 import UserProfile from '../components/UserProfile.vue';
@@ -104,87 +147,75 @@ export default router;
 
 
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/HelloWorld.vue
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
 
 <template>
-  <!-- Содержимое компонента HelloWorld.vue -->
+  <div>
+    <h2>Регистрация</h2>
+    <form @submit.prevent="register">
+      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+      <input type="password" v-model="userData.password" placeholder="Пароль">
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      userData: {
+        username: '',
+        email: '',
+        password: ''
+      }
+    };
+  },
+  methods: {
+    async register() {
+      try {
+        const response = await fetch('http://localhost:8000/hotel_api/register/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.userData)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Успешная регистрация', data);
+          
+        } else {
+          console.error('Ошибка регистрации', response.statusText);
+        }
+      } catch (error) {
+        console.error('Ошибка сети', error);
+      }
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-/* Стили для компонента HelloWorld.vue */
+.navigation-links {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.navigation-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.navigation-links a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
 </style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
-
-<!-- src/components/RegistrationForm.vue -->
-
-<template>
-    <div>
-      <h2>Регистрация</h2>
-      <form @submit.prevent="register">
-        <label for="username">Имя пользователя:</label>
-        <input type="text" id="username" v-model="userData.username" required>
-  
-        <label for="email">Электронная почта:</label>
-        <input type="email" id="email" v-model="userData.email" required>
-  
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" v-model="userData.password" required>
-  
-        <button type="submit">Зарегистрироваться</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import { registerUser } from '@/api/auth.js';
-  
-  export default {
-    data() {
-      return {
-        userData: {
-          username: '',
-          email: '',
-          password: '',
-        },
-      };
-    },
-    methods: {
-      async register() {
-        try {
-          const response = await registerUser(this.userData);
-          console.log('Успешно зарегистрирован:', response.data);
-          
-        } catch (error) {
-          console.error('Ошибка регистрации:', error);
-          
-        }
-      },
-    },
-  };
-  </script>
-  
 
 
 
@@ -200,43 +231,170 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
 
 <template>
-    <div>
-      <h2>Вход</h2>
-      <form @submit.prevent="login">
-        <label for="email">Электронная почта:</label>
-        <input type="email" id="email" v-model="userData.email" required>
-  
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" v-model="userData.password" required>
-  
-        <button type="submit">Войти</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        userData: {
-          email: '',
-          password: '',
-        },
-      };
-    },
-    methods: {
-      async login() {
-        // Логика входа пользователя
-        try {
+  <!-- Existing template code -->
+  <form @submit.prevent="login">
+    <h2>Войти</h2>
+    <!-- form fields -->
+    <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+      <input type="password" v-model="userData.password" placeholder="Пароль">
+    <button type="submit">Войти</button>
+  </form>
+</template>
 
-          
-          console.log('Успешный вход:', this.userData.email);
-        } catch (error) {
-          // Обработка ошибок входа
-          console.error('Ошибка входа:', error);
-        }
+<script>
+export default {
+  data() {
+    return {
+      userData: {
+        username: '',
+        password: '',
       },
+      errorMessage: '',
+    };
+  },
+  methods: {
+  async login() {
+    try {
+      const response = await fetch('http://localhost:8000/hotel_api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.userData.username,
+          password: this.userData.password
+        })
+      });
+
+      if (response.ok) {
+        this.$router.push('/user-profile'); // Перенаправление на страницу профиля
+      } else {
+        this.errorMessage = 'Неверные учетные данные';
+      }
+    } catch (error) {
+      console.error('Ошибка сети', error);
+    }
+  }
+}
+
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
+
+<template>
+  <div>
+    <h2>Профиль пользователя</h2>
+    <div v-if="user">
+      <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+      <p><strong>Электронная почта:</strong> {{ user.email }}</p>
+      <!-- Другие данные пользователя -->
+    </div>
+  </div>
+</template>
+
+<script>
+import { state } from '@/store';
+
+export default {
+  computed: {
+    user() {
+      return state.user;
     },
-  };
-  </script>
-  
+  },
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
+
+// src/store.js если надо, то это файл состояния
+
+import { reactive } from 'vue';
+
+export const state = reactive({
+  user: null, // Здесь будут храниться данные о пользователе
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/package.json
+
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

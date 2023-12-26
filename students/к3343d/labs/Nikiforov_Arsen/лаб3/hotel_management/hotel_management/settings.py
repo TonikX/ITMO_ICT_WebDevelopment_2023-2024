@@ -25,18 +25,16 @@ SECRET_KEY = 'django-insecure-4o=g1ta42q5sx45l^9uz(e0+7jez!^w4ehcqxp6@tn(!suoke2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 LOGOUT_REDIRECT_URL = '/'
 
-
+CSRF_TRUSTED_ORIGINS = "http://localhost:8080", 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    # еще другие разрешенные источники...
+    "http://localhost:8080", 
 ]
-
-# Application definition
+ 
 LOGIN_REDIRECT_URL = '/hotel_api/'  
 
 
@@ -63,16 +61,17 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'hotel_api.utils.DisableCSRF',  
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'hotel_management.urls'
 

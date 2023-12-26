@@ -11,7 +11,8 @@ from rest_framework.permissions import AllowAny
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
-
+from .views import api_login
+from .views import login_view
 app_name = 'hotel_api'
 
 schema_view = get_schema_view(
@@ -42,6 +43,7 @@ router.register(r'nested_clients', NestedClientViewSet)
 
 urlpatterns = [    
     # URL для главной страницы
+    path('hotel_api/login/', login_view, name='login'),
     path('', views.home, name='home'),
     path('register/', views.register_user, name='register_user'),
     path('api/', include(router.urls)),
@@ -65,6 +67,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/login/', api_login, name='api_login'),
     
         
    

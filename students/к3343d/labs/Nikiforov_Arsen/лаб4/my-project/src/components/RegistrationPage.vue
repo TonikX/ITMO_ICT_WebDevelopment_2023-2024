@@ -1,12 +1,21 @@
 <template>
   <div>
     <h2>Регистрация</h2>
+    <!-- Форма регистрации -->
     <form @submit.prevent="register">
-      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-      <input type="email" v-model="userData.email" placeholder="Электронная почта">
-      <input type="password" v-model="userData.password" placeholder="Пароль">
+      <div class="input-wrapper">
+        <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+      </div>
+      <div class="input-wrapper">
+        <input type="password" v-model="userData.password" placeholder="Пароль">
+      </div>
       <button type="submit">Зарегистрироваться</button>
     </form>
+
+    <!-- Сообщение об успешной регистрации -->
+    <div v-if="registrationSuccess" class="success-message">
+      Регистрация прошла успешно! Теперь вы можете войти.
+    </div>
   </div>
 </template>
 
@@ -18,7 +27,8 @@ export default {
         username: '',
         email: '',
         password: ''
-      }
+      },
+      registrationSuccess: false, // Добавляем переменную для отслеживания успешной регистрации
     };
   },
   methods: {
@@ -35,7 +45,7 @@ export default {
         if (response.ok) {
           const data = await response.json();
           console.log('Успешная регистрация', data);
-          
+          this.registrationSuccess = true; // Устанавливаем успешную регистрацию в true
         } else {
           console.error('Ошибка регистрации', response.statusText);
         }
@@ -47,33 +57,30 @@ export default {
 };
 </script>
 
-
-
-
-  
-
-
 <style scoped>
-.registration-form {
-  max-width: 400px; /* ограничение максимальной ширины формы */
-  margin: 0 auto; /* центрирование формы */
-  padding: 20px; /* добавление внутренних отступов */
-  border: 1px solid #ccc; /* добавление границы */
-  border-radius: 10px; /* скругление углов */
+.navigation-links {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-
-.form-group {
-margin-bottom: 15px;
+.navigation-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
 }
 
-.form-group label,
-.form-group input {
-display: block;
-width: 100%;
+.navigation-links a:hover {
+  color: #007bff;
+  text-decoration: underline;
 }
 
-.form-group input {
-margin-top: 5px;
+.input-wrapper {
+  margin-bottom: 10px; /* Расстояние между полями ввода */
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
 }
 </style>
