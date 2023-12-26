@@ -59,6 +59,6 @@ urlpatterns = [
 
     path('goodboy/<int:pk>/', GoodClassRetrieveView.as_view(), name='goodboy'),
 
-    path('list_of_students/<int:klass>/', SpecialStudentListView.as_view(), name='list_of_students'),
+    path('list_of_students/<str:grade>/', SpecialStudentListView.as_view(), name='list_of_students'),
 
 ]

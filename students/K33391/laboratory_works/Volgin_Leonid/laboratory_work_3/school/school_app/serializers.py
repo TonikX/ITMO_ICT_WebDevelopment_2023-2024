@@ -48,6 +48,15 @@ class GradeSerializer(serializers.ModelSerializer):
         model = Grades
         fields = '__all__'
 
+
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    grades_set = GradeSerializer(many=True)
+    class Meta:
+        model = Students
+        fields = '__all__'
+
 class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedules

@@ -1,3 +1,4 @@
+from django.db.models import Min, Max
 from django.shortcuts import render
 
 # Create your views here.
@@ -213,9 +214,10 @@ class SubjectDeleteView(generics.DestroyAPIView):
 
 class SpecialStudentListView(generics.ListAPIView):
     serializer_class = StudentSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
     def get_queryset(self):
-       klass = self.kwargs['klass']
-       studs = Students.objects.filter(klass=klass)
+       grade = self.kwargs['grade']
+       studs = Students.objects.filter(grades__grade__contains = grade )
        return studs
 
 
