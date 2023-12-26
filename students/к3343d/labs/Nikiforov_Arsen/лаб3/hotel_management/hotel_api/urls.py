@@ -12,6 +12,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
 
+app_name = 'hotel_api'
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -42,6 +43,8 @@ router.register(r'nested_clients', NestedClientViewSet)
 urlpatterns = [    
     # URL для главной страницы
     path('', views.home, name='home'),
+    path('register/', views.register_user, name='register_user'),
+    path('api/', include(router.urls)),
     # URL для страницы входа
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('alternative_login/', views.alternative_login_view, name='alternative_login'),
@@ -62,5 +65,9 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    
+        
+   
+    
     
 ]

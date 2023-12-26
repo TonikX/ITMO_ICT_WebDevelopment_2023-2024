@@ -26,7 +26,22 @@ from django.contrib.auth import authenticate, login
 from rest_framework import viewsets
 from .models import Floor
 from .serializers import FloorOccupancySerializer
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
+@csrf_exempt  # Отключение CSRF для данного view
+def register_user(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user = User.objects.create_user(
+            username=data['username'], 
+            email=data['email'], 
+            password=data['password']
+        )
+        return JsonResponse({'id': user.id, 'username': user.username}, status=201)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 #это для статистики

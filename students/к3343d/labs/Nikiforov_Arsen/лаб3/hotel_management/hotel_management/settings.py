@@ -28,8 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGOUT_REDIRECT_URL = '/'
+
+
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",  
+    "http://localhost:8080",
+    # еще другие разрешенные источники...
 ]
 
 # Application definition
