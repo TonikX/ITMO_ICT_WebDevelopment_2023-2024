@@ -20,6 +20,12 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 @csrf_exempt
 def login_view(request):
@@ -34,20 +40,25 @@ def login_view(request):
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
 
-
 @csrf_exempt
 def api_login(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user)
-            return JsonResponse({'status': 'success', 'username': username})
+            refresh = RefreshToken.for_user(user)
+            return JsonResponse({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
         else:
-            return JsonResponse({'status': 'error', 'message': 'Invalid credentials'}, status=401)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+            return JsonResponse({'message': 'Неверные учетные данные'}, status=401)
+    return JsonResponse({'message': 'Неверный запрос'}, status=400)
+
+
+
 
 
 @csrf_exempt  # Отключение CSRF для данного view

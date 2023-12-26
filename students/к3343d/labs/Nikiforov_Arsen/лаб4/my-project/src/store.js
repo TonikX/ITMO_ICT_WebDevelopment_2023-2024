@@ -1,14 +1,20 @@
-import { reactive } from 'vue';
+// store.js
+import { createStore } from 'vuex';
 
-export const state = reactive({
-  user: null, // Здесь будут храниться данные о пользователе
-});
-
-export const mutations = {
-  setUser(state, user) {
-    state.user = user;
+export default createStore({
+  state: {
+    user: null,
   },
-  clearUser(state) {
-    state.user = null;
-  }
-};
+  mutations: {
+    setUser(state, userData) {
+      state.user = userData;
+    },
+    clearUser(state) {
+      state.user = null;
+    },
+  },
+  getters: {
+    isAuthenticated: state => !!state.user,
+    user: state => state.user,
+  },
+});

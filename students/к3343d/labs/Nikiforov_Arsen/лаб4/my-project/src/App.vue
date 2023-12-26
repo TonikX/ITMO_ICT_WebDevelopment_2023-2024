@@ -16,6 +16,10 @@ import LoginPage from './components/LoginPage.vue';
 
 export default {
   name: 'App',
+  components: {
+    RegistrationPage,
+    LoginPage
+  },
   data() {
     return {
       showComponent: null
@@ -41,13 +45,9 @@ export default {
 }
 
 .logo {
-  max-width: 220px;
+  max-width: 150px;
   margin: 20px auto;
-  height: auto;
 }
-
-
-
 
 .menu h1 {
   color: #fff;

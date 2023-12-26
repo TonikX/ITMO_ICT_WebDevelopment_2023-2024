@@ -15,11 +15,23 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 import { createApp } from 'vue'; 
 import App from './App.vue';
-import router from './router'; 
+import router from './router';
+import store from './store';
+import axios from 'axios';
+import { VueAxios } from 'vue-axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BootstrapVue3 from 'bootstrap-vue-3';
 
+// Создание экземпляра приложения
 const app = createApp(App);
-app.use(router);
 
+// Использование плагинов
+app.use(router);
+app.use(store);
+app.use(BootstrapVue3); // Использование BootstrapVue3 для Vue 3
+app.use(VueAxios, axios);
+
+// Монтирование приложения
 app.mount('#app');
 
 
@@ -40,10 +52,10 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
   <div class="app-container">
     <img alt="Vue logo" src="./assets/logo.png" class="logo">
     <div class="menu">
+      <h1>Добро пожаловать в наш отель!</h1>
       <button @click="showComponent = 'login'">Вход</button>
       <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
-
     <component v-if="showComponent" :is="currentComponent"></component>
   </div>
 </template>
@@ -54,6 +66,10 @@ import LoginPage from './components/LoginPage.vue';
 
 export default {
   name: 'App',
+  components: {
+    RegistrationPage,
+    LoginPage
+  },
   data() {
     return {
       showComponent: null
@@ -74,6 +90,8 @@ export default {
 <style scoped>
 .app-container {
   text-align: center;
+  background: linear-gradient(to right, #b4ffb0, #b19dff); 
+  min-height: 100vh;
 }
 
 .logo {
@@ -81,15 +99,21 @@ export default {
   margin: 20px auto;
 }
 
+.menu h1 {
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+}
+
 .menu {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
 button {
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
   background-color: #007bff;
   color: white;
@@ -126,6 +150,7 @@ const routes = [
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },
+  // другие маршруты...
 ];
 
 const router = createRouter({
@@ -152,11 +177,21 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 <template>
   <div>
     <h2>Регистрация</h2>
+    <!-- Форма регистрации -->
     <form @submit.prevent="register">
-      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-      <input type="password" v-model="userData.password" placeholder="Пароль">
+      <div class="input-wrapper">
+        <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+      </div>
+      <div class="input-wrapper">
+        <input type="password" v-model="userData.password" placeholder="Пароль">
+      </div>
       <button type="submit">Зарегистрироваться</button>
     </form>
+
+    <!-- Сообщение об успешной регистрации -->
+    <div v-if="registrationSuccess" class="success-message">
+      Регистрация прошла успешно! Теперь вы можете войти.
+    </div>
   </div>
 </template>
 
@@ -168,7 +203,8 @@ export default {
         username: '',
         email: '',
         password: ''
-      }
+      },
+      registrationSuccess: false, // Добавляем переменную для отслеживания успешной регистрации
     };
   },
   methods: {
@@ -185,7 +221,7 @@ export default {
         if (response.ok) {
           const data = await response.json();
           console.log('Успешная регистрация', data);
-          
+          this.registrationSuccess = true; // Устанавливаем успешную регистрацию в true
         } else {
           console.error('Ошибка регистрации', response.statusText);
         }
@@ -196,6 +232,157 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.navigation-links {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.navigation-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.navigation-links a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.input-wrapper {
+  margin-bottom: 10px; /* Расстояние между полями ввода */
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
+
+<template>
+  <form @submit.prevent="login">
+    <h2>Войти</h2>
+    <div class="input-wrapper">
+      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+    </div>
+    <div class="input-wrapper">
+      <input type="password" v-model="userData.password" placeholder="Пароль">
+    </div>
+    <button type="submit">Войти</button>
+    <div v-if="token">Токен: {{ token }}</div>
+  </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      userData: {
+        username: '',
+        password: '',
+      },
+      errorMessage: '',
+      token: '', // Состояние для хранения токена
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await fetch('http://localhost:8000/hotel_api/alternative_login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.userData.username,
+            password: this.userData.password
+          })
+        });
+
+        if (response.ok) {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            this.token = data.token; // Сохраняем токен в локальном состоянии
+            
+          } else {
+            console.error('Получен не JSON ответ', await response.text());
+          }
+        } else {
+          this.errorMessage = 'Неверные учетные данные';
+        }
+      } catch (error) {
+        console.error('Ошибка сети', error);
+      }
+    },
+  }
+};
+</script>
+
+<style>
+.input-wrapper {
+  margin-bottom: 10px; /* Расстояние между полями ввода */
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
+
+<template>
+  <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
+  <div class="navigation-links">
+    <router-link to="/rooms">Комнаты</router-link>
+    <router-link to="/clients">Клиенты</router-link>
+    <router-link to="/employees">Сотрудники</router-link>
+    <button @click="logout">Выйти</button>
+  </div>
+</template>
+
+<script>
+export default {
+  computed: {
+    userName() {
+      // Здесь мы предполагаем, что у вас есть данные пользователя в состоянии Vuex
+      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit('clearUser'); // Очищаем данные пользователя в хранилище
+      this.$router.push('/login'); // Перенаправляем на страницу входа
+    }
+  }
+};
+</script>
+
+
 
 <style scoped>
 .navigation-links {
@@ -227,118 +414,27 @@ export default {
 
 
 
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
-
-<template>
-  <!-- Existing template code -->
-  <form @submit.prevent="login">
-    <h2>Войти</h2>
-    <!-- form fields -->
-    <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-      <input type="password" v-model="userData.password" placeholder="Пароль">
-    <button type="submit">Войти</button>
-  </form>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      userData: {
-        username: '',
-        password: '',
-      },
-      errorMessage: '',
-    };
-  },
-  methods: {
-  async login() {
-    try {
-      const response = await fetch('http://localhost:8000/hotel_api/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.userData.username,
-          password: this.userData.password
-        })
-      });
-
-      if (response.ok) {
-        this.$router.push('/user-profile'); // Перенаправление на страницу профиля
-      } else {
-        this.errorMessage = 'Неверные учетные данные';
-      }
-    } catch (error) {
-      console.error('Ошибка сети', error);
-    }
-  }
-}
-
-};
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
-
-<template>
-  <div>
-    <h2>Профиль пользователя</h2>
-    <div v-if="user">
-      <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
-      <p><strong>Электронная почта:</strong> {{ user.email }}</p>
-      <!-- Другие данные пользователя -->
-    </div>
-  </div>
-</template>
-
-<script>
-import { state } from '@/store';
-
-export default {
-  computed: {
-    user() {
-      return state.user;
-    },
-  },
-};
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
 
-// src/store.js если надо, то это файл состояния
+// store.js
+import { createStore } from 'vuex';
 
-import { reactive } from 'vue';
-
-export const state = reactive({
-  user: null, // Здесь будут храниться данные о пользователе
+export default createStore({
+  state: {
+    user: null,
+  },
+  mutations: {
+    setUser(state, userData) {
+      state.user = userData;
+    },
+    clearUser(state) {
+      state.user = null;
+    },
+  },
+  getters: {
+    isAuthenticated: state => !!state.user,
+    user: state => state.user,
+  },
 });
 
 
@@ -365,8 +461,12 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
+    "bootstrap": "^5.3.2",
+    "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-axios": "^3.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -398,3 +498,38 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     "not ie 11"
   ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
+
+// store.js
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {
+    user: null,
+  },
+  mutations: {
+    setUser(state, userData) {
+      state.user = userData;
+    },
+    clearUser(state) {
+      state.user = null;
+    },
+  },
+  getters: {
+    isAuthenticated: state => !!state.user,
+    user: state => state.user,
+  },
+});
