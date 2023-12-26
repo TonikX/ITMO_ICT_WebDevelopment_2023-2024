@@ -79,7 +79,9 @@ class ClassRetrieveView(generics.RetrieveAPIView):
 class GoodClassRetrieveView(generics.RetrieveAPIView):
     queryset = Classes.objects.all()
     serializer_class = GoodClassSerializer
-    #permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, ]
+
+
 
 class ClassCreateView(generics.CreateAPIView):
     queryset = Classes.objects.all()
@@ -102,6 +104,7 @@ class StudentListView(generics.ListAPIView):
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
     permission_classes = [permissions.IsAuthenticated, ]
+
 
 class StudentRetrieveView(generics.RetrieveAPIView):
     queryset = Students.objects.all()
@@ -208,6 +211,12 @@ class SubjectDeleteView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
 
 
+class SpecialStudentListView(generics.ListAPIView):
+    serializer_class = StudentSerializer
+    def get_queryset(self):
+       klass = self.kwargs['klass']
+       studs = Students.objects.filter(klass=klass)
+       return studs
 
 
 class GradeListView(generics.ListAPIView):
