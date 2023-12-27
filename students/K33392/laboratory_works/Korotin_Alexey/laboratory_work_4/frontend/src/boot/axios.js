@@ -1,6 +1,8 @@
 import { boot } from "quasar/wrappers";
 import axios from "axios";
 import { useAuthStore } from "@/stores/authStore";
+import router from "@/router";
+
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a
@@ -21,11 +23,20 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
     (r) => r,
     async (error) => {
-        if (error.response.status === 401) {
-            const auth = useAuthStore();
+        const config = error.config;
+        const auth = useAuthStore();
+        if (error.response.status === 401 && config.retried !== null) {
             auth.refresh();
+            config.retried = true;
             return api(error.config);
         }
+        if (config.retried) {
+            auth.logout();
+            const router = router();
+            router.push({path: '/auth/login'});
+        }
+
+
 
         return error;
     }
