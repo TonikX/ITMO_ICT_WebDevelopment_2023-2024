@@ -1,13 +1,46 @@
 <template>
     <q-page class="bg-primary" padding>
+        <q-dialog v-model="modal">
+            <q-card class="bg-primary">
+                <q-card-section>
+                    <div class="text text-h6">Create cage</div>
+                </q-card-section>
+
+                <q-separator />
+                <q-form >
+                    <q-card-section style="max-height: 50vh" class="scroll">
+                        <q-input label-color="white" label="Name" placeholder="Facility name" input-class="input-field"
+                            type="text" ></q-input>
+                        <q-input label-color="white" label="Longitude" placeholder="Facility longitude" input-class="input-field"
+                            type="number" ></q-input>
+                        <q-input label-color="white" label="Latitude" placeholder="Facility latitude" input-class="input-field"
+                            type="number"></q-input>
+
+                    </q-card-section>
+
+                    <q-separator />
+
+                    <q-card-actions align="right">
+                        <q-btn flat label="Create" type="submit" color="secondary" v-close-popup />
+                        <q-btn flat label="Close" color="secondary" v-close-popup  />
+                    </q-card-actions>
+                </q-form>
+            </q-card>
+        </q-dialog>
         <div class="column">
             <q-select label-color="primary" bg-color="secondary" v-model="facility" :options="options" label="Facility"
                 filled dropdown-icon="img:src/assets/icons.svg#facility" options-dense />
         </div>
-        <h6 class="text">Cages</h6>
+        <div class="row justify-between flex-center q-mt-xl">
+            <div class="text text-h6 ">Cages</div>
+            <div>
+                <q-btn color="secondary" text-color="primary" icon="add" label="Add" @click="modal = true;" />
+            </div>
+        </div>
         <div class="row">
             <CageCard v-for="cage in filteredCages" v-bind:key="cage.id" :id="cage.id" :row="cage.row" :column="cage.column"
-                :responsible="cage.responsible" :facility="cage.facility" class="border-hover"></CageCard>
+                :responsible="cage.responsible" :facility="cage.facility" class="border-hover"
+                @click="$router.push({ path: `/cages/${cage.id}` })"></CageCard>
         </div>
     </q-page>
 </template>
@@ -46,9 +79,8 @@ export default {
         ...mapActions(useCageStore, ['fetchAll'])
     },
 
-    async beforeMount() {
+    async mounted() {
         await this.fetchAll();
-        this.filteredCages = this.cages;
     },
 
     components: { CageCard }

@@ -19,3 +19,7 @@
     color: $text !important;
     appearance: textfield;
 }
+
+.active {
+    stroke: $secondary !important;
+}

@@ -39,6 +39,22 @@ const routes = [
         component: MainLayout,
     },
     {
+        path: "/staff",
+        component: MainLayout,
+        children: [
+            {
+                path: "",
+                component: () => import("@/pages/staff/AllPage.vue"),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: ":username",
+                component: () => import("@/pages/staff/StaffPage.vue"),
+                meta: { requiresAuth: true },
+            },
+        ],
+    },
+    {
         path: "/statistics",
         component: MainLayout,
         children: [

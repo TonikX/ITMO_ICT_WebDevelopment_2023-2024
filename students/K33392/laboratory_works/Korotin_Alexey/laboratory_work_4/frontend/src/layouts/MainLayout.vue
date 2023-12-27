@@ -10,6 +10,7 @@
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/facilities" label="Facilities" />
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/cages" label="Cages" />
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/chicken" label="Chicken" />
+          <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/staff" label="Staff" />
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/statistics" label="Stats" />
         </q-tabs>
       </q-toolbar>

@@ -5,17 +5,40 @@
             <q-btn color="secondary" text-color="primary" class="text" icon="delete" label="Delete" @click="onDelete" />
         </div>
         <div class="column flex-center">
-            <q-form @submit.prevent="editFacility" ref="facilityForm">
-                <q-input label-color="white" label="Name" placeholder="Facility name" input-class="input-field" type="text"
-                    v-model="facility.name"></q-input>
-                <q-input label-color="white" label="Longitude" placeholder="Facility longitude" input-class="input-field"
-                    type="number" v-model="facility._longitude"></q-input>
-                <q-input label-color="white" label="Latitude" placeholder="Facility latitude" input-class="input-field"
-                    type="number" v-model="facility._latitude"></q-input>
-
-                <q-btn flat label="Edit" type="submit" color="secondary" v-close-popup />
-            </q-form>
-
+            <div class="form-item text row justify-between fit q-mb-md">
+                <div class="item-label">Name</div>
+                <div class="item-value">{{ facility.name }}</div>
+                <q-popup-edit v-model="facility.name" auto-save v-slot="scope">
+                    <q-input v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
+                        <template v-slot:prepend>
+                            <q-icon name="edit" />
+                        </template>
+                    </q-input>
+                </q-popup-edit>
+            </div>
+            <div class="form-item text row justify-between fit q-mb-md">
+                <div class="item-label">Longitude</div>
+                <div class="item-value">{{ facility._longitude }} deg</div>
+                <q-popup-edit v-model="facility._longitude" auto-save v-slot="scope">
+                    <q-input type="number" v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
+                        <template v-slot:prepend>
+                            <q-icon name="edit" />
+                        </template>
+                    </q-input>
+                </q-popup-edit>
+            </div>
+            <div class="form-item text row justify-between fit q-mb-md">
+                <div class="item-label">Latitude</div>
+                <div class="item-value">{{ facility._latitude }} deg</div>
+                <q-popup-edit v-model="facility._latitude" auto-save v-slot="scope">
+                    <q-input type="number" v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
+                        <template v-slot:prepend>
+                            <q-icon name="edit" />
+                        </template>
+                    </q-input>
+                </q-popup-edit>
+            </div>
+            <q-btn color="secondary" icon="edit" label="Edit" @click="editFacility" flat />
         </div>
     </q-page>
 </template>
@@ -66,4 +89,20 @@ export default {
 </script>
 <style lang="scss">
 @import '@/css/app.scss';
+
+.form-item {
+    width: 50vw;
+    max-width: 350px;
+    font-size: 20px;
+}
+
+.item-label {
+    color: $secondary;
+}
+
+.item-value {
+    text-decoration: underline;
+    text-underline-offset: 0.5rem;
+    cursor: pointer;
+}
 </style>
