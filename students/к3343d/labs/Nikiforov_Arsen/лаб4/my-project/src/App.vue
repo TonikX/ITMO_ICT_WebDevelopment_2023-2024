@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <img alt="Vue logo" src="./assets/logo.png" class="logo">
-    <div class="menu">
+    <div class="menu" v-if="showButtons">
       <h1>Добро пожаловать в наш отель!</h1>
       <button @click="showComponent = 'login'">Вход</button>
       <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
     <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
     <RegistrationPage v-if="showComponent === 'registration'" />
-    <UserProfile v-if="showComponent === 'userProfile'" />
+    <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
   </div>
 </template>
 
@@ -26,12 +26,18 @@ export default {
   },
   data() {
     return {
-      showComponent: null
+      showComponent: null,
+      showButtons: true,
     };
   },
   methods: {
     showUserProfile() {
       this.showComponent = 'userProfile';
+      this.showButtons = false;
+    },
+    showMainButtons() {
+      this.showComponent = null;
+      this.showButtons = true;
     }
   }
 };

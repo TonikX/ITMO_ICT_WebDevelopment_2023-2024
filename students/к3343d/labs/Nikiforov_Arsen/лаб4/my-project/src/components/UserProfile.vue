@@ -5,7 +5,7 @@
       <router-link to="/rooms">Комнаты</router-link>
       <router-link to="/clients">Клиенты</router-link>
       <router-link to="/employees">Сотрудники</router-link>
-      <button @click="logout">Выйти</button>
+      <button @click="emitBack">Назад</button>
     </div>
   </div>
 </template>
@@ -14,14 +14,16 @@
 export default {
   computed: {
     userName() {
-      // Здесь мы предполагаем, что у вас есть данные пользователя в состоянии Vuex
       return this.$store.state.user ? this.$store.state.user.username : 'Guest';
     }
   },
   methods: {
     logout() {
-      this.$store.commit('clearUser'); // Очищаем данные пользователя в хранилище
-      this.$router.push('/login'); // Перенаправляем на страницу входа
+      this.$store.commit('clearUser');
+      this.$router.push('/login');
+    },
+    emitBack() {
+      this.$emit('go-back');
     }
   }
 };
@@ -33,14 +35,14 @@ export default {
   margin-bottom: 20px;
 }
 
-.navigation-links a {
+.navigation-links a, .navigation-links button {
   margin: 0 10px;
   text-decoration: none;
   color: #333;
   font-weight: bold;
 }
 
-.navigation-links a:hover {
+.navigation-links a:hover, .navigation-links button:hover {
   color: #007bff;
   text-decoration: underline;
 }
