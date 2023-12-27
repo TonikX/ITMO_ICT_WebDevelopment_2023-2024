@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm # TODO: JobForm, MyUserCreationForm
 
 from projects.models import File, ProjectTopic, Project, GradeReport, \
 ProjectOfUser, Teacher, Student, Grade, ProjectMeeting, Meeting
@@ -224,3 +227,55 @@ class MeetingCreateAPIView(generics.CreateAPIView):
    serializer_class = MeetingSerializer
    queryset = Meeting.objects.all()
    permission_classes = [permissions.IsAdminUser, IsOwnerOrReadOnly]
+
+# Home
+def home(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    projects = Project.objects.filter(
+        # Q(projectofuser__projecttopic__name__icontains=q) | TODO:
+        Q(name__icontains=q) |
+        Q(description__icontains=q)
+    )
+    for project in projects: 
+        project.__dict__['participant_count'] = ProjectOfUser.objects.filter(project_field=project).count()
+        project.__dict__['participants'] = [match.user for match in ProjectOfUser.objects.filter(project_field=project)]
+
+    topics = ProjectTopic.objects.all()[0:5]
+    project_count = projects.count()
+    project_meetings = ProjectMeeting.objects.filter(
+        Q(name__icontains=q))[0:3] # Тут нужно по топику # TODO: 
+
+    # project_to_teacher = get_project_to_teacher(projects)  
+    # pc = ParticipantCount(projects)
+    context = {'projects': projects, 
+               # 'project_to_teacher': project_to_teacher, 
+               'topics': topics,
+               'project_count': project_count, 
+               'project_meetings': project_meetings}
+               # 'participant_count': pc}
+    
+
+    return render(request, 'base/home.html', context)
+
+@login_required(login_url='login')
+def updateUser(request):
+    user = request.user
+    form = UserForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk=user.id)
+
+    return render(request, 'base/update-user.html', {'form': form})
+
+def topicsPage(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = ProjectTopic.objects.filter(name__icontains=q)
+    return render(request, 'base/topics.html', {'topics': topics})
+
+def activityPage(request):
+    project_meetings = ProjectMeeting.objects.all()
+    return render(request, 'base/activity.html', {'project_meetings': project_meetings})

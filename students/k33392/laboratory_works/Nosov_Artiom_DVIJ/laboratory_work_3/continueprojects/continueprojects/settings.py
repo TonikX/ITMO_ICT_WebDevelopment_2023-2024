@@ -72,7 +72,9 @@ ROOT_URLCONF = 'continueprojects.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,6 +140,10 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/Images/'
 
 MEDIA_ROOT = BASE_DIR / STATIC_URL / MEDIA_URL
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

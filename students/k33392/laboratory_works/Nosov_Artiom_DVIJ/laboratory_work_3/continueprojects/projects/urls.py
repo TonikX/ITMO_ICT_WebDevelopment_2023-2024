@@ -6,6 +6,17 @@ app_name = "projects"
 
 
 urlpatterns = [
+    path('', home, name="home"),
+
+    path('update-user/', updateUser, name="update-user"),
+    path('topics/', topicsPage, name="topics"),
+
+    path('activity/', activityPage, name="activity"),
+
+    # path('create-job/', createJob, name="create-job"), TODO
+    # path('update-job/<str:pk>/', updateJob, name="update-job"),
+    # path('delete-job/<str:pk>/', deleteJob, name="delete-job"),
+    # path('delete-message/<str:pk>/', deleteMessage, name="delete-message"),
     # File
     path('file/create/', FileCreateAPIView.as_view()),
     path('file/<str:pk>/', FileListAPIView.as_view()),
