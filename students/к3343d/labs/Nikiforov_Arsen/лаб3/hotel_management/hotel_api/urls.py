@@ -13,6 +13,10 @@ from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
 from .views import api_login
 from .views import login_view
+from .views import generate_token
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 app_name = 'hotel_api'
 
 schema_view = get_schema_view(
@@ -42,6 +46,8 @@ router.register(r'nested_clients', NestedClientViewSet)
 
 
 urlpatterns = [    
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/', generate_token, name='generate_token'),
     # URL для главной страницы
     path('hotel_api/login/', login_view, name='login'),
     path('', views.home, name='home'),
@@ -68,7 +74,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/login/', api_login, name='api_login'),
-    
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
         
    
     

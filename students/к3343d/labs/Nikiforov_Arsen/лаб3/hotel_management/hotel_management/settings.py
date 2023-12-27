@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta 
+
+ACCESS_TOKEN_LIFETIME = timedelta(minutes=60)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,7 +60,7 @@ INSTALLED_APPS = [
     'djoser',
     'drf_yasg',
     'corsheaders',
-
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -139,8 +143,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -162,6 +164,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
     ),
 }
 
@@ -185,3 +188,22 @@ AUTH_USER_MODEL = 'hotel_api.CustomUser'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# settings.py
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_AFTER_LIFETIME': timedelta(days=7),
+    'SLIDING_TOKEN_REFRESH_SLIDING_LIFETIME': timedelta(days=15),
+    'SLIDING_TOKEN_SLIDING_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_TYPE': 'sliding',
+    'SLIDING_TOKEN_REFRESH_ROTATE': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+
+}

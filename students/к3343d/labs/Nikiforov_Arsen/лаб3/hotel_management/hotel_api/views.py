@@ -26,6 +26,24 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 import json
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_token(request):
+    user = request.user
+    refresh = RefreshToken.for_user(user)
+    refresh.access_token.set_exp(timezone.now() + SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
+    access_token = str(refresh.access_token)
+    return Response({'access_token': access_token})
+
+
+
 
 @csrf_exempt
 def login_view(request):

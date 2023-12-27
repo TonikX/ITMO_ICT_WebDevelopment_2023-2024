@@ -1,16 +1,35 @@
 {% load static %}
 
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script>
+        async function loginWithToken() {
+            const token = document.getElementById('token').value;
+            try {
+                const response = await fetch('/home', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    // Перенаправление на страницу /home
+                    window.location.href = 'http://localhost:8000/home/';
+                } else {
+                    alert("Ошибка аутентификации");
+                }
+            } catch (error) {
+                console.error('Ошибка сети', error);
+            }
+        }
+    </script>
+    
 </head>
 <body>
+    <!-- Форма для авторизации с использованием имени пользователя и пароля -->
     <h2>Login</h2>
     <form method="post" action="{% url 'hotel_api:alternative_login' %}">
         {% csrf_token %}
@@ -18,12 +37,12 @@
         <input type="submit" value="Login">
     </form>
 
-    <!-- Кнопка для авторизации без токена -->
-    <form method="post" action="{% url 'hotel_api:alternative_login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Авторизация без токена">
-    </form>
+    <!-- Форма для авторизации через токен -->
+    <h2>Авторизация через токен</h2>
+    <div>
+        <input type="text" id="token" placeholder="Введите токен">
+        <button type="button" onclick="loginWithToken()">Войти с токеном</button>
+    </div>
 
     <!-- Кнопка регистрации -->
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>

@@ -16,22 +16,25 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 import { createApp } from 'vue'; 
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store'; //  хранилище Vuex
 import axios from 'axios';
 import { VueAxios } from 'vue-axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapVue3 from 'bootstrap-vue-3';
 
-// Создание экземпляра приложения
 const app = createApp(App);
 
-// Использование плагинов
 app.use(router);
-app.use(store);
-app.use(BootstrapVue3); // Использование BootstrapVue3 для Vue 3
+app.use(store); // Vuex в приложении
+app.use(BootstrapVue3);
 app.use(VueAxios, axios);
 
-// Монтирование приложения
+// Проверка localStorage на наличие токена и его установка в состояние Vuex
+const userToken = localStorage.getItem('userToken');
+if (userToken) {
+  store.commit('setUser', { token: userToken });
+}
+
 app.mount('#app');
 
 
@@ -150,6 +153,7 @@ const routes = [
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },
+  
   // другие маршруты...
 ];
 
@@ -284,10 +288,11 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <div class="input-wrapper">
       <input type="password" v-model="userData.password" placeholder="Пароль">
     </div>
-    <button type="submit">Войти</button>
+    <button type="submit">Получить токен</button>
     <div v-if="token">Токен: {{ token }}</div>
   </form>
 </template>
+
 
 <script>
 export default {
@@ -298,39 +303,31 @@ export default {
         password: '',
       },
       errorMessage: '',
-      token: '', // Состояние для хранения токена
+      token: '',
     };
   },
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:8000/hotel_api/alternative_login/', {
+        const response = await fetch('http://localhost:8000/hotel_api/api/login/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            username: this.userData.username,
-            password: this.userData.password
-          })
+          body: JSON.stringify(this.userData)
         });
 
         if (response.ok) {
-          const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            this.token = data.token; // Сохраняем токен в локальном состоянии
-            
-          } else {
-            console.error('Получен не JSON ответ', await response.text());
-          }
+          const data = await response.json();
+          this.token = data.access;
+          localStorage.setItem('userToken', data.access);
         } else {
           this.errorMessage = 'Неверные учетные данные';
         }
       } catch (error) {
         console.error('Ошибка сети', error);
       }
-    },
+    }
   }
 };
 </script>
@@ -356,12 +353,14 @@ export default {
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
 
 <template>
-  <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
-  <div class="navigation-links">
-    <router-link to="/rooms">Комнаты</router-link>
-    <router-link to="/clients">Клиенты</router-link>
-    <router-link to="/employees">Сотрудники</router-link>
-    <button @click="logout">Выйти</button>
+  <div>
+    <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
+    <div class="navigation-links">
+      <router-link to="/rooms">Комнаты</router-link>
+      <router-link to="/clients">Клиенты</router-link>
+      <router-link to="/employees">Сотрудники</router-link>
+      <button @click="logout">Выйти</button>
+    </div>
   </div>
 </template>
 
@@ -382,8 +381,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
 .navigation-links {
   text-align: center;
@@ -402,6 +399,7 @@ export default {
   text-decoration: underline;
 }
 </style>
+
 
 
 

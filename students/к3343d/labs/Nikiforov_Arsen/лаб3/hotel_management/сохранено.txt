@@ -71,6 +71,10 @@ from rest_framework.routers import DefaultRouter
 from .views import UserViewSet
 from .views import api_login
 from .views import login_view
+from .views import generate_token
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 app_name = 'hotel_api'
 
 schema_view = get_schema_view(
@@ -100,6 +104,8 @@ router.register(r'nested_clients', NestedClientViewSet)
 
 
 urlpatterns = [    
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/', generate_token, name='generate_token'),
     # URL для главной страницы
     path('hotel_api/login/', login_view, name='login'),
     path('', views.home, name='home'),
@@ -126,7 +132,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/login/', api_login, name='api_login'),
-    
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
         
    
     
@@ -440,6 +446,28 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
+from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+import json
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_token(request):
+    user = request.user
+    refresh = RefreshToken.for_user(user)
+    refresh.access_token.set_exp(timezone.now() + SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'])
+    access_token = str(refresh.access_token)
+    return Response({'access_token': access_token})
+
+
+
 
 @csrf_exempt
 def login_view(request):
@@ -454,16 +482,13 @@ def login_view(request):
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
 
-
-
-
 @csrf_exempt
 def api_login(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data.get('username')
         password = data.get('password')
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
             refresh = RefreshToken.for_user(user)
             return JsonResponse({
@@ -471,8 +496,11 @@ def api_login(request):
                 'access': str(refresh.access_token),
             })
         else:
-            return JsonResponse({'status': 'error', 'message': 'Invalid credentials'}, status=401)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+            return JsonResponse({'message': 'Неверные учетные данные'}, status=401)
+    return JsonResponse({'message': 'Неверный запрос'}, status=400)
+
+
+
 
 
 @csrf_exempt  # Отключение CSRF для данного view
@@ -863,6 +891,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta 
+
+ACCESS_TOKEN_LIFETIME = timedelta(minutes=60)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -907,7 +939,7 @@ INSTALLED_APPS = [
     'djoser',
     'drf_yasg',
     'corsheaders',
-
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -1013,6 +1045,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
     ),
 }
 
@@ -1036,6 +1069,23 @@ AUTH_USER_MODEL = 'hotel_api.CustomUser'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# settings.py
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_AFTER_LIFETIME': timedelta(days=7),
+    'SLIDING_TOKEN_REFRESH_SLIDING_LIFETIME': timedelta(days=15),
+    'SLIDING_TOKEN_SLIDING_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_TYPE': 'sliding',
+    'SLIDING_TOKEN_REFRESH_ROTATE': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 
 
@@ -1113,17 +1163,36 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 {% load static %}
 
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script>
+        async function loginWithToken() {
+            const token = document.getElementById('token').value;
+            try {
+                const response = await fetch('URL_ЗАЩИЩЕННОГО_МАРШРУТА', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    // Обработка успешного входа
+                    alert("Аутентификация прошла успешно");
+                } else {
+                    // Обработка ошибки аутентификации
+                    alert("Ошибка аутентификации");
+                }
+            } catch (error) {
+                console.error('Ошибка сети', error);
+            }
+        }
+    </script>
 </head>
 <body>
+    <!-- Форма для авторизации с использованием имени пользователя и пароля -->
     <h2>Login</h2>
     <form method="post" action="{% url 'hotel_api:alternative_login' %}">
         {% csrf_token %}
@@ -1131,12 +1200,12 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
         <input type="submit" value="Login">
     </form>
 
-    <!-- Кнопка для авторизации без токена -->
-    <form method="post" action="{% url 'hotel_api:alternative_login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Авторизация без токена">
-    </form>
+    <!-- Форма для авторизации через токен -->
+    <h2>Авторизация через токен</h2>
+    <div>
+        <input type="text" id="token" placeholder="Введите токен">
+        <button type="button" onclick="loginWithToken()">Войти с токеном</button>
+    </div>
 
     <!-- Кнопка регистрации -->
     <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>

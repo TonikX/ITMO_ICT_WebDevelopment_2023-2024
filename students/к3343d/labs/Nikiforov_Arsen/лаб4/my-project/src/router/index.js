@@ -7,6 +7,7 @@ const routes = [
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },
+  
   // другие маршруты...
 ];
 

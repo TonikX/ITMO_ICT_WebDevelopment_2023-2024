@@ -1,10 +1,12 @@
 <template>
-  <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
-  <div class="navigation-links">
-    <router-link to="/rooms">Комнаты</router-link>
-    <router-link to="/clients">Клиенты</router-link>
-    <router-link to="/employees">Сотрудники</router-link>
-    <button @click="logout">Выйти</button>
+  <div>
+    <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
+    <div class="navigation-links">
+      <router-link to="/rooms">Комнаты</router-link>
+      <router-link to="/clients">Клиенты</router-link>
+      <router-link to="/employees">Сотрудники</router-link>
+      <button @click="logout">Выйти</button>
+    </div>
   </div>
 </template>
 
@@ -24,8 +26,6 @@ export default {
   }
 };
 </script>
-
-
 
 <style scoped>
 .navigation-links {
