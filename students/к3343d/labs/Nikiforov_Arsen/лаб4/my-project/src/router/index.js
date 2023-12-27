@@ -4,6 +4,7 @@ import LoginPage from '../components/LoginPage.vue';
 import UserProfile from '../components/UserProfile.vue';
 
 const routes = [
+  
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },

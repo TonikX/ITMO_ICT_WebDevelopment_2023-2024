@@ -150,6 +150,7 @@ import LoginPage from '../components/LoginPage.vue';
 import UserProfile from '../components/UserProfile.vue';
 
 const routes = [
+  
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },
@@ -291,6 +292,15 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <button type="submit">Получить токен</button>
     <div v-if="token">Токен: {{ token }}</div>
   </form>
+
+  <!--  форма для входа по токену -->
+  <form @submit.prevent="loginWithToken">
+    <h2>Войти с токеном</h2>
+    <div class="input-wrapper">
+      <input type="text" v-model="token" placeholder="Введите токен">
+    </div>
+    <button type="submit">Войти</button>
+  </form>
 </template>
 
 
@@ -302,9 +312,9 @@ export default {
         username: '',
         password: '',
       },
-      errorMessage: '',
       token: '',
-    };
+      errorMessage: '',
+    }; 
   },
   methods: {
     async login() {
@@ -326,6 +336,14 @@ export default {
         }
       } catch (error) {
         console.error('Ошибка сети', error);
+      }
+    },
+    async loginWithToken() {
+      if (this.token) {
+        localStorage.setItem('userToken', this.token);
+        this.$router.push('/user-profile'); 
+      } else {
+        this.errorMessage = 'Введите токен';
       }
     }
   }
@@ -414,7 +432,6 @@ export default {
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
 
-// store.js
 import { createStore } from 'vuex';
 
 export default createStore({
@@ -511,7 +528,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
 
-// store.js
 import { createStore } from 'vuex';
 
 export default createStore({

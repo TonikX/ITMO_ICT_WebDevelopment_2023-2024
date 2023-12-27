@@ -6,32 +6,32 @@
       <button @click="showComponent = 'login'">Вход</button>
       <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
-    <component v-if="showComponent" :is="currentComponent"></component>
+    <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
+    <RegistrationPage v-if="showComponent === 'registration'" />
+    <UserProfile v-if="showComponent === 'userProfile'" />
   </div>
 </template>
 
 <script>
 import RegistrationPage from './components/RegistrationPage.vue';
 import LoginPage from './components/LoginPage.vue';
+import UserProfile from './components/UserProfile.vue';
 
 export default {
   name: 'App',
   components: {
     RegistrationPage,
-    LoginPage
+    LoginPage,
+    UserProfile
   },
   data() {
     return {
       showComponent: null
     };
   },
-  computed: {
-    currentComponent() {
-      switch (this.showComponent) {
-        case 'login': return LoginPage;
-        case 'registration': return RegistrationPage;
-        default: return null;
-      }
+  methods: {
+    showUserProfile() {
+      this.showComponent = 'userProfile';
     }
   }
 };

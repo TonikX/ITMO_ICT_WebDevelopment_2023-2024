@@ -10,6 +10,18 @@
     <button type="submit">Получить токен</button>
     <div v-if="token">Токен: {{ token }}</div>
   </form>
+
+
+
+
+  <!--  форма для входа по токену -->
+  <form @submit.prevent="loginWithToken">
+    <h2>Войти с токеном</h2>
+    <div class="input-wrapper">
+      <input type="text" v-model="token" placeholder="Введите токен">
+    </div>
+    <button @click="loginWithTokenClick">Войти с токеном</button>
+  </form>
 </template>
 
 
@@ -21,9 +33,9 @@ export default {
         username: '',
         password: '',
       },
-      errorMessage: '',
       token: '',
-    }; 
+      errorMessage: '',
+    };
   },
   methods: {
     async login() {
@@ -45,6 +57,14 @@ export default {
         }
       } catch (error) {
         console.error('Ошибка сети', error);
+      }
+    },
+    loginWithTokenClick() {
+      if (this.token) {
+        localStorage.setItem('userToken', this.token);
+        this.$emit('show-user-profile');
+      } else {
+        this.errorMessage = 'Введите токен';
       }
     }
   }
