@@ -6,8 +6,9 @@
             </svg>
         </div>
         <div class="">
-            <p class="text">Facility '{{ name }}'</p>
-            <p class="text">Longitude: {{ longitude }}, latitude: {{ latitude }}</p>
+            <p class="text">Facility <span class="text-secondary">{{ name }}</span></p>
+            <p class="text">Longitude <span class="text-secondary">{{ longitude }}</span></p>
+            <p class="text">Latitude <span class="text-secondary">{{ latitude }}</span></p>
         </div>
     </div>
 </template>
@@ -36,8 +37,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/css/app.scss';
 
-* {
-    font-size: 16px;
+.text {
+    font-size: 18px;
 }
 
 .facility-icon {

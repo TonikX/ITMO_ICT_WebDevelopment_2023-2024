@@ -6,8 +6,9 @@
             </svg>
         </div>
         <div class="">
-            <p class="text">Facility {{ facility.name }}</p>
-            <p class="text">Row {{ row }}, Column {{ column }}</p>
+            <p class="text">Facility <span class="text-secondary">{{ facility.name }}</span></p>
+            <p class="text">Row <span class="text-secondary">{{ row }}</span></p>
+            <p class="text">Column <span class="text-secondary">{{ column }}</span></p>
             <p class="text">Responsible: <span class="text-secondary">{{ responsible.username }}</span></p>
         </div>
     </div>
@@ -40,8 +41,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-* {
-    font-size: 16px;
+.text {
+    font-size: 18px;
 }
 
 .cage-icon {
