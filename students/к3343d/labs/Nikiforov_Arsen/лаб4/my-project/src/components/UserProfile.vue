@@ -2,25 +2,35 @@
   <div>
     <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
     <div class="navigation-links">
-      <router-link to="/rooms">Комнаты</router-link>
+      <button @click="showRooms">Комнаты</button>
       <router-link to="/clients">Клиенты</router-link>
       <router-link to="/employees">Сотрудники</router-link>
       <button @click="emitBack">Назад</button>
     </div>
+    <RoomsTable v-if="showRoomsTable" />
   </div>
 </template>
 
 <script>
+import RoomsTable from './RoomsTable.vue';
+
 export default {
+  components: {
+    RoomsTable
+  },
+  data() {
+    return {
+      showRoomsTable: false
+    };
+  },
   computed: {
     userName() {
       return this.$store.state.user ? this.$store.state.user.username : 'Guest';
     }
   },
   methods: {
-    logout() {
-      this.$store.commit('clearUser');
-      this.$router.push('/login');
+    showRooms() {
+      this.showRoomsTable = true;
     },
     emitBack() {
       this.$emit('go-back');

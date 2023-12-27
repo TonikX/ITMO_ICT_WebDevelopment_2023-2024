@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="login">
-    <h2>Вход</h2>
+    <h2></h2>
     <div class="input-wrapper">
       <input type="text" v-model="userData.username" placeholder="Имя пользователя">
     </div>
