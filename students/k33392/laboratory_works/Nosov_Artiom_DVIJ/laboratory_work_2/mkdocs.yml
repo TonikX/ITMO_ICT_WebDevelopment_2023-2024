@@ -1,0 +1,40 @@
+site_name: "Лабораторные работы"
+theme:
+  name: mkdocs
+  features:
+    - navigation.indexes
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github-alt
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Переключиться на тёмную тему
+    - media: "(prefers-color-scheme: dark)"
+      primary: black
+      scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Переключиться на светлую тему
+  language: ru
+repo_url: https://github.com/kinsl/ITMO_ICT_WebDevelopment
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+plugins:
+  - glightbox:
+      auto_caption: true
+extra_css:
+- css/custom.css
+- css/palette.scss
+nav:
+  - "Django web-server":
+      - index.md
+      - task.md
+      - database_setup.md
+      - models.md
+      - forms.md
+      - views.md
