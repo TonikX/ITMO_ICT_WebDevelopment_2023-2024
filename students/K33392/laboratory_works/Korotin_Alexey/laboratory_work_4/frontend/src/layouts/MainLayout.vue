@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <q-ajax-bar position="top" color="secondary" size="3px" />
     <q-header elevated class="row no-wrap">
       <q-toolbar>
         <q-toolbar-title shrink>
@@ -7,6 +8,7 @@
         </q-toolbar-title>
         <q-tabs class="row justfiy-between" indicator-color="secondary">
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/facilities" label="Facilities" />
+          <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/cages" label="Cages" />
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/chicken" label="Chicken" />
           <q-route-tab class="q-px-xs-xs q-px-sm-md" to="/statistics" label="Stats" />
         </q-tabs>

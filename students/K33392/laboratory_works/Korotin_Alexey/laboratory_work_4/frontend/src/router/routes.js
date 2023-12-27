@@ -1,7 +1,10 @@
+import MainLayout from "@/layouts/MainLayout.vue";
+import AuthLayout from "@/layouts/AuthLayout.vue";
+
 const routes = [
     {
         path: "/facilities",
-        component: () => import("@/layouts/MainLayout.vue"),
+        component: MainLayout,
         children: [
             {
                 path: "",
@@ -16,19 +19,39 @@ const routes = [
         ],
     },
     {
-        path: "/statistics",
-        component: () => import("@/layouts/MainLayout.vue"),
+        path: "/cages",
+        component: MainLayout,
         children: [
             {
                 path: "",
-                component: () => import("@/pages/statistics/StatisticsPage.vue"),
+                component: () => import("@/pages/cages/AllPage.vue"),
                 meta: { requiresAuth: true },
-            }
-        ]
+            },
+            {
+                path: ":id",
+                component: () => import("@/pages/cages/CagePage.vue"),
+                meta: { requiresAuth: true },
+            },
+        ],
+    },
+    {
+        path: "/chicken",
+        component: MainLayout,
+    },
+    {
+        path: "/statistics",
+        component: MainLayout,
+        children: [
+            {
+                path: "",
+                component: MainLayout,
+                meta: { requiresAuth: true },
+            },
+        ],
     },
     {
         path: "/auth",
-        component: () => import("@/layouts/AuthLayout.vue"),
+        component: AuthLayout,
         children: [
             {
                 name: "Login",
