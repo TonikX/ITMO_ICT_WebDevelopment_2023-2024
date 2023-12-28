@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Представления - Lb3, Pavlishina Irina, K33391</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Lb3, Pavlishina Irina, K33391</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../first/" class="nav-link">Настройки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../second/" class="nav-link">Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../third/" class="nav-link">Сериалайзеры</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../fith/" class="nav-link">Ссылки</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../third/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../fith/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Представления</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">Представления</h1>
+<h3 id="_2">Импорты</h3>
+<pre><code>from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.decorators import action
+from drf_spectacular.utils import extend_schema, OpenApiTypes
+from rest_framework.permissions import SAFE_METHODS
+from . import serializers
+from .utils import get_tokens_for_user
+from django.contrib.auth import authenticate, login, logout
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import generics
+from django.db.models import Sum
+from .models import (CustomUser,
+                     Newspaper,
+                     Printer,
+                     PrintingNewspaper,
+                     PostOffice,
+                     PostOfficeOrder,
+                     Transportation)
+</code></pre>
+<h3 id="_3">Регистрация, логин, логаут, смена пароля</h3>
+<pre><code>class RegistrationView(generics.CreateAPIView):
+    serializer_class = serializers.RegistrationSerializer
+    queryset = CustomUser.objects.all()
+
+
+class LoginView(generics.GenericAPIView):
+    serializer_class = serializers.LoginSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request):
+        if 'username' not in request.data or 'password' not in request.data:
+            return Response({'msg': 'Credentials missing'}, status=status.HTTP_400_BAD_REQUEST)
+        username = request.data.get(&quot;username&quot;, None)
+        password = request.data.get(&quot;password&quot;, None)
+        print(username, password)
+        if username is not None and password is not None:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                auth_data = get_tokens_for_user(request.user)
+                return Response({'msg': 'Login Success', **auth_data}, status=status.HTTP_200_OK)
+            return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class LogoutView(APIView):
+    serializer_class = serializers.LogoutSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request):
+        logout(request)
+        return Response({'msg': 'Successfully Logged out'}, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(generics.GenericAPIView):
+    serializer_class = serializers.PasswordChangeSerializer
+    queryset = CustomUser.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        request.user.set_password(serializer.validated_data['new_password'])
+        request.user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+</code></pre>
+<h3 id="_4">Газета</h3>
+<pre><code>class NewspaperViewSet(ModelViewSet):
+    queryset = Newspaper.objects.all()
+    serializer_class = serializers.NewspaperSerializer
+</code></pre>
+<h3 id="_5">Почта</h3>
+<pre><code>class PostOfficeViewSet(ModelViewSet):
+    queryset = PostOffice.objects.all()
+    serializer_class = serializers.PostOfficeSerializer
+</code></pre>
+<h3 id="_6">Типография</h3>
+<pre><code>class PrinterViewSet(ModelViewSet):
+    queryset = Printer.objects.all()
+    serializer_class = serializers.PrinterSerializer
+</code></pre>
+<h3 id="_7">Печать газеты</h3>
+<pre><code>class PrintingNewspaperViewSet(ModelViewSet):
+    queryset = PrintingNewspaper.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in SAFE_METHODS:
+            return serializers.ShowPrintingNewspaperSerializer
+        return serializers.PrintingNewspaperSerializer
+</code></pre>
+<h3 id="_8">Заказ почты</h3>
+<pre><code>class PostOfficeOrderViewSet(ModelViewSet):
+    queryset = PostOfficeOrder.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in SAFE_METHODS:
+            return serializers.ShowPostOfficeOrderSerializer
+        return serializers.PostOfficeOrderSerializer
+</code></pre>
+<h3 id="_9">Доставка</h3>
+<pre><code>class TransportationViewSet(ModelViewSet):
+
+    queryset = Transportation.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in SAFE_METHODS:
+            return serializers.ShowTransportationSerializer
+        return serializers.TransportationSerializer
+</code></pre>
+<h3 id="_10">Вспомогательные представления</h3>
+<pre><code>class ActionViewSet(ViewSet):
+
+    @extend_schema(request=OpenApiTypes.STR, responses=serializers.ShowLossSerializer)
+    @action(detail=False, methods=['POST'], url_path='more-expensive-newspapers')
+    def by_cost(self, request):
+        cost =  float(list(request.data.keys())[0])
+        gazettes = Newspaper.objects.filter(cost__gt=cost)
+        qs = PostOfficeOrder.objects.filter(newspaper__in=gazettes)
+        ser = serializers.ShowPostOfficeOrderSerializer(qs, many=True)
+        return Response(ser.data, status=status.HTTP_200_OK)
+
+    @extend_schema(responses=serializers.ShowLossSerializer)
+    @action(detail=False, methods=['GET'], url_path='lost-delivers')
+    def errors(self, request, pk=None):
+        qs = Transportation.objects.none()
+        context = {}
+
+        for obj in PostOffice.objects.all():
+            for journal in PostOfficeOrder.objects.filter(post_office=obj.id):
+                sum = Transportation.objects.filter(post_office_order__post=obj.id,
+                                                    post_office_order_newspaper=journal.id).aggregate(Sum('amount'))
+                if sum['amount__sum'] &lt; journal.amount:
+                    qs |= PostOfficeOrder.objects.filter(id=journal.id)
+                    context[journal.id] = sum
+
+        ser = serializers.ShowLossSerializer(qs, many=True, context=context)
+        return Response(ser.data, status=status.HTTP_200_OK)
+
+    @extend_schema(request=OpenApiTypes.STR, responses=serializers.ShowLossSerializer)
+    @action(detail=False, methods=['POST'], url_path='find-addresses')
+    def find_by_name(self, request):
+        name = list(request.data.keys())[0]
+        qs = PrintingNewspaper.objects.filter(newspaper__name=name)
+        ser = serializers.ShowPrintingAddreses(qs, many=True)
+        return Response(data=ser.data, status=status.HTTP_200_OK)
+
+    @extend_schema(request=serializers.FindTransportationsSerializers,
+                   responses=serializers.ShowTransportEndSerializer)
+    @action(detail=False, methods=['POST'], url_path='where-to-sell')
+    def where_to_sell(self, request):
+        name = request.data['name']
+        address = request.data['where_printed']
+        gip = PrintingNewspaper.objects.filter(newspaper__name=name, printer__address=address).first()
+        obj = Transportation.objects.filter(printing_newspaper=gip.id).first()
+        ser = serializers.ShowTransportEndSerializer(obj)
+        return Response(ser.data, status=status.HTTP_200_OK)
+
+    @extend_schema(responses={
+        'most-sold-redactor': serializers.ShowRedactor,
+        'printed_here': OpenApiTypes.INT,
+        'show_printed': serializers.ShowPrintingNewspaperSerializer(many=True),
+        'where-to-sell': serializers.ShowTransportEndSerializer(many=True)
+    })
+    @action(detail=True, methods=['GET'], url_path='report')
+    def redactor(self, request, pk=None):
+        data = {}
+
+        obj = PrintingNewspaper.objects.filter(printer=pk).order_by('-how_many_to_print').first()
+
+        if obj:
+            ser = serializers.ShowRedactor(obj.newspaper)
+            data['most-sold-redactor'] = ser.data
+        else:
+            data['most-sold-redactor'] = {}
+
+        qs = PrintingNewspaper.objects.filter(printer=pk)
+
+        data['printed_here'] = qs.count()
+
+        ser = serializers.ShowPrintingNewspaperSerializer(qs, many=True)
+        data['show_printed']  = ser.data
+
+        ts = Transportation.objects.filter(printing_newspaper__in=qs)
+        ser = serializers.ShowTransportEndSerializer(ts, many=True)
+        data['where-to-sell'] = ser.data
+
+        return Response(data, status=status.HTTP_200_OK)
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

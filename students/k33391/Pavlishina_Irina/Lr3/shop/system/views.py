@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.decorators import action
 from drf_spectacular.utils import extend_schema, OpenApiTypes
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS
 from . import serializers
 from .utils import get_tokens_for_user
 from django.contrib.auth import authenticate, login, logout
