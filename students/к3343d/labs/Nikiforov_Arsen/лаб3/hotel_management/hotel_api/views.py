@@ -53,38 +53,41 @@ def room_list(request):
         rooms = Room.objects.filter(room_type=room_type, status=room_status)
     else:
         rooms = Room.objects.all()
-    return render(request, 'room_list.html', {'rooms': rooms})
+    return render(request, 'hotel_api/rooms_list.html', {'rooms': rooms})
+
+
+    
 
 
 def book_room(request, room_id):
-    room = get_object_or_404(Room, pk=room_id)  # Получаем комнату по ID
+    room = get_object_or_404(Room, pk=room_id)
 
     if request.method == 'POST':
-        # Получаем данные из формы
-        user_id = request.POST.get('user_id')  # предположим, что user_id передается через форму
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
 
-        # Проверяем, что пользователь существует
-        try:
-            user = User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return HttpResponse("User does not exist", status=404)
+        # Проверяем, что пользователь аутентифицирован
+        if request.user.is_authenticated:
+            user = request.user
+        else:
+            return HttpResponse("User is not authenticated", status=401)
 
         # Создаем объект бронирования
-        booking = Booking.objects.create(
+        Booking.objects.create(
             user=user,
             room=room,
             start_date=start_date,
             end_date=end_date,
-            confirmed=False  # Изначально бронирование не подтверждено
+            confirmed=False
         )
 
-        # Перенаправляем пользователя обратно к списку комнат
-        return redirect('room_list')
+        # Перенаправление после успешного бронирования
+        return redirect('hotel_api:room_list') # Обновите эту строку с учетом пространства имен
+
     else:
-        # Показываем форму бронирования
-        return render(request, 'book_room.html', {'room': room})
+        return render(request, 'hotel_api/book_room.html', {'room': room})
+
+
 
 
 

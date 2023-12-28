@@ -13,7 +13,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from . import views
 app_name = 'hotel_api'
 
 schema_view = get_schema_view(
@@ -42,6 +42,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('', home, name='home'),
+    path('rooms/', views.room_list, name='room_list'),
     path('book_selected_rooms/', book_selected_rooms, name='book_selected_rooms'),
     path('register/', register_user, name='register_user'),
     path('login/', login_view, name='login'),
@@ -65,5 +66,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('book_room/<int:room_id>/', book_room, name='book_room'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/', generate_token, name='generate_token')
+    path('api/token/', generate_token, name='generate_token'),
+    
+ 
 ]

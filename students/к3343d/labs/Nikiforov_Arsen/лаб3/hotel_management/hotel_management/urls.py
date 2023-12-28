@@ -13,4 +13,5 @@ urlpatterns = [
     path('register/', hotel_views.register_view, name='register'),
     path('home/', hotel_views.home, name='home'),  
     path('hotel_api/', include('hotel_api.urls')),
+    
 ]
