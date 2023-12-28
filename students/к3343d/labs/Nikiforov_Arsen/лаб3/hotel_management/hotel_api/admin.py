@@ -20,6 +20,27 @@ class BookingAdmin(admin.ModelAdmin):
             booking.save()
     confirm_booking.short_description = "Confirm selected bookings"
 
+    def cancel_booking(self, request, queryset):
+        for booking in queryset:
+            room = booking.room
+            room.set_available()
+            room.save()
+            booking.delete()
+    cancel_booking.short_description = "Cancel selected bookings and set room available"
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            room = obj.room
+            room.set_available()
+            room.save()
+        queryset.delete()  # This deletes all bookings in the queryset
+
+    def delete_model(self, request, obj):
+        room = obj.room
+        room.set_available()
+        room.save()
+        obj.delete()
+
 # Регистрация других моделей
 admin.site.register(CustomUser)
 admin.site.register(Client)
