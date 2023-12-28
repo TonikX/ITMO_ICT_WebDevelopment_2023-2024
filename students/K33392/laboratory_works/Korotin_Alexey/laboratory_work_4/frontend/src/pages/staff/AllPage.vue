@@ -34,6 +34,9 @@
                 <svg class="eye-icon cursor-pointer q-ml-md" :class="{ active: !hide }" @click="hide = !hide">
                     <use xlink:href="@/assets/icons.svg#eye"></use>
                 </svg>
+                <q-input :rules="[val => val >= 1 || 'Should be at least 1']" class="q-ml-xl pagesize-input" input-class="input-field" v-model="pageSize" dense autofocus label="Per page" color="secondary"
+                    label-color="white" type="number" flat />
+
             </div>
             <div>
                 <q-btn color="secondary" text-color="primary" icon="add" label="Add" @click="modal = true;" />
@@ -41,31 +44,40 @@
         </div>
 
         <div class="row">
-            <StaffCard v-for="(person, index) in staff" v-bind:key="index" :username="person.username" :role="person.role"
-                :passport="person.passport" :salary="person.salary" :hide="hide" class="border-hover" />
+            <StaffCard v-for="(person, index) in staffPage" v-bind:key="index" :username="person.username"
+                :role="person.role" :passport="person.passport" :salary="person.salary" :hide="hide" class="border-hover" />
+        </div>
+        <div class="column flex-center">
+            <q-pagination v-model="page" :max="getPageCount()" direction-links flat color="white"
+                active-color="secondary" active-text-color="primary" />
         </div>
     </q-page>
 </template>
 <script>
 import StaffCard from '@/components/StaffCard.vue';
 import { useStaffStore } from '@/stores/staffStore';
-import { mapState, mapActions } from 'pinia';
+import { mapState, mapActions, mapWritableState } from 'pinia';
 import { ref } from 'vue';
 
 export default {
     data() {
         return {
             modal: false,
-            hide: ref(true)
+            hide: ref(true),
+            page: 1
         }
     },
     computed: {
-        ...mapState(useStaffStore, ['staff'])
+        ...mapState(useStaffStore, ['staff']),
+        ...mapWritableState(useStaffStore, ['pageSize']),
+        staffPage() {
+            return this.getPage(this.page);
+        }
     },
     methods: {
-        ...mapActions(useStaffStore, ['fetchAll'])
+        ...mapActions(useStaffStore, ['fetchAll', 'getPage', 'getPageCount'])
     },
-    mounted() {
+    beforeMount() {
         this.fetchAll();
     },
     components: { StaffCard }
@@ -78,5 +90,9 @@ export default {
     stroke: $text;
     width: 30px;
     height: 30px;
+}
+
+.pagesize-input {
+    width: 100px;
 }
 </style>
