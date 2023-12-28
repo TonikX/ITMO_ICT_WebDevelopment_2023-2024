@@ -54,37 +54,43 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 <template>
   <div class="app-container">
     <img alt="Vue logo" src="./assets/logo.png" class="logo">
-    <div class="menu">
+    <div class="menu" v-if="showButtons">
       <h1>Добро пожаловать в наш отель!</h1>
       <button @click="showComponent = 'login'">Вход</button>
       <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
-    <component v-if="showComponent" :is="currentComponent"></component>
+    <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
+    <RegistrationPage v-if="showComponent === 'registration'" />
+    <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
   </div>
 </template>
 
 <script>
 import RegistrationPage from './components/RegistrationPage.vue';
 import LoginPage from './components/LoginPage.vue';
+import UserProfile from './components/UserProfile.vue';
 
 export default {
   name: 'App',
   components: {
     RegistrationPage,
-    LoginPage
+    LoginPage,
+    UserProfile
   },
   data() {
     return {
-      showComponent: null
+      showComponent: null,
+      showButtons: true,
     };
   },
-  computed: {
-    currentComponent() {
-      switch (this.showComponent) {
-        case 'login': return LoginPage;
-        case 'registration': return RegistrationPage;
-        default: return null;
-      }
+  methods: {
+    showUserProfile() {
+      this.showComponent = 'userProfile';
+      this.showButtons = false;
+    },
+    showMainButtons() {
+      this.showComponent = null;
+      this.showButtons = true;
     }
   }
 };
@@ -282,7 +288,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <form @submit.prevent="login">
-    <h2>Войти</h2>
+    <h2></h2>
     <div class="input-wrapper">
       <input type="text" v-model="userData.username" placeholder="Имя пользователя">
     </div>
@@ -293,13 +299,16 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <div v-if="token">Токен: {{ token }}</div>
   </form>
 
+
+
+
   <!--  форма для входа по токену -->
   <form @submit.prevent="loginWithToken">
     <h2>Войти с токеном</h2>
     <div class="input-wrapper">
       <input type="text" v-model="token" placeholder="Введите токен">
     </div>
-    <button type="submit">Войти</button>
+    <button @click="loginWithTokenClick">Войти с токеном</button>
   </form>
 </template>
 
@@ -314,7 +323,7 @@ export default {
       },
       token: '',
       errorMessage: '',
-    }; 
+    };
   },
   methods: {
     async login() {
@@ -338,10 +347,10 @@ export default {
         console.error('Ошибка сети', error);
       }
     },
-    async loginWithToken() {
+    loginWithTokenClick() {
       if (this.token) {
         localStorage.setItem('userToken', this.token);
-        this.$router.push('/user-profile'); 
+        this.$emit('show-user-profile');
       } else {
         this.errorMessage = 'Введите токен';
       }
@@ -374,26 +383,38 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
   <div>
     <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
     <div class="navigation-links">
-      <router-link to="/rooms">Комнаты</router-link>
+      <button @click="showRooms">Комнаты</button>
       <router-link to="/clients">Клиенты</router-link>
       <router-link to="/employees">Сотрудники</router-link>
-      <button @click="logout">Выйти</button>
+      <button @click="emitBack">Назад</button>
     </div>
+    <RoomsTable v-if="showRoomsTable" />
   </div>
 </template>
 
 <script>
+import RoomsTable from './RoomsTable.vue';
+
 export default {
+  components: {
+    RoomsTable
+  },
+  data() {
+    return {
+      showRoomsTable: false
+    };
+  },
   computed: {
     userName() {
-      // Здесь мы предполагаем, что у вас есть данные пользователя в состоянии Vuex
       return this.$store.state.user ? this.$store.state.user.username : 'Guest';
     }
   },
   methods: {
-    logout() {
-      this.$store.commit('clearUser'); // Очищаем данные пользователя в хранилище
-      this.$router.push('/login'); // Перенаправляем на страницу входа
+    showRooms() {
+      this.showRoomsTable = true;
+    },
+    emitBack() {
+      this.$emit('go-back');
     }
   }
 };
@@ -405,14 +426,14 @@ export default {
   margin-bottom: 20px;
 }
 
-.navigation-links a {
+.navigation-links a, .navigation-links button {
   margin: 0 10px;
   text-decoration: none;
   color: #333;
   font-weight: bold;
 }
 
-.navigation-links a:hover {
+.navigation-links a:hover, .navigation-links button:hover {
   color: #007bff;
   text-decoration: underline;
 }

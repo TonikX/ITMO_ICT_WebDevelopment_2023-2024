@@ -18,7 +18,10 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
         # Считаем количество занятых комнат на этаже
         return Room.objects.filter(floor=floor, status='occupied').count()
 
-
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = '__all__' 
 
 
 

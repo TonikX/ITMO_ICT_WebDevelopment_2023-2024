@@ -73,6 +73,7 @@
             <option value="cleaning">Cleaning</option>
         </select>
     
+        <input type="submit" value="To book">
         <input type="submit" value="Filter">
     </form>
 
@@ -83,6 +84,7 @@
                 <th>Floor Number</th>
                 <th>Status</th>
                 <th>Cost</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -92,9 +94,15 @@
                 <td>{{ room.floor.number }}</td>
                 <td>{{ room.get_status_display }}</td>
                 <td>{{ room.cost }}</td>
+                <td>
+                    {% if room.status == 'available' %}
+                        <a href="{% url 'hotel_api:book_room' room.id %}">Забронировать</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    
 </body>
 </html>

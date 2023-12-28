@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Room</title>
+</head>
+<body>
+    <h1>Book Room</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Поле для выбора комнаты -->
+        <div>
+            <label for="room_id">Room:</label>
+            <select id="room_id" name="room_id">
+                {% for room in rooms %}
+                    {% if room.status == 'available' %}
+                        <option value="{{ room.id }}">{{ room.get_room_type_display }} - Floor {{ room.floor.number }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Поле для ввода ID пользователя -->
+        <div>
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
+        </div>
+
+        <!-- Поле для ввода даты начала бронирования -->
+        <div>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+        </div>
+
+        <!-- Поле для ввода даты окончания бронирования -->
+        <div>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+        </div>
+
+        <!-- Кнопка для отправки формы -->
+        <input type="submit" value="Book">
+    </form>
+</body>
+</html>

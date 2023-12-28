@@ -15,25 +15,23 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 # admin.py
 from django.contrib import admin
-from django import forms
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
 from .models import CustomUser
+from django.contrib import admin
+from .models import Room
 
-
-
-class RoomAdminForm(forms.ModelForm):
-    class Meta:
-        model = Room
-        fields = '__all__'
-        widgets = {
-            'room_type': forms.Select(choices=Room.ROOM_TYPES)
-        }
-
+@admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    form = RoomAdminForm
-    
+    list_display = ('room_type', 'floor', 'status', 'cost')
+    actions = ['confirm_booking']
+
+    def confirm_booking(self, request, queryset):
+        queryset.update(booking_confirmed=True)
+    confirm_booking.short_description = "Confirm selected bookings"
+
+
+
 admin.site.register(CustomUser)
-admin.site.register(Room, RoomAdmin)
 admin.site.register(Client)
 admin.site.register(ClientInfo)
 admin.site.register(Employee)
@@ -56,24 +54,26 @@ admin.site.register(EmployeeDay)
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/urls.py
 
+# hotel_management/hotel_api/urls.py
+from . import views 
 from django.urls import path, include, re_path
-from . import views
-from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
-from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet, FloorOccupancyViewSet,
-                    DayViewSet, EmployeeFloorViewSet, EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet, NestedClientViewSet)
-                    
+from .views import (RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
+                    FloorOccupancyViewSet, DayViewSet, EmployeeFloorViewSet,
+                    EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet,
+                    NestedClientViewSet, UserViewSet, api_login, login_view,
+                    generate_token, book_room,
+                    alternative_login_view, register_user, rooms_list,
+                    clients_list, employees_list, floors_list,
+                    client_info_list, days_list, employee_floors_list,
+                    employee_days_list, bookings_list, book_selected_rooms)
+from .views import book_room
+
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import UserViewSet
-from .views import api_login
-from .views import login_view
-from .views import generate_token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
 
 app_name = 'hotel_api'
 
@@ -87,10 +87,7 @@ schema_view = get_schema_view(
     permission_classes=(AllowAny,),
 )
 
-
 router = DefaultRouter()
-router.register(r'floor_occupancy', FloorOccupancyViewSet)
-router.register(r'users', UserViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'employees', EmployeeViewSet)
@@ -101,20 +98,15 @@ router.register(r'employee_days', EmployeeDayViewSet)
 router.register(r'client_info', ClientInfoViewSet)
 router.register(r'complex_rooms', ComplexRoomViewSet)
 router.register(r'nested_clients', NestedClientViewSet)
+router.register(r'floor_occupancy', FloorOccupancyViewSet)
+router.register(r'users', UserViewSet)
 
-
-urlpatterns = [    
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/', generate_token, name='generate_token'),
-    # URL для главной страницы
-    path('hotel_api/login/', login_view, name='login'),
+urlpatterns = [  
     path('', views.home, name='home'),
+    path('book_selected_rooms/', views.book_selected_rooms, name='book_selected_rooms'),
     path('register/', views.register_user, name='register_user'),
-    path('api/', include(router.urls)),
-    # URL для страницы входа
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', views.login_view, name='login'),
     path('alternative_login/', views.alternative_login_view, name='alternative_login'),
-    # URL для страницы регистрации
     path('register/', views.register_view, name='register'),    
     path('rooms/', views.rooms_list, name='rooms_list'),
     path('clients/', views.clients_list, name='clients_list'),
@@ -125,16 +117,17 @@ urlpatterns = [
     path('employee-floors/', views.employee_floors_list, name='employee_floors_list'),
     path('employee-days/', views.employee_days_list, name='employee_days_list'),
     path('bookings/', views.bookings_list, name='bookings_list'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
-    path('api/', include(router.urls)),  # Пути API
+    path('api/', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-    path('api/login/', api_login, name='api_login'),
+    path('api/login/', views.api_login, name='api_login'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-        
-   
+    path('book_room/<int:room_id>/', views.book_room, name='book_room'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/', views.generate_token, name='generate_token'),
+    path('book_room/<int:room_id>/', book_room, name='book_room'),
     
     
 ]
@@ -173,7 +166,10 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
         # Считаем количество занятых комнат на этаже
         return Room.objects.filter(floor=floor, status='occupied').count()
 
-
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = '__all__' 
 
 
 
@@ -319,7 +315,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.conf import settings
 
 
 
@@ -344,15 +340,22 @@ class Room(models.Model):
         ('double', 'Double'),
         ('suite', 'Suite'),
     )
+    
     ROOM_STATUSES = (
         ('available', 'Available'),
+        ('booked', 'Booked'),
         ('occupied', 'Occupied'),
         ('cleaning', 'Cleaning'),
     )
+    status = models.CharField(max_length=100, choices=ROOM_STATUSES)
+
     room_type = models.CharField(max_length=100, choices=ROOM_TYPES)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     status = models.CharField(max_length=100, choices=ROOM_STATUSES)
+    booked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='booked_rooms')
+    booking_confirmed = models.BooleanField(default=False)
+  
 
 
 
@@ -456,6 +459,55 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from .models import Room
+from django.http import JsonResponse
+from .models import Room
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+from django.http import JsonResponse
+from .models import Room
+
+from django.shortcuts import redirect
+from django.urls import reverse
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import redirect
+from .models import Room
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
+
+@login_required
+def book_selected_rooms(request):
+    if request.method == 'POST':
+        room_ids = request.POST.getlist('room_ids')
+        rooms = Room.objects.filter(id__in=room_ids, is_available=True)
+        for room in rooms:
+            room.booked_by = request.user
+            room.is_available = False
+            room.save()
+        return redirect('rooms_list')
+    return render(request, 'hotel_api/rooms_list.html')
+
+
+
+@login_required
+def book_room(request, room_id):
+    room = Room.objects.get(id=room_id)
+    if room.is_available and not room.booked_by:
+        room.booked_by = request.user
+        room.is_available = False
+        room.save()
+        return HttpResponse("Room booked successfully")
+    return HttpResponse("Room is not available", status=400)
+
+
+
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -722,50 +774,44 @@ def employee_days_list(request):
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/hotel_api/rooms_list.html
 
+<!-- hotel_api/templates/hotel_api/rooms_list.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Rooms List</title>
     <style>
-        /* Add your CSS styles here */
+        /* Добавьте свои стили CSS здесь */
         h1 {
             font-size: 24px;
             text-align: center;
         }
-
         form {
             margin: 20px 0;
             text-align: center;
         }
-
         label {
             font-weight: bold;
         }
-
-        select {
+        select, input[type="submit"] {
             margin: 5px;
         }
-
         table {
             width: 80%;
             margin: 20px auto;
             border-collapse: collapse;
         }
-
         th, td {
             padding: 8px 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-
         th {
             background-color: #f2f2f2;
         }
-
         tbody tr:hover {
             background-color: #f5f5f5;
         }
-
         .back-button {
             display: block;
             text-align: center;
@@ -775,11 +821,10 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 </head>
 <body>
     <a href="http://localhost:8000/" class="back-button">Back to Home</a>
-    
     <h1>Rooms List</h1>
-
+    
+    <!-- Форма фильтрации -->
     <form method="get">
-        <!-- Filter by Room Type -->
         <label for="room_type">Room Type:</label>
         <select name="room_type" id="room_type">
             <option value="">--Select a Type--</option>
@@ -788,7 +833,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
             <option value="suite">Suite</option>
         </select>
     
-        <!-- Filter by Room Status -->
         <label for="room_status">Room Status:</label>
         <select name="room_status" id="room_status">
             <option value="">--Select a Status--</option>
@@ -800,26 +844,33 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
         <input type="submit" value="Filter">
     </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Room Type</th>
-                <th>Floor Number</th>
-                <th>Status</th>
-                <th>Cost</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for room in rooms %}
-            <tr>
-                <td>{{ room.get_room_type_display }}</td>
-                <td>{{ room.floor.number }}</td>
-                <td>{{ room.get_status_display }}</td>
-                <td>{{ room.cost }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- Форма для бронирования комнат -->
+    <form method="post" action="{% url 'book_selected_rooms' %}">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Room Type</th>
+                    <th>Floor Number</th>
+                    <th>Status</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td><input type="checkbox" name="room_ids" value="{{ room.id }}"></td>
+                    <td>{{ room.get_room_type_display }}</td>
+                    <td>{{ room.floor.number }}</td>
+                    <td>{{ room.get_status_display }}</td>
+                    <td>{{ room.cost }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Book Selected Rooms">
+    </form>
 </body>
 </html>
 
@@ -1022,8 +1073,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
-
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -1074,6 +1123,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
     'SLIDING_TOKEN_REFRESH_AFTER_LIFETIME': timedelta(days=7),
@@ -1085,6 +1135,7 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
+
 }
 
 
@@ -1172,17 +1223,16 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
         async function loginWithToken() {
             const token = document.getElementById('token').value;
             try {
-                const response = await fetch('URL_ЗАЩИЩЕННОГО_МАРШРУТА', {
+                const response = await fetch('/home', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
                 if (response.ok) {
-                    // Обработка успешного входа
-                    alert("Аутентификация прошла успешно");
+                    // Перенаправление на страницу /home
+                    window.location.href = 'http://localhost:8000/home/';
                 } else {
-                    // Обработка ошибки аутентификации
                     alert("Ошибка аутентификации");
                 }
             } catch (error) {
@@ -1190,6 +1240,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
             }
         }
     </script>
+    
 </head>
 <body>
     <!-- Форма для авторизации с использованием имени пользователя и пароля -->

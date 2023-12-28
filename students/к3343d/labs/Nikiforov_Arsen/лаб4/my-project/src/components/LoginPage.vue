@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="login">
-    <h2></h2>
+    <h2>Вход</h2>
     <div class="input-wrapper">
       <input type="text" v-model="userData.username" placeholder="Имя пользователя">
     </div>
@@ -8,13 +8,12 @@
       <input type="password" v-model="userData.password" placeholder="Пароль">
     </div>
     <button type="submit">Получить токен</button>
+    <!-- Добавленный элемент для отображения сообщения об ошибке -->
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div v-if="token">Токен: {{ token }}</div>
   </form>
 
-
-
-
-  <!--  форма для входа по токену -->
+  <!-- форма для входа по токену -->
   <form @submit.prevent="loginWithToken">
     <h2>Войти с токеном</h2>
     <div class="input-wrapper">
@@ -23,7 +22,6 @@
     <button @click="loginWithTokenClick">Войти с токеном</button>
   </form>
 </template>
-
 
 <script>
 export default {
@@ -52,8 +50,9 @@ export default {
           const data = await response.json();
           this.token = data.access;
           localStorage.setItem('userToken', data.access);
+          this.errorMessage = ''; // Сброс сообщения об ошибке
         } else {
-          this.errorMessage = 'Неверные учетные данные';
+          this.errorMessage = 'Введите корректные данные'; // Обновленное сообщение об ошибке
         }
       } catch (error) {
         console.error('Ошибка сети', error);
@@ -73,6 +72,11 @@ export default {
 
 <style>
 .input-wrapper {
-  margin-bottom: 10px; /* Расстояние между полями ввода */
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>

@@ -6,6 +6,7 @@ export default createStore({
   },
   mutations: {
     setUser(state, userData) {
+      console.log('Updating user data:', userData);
       state.user = userData;
     },
     clearUser(state) {
@@ -17,3 +18,6 @@ export default createStore({
     user: state => state.user,
   },
 });
+
+
+

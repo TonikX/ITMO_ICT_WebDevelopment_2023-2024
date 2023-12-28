@@ -1,24 +1,24 @@
-# admin.py
 from django.contrib import admin
-from django import forms
-from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay
-from .models import CustomUser
+from .models import (Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, 
+                     EmployeeDay, Booking, CustomUser)
 
-
-
-class RoomAdminForm(forms.ModelForm):
-    class Meta:
-        model = Room
-        fields = '__all__'
-        widgets = {
-            'room_type': forms.Select(choices=Room.ROOM_TYPES)
-        }
-
+# Класс администратора для модели Room
+@admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    form = RoomAdminForm
-    
+    list_display = ('room_type', 'floor', 'status', 'cost')
+
+# Класс администратора для модели Booking 
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ['user', 'room', 'start_date', 'end_date', 'confirmed']
+    actions = ['confirm_booking']
+
+    def confirm_booking(self, request, queryset):
+        queryset.update(confirmed=True)
+    confirm_booking.short_description = "Confirm selected bookings"
+
+# Регистрация других моделей
 admin.site.register(CustomUser)
-admin.site.register(Room, RoomAdmin)
 admin.site.register(Client)
 admin.site.register(ClientInfo)
 admin.site.register(Employee)

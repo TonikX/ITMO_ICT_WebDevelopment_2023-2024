@@ -25,7 +25,9 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+      const username = this.$store.state.user ? this.$store.state.user.username : 'Guest';
+      console.log('Current username:', username);
+      return username;
     }
   },
   methods: {
@@ -38,6 +40,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .navigation-links {

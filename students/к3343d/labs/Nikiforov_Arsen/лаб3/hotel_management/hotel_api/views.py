@@ -9,29 +9,105 @@ from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 from .models import CustomUser
 from rest_framework import status
-from rest_framework.response import Response
+
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
-from rest_framework.response import Response
+
 from .serializers import ComplexRoomSerializer, NestedClientSerializer
 from .models import Floor
 from .serializers import FloorOccupancySerializer
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-import json
+
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
+
 from django.contrib.auth import authenticate
-from django.http import JsonResponse
-from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
-import json
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+
+import json
+
+from django.shortcuts import redirect
+from django.urls import reverse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Room, Booking
+
+
+
+def room_list(request):
+    room_type = request.GET.get('room_type')
+    room_status = request.GET.get('room_status')
+    if room_type and room_status:
+        rooms = Room.objects.filter(room_type=room_type, status=room_status)
+    else:
+        rooms = Room.objects.all()
+    return render(request, 'room_list.html', {'rooms': rooms})
+
+
+def book_room(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)  # Получаем комнату по ID
+
+    if request.method == 'POST':
+        # Получаем данные из формы
+        user_id = request.POST.get('user_id')  # предположим, что user_id передается через форму
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        # Проверяем, что пользователь существует
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return HttpResponse("User does not exist", status=404)
+
+        # Создаем объект бронирования
+        booking = Booking.objects.create(
+            user=user,
+            room=room,
+            start_date=start_date,
+            end_date=end_date,
+            confirmed=False  # Изначально бронирование не подтверждено
+        )
+
+        # Перенаправляем пользователя обратно к списку комнат
+        return redirect('room_list')
+    else:
+        # Показываем форму бронирования
+        return render(request, 'book_room.html', {'room': room})
+
+
+
+
+@login_required
+def book_selected_rooms(request):
+    if request.method == 'POST':
+        room_ids = request.POST.getlist('room_ids')
+        rooms = Room.objects.filter(id__in=room_ids, is_available=True)
+        for room in rooms:
+            room.booked_by = request.user
+            room.is_available = False
+            room.save()
+        return redirect('rooms_list')
+    return render(request, 'hotel_api/rooms_list.html')
+
+
+
+
+
+
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
