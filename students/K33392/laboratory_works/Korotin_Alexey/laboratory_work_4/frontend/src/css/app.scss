@@ -23,3 +23,13 @@
 .active {
     stroke: $secondary !important;
 }
+
+.item-label {
+    color: $secondary;
+}
+
+.item-value {
+    text-decoration: underline;
+    text-underline-offset: 0.5rem;
+    cursor: pointer;
+}

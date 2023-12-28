@@ -34,8 +34,8 @@
                 <svg class="eye-icon cursor-pointer q-ml-md" :class="{ active: !hide }" @click="hide = !hide">
                     <use xlink:href="@/assets/icons.svg#eye"></use>
                 </svg>
-                <q-input :rules="[val => val >= 1 || 'Should be at least 1']" class="q-ml-xl pagesize-input" input-class="input-field" v-model="pageSize" dense autofocus label="Per page" color="secondary"
-                    label-color="white" type="number" flat />
+                <q-select class="pagesize-input text q-ml-xl" v-model="pageSize" :options="perPageOptions" label="Per page"
+                    label-color="white" dense standout  flat dark filled color="secondary" />
 
             </div>
             <div>
@@ -48,8 +48,8 @@
                 :role="person.role" :passport="person.passport" :salary="person.salary" :hide="hide" class="border-hover" />
         </div>
         <div class="column flex-center">
-            <q-pagination v-model="page" :max="getPageCount()" direction-links flat color="white"
-                active-color="secondary" active-text-color="primary" />
+            <q-pagination v-model="page" :max="getPageCount()" direction-links flat color="white" active-color="secondary"
+                active-text-color="primary" />
         </div>
     </q-page>
 </template>
@@ -64,6 +64,7 @@ export default {
         return {
             modal: false,
             hide: ref(true),
+            perPageOptions: [5, 10, 20, 50],
             page: 1
         }
     },
@@ -83,8 +84,9 @@ export default {
     components: { StaffCard }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/css/app.scss';
+@import '@/css/quasar.variables.scss';
 
 .eye-icon {
     stroke: $text;
@@ -95,4 +97,5 @@ export default {
 .pagesize-input {
     width: 100px;
 }
+
 </style>

@@ -96,13 +96,5 @@ export default {
     font-size: 20px;
 }
 
-.item-label {
-    color: $secondary;
-}
 
-.item-value {
-    text-decoration: underline;
-    text-underline-offset: 0.5rem;
-    cursor: pointer;
-}
 </style>

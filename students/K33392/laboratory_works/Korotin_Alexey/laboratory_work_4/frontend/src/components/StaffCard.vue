@@ -1,7 +1,7 @@
 <template>
     <div class="col-2 q-pa-sm q-ma-sm">
         <div class="row q-pb-sm justify-between">
-            <svg class="staff-icon cursor-pointer">
+            <svg class="staff-icon cursor-pointer" @click="$router.push({path: `/staff/${username}`})">
                 <use xlink:href="@/assets/icons.svg#person"></use>
             </svg>
             <svg class="eye-icon cursor-pointer self-end q-mr-md" role="button" :class="{ active: !hidden }"
@@ -64,6 +64,11 @@ export default {
     fill: $text;
     width: 75px;
     height: 75px;
+    transition: opacity 0.3s;
+}
+
+.staff-icon:hover {
+    fill: $secondary;
 }
 
 .eye-icon {

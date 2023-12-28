@@ -24,5 +24,14 @@ export const useStaffStore = defineStore("staff", {
             const staffSize = this.staff.length;
             return Math.ceil(staffSize / this.pageSize);
         },
+
+        async fetchByUsername(username) {
+            let person = this.staff.find((s) => s.username === username);
+            if (person === undefined) {
+                await this.fetchAll();
+                person = this.staff.find((s) => s.username === username);
+            }
+            return person;
+        }
     },
 });
