@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
+    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
     <div class="navigation-links">
       <button @click="showRooms">Комнаты</button>
       <router-link to="/clients">Клиенты</router-link>
@@ -15,6 +15,11 @@
 import RoomsTable from './RoomsTable.vue';
 
 export default {
+  computed: {
+    username() {
+      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+    }
+  },
   components: {
     RoomsTable
   },
@@ -22,13 +27,6 @@ export default {
     return {
       showRoomsTable: false
     };
-  },
-  computed: {
-    userName() {
-      const username = this.$store.state.user ? this.$store.state.user.username : 'Guest';
-      console.log('Current username:', username);
-      return username;
-    }
   },
   methods: {
     showRooms() {

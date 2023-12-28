@@ -35,11 +35,16 @@ export default {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem('userToken', data.access);
-          this.$emit('show-user-profile');
-          this.errorMessage = '';
-        } else {
+  const data = await response.json();
+  localStorage.setItem('userToken', data.access);
+
+  // Сохраните имя пользователя в состоянии Vuex
+  this.$store.commit('setUser', { username: this.userData.username, token: data.access });
+
+  this.$emit('show-user-profile');
+  this.errorMessage = '';
+}     
+         else {
           this.errorMessage = 'Введите корректные данные';
         }
       } catch (error) {
