@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 from .models import CustomUser
 from rest_framework import status
+from datetime import datetime
 
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
@@ -43,6 +44,71 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Room, Booking
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import Room, Booking
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from .models import Room, Booking
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from datetime import datetime
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def book_room(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+
+    # Проверка, доступна ли комната
+    if room.status != 'available':
+        return JsonResponse({'status': 'error', 'message': 'Room is not available'}, status=400)
+
+    # Получение и проверка дат
+    start_date = request.data.get('start_date')
+    end_date = request.data.get('end_date')
+    if not start_date or not end_date:
+        return JsonResponse({'status': 'error', 'message': 'Start date and end date are required'}, status=400)
+
+    try:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        if start_date >= end_date:
+            return JsonResponse({'status': 'error', 'message': 'End date must be after start date'}, status=400)
+    except ValueError:
+        return JsonResponse({'status': 'error', 'message': 'Invalid date format'}, status=400)
+
+    # Создание бронирования
+    booking = Booking.objects.create(
+        user=request.user,
+        room=room,
+        start_date=start_date,
+        end_date=end_date
+    )
+    room.status = 'booked'
+    room.save()
+
+    return JsonResponse({'status': 'success', 'booking_id': booking.id})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -62,34 +128,6 @@ def room_list(request):
 
 
     
-
-
-def book_room(request, room_id):
-    room = get_object_or_404(Room, pk=room_id)
-
-    if request.method == 'POST':
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        
-
-        # Проверяем, что пользователь аутентифицирован
-        if request.user.is_authenticated:
-            user = request.user
-            room.set_booked()  # Меняем статус комнаты на 'booked'
-            Booking.objects.create(
-                user=user,
-                room=room,
-                start_date=start_date,
-                end_date=end_date,
-                confirmed=False
-        )
-        return redirect('hotel_api:room_list')
-    else:
-        return render(request, 'hotel_api/book_room.html', {'room': room})
-
-
-
-
 
 
 

@@ -1,32 +1,41 @@
 <template> 
   <div>
     <h2>Список комнат</h2>
-    <label for="room_type">Room Type:</label>
+
+    <!-- Фильтры -->
+    <label for="room_type">Тип комнаты:</label>
     <select v-model="filterType">
-      <option value="">--Select a Type--</option>
-      <option value="single">Single</option>
-      <option value="double">Double</option>
-      <option value="suite">Suite</option>
+      <option value="">--Выберите тип--</option>
+      <option value="single">Одноместный</option>
+      <option value="double">Двухместный</option>
+      <option value="suite">Люкс</option>
     </select>
 
-    <label for="room_status">Room Status:</label>
+    <label for="room_status">Статус комнаты:</label>
     <select v-model="filterStatus">
-      <option value="">--Select a Status--</option>
-      <option value="available">Available</option>
-      <option value="occupied">Occupied</option>
-      <option value="cleaning">Cleaning</option>
+      <option value="">--Выберите статус--</option>
+      <option value="available">Доступна</option>
+      <option value="occupied">Занята</option>
+      <option value="cleaning">На уборке</option>
     </select>
 
-    
+    <button @click="applyFilter">Применить фильтр</button>
 
+    <!-- Выбор даты бронирования -->
+    <div class="date-selection">
+      <input type="date" v-model="startDate" placeholder="Дата начала">
+      <input type="date" v-model="endDate" placeholder="Дата окончания">
+    </div>
+
+    <!-- Таблица комнат -->
     <table>
       <thead>
         <tr>
-          <th>Room Type</th>
-          <th>Floor Number</th>
-          <th>Status</th>
-          <th>Cost</th>
-          <th>Actions</th>
+          <th>Тип комнаты</th>
+          <th>Номер этажа</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
@@ -37,7 +46,7 @@
           <td>{{ room.cost }}</td>
           <td>
             <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
-              Book
+              Забронировать
             </button>
           </td>
         </tr>
@@ -54,7 +63,9 @@ export default {
     return {
       rooms: [],
       filterType: '',
-      filterStatus: ''
+      filterStatus: '',
+      startDate: '', // Для хранения даты начала бронирования
+      endDate: ''   // Для хранения даты окончания бронирования
     };
   },
   computed: {
@@ -65,31 +76,51 @@ export default {
       });
     }
   },
-  created() {
-    this.fetchRooms();
-  },
   methods: {
     fetchRooms() {
-      axios.get('/hotel_api/api/rooms/')
+      axios.get('http://localhost:8000/hotel_api/api/rooms/')
         .then(response => {
           this.rooms = response.data;
         })
         .catch(error => {
-          console.error('Error loading rooms:', error);
+          console.error('Ошибка загрузки комнат:', error);
         });
     },
     applyFilter() {
       this.fetchRooms();
     },
     bookRoom(roomId) {
-      axios.post(`/hotel_api/api/book_room/${roomId}`)
-        .then(() => {
-          this.fetchRooms(); // обновить после брони
-        })
-        .catch(error => {
-          console.error('Error booking room:', error);
-        });
+    if (!this.startDate || !this.endDate) {
+      alert('Необходимо указать даты начала и окончания бронирования');
+      return;
     }
+
+    const token = localStorage.getItem('userToken');
+    axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
+      start_date: this.startDate,
+      end_date: this.endDate
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.data.status === 'success') {
+        alert('Комната успешно забронирована');
+        this.fetchRooms(); // Обновление списка комнат
+      } else {
+        console.error('Ответ об ошибке:', response.data);
+        alert('Ошибка бронирования: ' + response.data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка бронирования комнаты:', error);
+      alert('Ошибка бронирования: ' + error.message);
+    });
+  }
+  },
+  created() {
+    this.fetchRooms();
   }
 };
 </script>
@@ -116,5 +147,13 @@ td {
 
 tr:hover {
   background-color: #f5f5f5;
+}
+
+.date-selection {
+  margin: 10px 0;
+}
+
+.date-selection input {
+  margin-right: 10px;
 }
 </style>

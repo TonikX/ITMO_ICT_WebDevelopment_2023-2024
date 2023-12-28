@@ -67,6 +67,6 @@ urlpatterns = [
     path('book_room/<int:room_id>/', book_room, name='book_room'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/', generate_token, name='generate_token'),
-    
+    path('api/book_room/<int:room_id>/', views.book_room, name='book_room'),
  
 ]

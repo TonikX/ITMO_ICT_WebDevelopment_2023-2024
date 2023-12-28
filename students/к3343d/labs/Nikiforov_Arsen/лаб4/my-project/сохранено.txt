@@ -498,84 +498,146 @@ export default createStore({
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomsTable.vue
 
-<template>
-  <div class="rooms-container">
-    <h2>Список номеров</h2>
-    <div class="room" v-for="room in rooms" :key="room.id">
-      <h3>Номер: {{ room.id }}</h3>
-      <p>Тип: {{ room.room_type }}</p>
-      <p>Этаж: {{ room.floor }}</p>
-      <p>Стоимость: {{ room.cost }}</p>
-      <button v-if="room.is_available" @click="bookRoom(room.id)">Забронировать</button>
-    </div>
+<template> 
+  <div>
+    <h2>Список комнат</h2>
+    <label for="room_type">Room Type:</label>
+    <select v-model="filterType">
+      <option value="">--Select a Type--</option>
+      <option value="single">Single</option>
+      <option value="double">Double</option>
+      <option value="suite">Suite</option>
+    </select>
+
+    <label for="room_status">Room Status:</label>
+    <select v-model="filterStatus">
+      <option value="">--Select a Status--</option>
+      <option value="available">Available</option>
+      <option value="occupied">Occupied</option>
+      <option value="cleaning">Cleaning</option>
+    </select>
+
+    <button @click="applyFilter">Filter</button>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Room Type</th>
+          <th>Floor Number</th>
+          <th>Status</th>
+          <th>Cost</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in filteredRooms" :key="room.id">
+          <td>{{ room.room_type }}</td>
+          <td>{{ room.floor.number }}</td>
+          <td>{{ room.status }}</td>
+          <td>{{ room.cost }}</td>
+          <td>
+            <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
+              Book
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      rooms: [] // Предполагается, что это массив комнат
+      rooms: [],
+      filterType: '',
+      filterStatus: ''
     };
   },
-  methods: {
-    async bookRoom(roomId) {
-      try {
-        const response = await this.$axios.post(`http://localhost:8000/book_room/${roomId}`);
-        if (response.data.status === 'booked') {
-          // Обновление состояния комнаты после успешного бронирования
-          this.updateRoomStatus(roomId, false);
-        }
-      } catch (error) {
-        console.error('Ошибка при бронировании: ', error);
-      }
-    },
-    updateRoomStatus(roomId, isAvailable) {
-      const room = this.rooms.find(r => r.id === roomId);
-      if (room) {
-        room.is_available = isAvailable;
-      }
+  computed: {
+    filteredRooms() {
+      return this.rooms.filter(room => {
+        return (!this.filterType || room.room_type === this.filterType) &&
+               (!this.filterStatus || room.status === this.filterStatus);
+      });
     }
   },
-  // Методы загрузки данных комнат и т.д.
+  created() {
+    this.fetchRooms();
+  },
+  methods: {
+
+    fetchRooms() {
+    axios.get('http://localhost:8000/hotel_api/api/rooms/')
+      .then(response => {
+        this.rooms = response.data;
+      })
+      .catch(error => {
+        console.error('Error loading rooms:', error);
+      });
+  },
+    applyFilter() {
+      this.fetchRooms();
+    },
+    bookRoom(roomId) {
+  const token = localStorage.getItem('userToken'); // Получение токена из localStorage
+
+  axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
+    start_date: this.start_date,
+    end_date: this.end_date
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}` // Добавление токена в заголовок запроса
+    }
+  })
+    .then(response => {
+        if (response.data.status === 'success') {
+            alert('Room booked successfully');
+            this.fetchRooms(); // Обновить список комнат
+        } else {
+            console.error('Error response:', response.data);
+            alert('Failed to book room: ' + response.data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error booking room:', error);
+        alert('Failed to book room: ' + error.message);
+    });
 }
+
+  
+
+
+
+}
+};
 </script>
 
-<style>
-.rooms-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.room {
+th, td {
   border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  padding: 8px;
+  text-align: left;
 }
 
-.room h3 {
-  margin: 0;
-  font-size: 1.2em;
+th {
+  background-color: #f2f2f2;
 }
 
-.room p {
-  margin: 5px 0;
+td {
+  background-color: #fff;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
+tr:hover {
+  background-color: #f5f5f5;
 }
 </style>
 
@@ -603,7 +665,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "axios": "^1.6.3",
     "bootstrap": "^5.3.2",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",

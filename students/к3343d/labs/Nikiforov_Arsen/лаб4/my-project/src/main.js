@@ -1,7 +1,7 @@
 import { createApp } from 'vue'; 
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store'; //  хранилище Vuex
 import axios from 'axios';
 import { VueAxios } from 'vue-axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,17 +9,15 @@ import BootstrapVue3 from 'bootstrap-vue-3';
 
 const app = createApp(App);
 
-axios.defaults.baseURL = 'http://localhost:8000'; // Настройка базового URL
-
 app.use(router);
-app.use(store);
+app.use(store); // Vuex в приложении
 app.use(BootstrapVue3);
 app.use(VueAxios, axios);
 
+// Проверка localStorage на наличие токена и его установка в состояние Vuex
 const userToken = localStorage.getItem('userToken');
 if (userToken) {
   store.commit('setUser', { token: userToken });
-  axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
 }
 
 app.mount('#app');
