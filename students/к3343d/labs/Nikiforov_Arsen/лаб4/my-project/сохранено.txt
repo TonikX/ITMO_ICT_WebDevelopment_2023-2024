@@ -288,7 +288,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <form @submit.prevent="login">
-    <h2></h2>
+    <h2>Вход</h2>
     <div class="input-wrapper">
       <input type="text" v-model="userData.username" placeholder="Имя пользователя">
     </div>
@@ -296,13 +296,12 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
       <input type="password" v-model="userData.password" placeholder="Пароль">
     </div>
     <button type="submit">Получить токен</button>
+    <!-- Добавленный элемент для отображения сообщения об ошибке -->
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div v-if="token">Токен: {{ token }}</div>
   </form>
 
-
-
-
-  <!--  форма для входа по токену -->
+  <!-- форма для входа по токену -->
   <form @submit.prevent="loginWithToken">
     <h2>Войти с токеном</h2>
     <div class="input-wrapper">
@@ -311,7 +310,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <button @click="loginWithTokenClick">Войти с токеном</button>
   </form>
 </template>
-
 
 <script>
 export default {
@@ -340,8 +338,9 @@ export default {
           const data = await response.json();
           this.token = data.access;
           localStorage.setItem('userToken', data.access);
+          this.errorMessage = ''; // Сброс сообщения об ошибке
         } else {
-          this.errorMessage = 'Неверные учетные данные';
+          this.errorMessage = 'Введите корректные данные'; // Обновленное сообщение об ошибке
         }
       } catch (error) {
         console.error('Ошибка сети', error);
@@ -361,7 +360,12 @@ export default {
 
 <style>
 .input-wrapper {
-  margin-bottom: 10px; /* Расстояние между полями ввода */
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
 
@@ -406,7 +410,9 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+      const username = this.$store.state.user ? this.$store.state.user.username : 'Guest';
+      console.log('Current username:', username);
+      return username;
     }
   },
   methods: {
@@ -419,6 +425,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .navigation-links {
@@ -461,6 +468,7 @@ export default createStore({
   },
   mutations: {
     setUser(state, userData) {
+      console.log('Updating user data:', userData);
       state.user = userData;
     },
     clearUser(state) {
@@ -472,6 +480,104 @@ export default createStore({
     user: state => state.user,
   },
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomsTable.vue
+
+<template>
+  <div class="rooms-container">
+    <h2>Список номеров</h2>
+    <div class="room" v-for="room in rooms" :key="room.id">
+      <h3>Номер: {{ room.id }}</h3>
+      <p>Тип: {{ room.room_type }}</p>
+      <p>Этаж: {{ room.floor }}</p>
+      <p>Стоимость: {{ room.cost }}</p>
+      <button v-if="room.is_available" @click="bookRoom(room.id)">Забронировать</button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      rooms: [] // Предполагается, что это массив комнат
+    };
+  },
+  methods: {
+    async bookRoom(roomId) {
+      try {
+        const response = await this.$axios.post(`http://localhost:8000/book_room/${roomId}`);
+        if (response.data.status === 'booked') {
+          // Обновление состояния комнаты после успешного бронирования
+          this.updateRoomStatus(roomId, false);
+        }
+      } catch (error) {
+        console.error('Ошибка при бронировании: ', error);
+      }
+    },
+    updateRoomStatus(roomId, isAvailable) {
+      const room = this.rooms.find(r => r.id === roomId);
+      if (room) {
+        room.is_available = isAvailable;
+      }
+    }
+  },
+  // Методы загрузки данных комнат и т.д.
+}
+</script>
+
+<style>
+.rooms-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.room {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.room h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.room p {
+  margin: 5px 0;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+</style>
 
 
 
@@ -557,6 +663,7 @@ export default createStore({
   },
   mutations: {
     setUser(state, userData) {
+      console.log('Updating user data:', userData);
       state.user = userData;
     },
     clearUser(state) {
@@ -568,3 +675,6 @@ export default createStore({
     user: state => state.user,
   },
 });
+
+
+

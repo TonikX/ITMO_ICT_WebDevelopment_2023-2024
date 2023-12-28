@@ -1,80 +1,78 @@
 <template>
-  <div class="rooms-container">
-    <h2>Список номеров</h2>
-    <div class="room" v-for="room in rooms" :key="room.id">
-      <h3>Номер: {{ room.id }}</h3>
-      <p>Тип: {{ room.room_type }}</p>
-      <p>Этаж: {{ room.floor }}</p>
-      <p>Стоимость: {{ room.cost }}</p>
-      <button v-if="room.is_available" @click="bookRoom(room.id)">Забронировать</button>
-    </div>
+  <div>
+    <h2>Список комнат</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Тип комнаты</th>
+          <th>Этаж</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in rooms" :key="room.id">
+          <td>{{ room.room_type }}</td>
+          <td>{{ room.floorNumber }}</td>
+          <td>{{ room.status }}</td>
+          <td>{{ room.cost }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      rooms: [] // Предполагается, что это массив комнат
+      rooms: []
     };
   },
-  methods: {
-    async bookRoom(roomId) {
-      try {
-        const response = await this.$axios.post(`http://localhost:8000/book_room/${roomId}`);
-        if (response.data.status === 'booked') {
-          // Обновление состояния комнаты после успешного бронирования
-          this.updateRoomStatus(roomId, false);
-        }
-      } catch (error) {
-        console.error('Ошибка при бронировании: ', error);
-      }
-    },
-    updateRoomStatus(roomId, isAvailable) {
-      const room = this.rooms.find(r => r.id === roomId);
-      if (room) {
-        room.is_available = isAvailable;
-      }
-    }
+  created() {
+    this.fetchRooms();
   },
-  // Методы загрузки данных комнат и т.д.
-}
+  methods: {
+    fetchRooms() {
+      axios.get('http://localhost:8000/hotel_api/api/rooms/')
+        .then(response => {
+          this.rooms = response.data.map(room => ({
+            ...room,
+            floorNumber: room.floor ? room.floor.number : 'Неизвестно'
+          }));
+          console.log('Комнаты загружены:', this.rooms);
+        })
+        .catch(error => {
+          console.error('Ошибка при загрузке данных о комнатах:', error);
+        });
+    }
+  }
+};
 </script>
 
-<style>
-.rooms-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.room {
+th, td {
   border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  padding: 8px;
+  text-align: left;
 }
 
-.room h3 {
-  margin: 0;
-  font-size: 1.2em;
+th {
+  background-color: #f2f2f2;
 }
 
-.room p {
-  margin: 5px 0;
+td {
+  background-color: #fff;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
+tr:hover {
+  background-color: #f5f5f5;
 }
 </style>
