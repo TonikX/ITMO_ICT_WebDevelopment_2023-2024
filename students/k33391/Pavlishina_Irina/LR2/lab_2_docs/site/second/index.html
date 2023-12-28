@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Модели - Lb2, Pavlishina Irina, K33391</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Lb2, Pavlishina Irina, K33391</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../docs/first.md" class="nav-link">Настройки сервера</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../third/" class="nav-link">Формы</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../fourth/" class="nav-link">Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../fith/" class="nav-link">Темплэйты</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../sixth/" class="nav-link">Ссылки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../seventh/" class="nav-link">Джанго-Админ</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../third/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Модели</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">Модели</h1>
+<h3 id="_2">Импорты</h3>
+<pre><code>from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
+</code></pre>
+<h3 id="_3">Пассажир</h3>
+<pre><code>class Passenger(AbstractUser):
+    passport = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f&quot;{self.first_name} {self.last_name} {self.passport}&quot;
+
+</code></pre>
+<h3 id="_4">Город</h3>
+<pre><code>class City(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f&quot;{self.name}&quot;
+</code></pre>
+<h3 id="_5">Авиакомпания</h3>
+<pre><code>class AirLine(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f&quot;{self.name}&quot;
+</code></pre>
+<h3 id="_6">Модель самолета</h3>
+<pre><code>class PlaneModel(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return f&quot;{self.name}&quot;
+</code></pre>
+<h3 id="_7">Место</h3>
+<pre><code>class Seat(models.Model):
+    plane = models.ForeignKey('flights.PlaneModel', related_name='plane_seats', on_delete=models.CASCADE)
+    row = models.CharField(max_length=2)
+    column = models.CharField(max_length=2)
+
+    def __str__(self):
+        return f&quot;{self.row}{self.column}&quot;
+</code></pre>
+<h3 id="_8">Полет</h3>
+<pre><code>class Flight(models.Model):
+    FLIGHT_TYPES = models.TextChoices('type_of', ['arrive', 'departure'])
+
+    flight_number = models.CharField(max_length=100)
+    departure_time = models.DateTimeField()
+    arrival_time = models.DateTimeField()
+
+    plane = models.ForeignKey(&quot;PlaneModel&quot;, related_name=&quot;plane_flights&quot;, on_delete=models.CASCADE)
+    departure_city = models.ForeignKey(
+        &quot;flights.City&quot;, on_delete=models.CASCADE, related_name=&quot;%(class)s_departure_city&quot;
+    )
+    arrival_city = models.ForeignKey(
+        &quot;flights.City&quot;, on_delete=models.CASCADE, related_name=&quot;%(class)s_arrival_city&quot;
+    )
+    air_line = models.ForeignKey(&quot;flights.AirLine&quot;, on_delete=models.CASCADE)
+
+    type = models.CharField(max_length=20, choices=FLIGHT_TYPES.choices)
+    gate = models.CharField(max_length=10)
+</code></pre>
+<h3 id="_9">Бронь места</h3>
+<pre><code>class Reservation(models.Model):
+    passenger = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reservations', on_delete=models.CASCADE)
+    flight = models.ForeignKey('flights.Flight', related_name='flight_reservations', on_delete=models.CASCADE)
+    seat = models.OneToOneField('flights.Seat', related_name='reserved_by', on_delete=models.CASCADE)
+    ticket_number = models.CharField(max_length=100)
+</code></pre>
+<h3 id="_10">Отзыв</h3>
+<pre><code>class Comment(models.Model):
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+    #date_time = models.DateTimeField(auto_now_add=True)
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

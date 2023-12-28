@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+
+<a href="{% url 'flight_detail' reservation.flight.id %}" class="btn btn-secondary mb-4">Back to flight</a>
+
+<h2>Delete reservation</h2>
+<h5 class="my-3">Information about reservation</h5>
+<div>Seat: {{ reservation.seat }}</div>
+<div>Ticket: {{ reservation.ticket_number }}</div>
+
+<form method="POST" class="mt-3">
+    {% csrf_token %}
+    <p>Are you sure you want to delete reservation?</p>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+{% endblock %}

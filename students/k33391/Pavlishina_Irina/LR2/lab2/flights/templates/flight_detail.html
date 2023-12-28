@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>FLight {{flight.name}}</h1>
+
+<h2 class="mb-3">Information about flight</h2>
+<div>Flight number: {{ flight.flight_number }}</div>
+<div>Airline: {{ flight.air_line }}</div>
+<div>Departure: {{ flight.departure_city }} {{ flight.departure }}</div>
+<div>Arrival: {{ flight.arrival_city }} {{ flight.arrival }}</div>
+<div>Type: {{ flight.type }}</div>
+<div>Gate: {{ flight.gate }}</div>
+
+
+<h2>Passengers</h2>
+<div class="row mb-5">
+  <div class="col-md-5">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Seat</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for ticket in tickets %}
+          <tr>
+            <td class="align-middle">{{ticket.passenger.last_name}} {{ticket.passenger.first_name}} </td>
+            <td class="align-middle">{{ticket.seat}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h4 class="my-3">Comments</h4>
+<ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item">
+        <strong>{{ comment.author.username }}</strong>
+        <br>
+        Rating: {{ comment.rating }}
+        <br>
+        {{ comment.text }}
+    </li>
+    {% endfor %}
+</ul>
+
+
+<h2>Seats</h2>
+<table class="table table-striped table-hover mb-5">
+  {% for seat in seats %}
+  <td class="text-center">
+    {% if seat.is_taken %} <s style="color:grey;">{{seat.name}}</s>
+    {% else %} {{seat.name}}
+    {% endif %}
+  </td>
+  {% endfor %}
+</table>
+
+<h2>Reserve  a seat</h2>
+{% if user.is_authenticated %}
+<div class="row">
+  <div class="col-md-3">
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="ticketSeatInput" class="form-label">Seat: </label>
+        <input name='seat' class="form-control" id="ticketSeatInput">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+  {% if has_ticket%}
+  <td><a href="{% url 'reservations_for_user'%}">You already have a ticket on these flight</a></td>
+  {% endif %}
+
+<h5 class="my-3">Add comment</h5>
+<form method="post" class="mb-5">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+{% else %}
+<td><a href="{% url 'register' %}">Register</a> previously</td>
+{% endif %}
+
+{% endblock %}
