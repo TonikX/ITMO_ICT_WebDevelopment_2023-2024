@@ -51,6 +51,11 @@ class Room(models.Model):
         self.status = 'occupied'
         self.save()
 
+    def set_available(self):
+        self.status = 'available'
+        self.save()
+
+
     def __str__(self):
         return f"{self.get_room_type_display()} on Floor {self.floor.number}"
     

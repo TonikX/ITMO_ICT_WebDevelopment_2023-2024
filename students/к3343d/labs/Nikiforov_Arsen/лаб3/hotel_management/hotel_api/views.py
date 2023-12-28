@@ -47,13 +47,18 @@ from .models import Room, Booking
 
 
 def room_list(request):
-    room_type = request.GET.get('room_type')
-    room_status = request.GET.get('room_status')
-    if room_type and room_status:
-        rooms = Room.objects.filter(room_type=room_type, status=room_status)
-    else:
-        rooms = Room.objects.all()
+    room_type_query = request.GET.get('room_type', '').strip()
+    room_status_query = request.GET.get('room_status', '').strip()
+
+    rooms = Room.objects.all()
+
+    if room_type_query:
+        rooms = rooms.filter(room_type__iexact=room_type_query)
+    if room_status_query:
+        rooms = rooms.filter(status__iexact=room_status_query)
+
     return render(request, 'hotel_api/rooms_list.html', {'rooms': rooms})
+
 
 
     
