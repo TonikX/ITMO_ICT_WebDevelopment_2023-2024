@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "role", "passport", "role", "salary", "employment_contract_id", "dismissal_agreement_id"]
+        fields = ["id", "username", "role", "passport", "salary", "employment_contract_id", "dismissal_agreement_id"]
 
 
 class FacilitySerializer(serializers.ModelSerializer):
