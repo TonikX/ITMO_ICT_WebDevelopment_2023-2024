@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.auth.models import User
-
+from django.contrib import admin
 
 
 class CustomUser(AbstractUser):
@@ -42,13 +42,21 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     booked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='booked_rooms')
     booking_confirmed = models.BooleanField(default=False)
+    
+    def set_booked(self):
+        self.status = 'booked'
+        self.save()
+
+    def set_occupied(self):
+        self.status = 'occupied'
+        self.save()
 
     def __str__(self):
         return f"{self.get_room_type_display()} on Floor {self.floor.number}"
     
+
     
-
-
+    
 
 
 
@@ -63,12 +71,9 @@ class Booking(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     confirmed = models.BooleanField(default=False)
-    
 
     def __str__(self):
         return f'Booking {self.id} for {self.room}'
-
-
 
 
 

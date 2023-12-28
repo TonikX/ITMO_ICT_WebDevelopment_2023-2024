@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import (Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, 
-                     EmployeeDay, Booking, CustomUser)
+from .models import (Room, Client, ClientInfo, Employee, Floor, Day, 
+                     EmployeeFloor, EmployeeDay, Booking, CustomUser)
 
 # Класс администратора для модели Room
 @admin.register(Room)
@@ -14,7 +14,10 @@ class BookingAdmin(admin.ModelAdmin):
     actions = ['confirm_booking']
 
     def confirm_booking(self, request, queryset):
-        queryset.update(confirmed=True)
+        for booking in queryset:
+            booking.confirmed = True
+            booking.room.set_occupied()  # Меняем статус комнаты на 'occupied'
+            booking.save()
     confirm_booking.short_description = "Confirm selected bookings"
 
 # Регистрация других моделей

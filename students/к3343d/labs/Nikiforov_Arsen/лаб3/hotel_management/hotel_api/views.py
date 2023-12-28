@@ -65,27 +65,24 @@ def book_room(request, room_id):
     if request.method == 'POST':
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
+        
 
         # Проверяем, что пользователь аутентифицирован
         if request.user.is_authenticated:
             user = request.user
-        else:
-            return HttpResponse("User is not authenticated", status=401)
-
-        # Создаем объект бронирования
-        Booking.objects.create(
-            user=user,
-            room=room,
-            start_date=start_date,
-            end_date=end_date,
-            confirmed=False
+            room.set_booked()  # Меняем статус комнаты на 'booked'
+            Booking.objects.create(
+                user=user,
+                room=room,
+                start_date=start_date,
+                end_date=end_date,
+                confirmed=False
         )
-
-        # Перенаправление после успешного бронирования
-        return redirect('hotel_api:room_list') # Обновите эту строку с учетом пространства имен
-
+        return redirect('hotel_api:room_list')
     else:
         return render(request, 'hotel_api/book_room.html', {'room': room})
+
+
 
 
 
