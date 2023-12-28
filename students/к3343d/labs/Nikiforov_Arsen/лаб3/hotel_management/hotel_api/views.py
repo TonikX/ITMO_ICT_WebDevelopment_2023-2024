@@ -55,6 +55,41 @@ from .models import Room, Booking
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
+from rest_framework_simplejwt.tokens import AccessToken
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+
+            # Проверка валидности токена
+            try:
+                AccessToken(access_token)
+                login(request, user)
+                return JsonResponse({
+                    'status': 'success',
+                    'refresh': str(refresh),
+                    'access': access_token,
+                })
+            except TokenError as e:
+                return JsonResponse({'status': 'error', 'message': str(e)}, status=401)
+        else:
+            return JsonResponse({'status': 'error'}, status=401)
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+
+
+
+
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -164,17 +199,7 @@ def generate_token(request):
 
 
 
-@csrf_exempt
-def login_view(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        user = authenticate(username=data['username'], password=data['password'])
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'status': 'success'})
-        else:
-            return JsonResponse({'status': 'error'}, status=401)
-    return JsonResponse({'error': 'Invalid method'}, status=405)
+
 
 
 @csrf_exempt

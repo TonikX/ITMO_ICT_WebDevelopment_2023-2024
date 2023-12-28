@@ -7,19 +7,8 @@
     <div class="input-wrapper">
       <input type="password" v-model="userData.password" placeholder="Пароль">
     </div>
-    <button type="submit">Получить токен</button>
-    <!-- Добавленный элемент для отображения сообщения об ошибке -->
+    <button type="submit">Войти</button>
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <div v-if="token">Токен: {{ token }}</div>
-  </form>
-
-  <!-- форма для входа по токену -->
-  <form @submit.prevent="loginWithToken">
-    <h2>Войти с токеном</h2>
-    <div class="input-wrapper">
-      <input type="text" v-model="token" placeholder="Введите токен">
-    </div>
-    <button @click="loginWithTokenClick">Войти с токеном</button>
   </form>
 </template>
 
@@ -31,7 +20,6 @@ export default {
         username: '',
         password: '',
       },
-      token: '',
       errorMessage: '',
     };
   },
@@ -48,22 +36,14 @@ export default {
 
         if (response.ok) {
           const data = await response.json();
-          this.token = data.access;
           localStorage.setItem('userToken', data.access);
-          this.errorMessage = ''; // Сброс сообщения об ошибке
+          this.$emit('show-user-profile');
+          this.errorMessage = '';
         } else {
-          this.errorMessage = 'Введите корректные данные'; // Обновленное сообщение об ошибке
+          this.errorMessage = 'Введите корректные данные';
         }
       } catch (error) {
         console.error('Ошибка сети', error);
-      }
-    },
-    loginWithTokenClick() {
-      if (this.token) {
-        localStorage.setItem('userToken', this.token);
-        this.$emit('show-user-profile');
-      } else {
-        this.errorMessage = 'Введите токен';
       }
     }
   }
