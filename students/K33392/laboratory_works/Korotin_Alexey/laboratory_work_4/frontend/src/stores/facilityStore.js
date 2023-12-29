@@ -31,5 +31,15 @@ export const useFacilityStore = defineStore("facility", {
                 this.facilities[index] = response.data;
             }
         },
+
+        async fetchByName(name) {
+            let facility = this.facilities.find(f => f.name === name);
+            if (facility === undefined) {
+                await this.fetchAll();
+                facility = this.facilities.find(f => f.name === name);
+            }
+
+            return facility;
+        }
     },
 });

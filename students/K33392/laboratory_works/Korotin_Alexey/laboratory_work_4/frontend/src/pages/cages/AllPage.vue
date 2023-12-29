@@ -7,15 +7,14 @@
                 </q-card-section>
 
                 <q-separator />
-                <q-form >
+                <q-form @submit.prevent="createCage" ref="form">
                     <q-card-section style="max-height: 50vh" class="scroll">
-                        <q-input label-color="white" label="Name" placeholder="Facility name" input-class="input-field"
-                            type="text" ></q-input>
-                        <q-input label-color="white" label="Longitude" placeholder="Facility longitude" input-class="input-field"
+                        <q-select v-model="form.facility" :options="availableFacilities" label="Facility" dark label-color="white" filled />
+                        <q-input v-model="form.row" label-color="white" label="Row" placeholder="Row number" input-class="input-field"
                             type="number" ></q-input>
-                        <q-input label-color="white" label="Latitude" placeholder="Facility latitude" input-class="input-field"
-                            type="number"></q-input>
-
+                        <q-input v-model="form.column" label-color="white" label="Column" placeholder="Column number" input-class="input-field"
+                            type="number" ></q-input>
+                        <q-select v-model="form.responsible" :options="availableStaff" label="Responsible" dark label-color="white" filled />
                     </q-card-section>
 
                     <q-separator />
@@ -37,7 +36,7 @@
                 <q-btn color="secondary" text-color="primary" icon="add" label="Add" @click="modal = true;" />
             </div>
         </div>
-        <div class="row">
+        <div class="row q-mt-md">
             <CageCard v-for="cage in filteredCages" v-bind:key="cage.id" :id="cage.id" :row="cage.row" :column="cage.column"
                 :responsible="cage.responsible" :facility="cage.facility" class="border-hover"
                 @click="$router.push({ path: `/cages/${cage.id}` })"></CageCard>
@@ -48,6 +47,7 @@
 
 import { useFacilityStore } from '@/stores/facilityStore';
 import { useCageStore } from '@/stores/cageStore';
+import { useStaffStore } from '@/stores/staffStore';
 import { mapState, mapActions } from 'pinia';
 import CageCard from '@/components/CageCard.vue';
 export default {
@@ -55,17 +55,32 @@ export default {
         return {
             modal: false,
             facility: 'Any',
+            form: {
+                facility: '',
+                row: 0,
+                column: 0,
+                responsible: ''
+            }
         }
     },
 
     computed: {
         ...mapState(useFacilityStore, ['facilities']),
         ...mapState(useCageStore, ['cages']),
+        ...mapState(useStaffStore, ['staff']),
 
         options() {
             const options = this.facilities.map((f) => f.name);
             options.push('Any');
             return options;
+        },
+
+        availableFacilities() {
+            return this.facilities.map(f => f.name);
+        },
+
+        availableStaff() {
+            return this.staff.map(s => s.username);
         },
 
         filteredCages() {
@@ -76,7 +91,22 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCageStore, ['fetchAll'])
+        ...mapActions(useCageStore, ['fetchAll', 'create']),
+        ...mapActions(useStaffStore, ['fetchByUsername']),
+        ...mapActions(useFacilityStore, ['fetchByName']),
+
+        async createCage() {
+            const facility = await this.fetchByName(this.form.facility);
+            const responsible = await this.fetchByUsername(this.form.responsible);
+            
+            const payload = new Object(this.form);
+
+            payload.facility = facility.id;
+            payload.responsible = responsible.id;
+
+            await this.create(payload);
+            this.$form.reset();
+        }
     },
 
     async mounted() {
