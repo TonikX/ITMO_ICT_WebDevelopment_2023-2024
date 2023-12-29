@@ -25,3 +25,13 @@ class CageSerializer(serializers.ModelSerializer):
         model = Cage
         fields = "__all__"
 
+
+class CageMutateSerializer(serializers.ModelSerializer):
+
+    facility = serializers.PrimaryKeyRelatedField(many=False, queryset=Facility.objects.all())
+    responsible = serializers.PrimaryKeyRelatedField(many=False, queryset=User.objects.all())
+
+    class Meta:
+        model = Cage
+        fields = '__all__'
+

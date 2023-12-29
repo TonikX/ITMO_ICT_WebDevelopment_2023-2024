@@ -1,5 +1,5 @@
 from .services import UserService, FacilityService, CageService
-from .serializers import UserSerializer, FacilitySerializer, CageSerializer
+from .serializers import UserSerializer, FacilitySerializer, CageSerializer, CageMutateSerializer
 from poultry_farm_project.views import BaseAPIView, BaseExactAPIView
 from rest_framework.decorators import api_view, permission_classes
 from poultry_farm_project.permissions import IsDirectorPermission
@@ -33,7 +33,7 @@ class FacilityExactAPIView(BaseExactAPIView):
 class CageAPIView(BaseAPIView):
 
     def __init__(self):
-        super().__init__(CageService(), CageSerializer)
+        super().__init__(CageService(), CageSerializer, CageMutateSerializer)
 
 
 class CageExactAPIView(BaseExactAPIView):

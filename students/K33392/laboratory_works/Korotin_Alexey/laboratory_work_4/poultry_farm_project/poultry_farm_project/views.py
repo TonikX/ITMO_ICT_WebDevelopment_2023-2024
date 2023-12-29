@@ -10,10 +10,12 @@ class BaseAPIView(APIView):
 
     permission_classes = (IsAuthenticated, )
 
-    def __init__(self, service: CRUDService, serializer: Type[ModelSerializer]) -> None:
+    def __init__(self, service: CRUDService, serializer: Type[ModelSerializer],
+                 mutate_serializer: Type[ModelSerializer] = None) -> None:
         super().__init__()
         self.service = service
         self.serializer = serializer
+        self.mutate_serializer = mutate_serializer
 
     def get(self, request):
         entity = self.service.find_all()
@@ -22,7 +24,8 @@ class BaseAPIView(APIView):
 
     def post(self, request):
         entity = request.data
-        serializer = self.serializer(data=entity)
+        serializer = self.serializer(data=entity) if self.mutate_serializer is None \
+            else self.mutate_serializer(data=entity)
 
         if serializer.is_valid(raise_exception=True):
             self.service.save(serializer)
@@ -34,10 +37,12 @@ class BaseExactAPIView(APIView):
 
     permission_classes = (IsAuthenticated, )
 
-    def __init__(self, service: CRUDService, serializer: Type[ModelSerializer]):
+    def __init__(self, service: CRUDService, serializer: Type[ModelSerializer],
+                 mutate_serializer: Type[ModelSerializer] = None) -> None:
         super().__init__()
         self.service = service
         self.serializer = serializer
+        self.mutate_serializer = mutate_serializer
 
     def get(self, request, pk):
         entity = self.service.find_by_id(pk)
@@ -52,7 +57,8 @@ class BaseExactAPIView(APIView):
         if existing is None:
             return Response(status=404)
 
-        serializer = self.serializer(data=entity, instance=existing)
+        serializer = self.serializer(data=entity, instance=existing) if self.mutate_serializer is None \
+            else self.mutate_serializer(data=entity, instance=existing)
 
         if serializer.is_valid(raise_exception=True):
             self.service.save(serializer)
