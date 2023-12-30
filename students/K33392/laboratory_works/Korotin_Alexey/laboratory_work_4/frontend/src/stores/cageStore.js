@@ -22,6 +22,16 @@ export const useCageStore = defineStore("cages", {
             }
 
             return response;
+        },
+
+        async fetchById(id) {
+            let cage = this.cages.find(c => c.id == id);
+            if (cage === undefined) {
+                await this.fetchAll();
+                cage = this.cages.find(c => c.id == id);
+            }
+
+            return cage;
         }
     },
 });
