@@ -1,0 +1,350 @@
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/1.py
+
+# https://leetcode.com/problems/add-two-numbers/submissions/
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+ 
+        dummyHead = ListNode(0)
+       
+        current = dummyHead
+     
+        carry = 0
+
+        while l1 is not None or l2 is not None:
+            sum = carry
+            if l1 is not None:
+                sum += l1.val
+                l1 = l1.next
+            if l2 is not None:
+                sum += l2.val
+                l2 = l2.next
+
+            carry = sum // 10
+            current.next = ListNode(sum % 10)
+            current = current.next
+
+     
+        if carry > 0:
+            current.next = ListNode(carry)
+
+    
+        return dummyHead.next
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/2.py
+
+# https://leetcode.com/problems/longest-substring-without-repeating-characters/submissions/
+
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        start, maxLength = 0, 0
+        charIndexMap = {}
+
+        for i in range(len(s)):
+            if s[i] in charIndexMap and charIndexMap[s[i]] >= start:
+                start = charIndexMap[s[i]] + 1
+            charIndexMap[s[i]] = i
+            maxLength = max(maxLength, i - start + 1)
+
+        return maxLength
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/3.py
+
+# https://leetcode.com/problems/longest-palindromic-substring/submissions/
+class Solution:
+    def longestPalindrome(self, s):
+        def expandAroundCenter(left, right):
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return s[left + 1:right]
+
+        if not s or len(s) < 1:
+            return ""
+
+        start, end = 0, 0
+        for i in range(len(s)):
+            len1 = expandAroundCenter(i, i)
+            len2 = expandAroundCenter(i, i + 1)
+            longer = len1 if len(len1) > len(len2) else len2
+            if len(longer) > end - start:
+                start, end = i - ((len(longer) - 1) // 2), i + (len(longer) // 2)
+
+        return s[start:end + 1]
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/4.py
+
+# https://leetcode.com/problems/zigzag-conversion/submissions/
+class Solution:
+    def convert(self, s, numRows):
+        if numRows == 1 or numRows >= len(s):
+            return s
+
+        result = [''] * numRows
+        index, step = 0, 1
+
+        for char in s:
+            result[index] += char
+
+            if index == 0:
+                step = 1
+            elif index == numRows - 1:
+                step = -1
+
+            index += step
+
+        return ''.join(result)
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/5.py
+
+# https://leetcode.com/problems/reverse-integer/submissions/
+class Solution:
+    def reverse(self, x):
+        sign = [1,-1][x < 0]
+        reversed_x = sign * int(str(abs(x))[::-1])
+
+        return reversed_x if -2**31 <= reversed_x <= 2**31 - 1 else 0
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/6.py
+
+# https://leetcode.com/problems/string-to-integer-atoi/submissions/
+class Solution:
+    def myAtoi(self, s):
+        s = s.strip()
+        if not s:
+            return 0
+
+        sign, i = 1, 0
+        if s[0] in ["-", "+"]:
+            sign = -1 if s[0] == "-" else 1
+            i = 1
+
+        number = 0
+        for j in range(i, len(s)):
+            if not s[j].isdigit():
+                break
+            number = number * 10 + int(s[j])
+
+        return max(-2**31, min(sign * number, 2**31 - 1))
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/7.py
+
+# https://leetcode.com/problems/palindrome-number/submissions/
+class Solution(object):
+    def isPalindrome(self, x):
+        if x < 0:
+            return False
+        reversed_x, original_x = 0, x
+        while x > 0:
+            reversed_x = reversed_x * 10 + x % 10
+            x //= 10
+        return original_x == reversed_x
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/8.py
+
+# https://leetcode.com/problems/regular-expression-matching/submissions/
+class Solution(object):
+    def isMatch(self, s, p):
+        dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]
+        dp[-1][-1] = True
+
+        for i in range(len(s), -1, -1):
+            for j in range(len(p) - 1, -1, -1):
+                first_match = i < len(s) and p[j] in {s[i], '.'}
+                if j + 1 < len(p) and p[j + 1] == '*':
+                    dp[i][j] = dp[i][j + 2] or first_match and dp[i + 1][j]
+                else:
+                    dp[i][j] = first_match and dp[i + 1][j + 1]
+
+        return dp[0][0]
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/9.py
+
+# https://leetcode.com/problems/container-with-most-water/
+class Solution(object):
+    def maxArea(self, height):
+        left, right = 0, len(height) - 1
+        max_area = 0
+        while left < right:
+            width = right - left
+            max_area = max(max_area, min(height[left], height[right]) * width)
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        return max_area
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/10.py
+
+# https://leetcode.com/problems/integer-to-roman/
+class Solution(object):
+    def intToRoman(self, num):
+        val = [
+            1000, 900, 500, 400,
+            100, 90, 50, 40,
+            10, 9, 5, 4,
+            1
+            ]
+        syms = [
+            "M", "CM", "D", "CD",
+            "C", "XC", "L", "XL",
+            "X", "IX", "V", "IV",
+            "I"
+            ]
+        roman_num = ''
+        i = 0
+        while num > 0:
+            for _ in range(num // val[i]):
+                roman_num += syms[i]
+                num -= val[i]
+            i += 1
+        return roman_num
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/11.py
+
+# https://leetcode.com/problems/roman-to-integer/
+class Solution(object):
+    def romanToInt(self, s):
+        roman = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        integer = 0
+        for i in range(len(s)):
+            if i > 0 and roman[s[i]] > roman[s[i - 1]]:
+                integer += roman[s[i]] - 2 * roman[s[i - 1]]
+            else:
+                integer += roman[s[i]]
+        return integer
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/12.py
+
+# https://leetcode.com/problems/longest-common-prefix/
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        if not strs:
+            return ""
+        shortest = min(strs, key=len)
+        for i, ch in enumerate(shortest):
+            for other in strs:
+                if other[i] != ch:
+                    return shortest[:i]
+        return shortest 
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/13.py
+
+# https://leetcode.com/problems/3sum/
+class Solution(object):
+    def threeSum(self, nums):
+        nums.sort()
+        result = []
+        for i in range(len(nums) - 2):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            left, right = i + 1, len(nums) - 1
+            while left < right:
+                sum = nums[i] + nums[left] + nums[right]
+                if sum < 0:
+                    left += 1
+                elif sum > 0:
+                    right -= 1
+                else:
+                    result.append([nums[i], nums[left], nums[right]])
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+                    left += 1
+                    right -= 1
+        return result
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/14.py
+
+# https://leetcode.com/problems/3sum-closest/
+class Solution(object):
+    def threeSumClosest(self, nums, target):
+        nums.sort()
+        closest = sum(nums[:3])
+        for i in range(len(nums) - 2):
+            left, right = i + 1, len(nums) - 1
+            while left < right:
+                current_sum = nums[i] + nums[left] + nums[right]
+                if abs(current_sum - target) < abs(closest - target):
+                    closest = current_sum
+                if current_sum < target:
+                    left += 1
+                elif current_sum > target:
+                    right -= 1
+                else:
+                    return target
+        return closest
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/leetcode/15.py
+
+# https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+class Solution(object):
+    def letterCombinations(self, digits):
+        if not digits:
+            return []
+
+        digit_to_char = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
+
+        def backtrack(index, path):
+            if index == len(digits):
+                combinations.append(''.join(path))
+                return
+            possible_letters = digit_to_char[digits[index]]
+            for letter in possible_letters:
+                path.append(letter)
+                backtrack(index + 1, path)
+                path.pop()
+
+        combinations = []
+        backtrack(0, [])
+        return combinations

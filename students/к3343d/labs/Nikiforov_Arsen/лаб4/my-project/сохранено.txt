@@ -295,19 +295,8 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     <div class="input-wrapper">
       <input type="password" v-model="userData.password" placeholder="Пароль">
     </div>
-    <button type="submit">Получить токен</button>
-    <!-- Добавленный элемент для отображения сообщения об ошибке -->
+    <button type="submit">Войти</button>
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <div v-if="token">Токен: {{ token }}</div>
-  </form>
-
-  <!-- форма для входа по токену -->
-  <form @submit.prevent="loginWithToken">
-    <h2>Войти с токеном</h2>
-    <div class="input-wrapper">
-      <input type="text" v-model="token" placeholder="Введите токен">
-    </div>
-    <button @click="loginWithTokenClick">Войти с токеном</button>
   </form>
 </template>
 
@@ -319,7 +308,6 @@ export default {
         username: '',
         password: '',
       },
-      token: '',
       errorMessage: '',
     };
   },
@@ -335,23 +323,20 @@ export default {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          this.token = data.access;
-          localStorage.setItem('userToken', data.access);
-          this.errorMessage = ''; // Сброс сообщения об ошибке
-        } else {
-          this.errorMessage = 'Введите корректные данные'; // Обновленное сообщение об ошибке
+  const data = await response.json();
+  localStorage.setItem('userToken', data.access);
+
+  // Сохраните имя пользователя в состоянии Vuex
+  this.$store.commit('setUser', { username: this.userData.username, token: data.access });
+
+  this.$emit('show-user-profile');
+  this.errorMessage = '';
+}     
+         else {
+          this.errorMessage = 'Введите корректные данные';
         }
       } catch (error) {
         console.error('Ошибка сети', error);
-      }
-    },
-    loginWithTokenClick() {
-      if (this.token) {
-        localStorage.setItem('userToken', this.token);
-        this.$emit('show-user-profile');
-      } else {
-        this.errorMessage = 'Введите токен';
       }
     }
   }
@@ -385,7 +370,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <div>
-    <h2>Добро пожаловать в систему управления отелем, {{ userName }}</h2>
+    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
     <div class="navigation-links">
       <button @click="showRooms">Комнаты</button>
       <router-link to="/clients">Клиенты</router-link>
@@ -400,6 +385,11 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 import RoomsTable from './RoomsTable.vue';
 
 export default {
+  computed: {
+    username() {
+      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+    }
+  },
   components: {
     RoomsTable
   },
@@ -407,13 +397,6 @@ export default {
     return {
       showRoomsTable: false
     };
-  },
-  computed: {
-    userName() {
-      const username = this.$store.state.user ? this.$store.state.user.username : 'Guest';
-      console.log('Current username:', username);
-      return username;
-    }
   },
   methods: {
     showRooms() {
@@ -462,13 +445,13 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 import { createStore } from 'vuex';
 
+
 export default createStore({
   state: {
     user: null,
   },
   mutations: {
     setUser(state, userData) {
-      console.log('Updating user data:', userData);
       state.user = userData;
     },
     clearUser(state) {
@@ -501,32 +484,41 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 <template> 
   <div>
     <h2>Список комнат</h2>
-    <label for="room_type">Room Type:</label>
+
+    <!-- Фильтры -->
+    <label for="room_type">Тип комнаты:</label>
     <select v-model="filterType">
-      <option value="">--Select a Type--</option>
-      <option value="single">Single</option>
-      <option value="double">Double</option>
-      <option value="suite">Suite</option>
+      <option value="">--Выберите тип--</option>
+      <option value="single">Одноместный</option>
+      <option value="double">Двухместный</option>
+      <option value="suite">Люкс</option>
     </select>
 
-    <label for="room_status">Room Status:</label>
+    <label for="room_status">Статус комнаты:</label>
     <select v-model="filterStatus">
-      <option value="">--Select a Status--</option>
-      <option value="available">Available</option>
-      <option value="occupied">Occupied</option>
-      <option value="cleaning">Cleaning</option>
+      <option value="">--Выберите статус--</option>
+      <option value="available">Доступна</option>
+      <option value="occupied">Занята</option>
+      <option value="cleaning">На уборке</option>
     </select>
 
-    <button @click="applyFilter">Filter</button>
+    <button @click="applyFilter">Применить фильтр</button>
 
+    <!-- Выбор даты бронирования -->
+    <div class="date-selection">
+      <input type="date" v-model="startDate" placeholder="Дата начала">
+      <input type="date" v-model="endDate" placeholder="Дата окончания">
+    </div>
+
+    <!-- Таблица комнат -->
     <table>
       <thead>
         <tr>
-          <th>Room Type</th>
-          <th>Floor Number</th>
-          <th>Status</th>
-          <th>Cost</th>
-          <th>Actions</th>
+          <th>Тип комнаты</th>
+          <th>Номер этажа</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
@@ -537,7 +529,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <td>{{ room.cost }}</td>
           <td>
             <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
-              Book
+              Забронировать
             </button>
           </td>
         </tr>
@@ -554,7 +546,9 @@ export default {
     return {
       rooms: [],
       filterType: '',
-      filterStatus: ''
+      filterStatus: '',
+      startDate: '', // Для хранения даты начала бронирования
+      endDate: ''   // Для хранения даты окончания бронирования
     };
   },
   computed: {
@@ -565,54 +559,52 @@ export default {
       });
     }
   },
-  created() {
-    this.fetchRooms();
-  },
   methods: {
-
     fetchRooms() {
-    axios.get('http://localhost:8000/hotel_api/api/rooms/')
-      .then(response => {
-        this.rooms = response.data;
-      })
-      .catch(error => {
-        console.error('Error loading rooms:', error);
-      });
-  },
+      axios.get('http://localhost:8000/hotel_api/api/rooms/')
+        .then(response => {
+          this.rooms = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка загрузки комнат:', error);
+        });
+    },
     applyFilter() {
       this.fetchRooms();
     },
     bookRoom(roomId) {
-  const token = localStorage.getItem('userToken'); // Получение токена из localStorage
-
-  axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
-    start_date: this.start_date,
-    end_date: this.end_date
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}` // Добавление токена в заголовок запроса
+    if (!this.startDate || !this.endDate) {
+      alert('Необходимо указать даты начала и окончания бронирования');
+      return;
     }
-  })
+
+    const token = localStorage.getItem('userToken');
+    axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
+      start_date: this.startDate,
+      end_date: this.endDate
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     .then(response => {
-        if (response.data.status === 'success') {
-            alert('Room booked successfully');
-            this.fetchRooms(); // Обновить список комнат
-        } else {
-            console.error('Error response:', response.data);
-            alert('Failed to book room: ' + response.data.message);
-        }
+      if (response.data.status === 'success') {
+        alert('Комната успешно забронирована');
+        this.fetchRooms(); // Обновление списка комнат
+      } else {
+        console.error('Ответ об ошибке:', response.data);
+        alert('Ошибка бронирования: ' + response.data.message);
+      }
     })
     .catch(error => {
-        console.error('Error booking room:', error);
-        alert('Failed to book room: ' + error.message);
+      console.error('Ошибка бронирования комнаты:', error);
+      alert('Ошибка бронирования: ' + error.message);
     });
-}
-
-  
-
-
-
-}
+  }
+  },
+  created() {
+    this.fetchRooms();
+  }
 };
 </script>
 
@@ -638,6 +630,14 @@ td {
 
 tr:hover {
   background-color: #f5f5f5;
+}
+
+.date-selection {
+  margin: 10px 0;
+}
+
+.date-selection input {
+  margin-right: 10px;
 }
 </style>
 
@@ -700,7 +700,11 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "author": "",
+  "license": "ISC"
 }
 
 
@@ -719,13 +723,13 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 import { createStore } from 'vuex';
 
+
 export default createStore({
   state: {
     user: null,
   },
   mutations: {
     setUser(state, userData) {
-      console.log('Updating user data:', userData);
       state.user = userData;
     },
     clearUser(state) {

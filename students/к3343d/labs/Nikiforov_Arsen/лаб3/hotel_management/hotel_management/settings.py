@@ -33,13 +33,16 @@ ALLOWED_HOSTS = ['localhost']
 
 LOGOUT_REDIRECT_URL = '/'
 
-CSRF_TRUSTED_ORIGINS = "http://localhost:8080", 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080", 
+    "http://localhost:8080"
 ]
+
  
 LOGIN_REDIRECT_URL = '/hotel_api/'  
+
 
 
 
@@ -148,10 +151,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Путь к статическим файлам (CSS, JavaScript, Images)
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'hotel_api', 'static'),
-    'C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/hotel-management/dist',
+    'C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/dist',
 ]
+
+
 
 
 # Default primary key field type

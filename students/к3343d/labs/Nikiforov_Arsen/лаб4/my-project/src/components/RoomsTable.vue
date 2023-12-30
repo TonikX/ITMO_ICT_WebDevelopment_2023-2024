@@ -19,7 +19,7 @@
       <option value="cleaning">На уборке</option>
     </select>
 
-    <button @click="applyFilter">Применить фильтр</button>
+
 
     <!-- Выбор даты бронирования -->
     <div class="date-selection">

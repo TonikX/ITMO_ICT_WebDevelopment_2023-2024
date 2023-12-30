@@ -3,16 +3,18 @@
     <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
     <div class="navigation-links">
       <button @click="showRooms">Комнаты</button>
-      <router-link to="/clients">Клиенты</router-link>
-      <router-link to="/employees">Сотрудники</router-link>
+      <button @click="showClients">Клиенты</button>
+      <button @click="showEmployees">Сотрудники</button>
       <button @click="emitBack">Назад</button>
     </div>
-    <RoomsTable v-if="showRoomsTable" />
+    <component :is="currentComponent" v-if="showTable" />
   </div>
 </template>
 
 <script>
 import RoomsTable from './RoomsTable.vue';
+import ClientsTable from './ClientsTable.vue';
+import EmployeesTable from './EmployeesTable.vue';
 
 export default {
   computed: {
@@ -21,24 +23,35 @@ export default {
     }
   },
   components: {
-    RoomsTable
+    RoomsTable,
+    ClientsTable,
+    EmployeesTable
   },
   data() {
     return {
-      showRoomsTable: false
+      showTable: false,
+      currentComponent: null
     };
   },
   methods: {
     showRooms() {
-      this.showRoomsTable = true;
+      this.currentComponent = 'RoomsTable';
+      this.showTable = true;
+    },
+    showClients() {
+      this.currentComponent = 'ClientsTable';
+      this.showTable = true;
+    },
+    showEmployees() {
+      this.currentComponent = 'EmployeesTable';
+      this.showTable = true;
     },
     emitBack() {
-      this.$emit('go-back');
+      this.showTable = false;
     }
   }
 };
 </script>
-
 
 <style scoped>
 .navigation-links {
@@ -46,14 +59,14 @@ export default {
   margin-bottom: 20px;
 }
 
-.navigation-links a, .navigation-links button {
+.navigation-links button {
   margin: 0 10px;
   text-decoration: none;
   color: #333;
   font-weight: bold;
 }
 
-.navigation-links a:hover, .navigation-links button:hover {
+.navigation-links button:hover {
   color: #007bff;
   text-decoration: underline;
 }

@@ -41,7 +41,7 @@ nav:
           - Models: 'lw3/lab3/models.md'
           - Views: 'lw3/lab3/views.md'
       
-
+      - "leetcode": 'leetcode/leetcode.md'
         
 
 
