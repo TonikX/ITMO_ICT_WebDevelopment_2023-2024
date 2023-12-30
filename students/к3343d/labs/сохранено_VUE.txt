@@ -123,16 +123,19 @@ import LoginPage from '../components/LoginPage.vue';
 import UserProfile from '../components/UserProfile.vue';
 import ClientsTable from '../components/ClientsTable.vue';
 import EmployeesTable from '../components/EmployeesTable.vue';
+import RoomStatistics from '../components/RoomStatistics.vue';
+import ComplexRoomsTable from '../components/ComplexRoomsTable.vue';
+import RoomsTable from '../components/RoomsTable.vue';
 
 const routes = [
-  
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
   { path: '/user-profile', component: UserProfile },
   { path: '/clients', component: ClientsTable },
   { path: '/employees', component: EmployeesTable },
-  
-  // другие маршруты...
+  { path: '/room-statistics', component: RoomStatistics },
+  { path: '/complex-rooms', component: ComplexRoomsTable },
+  { path: '/rooms-table', component: RoomsTable },
 ];
 
 const router = createRouter({
@@ -313,6 +316,8 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
       <button @click="showRooms">Комнаты</button>
       <button @click="showClients">Клиенты</button>
       <button @click="showEmployees">Сотрудники</button>
+      <button @click="showRoomStatistics">Статистика комнат</button>
+      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
       <button @click="emitBack">Назад</button>
     </div>
     <component :is="currentComponent" v-if="showTable" />
@@ -342,6 +347,14 @@ export default {
     };
   },
   methods: {
+    showComplexRooms() { //сложный запрос
+  this.currentComponent = 'ComplexRoomsTable';
+  this.showTable = true;
+},
+    showRoomStatistics() {
+    this.currentComponent = 'RoomStatistics';
+    this.showTable = true;
+    },
     showRooms() {
       this.currentComponent = 'RoomsTable';
       this.showTable = true;
@@ -403,8 +416,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
       <option value="occupied">Занята</option>
       <option value="cleaning">На уборке</option>
     </select>
-
-
 
     <!-- Выбор даты бронирования -->
     <div class="date-selection">
@@ -475,34 +486,34 @@ export default {
       this.fetchRooms();
     },
     bookRoom(roomId) {
-    if (!this.startDate || !this.endDate) {
-      alert('Необходимо указать даты начала и окончания бронирования');
-      return;
-    }
+      if (!this.startDate || !this.endDate) {
+        alert('Необходимо указать даты начала и окончания бронирования');
+        return;
+      }
 
-    const token = localStorage.getItem('userToken');
-    axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
-      start_date: this.startDate,
-      end_date: this.endDate
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      if (response.data.status === 'success') {
-        alert('Комната успешно забронирована');
-        this.fetchRooms(); // Обновление списка комнат
-      } else {
-        console.error('Ответ об ошибке:', response.data);
-        alert('Ошибка бронирования: ' + response.data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Ошибка бронирования комнаты:', error);
-      alert('Ошибка бронирования: ' + error.message);
-    });
-  }
+      const token = localStorage.getItem('userToken');
+      axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
+        start_date: this.startDate,
+        end_date: this.endDate
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        if (response.data.status === 'success') {
+          alert('Комната успешно забронирована');
+          this.fetchRooms(); // Обновление списка комнат
+        } else {
+          console.error('Ответ об ошибке:', response.data);
+          alert('Ошибка бронирования: ' + response.data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка бронирования комнаты:', error);
+        alert('Ошибка бронирования: ' + error.message);
+      });
+    }
   },
   created() {
     this.fetchRooms();
@@ -919,21 +930,20 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <th>Имя</th>
           <th>Фамилия</th>
           <th>Номер комнаты</th>
-          <!-- Дополнительные столбцы по необходимости -->
         </tr>
       </thead>
       <tbody>
         <tr v-for="client in clients" :key="client.id">
           <td>{{ client.id }}</td>
-          <td>{{ client.first_name }}</td>
-          <td>{{ client.last_name }}</td>
-          <td>{{ client.room_number }}</td>
-          <!-- Дополнительные данные по необходимости -->
+          <td>{{ client.client_info.first_name }}</td>
+          <td>{{ client.client_info.last_name }}</td>
+          <td>{{ client.room }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -949,14 +959,14 @@ export default {
   },
   methods: {
     fetchClients() {
-      axios.get('http://localhost:8000/hotel_api/api//clients') // API URL
-        .then(response => {
-          this.clients = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении данных о клиентах:', error);
-        });
-    }
+    axios.get('http://localhost:8000/hotel_api/api/clients') 
+      .then(response => {
+        this.clients = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных о клиентах:', error);
+      });
+  }
   }
 };
 </script>
@@ -966,22 +976,178 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
-
 th {
   background-color: #f2f2f2;
 }
-
 td {
   background-color: #fff;
 }
-
 tr:hover {
   background-color: #f5f5f5;
 }
 </style>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomStatistics.vue
+
+<template>
+  <div>
+    <h2>Статистика по комнатам</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Тип комнаты</th>
+          <th>Общее количество</th>
+          <th>Средняя стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="stat in roomStats" :key="stat.room_type">
+          <td>{{ stat.room_type }}</td>
+          <td>{{ stat.total }}</td>
+          <td>{{ stat.average_cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      roomStats: []
+    };
+  },
+  created() {
+    this.fetchRoomStatistics();
+  },
+  methods: {
+    fetchRoomStatistics() {
+      axios.get('http://localhost:8000/hotel_api/api/room-statistics/') 
+        .then(response => {
+          this.roomStats = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении статистики комнат:', error);
+        });
+    }
+  }
+};
+</script>
+
+
+
+
+
+  
+  <style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  td {
+    background-color: #fff;
+  }
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  </style>
+  
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ComplexRoomsTable.vue
+
+<template>
+  <div>
+    <h2>Комплексная информация о комнатах</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID комнаты</th>
+          <th>Тип комнаты</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+      
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in complexRooms" :key="room.id">
+          <td>{{ room.id }}</td>
+          <td>{{ room.room_type }}</td>
+          <td>{{ room.status }}</td>
+          <td>{{ room.cost }}</td>
+      
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      complexRooms: []
+    };
+  },
+  created() {
+    this.fetchComplexRooms();
+  },
+  methods: {
+    fetchComplexRooms() {
+      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/') 
+        .then(response => {
+          this.complexRooms = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении комплексной информации о комнатах:', error);
+        });
+    }
+  }
+};
+</script>
+
+
+  
+  <style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  td {
+    background-color: #fff;
+  }
+  
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  </style>
+  

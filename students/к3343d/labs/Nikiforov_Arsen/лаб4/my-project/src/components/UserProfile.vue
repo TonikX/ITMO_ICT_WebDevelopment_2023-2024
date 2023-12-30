@@ -5,6 +5,8 @@
       <button @click="showRooms">Комнаты</button>
       <button @click="showClients">Клиенты</button>
       <button @click="showEmployees">Сотрудники</button>
+      <button @click="showRoomStatistics">Статистика комнат</button>
+      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
       <button @click="emitBack">Назад</button>
     </div>
     <component :is="currentComponent" v-if="showTable" />
@@ -34,6 +36,14 @@ export default {
     };
   },
   methods: {
+    showComplexRooms() { //сложный запрос
+  this.currentComponent = 'ComplexRoomsTable';
+  this.showTable = true;
+},
+    showRoomStatistics() {
+    this.currentComponent = 'RoomStatistics';
+    this.showTable = true;
+    },
     showRooms() {
       this.currentComponent = 'RoomsTable';
       this.showTable = true;

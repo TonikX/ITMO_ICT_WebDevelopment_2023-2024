@@ -19,8 +19,6 @@
       <option value="cleaning">На уборке</option>
     </select>
 
-
-
     <!-- Выбор даты бронирования -->
     <div class="date-selection">
       <input type="date" v-model="startDate" placeholder="Дата начала">
@@ -41,7 +39,7 @@
       <tbody>
         <tr v-for="room in filteredRooms" :key="room.id">
           <td>{{ room.room_type }}</td>
-          <td>{{ room.floor.number }}</td>
+          <td>{{ room.floor }}</td>
           <td>{{ room.status }}</td>
           <td>{{ room.cost }}</td>
           <td>
@@ -90,34 +88,34 @@ export default {
       this.fetchRooms();
     },
     bookRoom(roomId) {
-    if (!this.startDate || !this.endDate) {
-      alert('Необходимо указать даты начала и окончания бронирования');
-      return;
-    }
+      if (!this.startDate || !this.endDate) {
+        alert('Необходимо указать даты начала и окончания бронирования');
+        return;
+      }
 
-    const token = localStorage.getItem('userToken');
-    axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
-      start_date: this.startDate,
-      end_date: this.endDate
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      if (response.data.status === 'success') {
-        alert('Комната успешно забронирована');
-        this.fetchRooms(); // Обновление списка комнат
-      } else {
-        console.error('Ответ об ошибке:', response.data);
-        alert('Ошибка бронирования: ' + response.data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Ошибка бронирования комнаты:', error);
-      alert('Ошибка бронирования: ' + error.message);
-    });
-  }
+      const token = localStorage.getItem('userToken');
+      axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
+        start_date: this.startDate,
+        end_date: this.endDate
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        if (response.data.status === 'success') {
+          alert('Комната успешно забронирована');
+          this.fetchRooms(); // Обновление списка комнат
+        } else {
+          console.error('Ответ об ошибке:', response.data);
+          alert('Ошибка бронирования: ' + response.data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка бронирования комнаты:', error);
+        alert('Ошибка бронирования: ' + error.message);
+      });
+    }
   },
   created() {
     this.fetchRooms();

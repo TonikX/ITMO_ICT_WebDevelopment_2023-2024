@@ -217,13 +217,17 @@ class UserSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     user_details = serializers.SerializerMethodField()
     room_details = serializers.SerializerMethodField()
+
     class Meta:
         model = Booking
-        fields = ['id', 'user', 'room', 'start_date', 'end_date', 'confirmed']
+        fields = ['id', 'user', 'room', 'start_date', 'end_date', 'confirmed', 'user_details', 'room_details']
+
     def get_user_details(self, obj):
         return UserSerializer(obj.user).data
+
     def get_room_details(self, obj):
         return RoomSerializer(obj.room).data
+
 
 class FloorOccupancySerializer(serializers.ModelSerializer):
     occupied_rooms_count = serializers.SerializerMethodField()
@@ -399,6 +403,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, TokenErro
 import json
 from rest_framework.views import APIView
 from django.db.models import Count, Avg
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
