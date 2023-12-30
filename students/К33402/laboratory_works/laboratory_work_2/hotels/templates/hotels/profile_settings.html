@@ -1,0 +1,44 @@
+{%  extends 'hotels/main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+    .img-fluid {
+        border: 2px solid #31a9ff;
+    }
+
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'profile' %}"> &#8592; Back to Profile</a>
+			<hr>
+			<h3 style="text-align: center">Profile Settings</h3>
+			<hr>
+            {% if request.user.customer.image %}
+			<img src="{{request.user.customer.image.url}}" class="img-fluid rounded-circle" style="width: 250px; height: 250px;">
+            {% else %}
+            <img src="{% static 'img/default-profile.png' %}" class="img-fluid rounded-circle" style="width: 250px; height: 250px;">
+            {% endif %}
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+		
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

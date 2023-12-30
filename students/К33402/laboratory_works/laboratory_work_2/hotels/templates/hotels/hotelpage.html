@@ -1,0 +1,74 @@
+{% extends 'hotels/main.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h1>{{ hotel.name }}</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h3>Hotel Information</h3>
+            <p><strong>Address:</strong> {{ hotel.address }}</p>
+            <p><strong>Website:</strong> <a href="http://{{ hotel.website }}" target="_blank">{{ hotel.website }}</a></p>
+            <p><strong>Phone:</strong> {{ hotel.phone }}</p>
+            <p><strong>Owner:</strong> {{ hotel.owner }}</p>
+            <p><strong>Rating:</strong> {{ hotel.rating }} Stars</p>
+            <p><strong>Description:</strong> {{ hotel.full_description|linebreaksbr }}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h3>Rooms</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Picture</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Amenities</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td><img src="{{ room.image.url }}" alt="{{ room.category }}" class="img-fluid" style="width: 250px; height: 250px;"></td>
+                    <td>{{ room.category }}</td>
+                    <td>{{ room.price }} rub/day</td>
+                    <td>{{ room.amenities|linebreaksbr }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'booking' hotel.name room.category %}" style="color: aliceblue;">Book</a> </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <h3>Customer Reviews</h3>
+        <ul class="list-group">
+            {% for review in reviews %}
+            <li class="list-group-item">
+                <p><strong>Rating:</strong> {{ review.rating }}/5</p>
+                <p><strong>Comment:</strong> {{ review.comment }}</p>
+                <p><strong>Days Spent: </strong> {{ review.booking.days_spent }}</p>
+                <p><strong>Reviewer:</strong> {{ review.booking.user.name }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="mt-4">
+        <h3>Customers Who Stayed Last Month</h3>
+        <ul class="list-group">
+            {% for customer in customers_for_last_month %}
+            <li class="list-group-item">
+                <p>{{ customer.name }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
