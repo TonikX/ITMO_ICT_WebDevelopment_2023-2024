@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay, Booking, CustomUser
+from .models import Review
+
+
 
 User = get_user_model()
 
@@ -93,3 +96,8 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
         fields = ['number', 'occupied_rooms_count']
     def get_occupied_rooms_count(self, floor):
         return Room.objects.filter(floor=floor, status='occupied').count()
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'

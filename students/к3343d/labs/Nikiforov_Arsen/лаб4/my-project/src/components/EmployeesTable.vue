@@ -1,13 +1,12 @@
 <template>
   <div>
     <h2>Список сотрудников</h2>
-    <table>
+    <table class="employee-table">
       <thead>
         <tr>
           <th>ID сотрудника</th>
           <th>Имя</th>
           <th>Фамилия</th>
-     
         </tr>
       </thead>
       <tbody>
@@ -15,7 +14,6 @@
           <td>{{ employee.id }}</td>
           <td>{{ employee.first_name }}</td>
           <td>{{ employee.last_name }}</td>
-     
         </tr>
       </tbody>
     </table>
@@ -48,23 +46,27 @@ export default {
 };
 </script>
 
-<style>
-table {
+<style scoped>
+.employee-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+.employee-table th,
+.employee-table td {
+  padding: 10px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-th {
+
+.employee-table th {
   background-color: #f2f2f2;
 }
-td {
-  background-color: #fff;
-}
-tr:hover {
+
+.employee-table tbody tr:nth-child(even) {
   background-color: #f5f5f5;
 }
 </style>

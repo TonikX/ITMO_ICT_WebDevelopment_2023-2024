@@ -19,7 +19,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-
+from .views import ReviewViewSet
 
 
 app_name = 'hotel_api'
@@ -49,6 +49,7 @@ router.register(r'nested_clients', NestedClientViewSet)
 router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'bookings', BookingViewSet)
+router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
     path('', home, name='home'),

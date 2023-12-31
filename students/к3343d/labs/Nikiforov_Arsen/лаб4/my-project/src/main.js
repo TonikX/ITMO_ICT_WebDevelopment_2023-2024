@@ -3,9 +3,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store'; //  хранилище Vuex
 import axios from 'axios';
-import { VueAxios } from 'vue-axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapVue3 from 'bootstrap-vue-3';
+import VueAxios from 'vue-axios';
 
 const app = createApp(App);
 

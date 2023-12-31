@@ -133,3 +133,9 @@ class EmployeeDay(models.Model):
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on {self.day.name}"
+
+class Review(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    author = models.CharField(max_length=255)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

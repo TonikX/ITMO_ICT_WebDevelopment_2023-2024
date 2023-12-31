@@ -3,11 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
-from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser
+from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser,Review
 from .serializers import (RoomSerializer, ClientSerializer, EmployeeSerializer, 
                           FloorSerializer, DaySerializer, EmployeeFloorSerializer, 
                           EmployeeDaySerializer, ClientInfoSerializer, BookingSerializer, 
-                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, 
+                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, ReviewSerializer,
                           UserSerializer)
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
@@ -270,3 +270,7 @@ def employee_floors_list(request):
 def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer

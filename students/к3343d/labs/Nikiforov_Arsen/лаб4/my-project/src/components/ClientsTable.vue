@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Список клиентов</h2>
-    <table>
+    <table class="table">
       <thead>
         <tr>
           <th>ID клиента</th>
@@ -22,7 +22,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios';
 
@@ -37,35 +36,39 @@ export default {
   },
   methods: {
     fetchClients() {
-    axios.get('http://localhost:8000/hotel_api/api/clients') 
-      .then(response => {
-        this.clients = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка при получении данных о клиентах:', error);
-      });
-  }
+      axios.get('http://localhost:8000/hotel_api/api/clients')
+        .then(response => {
+          this.clients = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении данных о клиентах:', error);
+        });
+    }
   }
 };
 </script>
 
-<style>
-table {
+<style scoped>
+.table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+.table th,
+.table td {
+  padding: 10px;
   text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-th {
+
+.table th {
   background-color: #f2f2f2;
 }
-td {
-  background-color: #fff;
-}
-tr:hover {
+
+.table tbody tr:nth-child(even) {
   background-color: #f5f5f5;
 }
 </style>

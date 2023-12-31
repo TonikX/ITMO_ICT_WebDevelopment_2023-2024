@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     fetchComplexRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/') 
+      axios.get('http://localhost:8000/hotel_api/complex_rooms/') 
         .then(response => {
           this.complexRooms = response.data;
         })

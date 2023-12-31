@@ -79,7 +79,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-
+from .views import ReviewViewSet
 
 
 app_name = 'hotel_api'
@@ -109,6 +109,7 @@ router.register(r'nested_clients', NestedClientViewSet)
 router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'bookings', BookingViewSet)
+router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
     path('', home, name='home'),
@@ -144,6 +145,9 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay, Booking, CustomUser
+from .models import Review
+
+
 
 User = get_user_model()
 
@@ -237,6 +241,10 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
     def get_occupied_rooms_count(self, floor):
         return Room.objects.filter(floor=floor, status='occupied').count()
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/models.py
 
@@ -376,6 +384,11 @@ class EmployeeDay(models.Model):
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on {self.day.name}"
 
+class Review(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    author = models.CharField(max_length=255)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/views.py
 
@@ -384,11 +397,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
-from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser
+from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser,Review
 from .serializers import (RoomSerializer, ClientSerializer, EmployeeSerializer, 
                           FloorSerializer, DaySerializer, EmployeeFloorSerializer, 
                           EmployeeDaySerializer, ClientInfoSerializer, BookingSerializer, 
-                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, 
+                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, ReviewSerializer,
                           UserSerializer)
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
@@ -651,6 +664,10 @@ def employee_floors_list(request):
 def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/hotel_api/rooms_list.html

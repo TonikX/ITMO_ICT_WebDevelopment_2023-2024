@@ -46,6 +46,8 @@
             <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
               Забронировать
             </button>
+
+
           </td>
         </tr>
       </tbody>
@@ -84,6 +86,11 @@ export default {
           console.error('Ошибка загрузки комнат:', error);
         });
     },
+    leaveReview(roomId) {
+  console.log("Переход к добавлению отзыва для комнаты:", roomId);
+  this.$router.push(`/room/${roomId}/add-review`);
+},
+
     applyFilter() {
       this.fetchRooms();
     },
@@ -115,7 +122,8 @@ export default {
         console.error('Ошибка бронирования комнаты:', error);
         alert('Ошибка бронирования: ' + error.message);
       });
-    }
+    },
+
   },
   created() {
     this.fetchRooms();
