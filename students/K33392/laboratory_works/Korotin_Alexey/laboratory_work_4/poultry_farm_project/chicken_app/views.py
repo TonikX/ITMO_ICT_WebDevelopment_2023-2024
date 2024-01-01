@@ -1,5 +1,5 @@
 from .services import ChickenService, BreedService, DietService
-from .serializers import ChickenSerializer, BreedSerializer, DietSerializer
+from .serializers import ChickenSerializer, MutateChickenSerializer, BreedSerializer, DietSerializer
 from poultry_farm_project.views import BaseAPIView, BaseExactAPIView
 from rest_framework.decorators import api_view, permission_classes
 from poultry_farm_project.permissions import IsDirectorPermission
@@ -8,12 +8,12 @@ from rest_framework.response import Response
 
 class ChickenAPIView(BaseAPIView):
     def __init__(self):
-        super().__init__(ChickenService(), ChickenSerializer)
+        super().__init__(ChickenService(), ChickenSerializer, MutateChickenSerializer)
 
 
 class ChickenExactAPIView(BaseExactAPIView):
     def __init__(self):
-        super().__init__(ChickenService(), ChickenSerializer)
+        super().__init__(ChickenService(), ChickenSerializer, MutateChickenSerializer)
 
 
 class BreedAPIView(BaseAPIView):
