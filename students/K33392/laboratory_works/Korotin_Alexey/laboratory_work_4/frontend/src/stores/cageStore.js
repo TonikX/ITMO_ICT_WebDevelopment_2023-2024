@@ -32,6 +32,25 @@ export const useCageStore = defineStore("cages", {
             }
 
             return cage;
+        },
+
+        async edit(payload = {facility, responsible, row, column}, id) {
+            const response = await api.put(`/cages/${id}`, payload);
+            if (response.status === 200) {
+                const index = this.cages.findIndex(c => c.id == id);
+                this.cages[index] = response.data;
+            }
+
+            return response;
+        },
+
+        async delete(id) {
+            const resposne = await api.delete(`/cages/${id}`);
+            if (resposne.status === 204){
+                this.cages = this.cages.filter(c => c.id != id);
+            }
+
+            return resposne;
         }
     },
 });

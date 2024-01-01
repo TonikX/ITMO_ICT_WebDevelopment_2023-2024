@@ -67,7 +67,9 @@ export default {
         return {
             cage: {
                 responsible: '',
-                facility: ''
+                facility: '',
+                row: 0,
+                column: 0
             }
         }
     },
@@ -88,14 +90,23 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCageStore, ['fetchById']),
+        ...mapActions(useCageStore, ['fetchById', 'delete', 'edit']),
 
         async onDelete() {
-            console.log('Deleted');
+            const response = await this.delete(this.id);
+            if (response.status === 204) {
+                this.$router.push({ path: '/cages' });
+            }
         },
 
         async editCage() {
-            console.log('Edited');
+            const payload = new Object(this.cage);
+            payload.responsible = this.cage.responsible.id;
+            payload.facility = this.cage.facility.id;
+            const resposne = await this.edit(payload, this.id);
+            if (resposne.status === 200) {
+                this.$router.push({ path: '/cages' });
+            }
         }
     },
 
