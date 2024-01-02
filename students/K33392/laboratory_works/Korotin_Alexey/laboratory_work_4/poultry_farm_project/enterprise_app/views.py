@@ -39,7 +39,7 @@ class CageAPIView(BaseAPIView):
 class CageExactAPIView(BaseExactAPIView):
 
     def __init__(self):
-        super().__init__(CageService(), CageSerializer)
+        super().__init__(CageService(), CageSerializer, CageMutateSerializer)
 
 
 @api_view(["GET"])

@@ -14,7 +14,7 @@ class MutateChickenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chicken
-        fields = '__all_'
+        fields = '__all__'
 
 
 class BreedSerializer(serializers.ModelSerializer):
