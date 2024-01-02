@@ -72,7 +72,7 @@ const routes = [
         children: [
             {
                 path: "",
-                component: MainLayout,
+                component: () => import("@/pages/statistics/StatisticsPage.vue"),
                 meta: { requiresAuth: true },
             },
         ],
