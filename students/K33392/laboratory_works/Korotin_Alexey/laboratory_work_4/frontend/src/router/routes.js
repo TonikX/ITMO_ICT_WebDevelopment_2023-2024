@@ -37,6 +37,18 @@ const routes = [
     {
         path: "/chicken",
         component: MainLayout,
+        children: [
+            {
+                path: "",
+                component: () => import("@/pages/chicken/AllPage.vue"),
+                meta: { requiresAuth: true },
+            },
+            {
+                path: ":id",
+                component: () => import("@/pages/chicken/ChickenPage.vue"),
+                meta: { requiresAuth: true },
+            },
+        ],
     },
     {
         path: "/staff",
