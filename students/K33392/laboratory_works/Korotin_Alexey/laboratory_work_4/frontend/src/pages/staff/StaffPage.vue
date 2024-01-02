@@ -93,12 +93,18 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useStaffStore, ['fetchByUsername']),
+        ...mapActions(useStaffStore, ['fetchByUsername', 'delete', 'edit']),
         async onDelete() {
-            console.log('Deleted');
+            const response = await this.delete(this.username);
+            if (response.status === 204) {
+                this.$router.push({ path: '/staff' });
+            }
         },
         async editStaff() {
-            console.log('Edited');
+            const response = await this.edit(this.staff, this.staff.id);
+            if (response.status === 200) {
+                this.$router.push({ path: '/staff' });
+            }
         }
     },
 

@@ -15,7 +15,7 @@
             <p class="text">Passport: <span class="text-secondary text-sensitive" :class="{ blur: isHidden }">{{ passport
             }}</span></p>
             <p class="text">Salary: <span class="text-secondary text-sensitive" :class="{ blur: isHidden }">{{ salary
-            }}</span></p>
+            }} Rub</span></p>
         </div>
     </div>
 </template>

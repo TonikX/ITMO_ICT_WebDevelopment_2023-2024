@@ -17,7 +17,10 @@ export const useStaffStore = defineStore("staff", {
         },
 
         getPage(number) {
-            return this.staff.slice(this.pageSize * (number - 1), this.pageSize * number);
+            return this.staff.slice(
+                this.pageSize * (number - 1),
+                this.pageSize * number
+            );
         },
 
         getPageCount() {
@@ -32,6 +35,37 @@ export const useStaffStore = defineStore("staff", {
                 person = this.staff.find((s) => s.username === username);
             }
             return person;
-        }
+        },
+
+        async delete(username) {
+            const staff = await this.fetchByUsername(username);
+            const response = await api.delete(`/staff/${staff.id}`);
+            if (response.status === 204) {
+                this.staff = this.staff.filter((s) => s.username !== username);
+            }
+
+            return response;
+        },
+
+        async edit(
+            payload = {
+                id,
+                username,
+                role,
+                passport,
+                salary,
+                employment_contract_id,
+                dismissal_agreement_id,
+            },
+            id
+        ) {
+            const response = await api.put(`/staff/${id}`, payload);
+            if (response.status === 200) {
+                const index = this.staff.findIndex((s) => s.id == id);
+                this.staff[index] = response.data;
+            }
+
+            return response;
+        },
     },
 });
