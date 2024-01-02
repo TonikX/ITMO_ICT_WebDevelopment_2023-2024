@@ -42,7 +42,7 @@
                 <div class="item-label">Cage</div>
                 <div class="item-value">{{ chicken.cage.id }}</div>
                 <q-popup-edit v-model="chicken.cage" auto-save>
-                    <q-select v-model="chicken.cage" :options="availableCages" label="Responsible" filled>
+                    <q-select v-model="chicken.cage" :options="availableCages" label="Cage" filled>
                         <template v-slot:prepend>
                             <q-icon name="edit" />
                         </template>
@@ -91,7 +91,9 @@ export default {
         async onEdit() {
             const payload = new Object(this.chicken);
             payload.birth_date = payload.birth_date.replaceAll('/', '-');
-            payload.cage = payload.cage.id;
+            if (typeof payload.cage === Object) {
+                payload.cage = payload.cage.id;
+            }
             const response = await this.edit(this.chicken, this.id);
 
             if (response.status === 200) {
