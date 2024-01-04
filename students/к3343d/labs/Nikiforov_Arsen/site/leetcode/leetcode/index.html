@@ -88,7 +88,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Лабораторная работа 3</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../../pw3/">Практическая часть</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="#">Основная часть</a>
@@ -119,9 +119,32 @@
                 </li>
     </ul>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">leetcode</a>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 4</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/">Основная информация</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/app/">App</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/auth/">Аутентификация</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/components/">Компоненты</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/main/">Главный модуль</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/reviewService/">Сервис отзывов</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/store/">Хранилище</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/userInterface/">Пользовательский интерфейс</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lw4/Router/">Роутер</a>
+                  </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">leetcode</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#1py-">1.py - Сложение двух чисел: Программа получает два числа в виде связных списков, складывает их и возвращает результат также в виде связного списка.</a>
+    <li class="toctree-l2"><a class="reference internal" href="#1py-">1.py - Сложение двух чисел:</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#2py-s">2.py - Самая длинная подстрока без повторяющихся символов: Находит максимальную длину подстроки в строке s, не содержащей повторяющихся символов.</a>
     </li>
@@ -151,8 +174,14 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#15py-">15.py - Комбинации букв телефонного номера: Генерирует все возможные комбинации букв для заданного набора цифр, как на кнопках телефона.</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#16py-">16.py - Удаление дубликатов из отсортированного массива</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#17py-k">17.py - Реверс узлов в группах по k</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#18cpp-median-of-two-sorted-arrays">18.cpp - Задача "Median of Two Sorted Arrays" заключается в нахождении медианы двух отсортированных массивов.</a>
+    </li>
     </ul>
-                  </li>
+                </li>
               </ul>
       </div>
     </div>
@@ -168,7 +197,6 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-          <li>Лабораторная работа 3 &raquo;</li>
       <li class="breadcrumb-item active">leetcode</li>
     <li class="wy-breadcrumbs-aside">
     </li>
@@ -179,44 +207,19 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="leetcode">Решения задач с LeetCode</h1>
-<h2 id="1py-">1.py - Сложение двух чисел: Программа получает два числа в виде связных списков, складывает их и возвращает результат также в виде связного списка.</h2>
+<h2 id="1py-">1.py - Сложение двух чисел:</h2>
+<p>Программа решает задачу нахождения двух чисел в списке nums, сумма которых равна заданной целевой сумме target. Он использует хэш-таблицу num_map, чтобы отслеживать уже пройденные числа и их индексы. В цикле for он вычисляет разницу между target и текущим числом, и если такая разница (complement) уже присутствует в хэш-таблице, возвращается индекс этой разницы и текущего числа, образуя пару, сумма которой равна target. В противном случае текущее число добавляется в хэш-таблицу, и если не найдена подходящая пара, возвращается пустой список.</p>
 <pre><code class="language-python"># https://leetcode.com/problems/add-two-numbers/submissions/
-class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+class Solution:
+    def twoSum(self, nums, target):
+        num_map = {}
+        for i in range(len(nums)):
+            complement = target - nums[i]
+            if complement in num_map:
+                return [num_map[complement], i]
+            num_map[nums[i]] = i
+        return []
 
-class Solution(object):
-    def addTwoNumbers(self, l1, l2):
-        &quot;&quot;&quot;
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        &quot;&quot;&quot;
-
-        dummyHead = ListNode(0)
-
-        current = dummyHead
-
-        carry = 0
-
-        while l1 is not None or l2 is not None:
-            sum = carry
-            if l1 is not None:
-                sum += l1.val
-                l1 = l1.next
-            if l2 is not None:
-                sum += l2.val
-                l2 = l2.next
-
-            carry = sum // 10
-            current.next = ListNode(sum % 10)
-            current = current.next
-
-        if carry &gt; 0:
-            current.next = ListNode(carry)
-
-        return dummyHead.next
 </code></pre>
 <h2 id="2py-s">2.py - Самая длинная подстрока без повторяющихся символов: Находит максимальную длину подстроки в строке s, не содержащей повторяющихся символов.</h2>
 <pre><code class="language-python">class Solution:
@@ -441,43 +444,178 @@ class Solution(object):
         return closest
 </code></pre>
 <h2 id="15py-">15.py - Комбинации букв телефонного номера: Генерирует все возможные комбинации букв для заданного набора цифр, как на кнопках телефона.</h2>
-<p>```python
+<pre><code class="language-python">
 class Solution(object):
     def letterCombinations(self, digits):
         if not digits:
-            return []</p>
-<pre><code>    digit_to_char = {
-        '2': 'abc',
-        '3': 'def',
-        '4': 'ghi',
-        '5': 'jkl',
-        '6': 'mno',
-        '7': 'pqrs',
-        '8': 'tuv',
-        '9': 'wxyz'
-    }
+            return []
 
-    def backtrack(index, path):
-        if index == len(digits):
-            combinations.append(''.join(path))
-            return
-        possible_letters = digit_to_char[digits[index]]
-        for letter in possible_letters:
-            path.append(letter)
-            backtrack(index + 1, path)
-            path.pop()
+        digit_to_char = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz'
+        }
 
-    combinations = []
-    backtrack(0, [])
-    return combinations
+        def backtrack(index, path):
+            if index == len(digits):
+                combinations.append(''.join(path))
+                return
+            possible_letters = digit_to_char[digits[index]]
+            for letter in possible_letters:
+                path.append(letter)
+                backtrack(index + 1, path)
+                path.pop()
+
+        combinations = []
+        backtrack(0, [])
+        return combinations
 </code></pre>
-<p>```
-<img alt="Выполненные задания на сайте leetcode" src="../../img/leetcode.png" /></p>
+<h2 id="16py-">16.py - Удаление дубликатов из отсортированного массива</h2>
+<p>Удаляет дубликаты из отсортированного массива nums, сохраняя только уникальные элементы, и возвращает их количество.</p>
+<pre><code class="language-python">class Solution:
+    def removeDuplicates(self, nums):
+        if not nums:
+            return 0
+
+        j = 0
+        for i in range(1, len(nums)):
+            if nums[i] != nums[j]:
+                j += 1
+                nums[j] = nums[i]
+
+        return j + 1
+
+</code></pre>
+<h2 id="17py-k">17.py - Реверс узлов в группах по k</h2>
+<p>Разворачивает узлы связного списка по k элементов за раз, возвращая модифицированный список.</p>
+<pre><code class="language-python">class Solution(object):
+    def reverseKGroup(self, head, k):
+        # Функция для разворота связного списка
+        def reverseLinkedList(head, k):
+            new_head, ptr = None, head
+            while k:
+                next_node = ptr.next
+                ptr.next = new_head
+                new_head = ptr
+                ptr = next_node
+                k -= 1
+            return new_head
+
+        count = 0
+        ptr = head
+        while count &lt; k and ptr:
+            ptr = ptr.next
+            count += 1
+
+        if count == k:
+            reversed_head = reverseLinkedList(head, k)
+            head.next = self.reverseKGroup(ptr, k)
+            return reversed_head
+        return head
+
+</code></pre>
+<h2 id="18cpp-median-of-two-sorted-arrays">18.cpp - Задача "Median of Two Sorted Arrays" заключается в нахождении медианы двух отсортированных массивов.</h2>
+<p>Медиана - это такое значение, что половина элементов массива меньше его, а другая половина больше или равна ему. 
+Если общее количество элементов в обоих массивах нечетное, медиана - это один элемент. 
+Если четное - это среднее двух центральных элементов.</p>
+<p>Код решает задачу, используя бинарный поиск по меньшему массиву для эффективного нахождения правильного разреза. 
+Он определяет граничные элементы с каждой стороны разреза, чтобы проверить, могут ли эти элементы формировать медиану. 
+Если разрез корректен, медиана вычисляется на основе этих граничных элементов в зависимости от четности общего количества элементов в обоих массивах.</p>
+<pre><code>#include &lt;vector&gt;
+#include &lt;climits&gt;
+using namespace std;
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        // Если nums1 больше nums2, меняем их местами для упрощения логики
+        if(nums2.size() &lt; nums1.size()) return findMedianSortedArrays(nums2, nums1);
+
+        int n1 = nums1.size();
+        int n2 = nums2.size();
+        int low = 0, high = n1;
+
+        while(low &lt;= high) {
+            // Находим середины обоих массивов
+            int cut1 = (low + high) / 2;
+            int cut2 = (n1 + n2 + 1) / 2 - cut1;
+
+            // Определяем левые и правые границы разделения
+            int left1 = cut1 == 0 ? INT_MIN : nums1[cut1 - 1];
+            int left2 = cut2 == 0 ? INT_MIN : nums2[cut2 - 1];
+            int right1 = cut1 == n1 ? INT_MAX : nums1[cut1];
+            int right2 = cut2 == n2 ? INT_MAX : nums2[cut2];
+
+            // Проверяем, корректно ли разделены массивы
+            if(left1 &lt;= right2 &amp;&amp; left2 &lt;= right1) {
+                // Если общее количество элементов четное
+                if((n1 + n2) % 2 == 0)
+                    return (max(left1, left2) + min(right1, right2)) / 2.0;
+                else
+                    return max(left1, left2);
+            }  
+            else if(left1 &gt; right2) {
+                high = cut1 - 1;
+            }
+            else {
+                low = cut1 + 1;
+            }
+        }
+        return 0.0; // В случае ошибки
+    }
+};
+
+</code></pre>
+<h1 id="19py-strong-password-checker">19.py - Strong Password Checker</h1>
+<p>Есть функция strongPasswordChecker, которая оценивает стойкость пароля и возвращает минимальное количество действий для усиления безопасности. Оценка включает проверку наличия строчных букв, прописных букв, цифр и повторяющихся символов. Код определяет, сколько символов нужно добавить или удалить, чтобы соответствовать заданным требованиям.</p>
+<pre><code class="language-Python">class Solution(object):
+    def strongPasswordChecker(self, password):
+        &quot;&quot;&quot;
+        :type password: str
+        :rtype: int
+        &quot;&quot;&quot;
+        # Инициализация переменных
+        n = len(password)
+        missing_type = 3 - sum((any(x.islower() for x in password), any(x.isupper() for x in password), any(x.isdigit() for x in password)))
+        change = 0
+        one = two = 0
+        p = 2
+        while p &lt; n:
+            if password[p] == password[p-1] == password[p-2]:
+                length = 2
+                while p &lt; n and password[p] == password[p-1]:
+                    length += 1
+                    p += 1
+
+                change += length // 3
+                if length % 3 == 0: one += 1
+                elif length % 3 == 1: two += 1
+            else:
+                p += 1
+
+        if n &lt; 6:
+            return max(missing_type, 6 - n)
+        elif n &lt;= 20:
+            return max(missing_type, change)
+        else:
+            delete = n - 20
+            change -= min(delete, one * 1) // 1
+            change -= min(max(delete - one, 0), two * 2) // 2
+            change -= max(delete - one - 2 * two, 0) // 3
+
+            return delete + max(missing_type, change)
+</code></pre>
+<p><img alt="Выполненные задания на сайте leetcode" src="../../img/leetcode.png" /></p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../lw3/lab3/views/" class="btn btn-neutral float-left" title="Views"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../lw4/Router/" class="btn btn-neutral float-left" title="Роутер"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -500,7 +638,7 @@ class Solution(object):
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../../lw3/lab3/views/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../lw4/Router/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>

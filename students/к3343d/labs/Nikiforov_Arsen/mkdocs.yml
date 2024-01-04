@@ -1,6 +1,6 @@
 site_name: 'Лабораторные работы по веб-программированию'
 theme:
-  name: 'readthedocs'  
+  name: 'readthedocs'
 
 nav:
   - Главная: 'index.md'
@@ -25,7 +25,7 @@ nav:
     - URLs: 'lw2/urls.md'
     - Views: 'lw2/views.md'
     - Templates: 'lw2/templates.md'
-    
+
   - Лабораторная работа 3:
       - "Практическая часть": 'pw3/index.md'
       - "Основная часть":
@@ -40,16 +40,19 @@ nav:
           - Serializers: 'lw3/lab3/serializers.md'
           - Models: 'lw3/lab3/models.md'
           - Views: 'lw3/lab3/views.md'
-      
-      - "leetcode": 'leetcode/leetcode.md'
-        
 
+  - Лабораторная работа 4:
+    - Основная информация: 'lw4/index.md'
+    - App: 'lw4/app.md'
+    - Аутентификация: 'lw4/auth.md'
+    - Компоненты: 'lw4/components.md'
+    - Главный модуль: 'lw4/main.md'
+    - Сервис отзывов: 'lw4/reviewService.md'
+    - Хранилище: 'lw4/store.md'
+    - Пользовательский интерфейс: 'lw4/userInterface.md'
+    - Роутер: 'lw4/Router.md'
 
-
-
-
-
-
+  - "leetcode": 'leetcode/leetcode.md'
 
 extra:
   img_dir: 'img'

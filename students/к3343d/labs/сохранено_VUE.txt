@@ -746,16 +746,17 @@ export default {
   },
   methods: {
     fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`)
-        .then(response => {
-          this.reviews = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении отзывов:', error);
-        });
-    },
-    goToAddReview() {
-      this.$router.push(`/room/${this.roomId}/add-review`);
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(response => {
+        this.reviews = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении отзывов:', error);
+      });
     }
   },
   created() {
@@ -1093,16 +1094,17 @@ export default {
   },
   methods: {
     fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`)
-        .then(response => {
-          this.reviews = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении отзывов:', error);
-        });
-    },
-    goToAddReview() {
-      this.$router.push(`/room/${this.roomId}/add-review`);
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(response => {
+        this.reviews = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении отзывов:', error);
+      });
     }
   },
   created() {
@@ -1116,11 +1118,8 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <div>
-    <h2>Добавить отзыв о комнате {{ roomId }}</h2>
+    <h2>Добавить общий отзыв</h2>
     <form @submit.prevent="submitReview">
-      <label for="author">Ваше имя:</label>
-      <input id="author" v-model="author" placeholder="Введите ваше имя" />
-      
       <label for="reviewText">Отзыв:</label>
       <textarea id="reviewText" v-model="reviewText" placeholder="Введите ваш отзыв"></textarea>
       
@@ -1133,24 +1132,22 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 import axios from 'axios';
 
 export default {
-  props: {
-    roomId: {
-      type: Number,
-      required: true
-    }
-  },
   data() {
     return {
-      author: '',
       reviewText: ''
     };
+  },
+  computed: {
+    username() {
+      // Получение имени пользователя из состояния Vuex
+      return this.$store.state.user ? this.$store.state.user.username : 'Аноним';
+    }
   },
   methods: {
     submitReview() {
       const reviewData = {
-        author: this.author,
-        text: this.reviewText,
-        room: this.roomId  
+        author: this.username, // Использование имени пользователя из Vuex
+        text: this.reviewText
       };
 
       axios.post('http://localhost:8000/hotel_api/api/reviews/', reviewData, {
@@ -1161,7 +1158,7 @@ export default {
       })
       .then(() => {
         alert('Отзыв успешно добавлен!');
-        this.$router.go(0); 
+        this.reviewText = ''; // Очистка поля ввода после отправки отзыва
       })
       .catch(error => {
         console.error('Ошибка при добавлении отзыва:', error);
@@ -1170,6 +1167,7 @@ export default {
   }
 };
 </script>
+
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomReviewsList.vue
