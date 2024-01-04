@@ -105,7 +105,8 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
     def get_occupied_rooms_count(self, floor):
         return Room.objects.filter(floor=floor, status='occupied').count()
 
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['author', 'text', 'created_at']

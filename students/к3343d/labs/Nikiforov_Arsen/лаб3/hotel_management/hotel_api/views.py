@@ -318,6 +318,9 @@ def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
 
+
+
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+

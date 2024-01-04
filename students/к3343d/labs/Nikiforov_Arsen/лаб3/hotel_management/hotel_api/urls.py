@@ -5,13 +5,14 @@ from .views import (
     RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
     FloorOccupancyViewSet, DayViewSet, EmployeeFloorViewSet,
     EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet,
-    NestedClientViewSet, UserViewSet, BookingViewSet,update_room_status,
+    NestedClientViewSet, UserViewSet, BookingViewSet, update_room_status,
     RoomStatisticsView, home, register_view,
     login_view, alternative_login_view, api_login,
     generate_token, register_user, book_room,
     rooms_list, clients_list, employees_list, floors_list,
     client_info_list, days_list, employee_floors_list,
-    employee_days_list, bookings_list, book_selected_rooms
+    employee_days_list, bookings_list, book_selected_rooms,
+    ReviewViewSet
 )
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -51,6 +52,9 @@ router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'bookings', BookingViewSet)
 router.register(r'reviews', ReviewViewSet)
+router.register(r'rooms', RoomViewSet)
+router.register(r'bookings', BookingViewSet)
+
 
 urlpatterns = [
     path('', home, name='home'),

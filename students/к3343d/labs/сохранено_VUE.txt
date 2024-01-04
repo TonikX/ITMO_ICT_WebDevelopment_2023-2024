@@ -975,8 +975,9 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <th>Тип комнаты</th>
           <th>Статус</th>
           <th>Стоимость</th>
-          <th>Клиенты</th>
+          
           <th>Сотрудники</th>
+          <th>Забронировал</th>
         </tr>
       </thead>
       <tbody>
@@ -987,20 +988,13 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <td>{{ room.cost }}</td>
           <td>
             <ul>
-              <li v-for="client in room.clients" :key="client.id">
-                {{ client.client_info.first_name }} {{ client.client_info.last_name }}
-              </li>
-            </ul>
-          </td>
-          <td>
-            <ul>
               <li v-for="employee in room.employees" :key="employee.id">
                 {{ employee.employee.first_name }} {{ employee.employee.last_name }}
               </li>
             </ul>
           </td>
           <td>
-            {{ room.booked_by }} <!-- Имя пользователя, который забронировал комнату -->
+            {{ room.booked_by }}
           </td>
         </tr>
       </tbody>
@@ -1033,7 +1027,6 @@ export default {
     checkIn(roomId) {
       axios.post(`http://localhost:8000/api/rooms/${roomId}/check_in`, { is_occupied: true })
         .then(() => {
-          // Перезагружаем данные о комнатах после успешного запроса
           this.fetchComplexRooms();
         }).catch(error => {
           console.error('Ошибка при обновлении статуса комнаты:', error);
@@ -1043,32 +1036,31 @@ export default {
 };
 </script>
 
-  
-  <style>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  td {
-    background-color: #fff;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  </style>
-  
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #fff;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+</style>
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LeaveFeedback.vue
 
@@ -1124,49 +1116,57 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <div>
-      <h2>Добавить отзыв</h2>
-      <form @submit.prevent="submitReview">
-          <input v-model="author" placeholder="Ваше имя" />
-          <textarea v-model="reviewText" placeholder="Ваш отзыв"></textarea>
-          <button type="submit">Отправить</button>
-      </form>
+    <h2>Добавить отзыв о комнате {{ roomId }}</h2>
+    <form @submit.prevent="submitReview">
+      <label for="author">Ваше имя:</label>
+      <input id="author" v-model="author" placeholder="Введите ваше имя" />
+      
+      <label for="reviewText">Отзыв:</label>
+      <textarea id="reviewText" v-model="reviewText" placeholder="Введите ваш отзыв"></textarea>
+      
+      <button type="submit">Отправить</button>
+    </form>
   </div>
 </template>
 
 <script>
-import ReviewService from '@/reviewService'; 
+import axios from 'axios';
 
 export default {
   props: {
-      roomId: {
-          type: Number,
-          required: true
-      }
+    roomId: {
+      type: Number,
+      required: true
+    }
   },
   data() {
-      return {
-          author: '',
-          reviewText: ''
-      };
+    return {
+      author: '',
+      reviewText: ''
+    };
   },
   methods: {
-      submitReview() {
-          const reviewData = {
-              author: this.author,
-              text: this.reviewText,
-              room: this.roomId
-          };
-          ReviewService.createReview(reviewData)
-              .then(() => {
-                  alert('Отзыв добавлен');
-                  this.reviewText = '';
-                  this.author = '';
-                  this.$emit('review-added'); // Отправка события родительскому компоненту
-              })
-              .catch(error => {
-                  console.error('Ошибка при добавлении отзыва:', error);
-              });
-      }
+    submitReview() {
+      const reviewData = {
+        author: this.author,
+        text: this.reviewText,
+        room: this.roomId  
+      };
+
+      axios.post('http://localhost:8000/hotel_api/api/reviews/', reviewData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(() => {
+        alert('Отзыв успешно добавлен!');
+        this.$router.go(0); 
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении отзыва:', error);
+      });
+    }
   }
 };
 </script>
@@ -1175,60 +1175,53 @@ export default {
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomReviewsList.vue
 
 <template>
-    <div>
-      <h2>Отзывы о комнате {{ roomId }}</h2>
-      <ul>
-        <li v-for="review in reviews" :key="review.id">
-          {{ review.text }} - {{ review.author }}
-          <button @click="deleteReview(review.id)">Удалить</button>
-        </li>
-      </ul>
-      <router-link :to="`/room/${roomId}/add-review`">Добавить отзыв</router-link>
-    </div>
-  </template>
-  
-  <script>
-  import ReviewService from '@/reviewService.js'; // Убедитесь, что путь к файлу reviewService.js верный
-  
-  export default {
-    props: {
-      roomId: {
-        type: Number,
-        required: true
-      }
-    },
-    data() {
-      return {
-        reviews: []
-      };
-    },
-    methods: {
-      fetchReviews() {
-        ReviewService.getAllReviews()
-          .then(response => {
-            this.reviews = response.data;
-          })
-          .catch(error => {
-            console.error('Ошибка при получении отзывов:', error);
-          });
-      },
-      deleteReview(reviewId) {
-        ReviewService.deleteReview(reviewId)
-          .then(() => {
-            alert('Отзыв удален');
-            this.fetchReviews(); // Обновление списка отзывов после удаления
-          })
-          .catch(error => {
-            console.error('Ошибка при удалении отзыва:', error);
-          });
-      }
-    },
-    created() {
-      this.fetchReviews();
+  <div>
+    <h2>Отзывы о комнате {{ roomId }}</h2>
+    <ul>
+      <li v-for="review in reviews" :key="review.id">
+        {{ review.text }} - {{ review.author }}
+      </li>
+    </ul>
+    <router-link :to="`/room/${roomId}/add-review`">Добавить отзыв</router-link>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  props: {
+    roomId: {
+      type: Number,
+      required: true
     }
-  };
-  </script>
-  
+  },
+  data() {
+    return {
+      reviews: []
+    };
+  },
+  methods: {
+    fetchReviews() {
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}` //  метод авторизации
+        }
+      })
+        .then(response => {
+          this.reviews = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении отзывов:', error);
+        });
+    }
+  },
+  created() {
+    this.fetchReviews();
+  }
+};
+</script>
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/reviewService.js
 

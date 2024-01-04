@@ -6,12 +6,10 @@ from django.contrib import admin
 from .models import (Room, Client, ClientInfo, Employee, Floor, Day, 
                      EmployeeFloor, EmployeeDay, Booking, CustomUser)
 
-# Класс администратора для модели Room
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('room_type', 'floor', 'status', 'cost')
 
-# Класс администратора для модели Booking 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['user', 'room', 'start_date', 'end_date', 'confirmed']
@@ -21,10 +19,10 @@ class BookingAdmin(admin.ModelAdmin):
         for booking in queryset:
             booking.confirmed = True
             booking.room.booked_by = booking.user
-            booking.room.set_occupied()
+            booking.room.set_occupied(True)  # Указываем True, что комната теперь занята
             booking.room.save()
             booking.save()
-    confirm_booking.short_description = "Confirm selected bookings"
+    confirm_booking.short_description = "Подтвердить выбранные бронирования"
 
     def cancel_booking(self, request, queryset):
         for booking in queryset:
@@ -32,14 +30,14 @@ class BookingAdmin(admin.ModelAdmin):
             room.set_available()
             room.save()
             booking.delete()
-    cancel_booking.short_description = "Cancel selected bookings and set room available"
+    cancel_booking.short_description = "Отменить выбранные бронирования и установить комнату доступной"
 
     def delete_queryset(self, request, queryset):
         for obj in queryset:
             room = obj.room
             room.set_available()
             room.save()
-        queryset.delete()  # This deletes all bookings in the queryset
+        queryset.delete()  # Удаляем все бронирования в выборке
 
     def delete_model(self, request, obj):
         room = obj.room
@@ -47,7 +45,6 @@ class BookingAdmin(admin.ModelAdmin):
         room.save()
         obj.delete()
 
-# Регистрация других моделей
 admin.site.register(CustomUser)
 admin.site.register(Client)
 admin.site.register(ClientInfo)
@@ -67,13 +64,14 @@ from .views import (
     RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
     FloorOccupancyViewSet, DayViewSet, EmployeeFloorViewSet,
     EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet,
-    NestedClientViewSet, UserViewSet, BookingViewSet,update_room_status,
+    NestedClientViewSet, UserViewSet, BookingViewSet, update_room_status,
     RoomStatisticsView, home, register_view,
     login_view, alternative_login_view, api_login,
     generate_token, register_user, book_room,
     rooms_list, clients_list, employees_list, floors_list,
     client_info_list, days_list, employee_floors_list,
-    employee_days_list, bookings_list, book_selected_rooms
+    employee_days_list, bookings_list, book_selected_rooms,
+    ReviewViewSet
 )
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -113,6 +111,9 @@ router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'bookings', BookingViewSet)
 router.register(r'reviews', ReviewViewSet)
+router.register(r'rooms', RoomViewSet)
+router.register(r'bookings', BookingViewSet)
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -207,6 +208,7 @@ class ComplexRoomSerializer(serializers.ModelSerializer):
     clients = NestedClientSerializer(many=True, read_only=True)
     employees = EmployeeFloorSerializer(source='employee_floor_set', many=True, read_only=True)
     booked_by = serializers.SerializerMethodField()
+
     class Meta:
         model = Room
         fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees', 'booked_by']

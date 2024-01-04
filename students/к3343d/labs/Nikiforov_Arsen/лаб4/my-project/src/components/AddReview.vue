@@ -1,48 +1,52 @@
 <template>
   <div>
-      <h2>Добавить отзыв</h2>
-      <form @submit.prevent="submitReview">
-          <input v-model="author" placeholder="Ваше имя" />
-          <textarea v-model="reviewText" placeholder="Ваш отзыв"></textarea>
-          <button type="submit">Отправить</button>
-      </form>
+    <h2>Добавить общий отзыв</h2>
+    <form @submit.prevent="submitReview">
+      <label for="reviewText">Отзыв:</label>
+      <textarea id="reviewText" v-model="reviewText" placeholder="Введите ваш отзыв"></textarea>
+      
+      <button type="submit">Отправить</button>
+    </form>
   </div>
 </template>
 
 <script>
-import ReviewService from '@/reviewService'; 
+import axios from 'axios';
 
 export default {
-  props: {
-      roomId: {
-          type: Number,
-          required: true
-      }
-  },
   data() {
-      return {
-          author: '',
-          reviewText: ''
-      };
+    return {
+      reviewText: ''
+    };
+  },
+  computed: {
+    username() {
+      // Получение имени пользователя из состояния Vuex
+      return this.$store.state.user ? this.$store.state.user.username : 'Аноним';
+    }
   },
   methods: {
-      submitReview() {
-          const reviewData = {
-              author: this.author,
-              text: this.reviewText,
-              room: this.roomId
-          };
-          ReviewService.createReview(reviewData)
-              .then(() => {
-                  alert('Отзыв добавлен');
-                  this.reviewText = '';
-                  this.author = '';
-                  this.$emit('review-added'); // Отправка события родительскому компоненту
-              })
-              .catch(error => {
-                  console.error('Ошибка при добавлении отзыва:', error);
-              });
-      }
+    submitReview() {
+      const reviewData = {
+        author: this.username, // Использование имени пользователя из Vuex
+        text: this.reviewText
+      };
+
+      axios.post('http://localhost:8000/hotel_api/api/reviews/', reviewData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(() => {
+        alert('Отзыв успешно добавлен!');
+        this.reviewText = ''; // Очистка поля ввода после отправки отзыва
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении отзыва:', error);
+      });
+    }
   }
 };
 </script>
+

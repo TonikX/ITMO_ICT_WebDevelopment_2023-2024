@@ -27,16 +27,17 @@ export default {
   },
   methods: {
     fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`)
-        .then(response => {
-          this.reviews = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении отзывов:', error);
-        });
-    },
-    goToAddReview() {
-      this.$router.push(`/room/${this.roomId}/add-review`);
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(response => {
+        this.reviews = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении отзывов:', error);
+      });
     }
   },
   created() {
