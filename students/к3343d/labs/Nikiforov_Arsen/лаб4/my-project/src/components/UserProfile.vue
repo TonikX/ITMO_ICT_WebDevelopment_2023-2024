@@ -1,36 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <template>
   <div>
     <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
@@ -60,6 +27,8 @@
       </ul>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -68,6 +37,8 @@ import ClientsTable from './ClientsTable.vue';
 import EmployeesTable from './EmployeesTable.vue';
 import AddReview from './AddReview.vue';
 import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
+import RoomStatistics from './RoomStatistics.vue';
+import ComplexRoomsTable from './ComplexRoomsTable.vue'
 
 export default {
   computed: {
@@ -79,7 +50,9 @@ export default {
     RoomsTable,
     ClientsTable,
     EmployeesTable,
-    AddReview
+    AddReview,
+    RoomStatistics,
+    ComplexRoomsTable,
   },
   data() {
     return {
@@ -125,7 +98,7 @@ export default {
       this.$router.push('/add-review');
     },
     leaveFeedback() {
-      this.$router.push('/path-to-feedback-form');
+      this.$router.push('');
     },
     showComplexRooms() {
       this.currentComponent = 'ComplexRoomsTable';

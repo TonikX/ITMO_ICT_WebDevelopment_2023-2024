@@ -27,7 +27,7 @@ from django.shortcuts import get_object_or_404
 User = get_user_model()
 
 class RoomStatisticsView(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         stats = Room.objects.values('room_type').annotate(
             total=Count('id'),
             average_cost=Avg('cost')
@@ -58,7 +58,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Room.objects.filter(status='occupied').prefetch_related('clients', 'employee_floor_set')
+    queryset = Room.objects.all().prefetch_related('clients', 'employee_floor_set')
     serializer_class = ComplexRoomSerializer
 
 class NestedClientViewSet(viewsets.ReadOnlyModelViewSet):

@@ -128,6 +128,7 @@ import RoomsTable from '../components/RoomsTable.vue';
 import RoomReviewsList from '../components/RoomReviewsList.vue';
 import LeaveFeedback from '../components/LeaveFeedback.vue';
 import AddReview from '../components/AddReview.vue';
+
 const routes = [
   { path: '/registration', component: RegistrationPage },
   { path: '/login', component: LoginPage },
@@ -137,6 +138,7 @@ const routes = [
   { path: '/room-statistics', component: RoomStatistics },
   { path: '/complex-rooms', component: ComplexRoomsTable },
   { path: '/rooms-table', component: RoomsTable },
+  
   {
     path: '/room/:roomId/reviews',
     name: 'RoomReviewsList',
@@ -155,6 +157,11 @@ const routes = [
     name: 'AddReview',
     component: AddReview,
     props: true
+  },
+  {
+    path: '/room-statistics',
+    name: 'RoomStatistics',
+    component: RoomStatistics
   }
 ];
 
@@ -345,22 +352,21 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
     <component :is="currentComponent" v-if="showTable" />
 
-    <!-- Форма добавления отзыва -->
     <div v-if="showReviewForm">
       <AddReview :roomId="selectedRoomId" @review-added="updateReviews" />
     </div>
 
-    <!-- Список отзывов -->
     <div v-if="showReviews">
       <h3>Отзывы</h3>
       <ul>
         <li v-for="review in reviews" :key="review.id">
           {{ review.text }} - {{ review.author }}
-          <!-- Удаление отзывов можно добавить здесь -->
         </li>
       </ul>
     </div>
   </div>
+
+
 </template>
 
 <script>
@@ -368,7 +374,9 @@ import RoomsTable from './RoomsTable.vue';
 import ClientsTable from './ClientsTable.vue';
 import EmployeesTable from './EmployeesTable.vue';
 import AddReview from './AddReview.vue';
-import ReviewService from '@/reviewService'; // Убедитесь, что путь к ReviewService верный
+import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
+import RoomStatistics from './RoomStatistics.vue';
+import ComplexRoomsTable from './ComplexRoomsTable.vue'
 
 export default {
   computed: {
@@ -380,7 +388,9 @@ export default {
     RoomsTable,
     ClientsTable,
     EmployeesTable,
-    AddReview
+    AddReview,
+    RoomStatistics,
+    ComplexRoomsTable,
   },
   data() {
     return {
@@ -388,12 +398,13 @@ export default {
       currentComponent: null,
       showReviewForm: false,
       showReviews: false,
-      reviews: [], // Массив для хранения отзывов
-      selectedRoomId: null // ID выбранной комнаты
+      reviews: [],
+      selectedRoomId: null
     };
   },
   methods: {
-    showAddReviewForm() {
+    showAddReviewForm(roomId) {
+      this.selectedRoomId = roomId;
       this.showReviewForm = true;
       this.showReviews = false;
     },
@@ -404,6 +415,8 @@ export default {
     },
     emitBack() {
       this.showTable = false;
+      this.showReviewForm = false;
+      this.showReviews = false;
     },
     fetchReviews() {
       ReviewService.getAllReviews()
@@ -416,18 +429,14 @@ export default {
     },
     updateReviews() {
       this.fetchReviews();
+      this.showReviewForm = false;
+      this.showReviews = true;
     },
-
-
-    showAddReview() {
-    this.currentComponent = 'AddReview';
-    this.showTable = true;
-  },
     goToLeaveFeedback() {
       this.$router.push('/add-review');
     },
     leaveFeedback() {
-      this.$router.push('/path-to-feedback-form');
+      this.$router.push('');
     },
     showComplexRooms() {
       this.currentComponent = 'ComplexRoomsTable';
@@ -449,9 +458,9 @@ export default {
       this.currentComponent = 'EmployeesTable';
       this.showTable = true;
     },
-
-
-
+  },
+  created() {
+    this.fetchReviews();
   }
 };
 </script>
@@ -474,174 +483,145 @@ export default {
 </style>
 
 
-
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomsTable.vue
 
-<template> 
+<template>
   <div>
-    <h2>Список комнат</h2>
-
-    <!-- Фильтры -->
-    <label for="room_type">Тип комнаты:</label>
-    <select v-model="filterType">
-      <option value="">--Выберите тип--</option>
-      <option value="single">Одноместный</option>
-      <option value="double">Двухместный</option>
-      <option value="suite">Люкс</option>
-    </select>
-
-    <label for="room_status">Статус комнаты:</label>
-    <select v-model="filterStatus">
-      <option value="">--Выберите статус--</option>
-      <option value="available">Доступна</option>
-      <option value="occupied">Занята</option>
-      <option value="cleaning">На уборке</option>
-    </select>
-
-    <!-- Выбор даты бронирования -->
-    <div class="date-selection">
-      <input type="date" v-model="startDate" placeholder="Дата начала">
-      <input type="date" v-model="endDate" placeholder="Дата окончания">
+    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
+    <div class="navigation-links">
+      <button @click="showRooms">Комнаты</button>
+      <button @click="showClients">Клиенты</button>
+      <button @click="showEmployees">Сотрудники</button>
+      <button @click="showRoomStatistics">Статистика комнат</button>
+      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
+      <button @click="showAddReviewForm">Оставить отзыв</button>
+      <button @click="showReviewList">Показать отзывы</button>
+      <button @click="emitBack">Назад</button>
     </div>
 
-    <!-- Таблица комнат -->
-    <table>
-      <thead>
-        <tr>
-          <th>Тип комнаты</th>
-          <th>Номер этажа</th>
-          <th>Статус</th>
-          <th>Стоимость</th>
-          <th>Действия</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in filteredRooms" :key="room.id">
-          <td>{{ room.room_type }}</td>
-          <td>{{ room.floor }}</td>
-          <td>{{ room.status }}</td>
-          <td>{{ room.cost }}</td>
-          <td>
-            <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
-              Забронировать
-            </button>
+    <component :is="currentComponent" v-if="showTable" />
 
+    <div v-if="showReviewForm">
+      <AddReview :roomId="selectedRoomId" @review-added="updateReviews" />
+    </div>
 
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="showReviews">
+      <h3>Отзывы</h3>
+      <ul>
+        <li v-for="review in reviews" :key="review.id">
+          {{ review.text }} - {{ review.author }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
+
 <script>
-import axios from 'axios';
+import RoomsTable from './RoomsTable.vue';
+import ClientsTable from './ClientsTable.vue';
+import EmployeesTable from './EmployeesTable.vue';
+import AddReview from './AddReview.vue';
+import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
+import RoomStatistics from './RoomStatistics.vue';
 
 export default {
-  data() {
-    return {
-      rooms: [],
-      filterType: '',
-      filterStatus: '',
-      startDate: '', // Для хранения даты начала бронирования
-      endDate: ''   // Для хранения даты окончания бронирования
-    };
-  },
   computed: {
-    filteredRooms() {
-      return this.rooms.filter(room => {
-        return (!this.filterType || room.room_type === this.filterType) &&
-               (!this.filterStatus || room.status === this.filterStatus);
-      });
+    username() {
+      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
     }
   },
+  components: {
+    RoomsTable,
+    ClientsTable,
+    EmployeesTable,
+    AddReview,
+    RoomStatistics,
+  },
+  data() {
+    return {
+      showTable: false,
+      currentComponent: null,
+      showReviewForm: false,
+      showReviews: false,
+      reviews: [],
+      selectedRoomId: null
+    };
+  },
   methods: {
-    fetchRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/rooms/')
+    showAddReviewForm(roomId) {
+      this.selectedRoomId = roomId;
+      this.showReviewForm = true;
+      this.showReviews = false;
+    },
+    showReviewList() {
+      this.showReviewForm = false;
+      this.showReviews = true;
+      this.fetchReviews();
+    },
+    emitBack() {
+      this.showTable = false;
+      this.showReviewForm = false;
+      this.showReviews = false;
+    },
+    fetchReviews() {
+      ReviewService.getAllReviews()
         .then(response => {
-          this.rooms = response.data;
+          this.reviews = response.data;
         })
         .catch(error => {
-          console.error('Ошибка загрузки комнат:', error);
+          console.error('Ошибка при получении отзывов:', error);
         });
     },
-    leaveReview(roomId) {
-  console.log("Переход к добавлению отзыва для комнаты:", roomId);
-  this.$router.push(`/room/${roomId}/add-review`);
-},
-
-    applyFilter() {
-      this.fetchRooms();
+    updateReviews() {
+      this.fetchReviews();
+      this.showReviewForm = false;
+      this.showReviews = true;
     },
-    bookRoom(roomId) {
-      if (!this.startDate || !this.endDate) {
-        alert('Необходимо указать даты начала и окончания бронирования');
-        return;
-      }
-
-      const token = localStorage.getItem('userToken');
-      axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
-        start_date: this.startDate,
-        end_date: this.endDate
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        if (response.data.status === 'success') {
-          alert('Комната успешно забронирована');
-          this.fetchRooms(); // Обновление списка комнат
-        } else {
-          console.error('Ответ об ошибке:', response.data);
-          alert('Ошибка бронирования: ' + response.data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка бронирования комнаты:', error);
-        alert('Ошибка бронирования: ' + error.message);
-      });
+    showComplexRooms() {
+      this.currentComponent = 'ComplexRoomsTable';
+      this.showTable = true;
     },
-
+    showRoomStatistics() {
+      this.currentComponent = 'RoomStatistics';
+      this.showTable = true;
+    },
+    showRooms() {
+      this.currentComponent = 'RoomsTable';
+      this.showTable = true;
+    },
+    showClients() {
+      this.currentComponent = 'ClientsTable';
+      this.showTable = true;
+    },
+    showEmployees() {
+      this.currentComponent = 'EmployeesTable';
+      this.showTable = true;
+    },
   },
   created() {
-    this.fetchRooms();
+    this.fetchReviews();
   }
 };
 </script>
 
 <style scoped>
-table {
-  width: 100%;
-  border-collapse: collapse;
+.navigation-links {
+  text-align: center;
+  margin-bottom: 20px;
 }
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.navigation-links button {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
 }
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-}
-
-.date-selection {
-  margin: 10px 0;
-}
-
-.date-selection input {
-  margin-right: 10px;
+.navigation-links button:hover {
+  color: #007bff;
+  text-decoration: underline;
 }
 </style>
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
 
@@ -901,7 +881,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 <template>
   <div>
-    <h2>Статистика по комнатам</h2>
+    <h2>Статистика комнат</h2>
     <table>
       <thead>
         <tr>
@@ -911,7 +891,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stat in roomStats" :key="stat.room_type">
+        <tr v-for="stat in statistics" :key="stat.room_type">
           <td>{{ stat.room_type }}</td>
           <td>{{ stat.total }}</td>
           <td>{{ stat.average_cost }}</td>
@@ -927,24 +907,24 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      roomStats: []
+      statistics: [] // Сюда будут загружены данные статистики
     };
   },
   created() {
-    this.fetchRoomStatistics();
+    this.fetchStatistics();
   },
   methods: {
-    fetchRoomStatistics() {
-      axios.get('http://localhost:8000/hotel_api/api/room-statistics/') 
+    fetchStatistics() {
+      axios.get('http://localhost:8000/hotel_api/api/room-statistics/')
         .then(response => {
-          this.roomStats = response.data;
+          this.statistics = response.data;
         })
         .catch(error => {
           console.error('Ошибка при получении статистики комнат:', error);
         });
     }
   }
-};
+}
 </script>
 
 <style>
@@ -952,17 +932,21 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
+
 th {
   background-color: #f2f2f2;
 }
+
 td {
   background-color: #fff;
 }
+
 tr:hover {
   background-color: #f5f5f5;
 }
@@ -981,7 +965,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <th>Тип комнаты</th>
           <th>Статус</th>
           <th>Стоимость</th>
-      
         </tr>
       </thead>
       <tbody>
@@ -990,7 +973,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
           <td>{{ room.room_type }}</td>
           <td>{{ room.status }}</td>
           <td>{{ room.cost }}</td>
-      
         </tr>
       </tbody>
     </table>
@@ -1011,7 +993,7 @@ export default {
   },
   methods: {
     fetchComplexRooms() {
-      axios.get('http://localhost:8000/hotel_api/complex_rooms/') 
+      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/') 
         .then(response => {
           this.complexRooms = response.data;
         })

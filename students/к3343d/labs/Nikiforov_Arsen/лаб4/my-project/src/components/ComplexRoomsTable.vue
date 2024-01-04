@@ -8,7 +8,6 @@
           <th>Тип комнаты</th>
           <th>Статус</th>
           <th>Стоимость</th>
-      
         </tr>
       </thead>
       <tbody>
@@ -17,7 +16,6 @@
           <td>{{ room.room_type }}</td>
           <td>{{ room.status }}</td>
           <td>{{ room.cost }}</td>
-      
         </tr>
       </tbody>
     </table>
@@ -38,7 +36,7 @@ export default {
   },
   methods: {
     fetchComplexRooms() {
-      axios.get('http://localhost:8000/hotel_api/complex_rooms/') 
+      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/') 
         .then(response => {
           this.complexRooms = response.data;
         })

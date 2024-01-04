@@ -57,6 +57,7 @@ class ComplexRoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees']
 
+
 class ClientSerializer(serializers.ModelSerializer):
     client_info = ClientInfoSerializer()
     class Meta:
