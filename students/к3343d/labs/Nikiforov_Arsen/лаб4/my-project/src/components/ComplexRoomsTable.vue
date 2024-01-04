@@ -8,8 +8,9 @@
           <th>Тип комнаты</th>
           <th>Статус</th>
           <th>Стоимость</th>
-          <th>Клиенты</th>
+          
           <th>Сотрудники</th>
+          <th>Забронировал</th>
         </tr>
       </thead>
       <tbody>
@@ -20,20 +21,13 @@
           <td>{{ room.cost }}</td>
           <td>
             <ul>
-              <li v-for="client in room.clients" :key="client.id">
-                {{ client.client_info.first_name }} {{ client.client_info.last_name }}
-              </li>
-            </ul>
-          </td>
-          <td>
-            <ul>
               <li v-for="employee in room.employees" :key="employee.id">
                 {{ employee.employee.first_name }} {{ employee.employee.last_name }}
               </li>
             </ul>
           </td>
           <td>
-            {{ room.booked_by }} <!-- Имя пользователя, который забронировал комнату -->
+            {{ room.booked_by }}
           </td>
         </tr>
       </tbody>
@@ -66,7 +60,6 @@ export default {
     checkIn(roomId) {
       axios.post(`http://localhost:8000/api/rooms/${roomId}/check_in`, { is_occupied: true })
         .then(() => {
-          // Перезагружаем данные о комнатах после успешного запроса
           this.fetchComplexRooms();
         }).catch(error => {
           console.error('Ошибка при обновлении статуса комнаты:', error);
@@ -76,29 +69,27 @@ export default {
 };
 </script>
 
-  
-  <style>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  td {
-    background-color: #fff;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  </style>
-  
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #fff;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+</style>

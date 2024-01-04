@@ -575,15 +575,22 @@ export default {
         });
     },
     bookRoom(roomId) {
-  const bookingData = {
-    start_date: this.startDate,
-    end_date: this.endDate
-  };
-  axios.post(`http://localhost:8000/hotel_api/api/rooms/${roomId}/book_room`, bookingData, {
-    headers: {
-      'Authorization': `Bearer ${this.$store.state.user.token}`
+    // Проверка, выбраны ли даты начала и окончания бронирования
+    if (!this.startDate || !this.endDate) {
+      alert('Введите дату!');
+      return;
     }
-  })
+
+    const bookingData = {
+      start_date: this.startDate,
+      end_date: this.endDate
+    };
+
+    axios.post(`http://localhost:8000/hotel_api/api/rooms/${roomId}/book_room/`, bookingData, {
+      headers: {
+        'Authorization': `Bearer ${this.$store.state.user.token}`
+      }
+    })
     .then(() => {
       alert('Бронирование успешно отправлено на подтверждение');
       this.fetchRooms();
@@ -591,7 +598,7 @@ export default {
     .catch(error => {
       console.error('Ошибка при бронировании комнаты:', error);
     });
-}
+  }
 
   }
 };

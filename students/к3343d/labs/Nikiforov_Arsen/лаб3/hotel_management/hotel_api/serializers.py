@@ -56,6 +56,7 @@ class ComplexRoomSerializer(serializers.ModelSerializer):
     clients = NestedClientSerializer(many=True, read_only=True)
     employees = EmployeeFloorSerializer(source='employee_floor_set', many=True, read_only=True)
     booked_by = serializers.SerializerMethodField()
+
     class Meta:
         model = Room
         fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees', 'booked_by']
