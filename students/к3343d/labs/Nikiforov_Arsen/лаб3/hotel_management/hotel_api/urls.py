@@ -1,10 +1,11 @@
+from django import views
 from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from .views import (
     RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
     FloorOccupancyViewSet, DayViewSet, EmployeeFloorViewSet,
     EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet,
-    NestedClientViewSet, UserViewSet, BookingViewSet,
+    NestedClientViewSet, UserViewSet, BookingViewSet,update_room_status,
     RoomStatisticsView, home, register_view,
     login_view, alternative_login_view, api_login,
     generate_token, register_user, book_room,
@@ -20,7 +21,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
 from .views import ReviewViewSet
-
+from . import views
 
 app_name = 'hotel_api'
 
@@ -70,12 +71,15 @@ urlpatterns = [
     path('api/login/', api_login, name='api_login'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/book_room/<int:room_id>/', book_room, name='book_room'),
+    path('api/rooms/<int:room_id>/book_room/', views.book_room, name='book_room'),
     path('api/room-statistics/', RoomStatisticsView.as_view(), name='room-statistics'),
     path('api/', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/rooms/<int:room_id>/check_in', update_room_status, name='update_room_status'),
+    path('api/bookings/<int:pk>/confirm/', BookingViewSet.as_view({'post': 'confirm_booking'}), name='confirm-booking'),
+    path('api/bookings/<int:pk>/cancel/', BookingViewSet.as_view({'post': 'cancel_booking'}), name='cancel-booking'),
     
 ]

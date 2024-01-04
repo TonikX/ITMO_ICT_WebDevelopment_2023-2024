@@ -8,6 +8,8 @@
           <th>Тип комнаты</th>
           <th>Статус</th>
           <th>Стоимость</th>
+          <th>Клиенты</th>
+          <th>Сотрудники</th>
         </tr>
       </thead>
       <tbody>
@@ -16,6 +18,23 @@
           <td>{{ room.room_type }}</td>
           <td>{{ room.status }}</td>
           <td>{{ room.cost }}</td>
+          <td>
+            <ul>
+              <li v-for="client in room.clients" :key="client.id">
+                {{ client.client_info.first_name }} {{ client.client_info.last_name }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li v-for="employee in room.employees" :key="employee.id">
+                {{ employee.employee.first_name }} {{ employee.employee.last_name }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            {{ room.booked_by }} <!-- Имя пользователя, который забронировал комнату -->
+          </td>
         </tr>
       </tbody>
     </table>
@@ -36,18 +55,26 @@ export default {
   },
   methods: {
     fetchComplexRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/') 
+      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/')
         .then(response => {
           this.complexRooms = response.data;
         })
         .catch(error => {
           console.error('Ошибка при получении комплексной информации о комнатах:', error);
         });
+    },
+    checkIn(roomId) {
+      axios.post(`http://localhost:8000/api/rooms/${roomId}/check_in`, { is_occupied: true })
+        .then(() => {
+          // Перезагружаем данные о комнатах после успешного запроса
+          this.fetchComplexRooms();
+        }).catch(error => {
+          console.error('Ошибка при обновлении статуса комнаты:', error);
+        });
     }
   }
 };
 </script>
-
 
   
   <style>

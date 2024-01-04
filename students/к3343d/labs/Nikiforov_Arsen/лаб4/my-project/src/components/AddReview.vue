@@ -1,45 +1,48 @@
 <template>
-    <div>
+  <div>
       <h2>Добавить отзыв</h2>
       <form @submit.prevent="submitReview">
-        <textarea v-model="reviewText" placeholder="Ваш отзыв"></textarea>
-        <button type="submit">Отправить</button>
+          <input v-model="author" placeholder="Ваше имя" />
+          <textarea v-model="reviewText" placeholder="Ваш отзыв"></textarea>
+          <button type="submit">Отправить</button>
       </form>
-    </div>
-  </template>
-  
-  <script>
-  import ReviewService from '@/reviewService'; 
-  
-  export default {
-    props: {
+  </div>
+</template>
+
+<script>
+import ReviewService from '@/reviewService'; 
+
+export default {
+  props: {
       roomId: {
-        type: Number,
-        required: true
+          type: Number,
+          required: true
       }
-    },
-    data() {
+  },
+  data() {
       return {
-        reviewText: ''
+          author: '',
+          reviewText: ''
       };
-    },
-    methods: {
+  },
+  methods: {
       submitReview() {
-        const reviewData = {
-          text: this.reviewText,
-          room: this.roomId
-        };
-        ReviewService.createReview(reviewData)
-          .then(() => {
-            alert('Отзыв добавлен');
-            this.reviewText = '';
-            this.$emit('review-added'); // Отправка события родительскому компоненту
-          })
-          .catch(error => {
-            console.error('Ошибка при добавлении отзыва:', error);
-          });
+          const reviewData = {
+              author: this.author,
+              text: this.reviewText,
+              room: this.roomId
+          };
+          ReviewService.createReview(reviewData)
+              .then(() => {
+                  alert('Отзыв добавлен');
+                  this.reviewText = '';
+                  this.author = '';
+                  this.$emit('review-added'); // Отправка события родительскому компоненту
+              })
+              .catch(error => {
+                  console.error('Ошибка при добавлении отзыва:', error);
+              });
       }
-    }
-  };
-  </script>
-  
+  }
+};
+</script>

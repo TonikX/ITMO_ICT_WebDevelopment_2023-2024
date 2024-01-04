@@ -42,6 +42,13 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     booked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='booked_rooms')
     booking_confirmed = models.BooleanField(default=False)
+    current_occupant = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='occupied_rooms'
+    )
     
     def set_booked(self):
         self.status = 'booked'
@@ -53,6 +60,20 @@ class Room(models.Model):
 
     def set_available(self):
         self.status = 'available'
+        self.save()
+    
+    def set_occupied(self, is_occupied):
+        self.status = 'occupied' if is_occupied else 'available'
+        self.save()
+    
+    def confirm_booking(self, user):
+        self.status = 'occupied'
+        self.current_occupant = user
+        self.save()
+
+    def cancel_booking(self):
+        self.status = 'available'
+        self.current_occupant = None
         self.save()
 
 

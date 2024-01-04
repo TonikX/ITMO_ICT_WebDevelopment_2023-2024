@@ -23,8 +23,33 @@ import json
 from rest_framework.views import APIView
 from django.db.models import Count, Avg
 from django.shortcuts import get_object_or_404
+from .models import Room
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 User = get_user_model()
+
+
+
+from django.http import JsonResponse
+from .models import Room
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+
+
+
+@api_view(['POST'])
+def update_room_status(request, room_id):
+    room = Room.objects.get(id=room_id)
+    is_occupied = request.data.get('is_occupied')
+    room.set_occupied(is_occupied)
+    serializer = RoomSerializer(room)
+    return Response(serializer.data)
+
+
+
+
 
 class RoomStatisticsView(APIView):
     def get(self, request):
@@ -56,6 +81,24 @@ class BookingViewSet(viewsets.ModelViewSet):
         bookings = Booking.objects.filter(start_date=date)
         serializer = self.get_serializer(bookings, many=True)
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        booking = serializer.save(user=self.request.user)
+        room = booking.room
+        room.confirm_booking(self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def confirm_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.room.confirm_booking(request.user)
+        return Response({'status': 'booking confirmed'})
+
+    @action(detail=True, methods=['post'])
+    def cancel_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.room.cancel_booking()
+        booking.delete()  # Удаляем бронирование
+        return Response({'status': 'booking cancelled'})
 
 class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all().prefetch_related('clients', 'employee_floor_set')
@@ -119,10 +162,12 @@ def book_room(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
     if room.status != 'available':
         return JsonResponse({'status': 'error', 'message': 'Room is not available'}, status=400)
+    
     start_date = request.data.get('start_date')
     end_date = request.data.get('end_date')
     if not start_date or not end_date:
         return JsonResponse({'status': 'error', 'message': 'Start date and end date are required'}, status=400)
+    
     try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
         end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
@@ -130,10 +175,12 @@ def book_room(request, room_id):
             return JsonResponse({'status': 'error', 'message': 'End date must be after start date'}, status=400)
     except ValueError:
         return JsonResponse({'status': 'error', 'message': 'Invalid date format'}, status=400)
+    
     booking = Booking.objects.create(user=request.user, room=room, start_date=start_date, end_date=end_date)
     room.status = 'booked'
     room.save()
     return JsonResponse({'status': 'success', 'booking_id': booking.id})
+
 
 def rooms_list(request):
     room_type_query = request.GET.get('room_type', '').strip()

@@ -1,136 +1,146 @@
-<template>
+<template> 
   <div>
-    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
-    <div class="navigation-links">
-      <button @click="showRooms">Комнаты</button>
-      <button @click="showClients">Клиенты</button>
-      <button @click="showEmployees">Сотрудники</button>
-      <button @click="showRoomStatistics">Статистика комнат</button>
-      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
-      <button @click="showAddReviewForm">Оставить отзыв</button>
-      <button @click="showReviewList">Показать отзывы</button>
-      <button @click="emitBack">Назад</button>
+    <h2>Список комнат</h2>
+
+    <!-- Фильтры -->
+    <label for="room_type">Тип комнаты:</label>
+    <select v-model="filterType">
+      <option value="">--Выберите тип--</option>
+      <option value="single">Одноместный</option>
+      <option value="double">Двухместный</option>
+      <option value="suite">Люкс</option>
+    </select>
+
+    <label for="room_status">Статус комнаты:</label>
+    <select v-model="filterStatus">
+      <option value="">--Выберите статус--</option>
+      <option value="available">Доступна</option>
+      <option value="occupied">Занята</option>
+      <option value="cleaning">На уборке</option>
+    </select>
+
+    <!-- Выбор даты бронирования -->
+    <div class="date-selection">
+      <input type="date" v-model="startDate" placeholder="Дата начала">
+      <input type="date" v-model="endDate" placeholder="Дата окончания">
     </div>
 
-    <component :is="currentComponent" v-if="showTable" />
-
-    <div v-if="showReviewForm">
-      <AddReview :roomId="selectedRoomId" @review-added="updateReviews" />
-    </div>
-
-    <div v-if="showReviews">
-      <h3>Отзывы</h3>
-      <ul>
-        <li v-for="review in reviews" :key="review.id">
-          {{ review.text }} - {{ review.author }}
-        </li>
-      </ul>
-    </div>
+    <!-- Таблица комнат -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Тип комнаты</th>
+          <th>Номер этажа</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in filteredRooms" :key="room.id">
+          <td>{{ room.room_type }}</td>
+          <td>{{ room.floor }}</td>
+          <td>{{ room.status }}</td>
+          <td>{{ room.cost }}</td>
+          <td>
+            <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
+              Забронировать
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
-
 <script>
-import RoomsTable from './RoomsTable.vue';
-import ClientsTable from './ClientsTable.vue';
-import EmployeesTable from './EmployeesTable.vue';
-import AddReview from './AddReview.vue';
-import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
-import RoomStatistics from './RoomStatistics.vue';
+import axios from 'axios';
 
 export default {
-  computed: {
-    username() {
-      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
-    }
-  },
-  components: {
-    RoomsTable,
-    ClientsTable,
-    EmployeesTable,
-    AddReview,
-    RoomStatistics,
-  },
   data() {
     return {
-      showTable: false,
-      currentComponent: null,
-      showReviewForm: false,
-      showReviews: false,
-      reviews: [],
-      selectedRoomId: null
+      rooms: [],
+      filterType: '',
+      filterStatus: '',
+      startDate: '',
+      endDate: ''
     };
   },
-  methods: {
-    showAddReviewForm(roomId) {
-      this.selectedRoomId = roomId;
-      this.showReviewForm = true;
-      this.showReviews = false;
-    },
-    showReviewList() {
-      this.showReviewForm = false;
-      this.showReviews = true;
-      this.fetchReviews();
-    },
-    emitBack() {
-      this.showTable = false;
-      this.showReviewForm = false;
-      this.showReviews = false;
-    },
-    fetchReviews() {
-      ReviewService.getAllReviews()
-        .then(response => {
-          this.reviews = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении отзывов:', error);
-        });
-    },
-    updateReviews() {
-      this.fetchReviews();
-      this.showReviewForm = false;
-      this.showReviews = true;
-    },
-    showComplexRooms() {
-      this.currentComponent = 'ComplexRoomsTable';
-      this.showTable = true;
-    },
-    showRoomStatistics() {
-      this.currentComponent = 'RoomStatistics';
-      this.showTable = true;
-    },
-    showRooms() {
-      this.currentComponent = 'RoomsTable';
-      this.showTable = true;
-    },
-    showClients() {
-      this.currentComponent = 'ClientsTable';
-      this.showTable = true;
-    },
-    showEmployees() {
-      this.currentComponent = 'EmployeesTable';
-      this.showTable = true;
-    },
+  computed: {
+    filteredRooms() {
+      return this.rooms.filter(room => {
+        return (!this.filterType || room.room_type === this.filterType) &&
+               (!this.filterStatus || room.status === this.filterStatus);
+      });
+    }
   },
   created() {
-    this.fetchReviews();
+    this.fetchRooms();
+  },
+  methods: {
+    fetchRooms() {
+      axios.get('http://localhost:8000/hotel_api/api/rooms/')
+        .then(response => {
+          this.rooms = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении данных о комнатах:', error);
+        });
+    },
+    bookRoom(roomId) {
+    // Проверка, выбраны ли даты начала и окончания бронирования
+    if (!this.startDate || !this.endDate) {
+      alert('Введите дату!');
+      return;
+    }
+
+    const bookingData = {
+      start_date: this.startDate,
+      end_date: this.endDate
+    };
+
+    axios.post(`http://localhost:8000/hotel_api/api/rooms/${roomId}/book_room/`, bookingData, {
+      headers: {
+        'Authorization': `Bearer ${this.$store.state.user.token}`
+      }
+    })
+    .then(() => {
+      alert('Бронирование успешно отправлено на подтверждение');
+      this.fetchRooms();
+    })
+    .catch(error => {
+      console.error('Ошибка при бронировании комнаты:', error);
+    });
+  }
+
   }
 };
 </script>
 
+
+
+
 <style scoped>
-.navigation-links {
-  text-align: center;
-  margin-bottom: 20px;
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.navigation-links button {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
-.navigation-links button:hover {
-  color: #007bff;
-  text-decoration: underline;
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
 }
 </style>
