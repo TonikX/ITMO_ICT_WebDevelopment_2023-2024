@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="{% url 'reservation_delete' reservation_id=reservation.pk %}" method="post">
+    {% csrf_token %}
+    <p>Вы уверены, что хотите удалить эту резервацию?</p>
+    <input type="submit" value="Удалить">
+  </form>
+{% endblock %}

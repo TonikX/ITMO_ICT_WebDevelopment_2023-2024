@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Список всех резерваций</h2>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>ID резервации</th>
+        <th>Имя пользователя</th>
+        <th>Фамилия пользователя</th>
+        <th>Дата резервации</th>
+        <th>Тип номера</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+        <tr>
+          <td>{{ reservation.id }}</td>
+          <td>{{ reservation.user.name }}</td>
+          <td>{{ reservation.user.surname }}</td>
+          <td>{{ reservation.start_date }} - {{ reservation.end_date }}</td>
+          <td>{{ reservation.room_type }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Нет резерваций</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
