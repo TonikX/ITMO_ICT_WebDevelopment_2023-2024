@@ -1,0 +1,143 @@
+<template>
+  <div class="container">
+
+    <div class="row filters-block">
+      <button
+        class="col-1 filters-block__filters_item"
+        :class="{'filters-block__filter_item_active': isFilterActive('songs')}"
+        @click="changeFilter('songs')"
+      >
+        Songs
+      </button>
+      <button
+        class="col-1 filters-block__filters_item"
+        :class="{'filters-block__filter_item_active': isFilterActive('playlists')}"
+        @click="changeFilter('playlists')"
+      >
+        Playlists
+      </button>
+<!--      <button-->
+<!--        class="col-1 filters-block__filters_item"-->
+<!--        :class="{'filters-block__filter_item_active': isFilterActive('artists')}"-->
+<!--        @click="changeFilter('artists')"-->
+<!--      >-->
+<!--        Artists-->
+<!--      </button>-->
+    </div>
+
+    <div v-show="showSongs">
+      <h4 class="pt-5 pb-2">Songs</h4>
+      <song-row-component
+        v-for="song in songs"
+        :song="song"
+      />
+    </div>
+
+    <div v-show="showPlaylists">
+      <h4 class="pt-5 pb-3">Playlists</h4>
+
+      <div class="row">
+        <playlist-card-component
+          v-for="playlist in playlists"
+          :playlist="playlist"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import DB from '@/services/db'
+import SongRowComponent from "@/components/songs/SongRowComponent.vue";
+import PlaylistCardComponent from "@/components/playlists/PlaylistCardComponent.vue";
+import http from "../services/httpClient";
+
+export default {
+  components: {
+    SongRowComponent,
+    PlaylistCardComponent,
+  },
+
+  data: () => ({
+    songs: [],
+    playlists: [],
+    filter: null,
+  }),
+
+  computed: {
+    query() {
+      return this.$route.query.q
+    },
+    showSongs() {
+      return this.songs && this.songs.length > 0 && (this.filter === null || this.filter === 'songs')
+    },
+    showPlaylists() {
+      return this.playlists && this.playlists.length > 0 && (this.filter === null || this.filter === 'playlists')
+    },
+  },
+
+  watch: {
+    query() {
+      this.getSongs()
+      this.getPlaylists()
+    }
+  },
+
+  mounted() {
+    this.getSongs()
+    this.getPlaylists()
+  },
+
+  methods: {
+    async getSongs() {
+      http.get(
+        'songs',
+        {
+          search: this.query
+        }
+      ).then(res => {
+        this.songs = res.data
+      })
+    },
+
+    getPlaylists() {
+      http.get(
+        'playlists',
+        {
+          search: this.query
+        }
+      ).then(res => {
+        this.playlists = res.data
+      })
+    },
+
+    changeFilter(filter) {
+      if (this.filter === filter) {
+        this.filter = null
+      } else {
+        this.filter = filter
+      }
+    },
+
+    isFilterActive(filter) {
+      return this.filter === filter
+    }
+  },
+}
+</script>
+
+<style scoped>
+hr {
+  color: var(--header-color);
+  margin: 10px;
+}
+.filters-block__filters_item {
+  background-color: var(--header-color);
+  border-radius: 15px;
+  text-align: center;
+  margin: 0 5px 0 5px;
+}
+.filters-block__filter_item_active {
+  background-color: var(--text-color);
+}
+</style>
