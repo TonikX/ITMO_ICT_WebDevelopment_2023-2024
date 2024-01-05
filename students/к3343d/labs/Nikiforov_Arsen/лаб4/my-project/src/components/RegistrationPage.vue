@@ -1,86 +1,84 @@
 <template>
-  <div>
-    <h2>Регистрация</h2>
-    <!-- Форма регистрации -->
-    <form @submit.prevent="register">
-      <div class="input-wrapper">
-        <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-      </div>
-      <div class="input-wrapper">
-        <input type="password" v-model="userData.password" placeholder="Пароль">
-      </div>
-      <button type="submit">Зарегистрироваться</button>
-    </form>
-
-    <!-- Сообщение об успешной регистрации -->
-    <div v-if="registrationSuccess" class="success-message">
-      Регистрация прошла успешно! Теперь вы можете войти.
+  <div class="app-container">
+    <img alt="Vue logo" src="@/assets/logo.png" class="logo">
+    <div class="menu" v-if="showButtons">
+      <h1>Добро пожаловать в наш отель!</h1>
+      <button @click="showComponent = 'login'">Вход</button>
+      <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
+    <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
+    <RegistrationPage v-if="showComponent === 'registration'" />
+    <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
   </div>
 </template>
 
 <script>
+import RegistrationPage from '@/components/RegistrationPage.vue';
+import LoginPage from '@/components/LoginPage.vue';
+import UserProfile from '@/components/UserProfile.vue';
+
 export default {
+  name: 'App',
+  components: {
+    RegistrationPage,
+    LoginPage,
+    UserProfile
+  },
   data() {
     return {
-      userData: {
-        username: '',
-        email: '',
-        password: ''
-      },
-      registrationSuccess: false, // Добавляем переменную для отслеживания успешной регистрации
+      showComponent: null,
+      showButtons: true,
     };
   },
   methods: {
-    async register() {
-      try {
-        const response = await fetch('http://localhost:8000/hotel_api/register/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.userData)
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Успешная регистрация', data);
-          this.registrationSuccess = true; // Устанавливаем успешную регистрацию в true
-        } else {
-          console.error('Ошибка регистрации', response.statusText);
-        }
-      } catch (error) {
-        console.error('Ошибка сети', error);
-      }
+    showUserProfile() {
+      this.showComponent = 'userProfile';
+      this.showButtons = false;
+    },
+    showMainButtons() {
+      this.showComponent = null;
+      this.showButtons = true;
     }
   }
 };
 </script>
 
 <style scoped>
-.navigation-links {
+.app-container {
   text-align: center;
+  background: linear-gradient(to right, #b4ffb0, #b19dff); 
+  min-height: 100vh;
+}
+
+.logo {
+  max-width: 150px;
+  margin: 20px auto;
+}
+
+.menu h1 {
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 20px;
 }
 
-.navigation-links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.navigation-links a:hover {
-  color: #007bff;
-  text-decoration: underline;
-}
-
-.input-wrapper {
-  margin-bottom: 10px; /* Расстояние между полями ввода */
-}
-
-.success-message {
-  color: green;
-  margin-top: 10px;
+button:hover {
+  background-color: #0056b3;
 }
 </style>

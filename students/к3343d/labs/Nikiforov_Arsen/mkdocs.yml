@@ -51,6 +51,7 @@ nav:
     - Хранилище: 'lw4/store.md'
     - Пользовательский интерфейс: 'lw4/userInterface.md'
     - Роутер: 'lw4/Router.md'
+    - README: 'lw4/readme.md'
 
   - "leetcode": 'leetcode/leetcode.md'
 

@@ -257,10 +257,12 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
     def get_occupied_rooms_count(self, floor):
         return Room.objects.filter(floor=floor, status='occupied').count()
 
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['author', 'text', 'created_at']
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/models.py
 
@@ -421,11 +423,16 @@ class EmployeeDay(models.Model):
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on {self.day.name}"
 
+# models.py
+
 class Review(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
     author = models.CharField(max_length=255)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review by {self.author}'
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/views.py
 
@@ -749,9 +756,12 @@ def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
 
+
+
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/hotel_api/rooms_list.html

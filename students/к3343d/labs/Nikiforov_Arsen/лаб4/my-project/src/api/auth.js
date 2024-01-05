@@ -18,6 +18,6 @@ export function userProfile(userData) {
 }
 
 export function logoutUser() {
-  // Здесь должен быть код для выхода пользователя.
+  localStorage.removeItem('userToken');
 
 }

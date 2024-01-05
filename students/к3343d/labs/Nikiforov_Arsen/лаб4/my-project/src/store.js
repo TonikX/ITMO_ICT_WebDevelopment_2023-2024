@@ -17,7 +17,7 @@ export default createStore({
     isAuthenticated: state => !!state.user,
     user: state => state.user,
   },
+  
 });
-
 
 

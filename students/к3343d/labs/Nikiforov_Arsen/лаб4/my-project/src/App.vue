@@ -1,11 +1,13 @@
 <template>
   <div class="app-container">
-    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+    <!-- Обновленный путь к логотипу -->
+    <img alt="Vue logo" src="@/assets/logo.png" class="logo"> 
     <div class="menu" v-if="showButtons">
       <h1>Добро пожаловать в наш отель!</h1>
       <button @click="showComponent = 'login'">Вход</button>
       <button @click="showComponent = 'registration'">Регистрация</button>
     </div>
+    <!-- Компоненты для входа, регистрации и профиля пользователя -->
     <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
     <RegistrationPage v-if="showComponent === 'registration'" />
     <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
@@ -13,9 +15,11 @@
 </template>
 
 <script>
-import RegistrationPage from './components/RegistrationPage.vue';
-import LoginPage from './components/LoginPage.vue';
-import UserProfile from './components/UserProfile.vue';
+// Импорт компонентов с использованием алиаса @
+import RegistrationPage from '@/components/RegistrationPage.vue';
+import LoginPage from '@/components/LoginPage.vue';
+import UserProfile from '@/components/UserProfile.vue';
+
 
 export default {
   name: 'App',
@@ -42,6 +46,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 .app-container {
