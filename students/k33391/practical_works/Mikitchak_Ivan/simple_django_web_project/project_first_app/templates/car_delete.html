@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Delete</title>
+</head>
+<body>
+    <form method="post", action="{% url 'car_delete' object.id%}">
+        {% csrf_token %}
+        <p>Are you sure?</p>
+        <button type="submit">Yes</button>
+    </form>
+</body>
+</html>

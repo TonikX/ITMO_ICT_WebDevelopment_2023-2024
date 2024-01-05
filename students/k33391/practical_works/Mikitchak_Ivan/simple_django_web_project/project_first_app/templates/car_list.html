@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car List</title>
+</head>
+<body>
+    <table>
+        <th><strong>State Number</strong></th>
+        <th><strong>Brand</strong></th>
+        <th><strong>Model</strong></th>
+        <th><strong>Color</strong></th>
+        {% for car in object_list %}
+            <tr>
+                <td>{{ car.state_number }}</td>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.color }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
