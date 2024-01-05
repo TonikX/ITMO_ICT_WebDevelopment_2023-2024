@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>Домашнее задание по {{ submission.homework.subject.name }} от {{ submission.homework.issue_date }}</h3>
+  <p>Сдал: {{ submission.student.first_name }} {{ submission.student.last_name }}</p>
+  <p>Текст задания:</p>
+  <p>{{ submission.homework.description }}</p>
+  <p>Ответ ученика:</p>
+  <p>{{ submission.submission_text }}</p>
+  <p>Оценка</p>
+  {% if submission.homeworkgrade %}
+    <p>{{ submission.homeworkgrade.grade }}</p>
+  {% else %}
+    <form action="{% url 'grades.store' %}" method="POST">
+      {% csrf_token %}
+      <input type="number" min="0" max="5" name="grade">
+      <input type="hidden" name="submission_id" value="{{ submission.id }}">
+
+      <button type="submit">
+        Поставить оценку
+      </button>
+    </form>
+  {% endif %}
+{% endblock %}

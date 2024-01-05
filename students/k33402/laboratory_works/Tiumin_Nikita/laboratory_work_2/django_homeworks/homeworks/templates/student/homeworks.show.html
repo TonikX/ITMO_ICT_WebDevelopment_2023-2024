@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2>{{ homework.subject.name }}</h2>
+  <div>Выдал: {{ homework.teacher.first_name }} {{ homework.teacher.last_name }}</div>
+  <div>Выдано: {{ homework.issue_date }}</div>
+  <div>Дедлайн: {{ homework.deadline }}</div>
+  <div>Штраф за день просрочки: {{ homework.penalties }} балл</div>
+
+
+  {% if not is_submitted %}
+    <div>Задание</div>
+    <p>{{ homework.description }}</p>
+
+    <div>Сдать задание:</div>
+    <form action="{% url 'submissions.store' %}" method="POST">
+      {% csrf_token %}
+      <textarea name="submission_text"></textarea>
+      <input type="hidden" name="homework_id" value="{{ homework.id }}">
+      <div>
+        <button type="submit">
+          Отправить
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <div>Задание сдано.</div>
+    <div>Ваш ответ:</div>
+    <p>{{ submission }}</p>
+  {% endif %}
+
+{% endblock %}
