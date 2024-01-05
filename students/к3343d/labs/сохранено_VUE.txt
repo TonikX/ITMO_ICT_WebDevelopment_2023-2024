@@ -54,6 +54,7 @@ import RegistrationPage from '@/components/RegistrationPage.vue';
 import LoginPage from '@/components/LoginPage.vue';
 import UserProfile from '@/components/UserProfile.vue';
 
+
 export default {
   name: 'App',
   components: {
@@ -136,6 +137,7 @@ import RoomsTable from '../components/RoomsTable.vue';
 import RoomReviewsList from '../components/RoomReviewsList.vue';
 import LeaveFeedback from '../components/LeaveFeedback.vue';
 import AddReview from '../components/AddReview.vue';
+//import store from '../store'; // Импорт Vuex Store
 
 const routes = [
   { path: '/registration', component: RegistrationPage },
@@ -146,7 +148,6 @@ const routes = [
   { path: '/room-statistics', component: RoomStatistics },
   { path: '/complex-rooms', component: ComplexRoomsTable },
   { path: '/rooms-table', component: RoomsTable },
-  
   {
     path: '/room/:roomId/reviews',
     name: 'RoomReviewsList',
@@ -159,7 +160,6 @@ const routes = [
     component: LeaveFeedback,
     props: true
   },
-
   {
     path: '/room/:roomId/add-review',
     name: 'AddReview',
@@ -180,11 +180,12 @@ const router = createRouter({
 
 export default router;
 
+
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
 
 <template>
   <div class="app-container">
-    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+    <img alt="Vue logo" src="@/assets/logo.png" class="logo">
     <div class="menu" v-if="showButtons">
       <h1>Добро пожаловать в наш отель!</h1>
       <button @click="showComponent = 'login'">Вход</button>
@@ -197,9 +198,9 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 </template>
 
 <script>
-import RegistrationPage from './components/RegistrationPage.vue';
-import LoginPage from './components/LoginPage.vue';
-import UserProfile from './components/UserProfile.vue';
+import RegistrationPage from '@/components/RegistrationPage.vue';
+import LoginPage from '@/components/LoginPage.vue';
+import UserProfile from '@/components/UserProfile.vue';
 
 export default {
   name: 'App',
@@ -350,7 +351,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
       <button @click="showComplexRooms">Комплексная информация о комнатах</button>
       <button @click="showAddReviewForm">Оставить отзыв</button>
       <button @click="showReviewList">Показать отзывы</button>
-      <button @click="emitBack">Назад</button>
+      <button @click="logout">Выход</button>
     </div>
 
     <component :is="currentComponent" v-if="showTable" />
@@ -368,8 +369,6 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
       </ul>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -379,7 +378,8 @@ import EmployeesTable from './EmployeesTable.vue';
 import AddReview from './AddReview.vue';
 import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
 import RoomStatistics from './RoomStatistics.vue';
-import ComplexRoomsTable from './ComplexRoomsTable.vue'
+import ComplexRoomsTable from './ComplexRoomsTable.vue';
+import store from '@/store';
 
 export default {
   computed: {
@@ -406,6 +406,11 @@ export default {
     };
   },
   methods: {
+    logout() {
+    console.log("Выход из системы...");
+    store.commit('clearUser'); 
+    this.$router.push('/login'); 
+  },
     showAddReviewForm(roomId) {
       this.selectedRoomId = roomId;
       this.showReviewForm = true;
@@ -484,6 +489,7 @@ export default {
   text-decoration: underline;
 }
 </style>
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomsTable.vue
 
@@ -639,27 +645,30 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
 import { createStore } from 'vuex';
 
-
 export default createStore({
   state: {
-    user: null,
+    user: null, // Состояние пользователя
   },
   mutations: {
     setUser(state, userData) {
-      state.user = userData;
+      state.user = userData; // Установка данных пользователя
     },
+    
     clearUser(state) {
-      state.user = null;
+      state.user = {}; // очищаем данные пользователя
     },
+  },
+  actions: {
+    logout({ commit }) {
+      commit('clearUser'); // Вызов мутации для очистки пользователя
+      
+    }
   },
   getters: {
-    isAuthenticated: state => !!state.user,
-    user: state => state.user,
+    isAuthenticated: state => !!state.user, // Проверка аутентификации
+    user: state => state.user, // Получение данных пользователя
   },
-  
 });
-
-
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/package.json

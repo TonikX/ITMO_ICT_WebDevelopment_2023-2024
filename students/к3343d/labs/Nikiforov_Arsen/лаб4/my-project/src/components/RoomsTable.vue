@@ -21,6 +21,7 @@
 
     <!-- Выбор даты бронирования -->
     <div class="date-selection">
+      Выберите дату:
       <input type="date" v-model="startDate" placeholder="Дата начала">
       <input type="date" v-model="endDate" placeholder="Дата окончания">
     </div>

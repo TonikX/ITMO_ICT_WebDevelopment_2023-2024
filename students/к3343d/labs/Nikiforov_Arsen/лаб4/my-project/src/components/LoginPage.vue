@@ -38,7 +38,7 @@ export default {
   const data = await response.json();
   localStorage.setItem('userToken', data.access);
 
-  // Сохраните имя пользователя в состоянии Vuex
+  // Сохранение имени пользователя в состоянии Vuex
   this.$store.commit('setUser', { username: this.userData.username, token: data.access });
 
   this.$emit('show-user-profile');

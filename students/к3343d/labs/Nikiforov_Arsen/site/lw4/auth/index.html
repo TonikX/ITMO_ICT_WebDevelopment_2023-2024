@@ -128,13 +128,9 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Аутентификация</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#_1">Введение</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">Структура кода</a>
+    <li class="toctree-l2"><a class="reference internal" href="#_1">Структура кода</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_3">Методы</a>
-    </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">Методы</a>
     </li>
     </ul>
                   </li>
@@ -182,9 +178,8 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="authjs">auth.js</h2>
-<h3 id="_1">Введение</h3>
 <p><code>auth.js</code> - это модуль, отвечающий за аутентификацию и авторизацию пользователей в приложении.</p>
-<h4 id="_2">Структура кода</h4>
+<h4 id="_1">Структура кода</h4>
 <pre><code class="language-javascript">import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/hotel_api/';
@@ -202,7 +197,7 @@ export function userProfile(userData) {
   return axios.post(`${API_URL}user-profile/`, userData);
 }
 </code></pre>
-<h4 id="_3">Методы</h4>
+<h4 id="_2">Методы</h4>
 <ol>
 <li><strong>login</strong></li>
 <li><strong>Описание</strong>: Аутентификация пользователя.</li>

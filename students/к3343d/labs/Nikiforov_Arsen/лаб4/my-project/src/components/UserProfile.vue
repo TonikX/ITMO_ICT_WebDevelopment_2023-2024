@@ -9,7 +9,7 @@
       <button @click="showComplexRooms">Комплексная информация о комнатах</button>
       <button @click="showAddReviewForm">Оставить отзыв</button>
       <button @click="showReviewList">Показать отзывы</button>
-      <button @click="emitBack">Назад</button>
+      <button @click="logout">Выход</button>
     </div>
 
     <component :is="currentComponent" v-if="showTable" />
@@ -27,9 +27,8 @@
       </ul>
     </div>
   </div>
-
-
 </template>
+
 
 <script>
 import RoomsTable from './RoomsTable.vue';
@@ -38,7 +37,9 @@ import EmployeesTable from './EmployeesTable.vue';
 import AddReview from './AddReview.vue';
 import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
 import RoomStatistics from './RoomStatistics.vue';
-import ComplexRoomsTable from './ComplexRoomsTable.vue'
+import ComplexRoomsTable from './ComplexRoomsTable.vue';
+import LogoutButton from './LogoutButton.vue';
+import store from '@/store';
 
 export default {
   computed: {
@@ -53,6 +54,7 @@ export default {
     AddReview,
     RoomStatistics,
     ComplexRoomsTable,
+    LogoutButton,
   },
   data() {
     return {
@@ -65,6 +67,11 @@ export default {
     };
   },
   methods: {
+    logout() {
+      store.commit('clearUser'); // Очистка данных пользователя
+      this.$router.push('/'); // Перенаправление на главную страницу
+      location.reload(); // Принудительное обновление страницы
+    },
     showAddReviewForm(roomId) {
       this.selectedRoomId = roomId;
       this.showReviewForm = true;
