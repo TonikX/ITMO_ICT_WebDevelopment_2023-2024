@@ -30,6 +30,13 @@ def validation_error(errors, message='Validation error'):
     )
 
 
+def not_found(message='Not found'):
+    return JsonResponse(
+        data=format_payload(message),
+        status=404,
+    )
+
+
 def error(message='Error', status=400):
     return JsonResponse(
         data=format_payload(message),

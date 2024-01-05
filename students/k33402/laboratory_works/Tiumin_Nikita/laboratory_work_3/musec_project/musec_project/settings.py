@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'musec_app',
 ]
 
@@ -49,9 +50,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
+CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'musec_project.urls'
+MEDIA_ROOT = 'C:/Users//tyumi/Desktop/web_new/students/k33402/laboratory_works/Tiumin_Nikita/laboratory_work_3/musec_project/'
+APP_URL = 'http://localhost:8000'
 
 TEMPLATES = [
     {

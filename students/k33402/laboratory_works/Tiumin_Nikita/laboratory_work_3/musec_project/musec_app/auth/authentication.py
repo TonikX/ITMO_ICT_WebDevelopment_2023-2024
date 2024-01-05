@@ -7,11 +7,10 @@ from musec_app.models import User, ApiToken
 class AppTokenAuthentication(BaseAuthentication):
     def authenticate(self, request):
         try:
-            token = request.headers['Token']
-        except KeyError:
-            raise exceptions.AuthenticationFailed('No authentication header is present')
-        try:
+            token = request.COOKIES['api_token']
             api_token = ApiToken.objects.filter(token=token).get()
+        except KeyError:
+            raise exceptions.AuthenticationFailed('Unauthenticated')
         except ObjectDoesNotExist:
             raise exceptions.AuthenticationFailed('Unauthenticated')
 
