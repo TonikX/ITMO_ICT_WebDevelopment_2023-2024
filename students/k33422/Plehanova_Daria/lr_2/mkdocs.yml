@@ -1,0 +1,32 @@
+site_name: 'Airline Project Documentation'
+
+theme:
+  name: material
+
+nav:
+  - 'Home': 'index.md'
+  - 'Users App':
+    - 'Overview':
+      - 'Data Models': 'users/models/overview.md'
+      - 'Controllers': 'users/views/overview.md'
+      - 'Routers': 'users/urls/overview.md'
+    - 'Data Models Details':
+      - 'User': 'users/models/user.md'
+    - 'Controllers Details':
+      - 'User Views': 'users/views/user_views.md'
+    - 'Screenshots': 'users/screenshots/user_screens.md'
+  - 'Flights App':
+    - 'Overview':
+      - 'Data Models': 'flights/models/overview.md'
+      - 'Controllers': 'flights/views/overview.md'
+      - 'Routers': 'flights/urls/overview.md'
+    - 'Data Models Details':
+      - 'Airplane': 'flights/models/airplane.md'
+      - 'Airline': 'flights/models/airline.md'
+      - 'Flight': 'flights/models/flight.md'
+      - 'Ticket': 'flights/models/ticket.md'
+      - 'Reservation': 'flights/models/reservation.md'
+      - 'Review': 'flights/models/review.md'
+    - 'Controllers Details':
+      - 'Flight Views': 'flights/views/flight_views.md'
+    - 'Screenshots': 'flights/screenshots/flight_screens.md'
