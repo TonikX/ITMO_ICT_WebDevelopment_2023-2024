@@ -1,0 +1,334 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/App.vue
+
+<template>
+  <div class="app">
+    <h1>Портал информации о войнах в онлайн РПГ</h1>
+    <button @click="fetchWarriors">Получить список воинов</button>
+    <warrior-form @warriorAdded="fetchWarriors" />
+    <div v-for="warrior in warriors" :key="warrior.id">
+      <div>Имя: {{ warrior.name }}</div>
+      <div>Расса: {{ warrior.race }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import WarriorForm from "@/components/WarriorForm.vue";
+import axios from "axios";
+
+export default {
+  components: {
+    WarriorForm,
+  },
+  data() {
+    return {
+      warriors: [],
+    };
+  },
+  methods: {
+    fetchWarriors() {
+      axios.get("http://localhost:3000/api/warriors") // Измените порт на тот, который вы указали в сервере
+        .then(response => {
+          this.warriors = response.data;
+        })
+        .catch(error => console.error(error));
+    },
+  },
+  mounted() {
+    this.fetchWarriors();
+  },
+};
+</script>
+
+<style>
+/* Стилизация по  усмотрению */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/main.js
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import './assets/main.css'
+import router from "./router"; 
+
+createApp(App).use(router).mount('#app')
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/router/index.js
+
+import { createRouter, createWebHistory } from "vue-router";
+import Warriors from "@/views/Warriors.vue"; // Импортируйте представление Warriors.vue
+
+const routes = [
+  {
+    path: "/",
+    redirect: "/warriors" // Перенаправление на маршрут /warriors по умолчанию
+  },
+  {
+    path: "/warriors",
+    name: "Warriors",
+    component: Warriors // Подключение представления Warriors.vue к маршруту
+  }
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+export default router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/main.js
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import './assets/main.css'
+import router from "./router"; 
+
+createApp(App).use(router).mount('#app')
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/server.cjs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/views/Warriors.vue
+
+<template>
+  <div class="app">
+    <h1>Портал информации о войнах в онлайн РПГ</h1>
+    <button @click="fetchWarriors">Получить список воинов</button>
+    <warrior-form @warriorAdded="fetchWarriors" />
+    <div v-for="warrior in warriors" :key="warrior.id">
+      <div>Имя: {{ warrior.name }}</div>
+      <div>Расса: {{ warrior.race }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import WarriorForm from "@/components/WarriorForm.vue";
+import axios from "axios";
+
+export default {
+  components: {
+    WarriorForm,
+  },
+  data() {
+    return {
+      warriors: [],
+    };
+  },
+  methods: {
+    fetchWarriors() {
+      axios.get("http://localhost:3000/api/warriors") // Измените порт на тот, который вы указали в сервере
+        .then(response => {
+          this.warriors = response.data;
+        })
+        .catch(error => console.error(error));
+    },
+  },
+  mounted() {
+    this.fetchWarriors();
+  },
+};
+</script>
+
+<style>
+/* Стилизация по  усмотрению */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/components/WarriorForm.vue
+
+<template>
+  <form @submit.prevent>
+    <h1>Создание война</h1>
+    <input
+      v-model="warrior.name"
+      class="input"
+      type="text"
+      placeholder="Имя"
+    />
+    <input
+      v-model="warrior.race"
+      class="input"
+      type="text"
+      placeholder="Расса"
+    />
+    <button class="btn" @click="createWarrior">Cоздать</button>
+  </form>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "WarriorForm",
+  data() {
+    return {
+      warrior: {
+        name: "",
+        race: ""
+      }
+    };
+  },
+  methods: {
+    createWarrior() {
+      axios.post("http://62.109.28.95:8890/warrior/create1", {
+        race: this.warrior.race,
+        name: this.warrior.name
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* Стили для компонента WarriorForm.vue */
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/practical_works/Nikiforov_Arsen/pw4/Практическая работа №4.2/PW-4.2/src/components/WarriorList.vue
+
+<template>
+  <div class="warrior" v-for="warrior in warriors">
+    <div><strong>Имя:</strong> {{ warrior.name }}</div>
+    <div><strong>Расса:</strong> {{ warrior.race }}</div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    warriors: {
+      type: Array,
+      required: true
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* Стили для компонента WarriorList.vue */
+</style>

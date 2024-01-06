@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Information List</title>
+</head>
+<body>
+    <h1>Client Information List</h1>
+    <ul>
+        {% for info in client_info %}
+            <li>{{ info.first_name }} {{ info.last_name }} - {{ info.passport_number }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+/PW-4.2/node_modules
+
+
+
+
+
 # C extensions
 *.so
 

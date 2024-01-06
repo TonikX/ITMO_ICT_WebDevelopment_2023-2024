@@ -1,0 +1,18 @@
+<!-- templates/sell_tour.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell Tour</title>
+</head>
+<body>
+
+<h2>Sell Tour</h2>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sell Tour</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+Шаг 1:
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3
+
+Шаг 2:
+ manage.py shell
+
+Шаг 3: импорт
+from your_app.models import Warrior, Skill, SkillOfWarrior
+
+Шаг 4: новый воин
+short_warrior = Warrior(race="s", name="Николай Леонтьев", level=20)
+short_warrior.save()
+
+Шаг 5: новый навык
+new_skill = Skill.objects.create(title="Взлом компьютера")
+
+Шаг 6: Привязал новый навык к созданному воину
+skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=15)
+
+Шаг 7: Вывод инфы
+from myapp.models import Warrior
+
+warriors = Warrior.objects.all()
+for warrior in warriors:
+    print(warrior.name, warrior.race, warrior.level)
+
+
+
+
+теория:
+SkillOfWarrior.objects.create: Это создание нового объекта модели SkillOfWarrior. 
+SkillOfWarrior.objects - менеджер запросов, который позволяет взаимодействовать с объектами модели SkillOfWarrior. 
+Метод create создает новый объект в базе данных.
+
+skill=new_skill: Это присвоение полю skill нового объекта Skill. 
+Мы создали предварительно новый навык (new_skill) и теперь связываем его с создаваемым объектом SkillOfWarrior.
+
+warrior=short_warrior: Аналогично предыдущему, это присвоение полю warrior объекта short_warrior. 
+Мы связываем создаваемый объект с воином (short_warrior).
+
+level=15: Это присвоение полю level значения 15. 
+Мы указываем уровень навыка для создаваемого объекта.
+
+Создается новый объект модели SkillOfWarrior, 
+который связывает новый навык (new_skill) с созданным воином 
+(short_warrior) и указывает уровень навыка (level=15).
+
+
+
+Пример:
+>>> short_warrior = Warrior(race="s", name="Арсен Никифоров", level=100)
+>>> short_warrior.save()
+>>> new_skill = Skill.objects.create(title="Взлом баз данных пентагона")
+>>> skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=800)
+>>> from myapp.models import Warrior
+>>> warriors = Warrior.objects.all()
+>>> for warrior in warriors:
+...     print(warrior.name, warrior.race, warrior.level)
+...
+Николай Леонтьев s 20
+Арсен Никифоров s 100
+>>> tall_warrior = Warrior(race="t", name="Артур Пирожков", level=1000)
+>>> tall_warrior.save()
+>>> skill_related = SkillOfWarrior.objects.create(skill=new_skill, warrior=short_warrior, level=1800)
+>>> warriors = Warrior.objects.all()
+>>> for warrior in warriors:
+...     print(warrior.name, warrior.race, warrior.level)
+...
+Николай Леонтьев s 20
+Арсен Никифоров s 100
+Артур Пирожков t 1000

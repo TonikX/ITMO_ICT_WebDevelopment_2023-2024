@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Room</title>
+</head>
+<body>
+    <h1>Book Room</h1>
+    <form method="post">
+        {% csrf_token %}
+        <!-- Поле для ввода даты начала бронирования -->
+        <div>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+        </div>
+        <!-- Поле для ввода даты окончания бронирования -->
+        <div>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+        </div>
+        <!-- Кнопка для отправки формы -->
+        <input type="submit" value="Book">
+    </form>
+</body>
+</html>

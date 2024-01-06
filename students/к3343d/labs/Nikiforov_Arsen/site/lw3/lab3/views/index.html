@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>Views - Лабораторные работы по веб-программированию</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Views";
+        var mkdocs_page_input_path = "lw3\\lab3\\views.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> Лабораторные работы по веб-программированию
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Главная</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 1</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/task1/">task1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/task2/">task2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/task3/">task3</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/task4/">task4</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw1/task5/">task5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/">Main</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Models</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../../lw2/tour/">Tour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../lw2/reservation/">Reservation</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../lw2/review/">Review</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../lw2/soldtour/">SoldTour</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../../lw2/tourreservation/">TourReservation</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/admin/">Admin</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/forms/">Forms</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/urls/">URLs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/views/">Views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw2/templates/">Templates</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 3</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../../../pw3/">Практическая часть</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="#">Основная часть</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../">Main</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../swagger/">Swagger</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../readme/">Readme</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../models/">Models</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../serializer/">Serializer</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Дополнительная часть</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../admin/">Admin</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../urls/">URL Routes</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../serializers/">Serializers</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../models/">Models</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Views</a>
+    <ul class="current">
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Лабораторная работа 4</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/">Основная информация</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/app/">App</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/auth/">Аутентификация</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/components/">Компоненты</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/main/">Главный модуль</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/reviewService/">Сервис отзывов</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/store/">Хранилище</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/userInterface/">Пользовательский интерфейс</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/Router/">Роутер</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../../lw4/readme/">README</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../leetcode/leetcode/">leetcode</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">Лабораторные работы по веб-программированию</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+          <li>Лабораторная работа 3 &raquo;</li>
+          <li>Дополнительная часть &raquo;</li>
+      <li class="breadcrumb-item active">Views</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h3 id="viewspy">views.py</h3>
+<h1 id="viewspy_1">Обзор views.py</h1>
+<p>Файл <code>views.py</code> содержит определения представлений для обработки запросов пользователей. Он включает в себя как функциональные, так и классовые представления.</p>
+<h2 id="_1">Импорты</h2>
+<pre><code class="language-python">from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate
+from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo
+from rest_framework import viewsets
+from .serializers import RoomSerializer, ClientSerializer, EmployeeSerializer, FloorSerializer, DaySerializer, EmployeeFloorSerializer, EmployeeDaySerializer, ClientInfoSerializer
+</code></pre>
+<p>Эти импорты включают функции и классы Django для работы с представлениями, аутентификацией и моделями.</p>
+<h2 id="_2">Представления</h2>
+<pre><code class="language-python">@login_required(login_url='/login/') 
+def home(request):
+    return render(request, 'hotel_api/home.html')
+</code></pre>
+<p>Это представление <code>home</code> доступно только аутентифицированным пользователям. Оно возвращает главную страницу приложения.</p>
+<h3 id="_3">Представления для входа и регистрации</h3>
+<pre><code class="language-python">def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+</code></pre>
+<p>Эти функции обрабатывают запросы на вход и регистрацию пользователей.</p>
+<h3 id="api">Представления для API</h3>
+<pre><code class="language-python">class RoomViewSet(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class FloorViewSet(viewsets.ModelViewSet):
+    queryset = Floor.objects.all()
+    serializer_class = FloorSerializer
+
+class DayViewSet(viewsets.ModelViewSet):
+    queryset = Day.objects.all()
+    serializer_class = DaySerializer
+
+class EmployeeFloorViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeFloor.objects.all()
+    serializer_class = EmployeeFloorSerializer
+
+class EmployeeDayViewSet(viewsets.ModelViewSet):
+    queryset = EmployeeDay.objects.all()
+    serializer_class = EmployeeDaySerializer
+
+class ClientInfoViewSet(viewsets.ModelViewSet):
+    queryset = ClientInfo.objects.all()
+    serializer_class = ClientInfoSerializer
+</code></pre>
+<p>Класс <code>RoomViewSet</code> и подобные ему являются частью REST API, обеспечивающей CRUD-операции над моделями.</p>
+<h3 id="_4">Другие представления</h3>
+<pre><code class="language-python">def rooms_list(request):
+    room_type_query = request.GET.get('room_type', '').strip()
+    room_status_query = request.GET.get('room_status', '').strip()
+
+    rooms = Room.objects.all()
+
+    if room_type_query:
+        rooms = rooms.filter(room_type__iexact=room_type_query)
+    if room_status_query:
+        rooms = rooms.filter(status__iexact=room_status_query)
+
+    context = {
+        'rooms': rooms,
+        'selected_type': room_type_query,
+        'selected_status': room_status_query,
+    }
+    return render(request, 'hotel_api/rooms_list.html', context)
+
+def clients_list(request):
+    clients = Client.objects.all()
+    return render(request, 'hotel_api/client_list.html', {'clients': clients})
+
+def employees_list(request):
+    employees = Employee.objects.all()
+    return render(request, 'hotel_api/employee_list.html', {'employees': employees})
+
+def bookings_list(request):
+    # Логика для списка бронирований
+    return render(request, 'hotel_api/bookings_list.html')
+
+def floors_list(request):
+    floors = Floor.objects.all()
+    return render(request, 'hotel_api/floor_list.html', {'floors': floors})
+
+def staff_management(request):
+    # Логика для управления персоналом
+    return render(request, 'hotel_api/staff_management.html')
+
+def reports(request):
+    return render(request, 'hotel_api/reports.html')
+
+def settings(request):
+    return render(request, 'hotel_api/settings.html')
+
+def client_info_list(request):
+    client_info = ClientInfo.objects.all()
+    return render(request, 'hotel_api/client_info_list.html', {'client_info': client_info})
+
+def days_list(request):
+    days = Day.objects.all()
+    return render(request, 'hotel_api/days_list.html', {'days': days})
+
+def employee_floors_list(request):
+    employee_floors = EmployeeFloor.objects.all()
+    return render(request, 'hotel_api/employee_floors_list.html', {'employee_floors': employee_floors})
+
+def employee_days_list(request):
+    employee_days = EmployeeDay.objects.all()
+    return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
+
+</code></pre>
+<p>Эти функции отвечают за отображение страниц со списками сущностей, таких как комнаты и клиенты.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../models/" class="btn btn-neutral float-left" title="Models"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../lw4/" class="btn btn-neutral float-right" title="Основная информация">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../models/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../../lw4/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!-- C:\WEBDJANGO\myproject\myapp\templates\myapp\review_tour.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Tour</title>
+</head>
+<body>
+    <h2>Review Tour</h2>
+    <form method="post" action="{% url 'review_tour' tour.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,59 @@
+site_name: 'Лабораторные работы по веб-программированию'
+theme:
+  name: 'readthedocs'
+
+nav:
+  - Главная: 'index.md'
+  - Лабораторная работа 1:
+    - Main: 'lw1/index.md'  
+    - task1: 'lw1/task1.md'
+    - task2: 'lw1/task2.md'
+    - task3: 'lw1/task3.md'    
+    - task4: 'lw1/task4.md'    
+    - task5: 'lw1/task5.md'  
+    
+  - Лабораторная работа 2:
+    - Main: 'lw2/index.md'  
+    - Models:
+        - Tour: 'lw2/tour.md' 
+        - Reservation: 'lw2/reservation.md'
+        - Review: 'lw2/review.md'
+        - SoldTour: 'lw2/soldtour.md'
+        - TourReservation: 'lw2/tourreservation.md'
+    - Admin: 'lw2/admin.md'
+    - Forms: 'lw2/forms.md'
+    - URLs: 'lw2/urls.md'
+    - Views: 'lw2/views.md'
+    - Templates: 'lw2/templates.md'
+
+  - Лабораторная работа 3:
+      - "Практическая часть": 'pw3/index.md'
+      - "Основная часть":
+          - Main: 'lw3/index.md'
+          - Swagger: 'lw3/swagger.md'
+          - Readme: 'lw3/readme.md'
+          - Models: 'lw3/models.md'
+          - Serializer: 'lw3/serializer.md'
+      - "Дополнительная часть":
+          - Admin: 'lw3/lab3/admin.md'
+          - URL Routes: 'lw3/lab3/urls.md'
+          - Serializers: 'lw3/lab3/serializers.md'
+          - Models: 'lw3/lab3/models.md'
+          - Views: 'lw3/lab3/views.md'
+
+  - Лабораторная работа 4:
+    - Основная информация: 'lw4/index.md'
+    - App: 'lw4/app.md'
+    - Аутентификация: 'lw4/auth.md'
+    - Компоненты: 'lw4/components.md'
+    - Главный модуль: 'lw4/main.md'
+    - Сервис отзывов: 'lw4/reviewService.md'
+    - Хранилище: 'lw4/store.md'
+    - Пользовательский интерфейс: 'lw4/userInterface.md'
+    - Роутер: 'lw4/Router.md'
+    - README: 'lw4/readme.md'
+
+  - "leetcode": 'leetcode/leetcode.md'
+
+extra:
+  img_dir: 'img'

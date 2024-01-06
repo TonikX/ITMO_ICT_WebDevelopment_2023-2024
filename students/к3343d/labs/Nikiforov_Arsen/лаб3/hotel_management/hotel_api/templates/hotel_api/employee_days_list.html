@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Days List</title>
+</head>
+<body>
+    <h1>Employee Days List</h1>
+    <ul>
+        {% for ed in employee_days %}
+            <li>{{ ed.employee.first_name }} {{ ed.employee.last_name }} - Day: {{ ed.day.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

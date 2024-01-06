@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Days List</title>
+</head>
+<body>
+    <h1>Days List</h1>
+    <ul>
+        {% for day in days %}
+            <li>{{ day.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

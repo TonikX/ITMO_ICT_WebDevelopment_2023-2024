@@ -1,0 +1,83 @@
+cd C:\Users\apce1\Desktop\УЧЕБА\Веб-программирование\ITMO_ICT_WebDevelopment_2023-2024\students\к3343d\practical_works\Nikiforov_Arsen\pw3\myproject2
+
+
+Выведем все машины марки "Toyota":
+>>> from myapp.models import Car
+>>>
+>>> # Запрос на вывод всех машин марки Toyota
+>>> toyota_cars = Car.objects.filter(brand="Toyota")
+>>> for car in toyota_cars:
+...     print(f"Car: {car.brand} {car.model}, License Plate: {car.license_plate}, Color: {car.color}")
+...
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+Car: Toyota Camry, License Plate: ABC123, Color: Blue
+>>>
+
+
+ Запрос на поиск водителей с именем "Сидор" (Вначале хотел поискать Олегов, но их не было)
+>>> oleg_drivers = DriverLicense.objects.filter(owner__first_name="Сидор")
+>>> for driver in oleg_drivers:
+...      print(f"Driver's License: {driver.owner.first_name} {driver.owner.last_name}, Number: {driver.license_number}, Type: {driver.license_type}")
+...
+Driver's License: Сидор Сидоров, Number: 54321, Type: C
+
+
+
+Возьмем любого случайного владельца, получим его id и затем получим экземпляр удостоверения:
+>>> import random
+>>>
+>>> # Получение случайного владельца
+>>> random_owner = random.choice(Owner.objects.all())
+>>>
+>>> # Вывод id владельца
+>>> print(f"Owner ID: {random_owner.id}")
+Owner ID: 3
+>>>
+>>> # Получение экземпляра удостоверения по id владельца
+>>> driver_license = DriverLicense.objects.get(owner=random_owner)
+>>> print(f"Driver's License: {driver_license.owner.first_name} {driver_license.owner.last_name}, Number: {driver_license.license_number}, Type: {driver_license.license_type}")
+Driver's License: Сидор Сидоров, Number: 54321, Type: C
+>>>
+
+
+Выведем всех владельцев красных машин (или любого другого цвета):
+>>> red_car_owners = Owner.objects.filter(cars__color="Red")
+>>> for owner in red_car_owners:
+...     print(f"Owner: {owner.first_name} {owner.last_name}, Birth Date: {owner.birth_date}")
+...
+Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Петр Петров, Birth Date: 1995-03-15
+Owner: Иван Иванов, Birth Date: 1990-01-01
+Owner: Иван Иванов, Birth Date: 1990-01-01
+
+
+Найдем всех владельцев, чей год владения машиной начинается с 2010 (или любой другой год после 2010):
+>>> from myapp.models import Ownership
+>>> year_start = 2010
+>>> ownership_2010 = Ownership.objects.filter(start_date__year__gte=year_start)
+>>> for ownership in ownership_2010:
+...     print(f"{ownership.owner.first_name} {ownership.owner.last_name} owns {ownership.car.brand} {ownership.car.model} from {ownership.start_date} to {ownership.end_date}")
+...
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2023-01-01
+Иван Иванов owns Honda Civic from 2022-02-15 to 2023-02-15
+Иван Иванов owns Ford Focus from 2022-03-20 to 2023-03-20
+Петр Петров owns Honda Civic from 2022-04-10 to 2023-04-10
+Петр Петров owns Chevrolet Malibu from 2022-05-25 to 2023-05-25
+Сидор Сидоров owns Toyota Camry from 2022-06-30 to 2023-06-30
+Сидор Сидоров owns Ford Focus from 2022-07-05 to 2023-07-05
+Сидор Сидоров owns Nissan Altima from 2022-08-10 to 2023-08-10
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2022-12-31
+Иван Иванов owns Honda Civic from 2022-02-01 to 2022-12-31
+Петр Петров owns Ford Focus from 2022-03-01 to 2022-12-31
+Сидор Сидоров owns Toyota Camry from 2022-04-01 to 2022-12-31
+Сидор Сидоров owns Ford Focus from 2022-05-01 to 2022-12-31
+Иван Иванов owns Toyota Camry from 2022-01-01 to 2022-05-01
+Иван Иванов owns Honda Civic from 2022-01-01 to 2022-06-15
+Петр Петров owns Ford Focus from 2022-02-15 to 2022-08-01
+Сидор Сидоров owns Toyota Camry from 2022-03-20 to 2022-10-30
+Сидор Сидоров owns Ford Focus from 2022-03-20 to 2022-09-15
+>>>
+
+
+

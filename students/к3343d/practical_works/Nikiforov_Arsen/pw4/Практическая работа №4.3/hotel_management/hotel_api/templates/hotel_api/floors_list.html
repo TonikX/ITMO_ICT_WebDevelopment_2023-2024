@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Floors List</title>
+</head>
+<body>
+    <h1>Floors List</h1>
+    <ul>
+        {% for floor in floors %}
+            <li>Floor {{ floor.number }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

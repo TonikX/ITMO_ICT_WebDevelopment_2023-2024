@@ -1,0 +1,10 @@
+<!-- reviews.html -->
+<h3>Отзывы</h3>
+{% for review in reviews %}
+    <div>
+        <h4>{{ review.user.username }}</h4>
+        <p>{{ review.text }}</p>
+    </div>
+{% empty %}
+    <p>Пока нет отзывов.</p>
+{% endfor %}

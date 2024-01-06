@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        h2 {
+            color: #009688;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px; 
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form input[type="text"], form input[type="password"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        form input[type="submit"] {
+            background-color: #009688;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        form input[type="submit"]:hover {
+            background-color: #00796b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #009688;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Login or Register</h2>
+
+<form method="post" action="{% url 'home' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="{{ form_name }}" value="Submit">
+</form>
+
+<a href="{% url 'home' %}?register">Register</a>
+<a href="{% url 'home' %}">Login</a>
+
+<h2>Tours</h2>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+    </tr>
+    {% for tour in tours %}
+    <tr>
+        <td>{{ tour.title }}</td>
+        <td>{{ tour.description }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
