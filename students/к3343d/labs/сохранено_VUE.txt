@@ -1,33 +1,59 @@
 
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/main.js
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/package.json
 
-import { createApp } from 'vue'; 
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import BootstrapVue3 from 'bootstrap-vue-3';
-import VueAxios from 'vue-axios';
-import { createVuetify } from 'vuetify';
-import 'vuetify/styles';
-
-const app = createApp(App);
-const vuetify = createVuetify();
-
-app.use(router);
-app.use(store);
-app.use(BootstrapVue3);
-app.use(VueAxios, axios);
-app.use(vuetify);
-
-const userToken = localStorage.getItem('userToken');
-if (userToken) {
-  store.commit('setUser', { token: userToken });
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^1.6.3",
+    "bootstrap": "^5.3.2",
+    "bootstrap-vue": "^2.23.1",
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-axios": "^3.5.2",
+    "vuetify": "^3.4.0-beta.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "author": "",
+  "license": "ISC"
 }
-
-app.mount('#app');
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/App.vue
@@ -123,106 +149,502 @@ button:hover {
 }
 </style>
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/router/index.js
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/api/auth.js
 
-import { createRouter, createWebHistory } from 'vue-router';
-import RegistrationPage from '../components/RegistrationPage.vue';
-import LoginPage from '../components/LoginPage.vue';
-import UserProfile from '../components/UserProfile.vue';
-import ClientsTable from '../components/ClientsTable.vue';
-import EmployeesTable from '../components/EmployeesTable.vue';
-import RoomStatistics from '../components/RoomStatistics.vue';
-import ComplexRoomsTable from '../components/ComplexRoomsTable.vue';
-import RoomsTable from '../components/RoomsTable.vue';
-import RoomReviewsList from '../components/RoomReviewsList.vue';
-import LeaveFeedback from '../components/LeaveFeedback.vue';
-import AddReview from '../components/AddReview.vue';
-//import store from '../store'; // Импорт Vuex Store
+import axios from 'axios';
 
-const routes = [
-  { path: '/registration', component: RegistrationPage },
-  { path: '/login', component: LoginPage },
-  { path: '/user-profile', component: UserProfile },
-  { path: '/clients', component: ClientsTable },
-  { path: '/employees', component: EmployeesTable },
-  { path: '/room-statistics', component: RoomStatistics },
-  { path: '/complex-rooms', component: ComplexRoomsTable },
-  { path: '/rooms-table', component: RoomsTable },
-  {
-    path: '/room/:roomId/reviews',
-    name: 'RoomReviewsList',
-    component: RoomReviewsList,
-    props: true
-  },
-  {
-    path: '/room/:roomId/leave-feedback',
-    name: 'LeaveFeedback',
-    component: LeaveFeedback,
-    props: true
-  },
-  {
-    path: '/room/:roomId/add-review',
-    name: 'AddReview',
-    component: AddReview,
-    props: true
-  },
-  {
-    path: '/room-statistics',
-    name: 'RoomStatistics',
-    component: RoomStatistics
-  }
-];
+const API_URL = 'http://localhost:8000/hotel_api/';
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-});
+export function registerUser(userData) {
+  return axios.post(`${API_URL}register/`, userData);
+}
 
-export default router;
+export function loginUser(userData) {
+  return axios.post(`${API_URL}login/`, userData);
+}
 
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
+export function userProfile(userData) {
+  return axios.post(`${API_URL}user-profile/`, userData);
+}
+
+export function logoutUser() {
+  localStorage.removeItem('userToken');
+
+}
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/AddReview.vue
 
 <template>
-  <div class="app-container">
-    <img alt="Vue logo" src="@/assets/logo.png" class="logo">
-    <div class="menu" v-if="showButtons">
-      <h1>Добро пожаловать в наш отель!</h1>
-      <button @click="showComponent = 'login'">Вход</button>
-      <button @click="showComponent = 'registration'">Регистрация</button>
-    </div>
-    <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
-    <RegistrationPage v-if="showComponent === 'registration'" />
-    <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
+  <div>
+    <h2>Добавить общий отзыв</h2>
+    <form @submit.prevent="submitReview">
+      <label for="reviewText">Отзыв:</label>
+      <textarea id="reviewText" v-model="reviewText" placeholder="Введите ваш отзыв"></textarea>
+      
+      <button type="submit">Отправить</button>
+    </form>
   </div>
 </template>
 
 <script>
-import RegistrationPage from '@/components/RegistrationPage.vue';
-import LoginPage from '@/components/LoginPage.vue';
-import UserProfile from '@/components/UserProfile.vue';
+import axios from 'axios';
 
 export default {
-  name: 'App',
-  components: {
-    RegistrationPage,
-    LoginPage,
-    UserProfile
+  data() {
+    return {
+      reviewText: ''
+    };
+  },
+  computed: {
+    username() {
+      // Получение имени пользователя из состояния Vuex
+      return this.$store.state.user ? this.$store.state.user.username : 'Аноним';
+    }
+  },
+  methods: {
+    submitReview() {
+      const reviewData = {
+        author: this.username, // Использование имени пользователя из Vuex
+        text: this.reviewText
+      };
+
+      axios.post('http://localhost:8000/hotel_api/api/reviews/', reviewData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(() => {
+        alert('Отзыв успешно добавлен!');
+        this.reviewText = ''; // Очистка поля ввода после отправки отзыва
+      })
+      .catch(error => {
+        console.error('Ошибка при добавлении отзыва:', error);
+      });
+    }
+  }
+};
+</script>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ClientsTable.vue
+
+<template>
+  <div>
+    <h2>Список клиентов</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID клиента</th>
+          <th>Имя</th>
+          <th>Фамилия</th>
+          <th>Номер комнаты</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="client in clients" :key="client.id">
+          <td>{{ client.id }}</td>
+          <td>{{ client.client_info.first_name }}</td>
+          <td>{{ client.client_info.last_name }}</td>
+          <td>{{ client.room }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      clients: []
+    };
+  },
+  created() {
+    this.fetchClients();
+  },
+  methods: {
+    fetchClients() {
+      axios.get('http://localhost:8000/hotel_api/api/clients')
+        .then(response => {
+          this.clients = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении данных о клиентах:', error);
+        });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+</style>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ComplexRoomsTable.vue
+
+<template>
+  <div>
+    <h2>Комплексная информация о комнатах</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID комнаты</th>
+          <th>Тип комнаты</th>
+          <th>Статус</th>
+          <th>Стоимость</th>
+          
+          <th>Сотрудники</th>
+          <th>Забронировал</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="room in complexRooms" :key="room.id">
+          <td>{{ room.id }}</td>
+          <td>{{ room.room_type }}</td>
+          <td>{{ room.status }}</td>
+          <td>{{ room.cost }}</td>
+          <td>
+            <ul>
+              <li v-for="employee in room.employees" :key="employee.id">
+                {{ employee.employee.first_name }} {{ employee.employee.last_name }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            {{ room.booked_by }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      complexRooms: []
+    };
+  },
+  created() {
+    this.fetchComplexRooms();
+  },
+  methods: {
+    fetchComplexRooms() {
+      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/')
+        .then(response => {
+          this.complexRooms = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении комплексной информации о комнатах:', error);
+        });
+    },
+    checkIn(roomId) {
+      axios.post(`http://localhost:8000/api/rooms/${roomId}/check_in`, { is_occupied: true })
+        .then(() => {
+          this.fetchComplexRooms();
+        }).catch(error => {
+          console.error('Ошибка при обновлении статуса комнаты:', error);
+        });
+    }
+  }
+};
+</script>
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #fff;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+</style>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/FloorOccupancy.vue
+
+<template>
+  <div>
+    <h2>Заполненность этажей</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Этаж</th>
+          <th>Занятые комнаты</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="floor in floors" :key="floor.number">
+          <td>{{ floor.number }}</td>
+          <td>{{ floor.occupied_rooms_count }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      floors: []
+    };
+  },
+  created() {
+    axios.get('http://localhost:8000/hotel_api/floor_occupancy/')
+      .then(response => {
+        this.floors = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+      });
+  }
+};
+</script>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LeaveFeedback.vue
+
+<template>
+  <div>
+    <h2>Отзывы о комнате {{ roomId }}</h2>
+    <ul>
+      <li v-for="review in reviews" :key="review.id">
+        {{ review.text }} - {{ review.author }}
+      </li>
+    </ul>
+    <button @click="goToAddReview">Добавить отзыв</button>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  props: {
+    roomId: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {
-      showComponent: null,
-      showButtons: true,
+      reviews: []
     };
   },
   methods: {
-    showUserProfile() {
-      this.showComponent = 'userProfile';
-      this.showButtons = false;
-    },
-    showMainButtons() {
-      this.showComponent = null;
-      this.showButtons = true;
+    fetchReviews() {
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        }
+      })
+      .then(response => {
+        this.reviews = response.data;
+      })
+      .catch(error => {
+        console.error('Ошибка при получении отзывов:', error);
+      });
+    }
+  },
+  created() {
+    this.fetchReviews();
+  }
+};
+</script>
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
+
+<template>
+  <form @submit.prevent="login">
+    <h2>Вход</h2>
+    <div class="input-wrapper">
+      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+    </div>
+    <div class="input-wrapper">
+      <input type="password" v-model="userData.password" placeholder="Пароль">
+    </div>
+    <button type="submit">Войти</button>
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </form>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      userData: {
+        username: '',
+        password: '',
+      },
+      errorMessage: '',
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await fetch('http://localhost:8000/hotel_api/api/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.userData)
+        });
+
+        if (response.ok) {
+  const data = await response.json();
+  localStorage.setItem('userToken', data.access);
+
+  // Сохранение имени пользователя в состоянии Vuex
+  this.$store.commit('setUser', { username: this.userData.username, token: data.access });
+
+  this.$emit('show-user-profile');
+  this.errorMessage = '';
+}     
+         else {
+          this.errorMessage = 'Введите корректные данные';
+        }
+      } catch (error) {
+        console.error('Ошибка сети', error);
+      }
+    }
+  }
+};
+</script>
+
+<style>
+.input-wrapper {
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+</style>
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LogoutButton.vue
+
+<template>
+    <button @click="logout">Выход</button>
+  </template>
+  
+  <script>
+  import { useStore } from 'vuex';
+  import { useRouter } from 'vue-router';
+  
+  export default {
+    setup() {
+      const store = useStore();
+      const router = useRouter();
+  
+      const logout = () => {
+        store.commit('clearUser'); // Очищаем данные пользователя из Vuex
+        router.push('/login'); // Перенаправляем на страницу входа
+      };
+  
+      return { logout };
+    }
+  };
+  </script>
+  
+  <style scoped>
+  button {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  </style>
+  
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
+
+<template>
+  <div>
+    <h2>Регистрация</h2>
+    <form @submit.prevent="register">
+      <div class="input-wrapper">
+        <input type="text" v-model="userData.username" placeholder="Имя пользователя">
+      </div>
+      <div class="input-wrapper">
+        <input type="password" v-model="userData.password" placeholder="Пароль">
+      </div>
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+    <div v-if="registrationSuccess" class="success-message">
+      Регистрация прошла успешно! Теперь вы можете войти.
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      userData: {
+        username: '',
+        email: '',
+        password: ''
+      },
+      registrationSuccess: false,
+    };
+  },
+  methods: {
+    async register() {
+      // Здесь код для регистрации пользователя
     }
   }
 };
@@ -268,204 +690,49 @@ button:hover {
 }
 </style>
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
-
-<template>
-  <form @submit.prevent="login">
-    <h2>Вход</h2>
-    <div class="input-wrapper">
-      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-    </div>
-    <div class="input-wrapper">
-      <input type="password" v-model="userData.password" placeholder="Пароль">
-    </div>
-    <button type="submit">Войти</button>
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-  </form>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      userData: {
-        username: '',
-        password: '',
-      },
-      errorMessage: '',
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await fetch('http://localhost:8000/hotel_api/api/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.userData)
-        });
-
-        if (response.ok) {
-  const data = await response.json();
-  localStorage.setItem('userToken', data.access);
-
-  // Сохраните имя пользователя в состоянии Vuex
-  this.$store.commit('setUser', { username: this.userData.username, token: data.access });
-
-  this.$emit('show-user-profile');
-  this.errorMessage = '';
-}     
-         else {
-          this.errorMessage = 'Введите корректные данные';
-        }
-      } catch (error) {
-        console.error('Ошибка сети', error);
-      }
-    }
-  }
-};
-</script>
-
-<style>
-.input-wrapper {
-  margin-bottom: 10px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-</style>
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomReviewsList.vue
 
 <template>
   <div>
-    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
-    <div class="navigation-links">
-      <button @click="showRooms">Комнаты</button>
-      <button @click="showClients">Клиенты</button>
-      <button @click="showEmployees">Сотрудники</button>
-      <button @click="showRoomStatistics">Статистика комнат</button>
-      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
-      <button @click="showAddReviewForm">Оставить отзыв</button>
-      <button @click="showReviewList">Показать отзывы</button>
-      <button @click="logout">Выход</button>
-    </div>
-
-    <component :is="currentComponent" v-if="showTable" />
-
-    <div v-if="showReviewForm">
-      <AddReview :roomId="selectedRoomId" @review-added="updateReviews" />
-    </div>
-
-    <div v-if="showReviews">
-      <h3>Отзывы</h3>
-      <ul>
-        <li v-for="review in reviews" :key="review.id">
-          {{ review.text }} - {{ review.author }}
-        </li>
-      </ul>
-    </div>
+    <h2>Отзывы о комнате {{ roomId }}</h2>
+    <ul>
+      <li v-for="review in reviews" :key="review.id">
+        {{ review.text }} - {{ review.author }}
+      </li>
+    </ul>
+    <router-link :to="`/room/${roomId}/add-review`">Добавить отзыв</router-link>
   </div>
 </template>
 
 <script>
-import RoomsTable from './RoomsTable.vue';
-import ClientsTable from './ClientsTable.vue';
-import EmployeesTable from './EmployeesTable.vue';
-import AddReview from './AddReview.vue';
-import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
-import RoomStatistics from './RoomStatistics.vue';
-import ComplexRoomsTable from './ComplexRoomsTable.vue';
-import store from '@/store';
+import axios from 'axios';
 
 export default {
-  computed: {
-    username() {
-      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
+  props: {
+    roomId: {
+      type: Number,
+      required: true
     }
-  },
-  components: {
-    RoomsTable,
-    ClientsTable,
-    EmployeesTable,
-    AddReview,
-    RoomStatistics,
-    ComplexRoomsTable,
   },
   data() {
     return {
-      showTable: false,
-      currentComponent: null,
-      showReviewForm: false,
-      showReviews: false,
-      reviews: [],
-      selectedRoomId: null
+      reviews: []
     };
   },
   methods: {
-    logout() {
-    console.log("Выход из системы...");
-    store.commit('clearUser'); 
-    this.$router.push('/login'); 
-  },
-    showAddReviewForm(roomId) {
-      this.selectedRoomId = roomId;
-      this.showReviewForm = true;
-      this.showReviews = false;
-    },
-    showReviewList() {
-      this.showReviewForm = false;
-      this.showReviews = true;
-      this.fetchReviews();
-    },
-    emitBack() {
-      this.showTable = false;
-      this.showReviewForm = false;
-      this.showReviews = false;
-    },
     fetchReviews() {
-      ReviewService.getAllReviews()
+      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}` //  метод авторизации
+        }
+      })
         .then(response => {
           this.reviews = response.data;
         })
         .catch(error => {
           console.error('Ошибка при получении отзывов:', error);
         });
-    },
-    updateReviews() {
-      this.fetchReviews();
-      this.showReviewForm = false;
-      this.showReviews = true;
-    },
-    goToLeaveFeedback() {
-      this.$router.push('/add-review');
-    },
-    leaveFeedback() {
-      this.$router.push('');
-    },
-    showComplexRooms() {
-      this.currentComponent = 'ComplexRoomsTable';
-      this.showTable = true;
-    },
-    showRoomStatistics() {
-      this.currentComponent = 'RoomStatistics';
-      this.showTable = true;
-    },
-    showRooms() {
-      this.currentComponent = 'RoomsTable';
-      this.showTable = true;
-    },
-    showClients() {
-      this.currentComponent = 'ClientsTable';
-      this.showTable = true;
-    },
-    showEmployees() {
-      this.currentComponent = 'EmployeesTable';
-      this.showTable = true;
-    },
+    }
   },
   created() {
     this.fetchReviews();
@@ -473,20 +740,79 @@ export default {
 };
 </script>
 
-<style scoped>
-.navigation-links {
-  text-align: center;
-  margin-bottom: 20px;
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomStatistics.vue
+
+<template>
+  <div>
+    <h2>Статистика комнат</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Тип комнаты</th>
+          <th>Общее количество</th>
+          <th>Средняя стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="stat in statistics" :key="stat.room_type">
+          <td>{{ stat.room_type }}</td>
+          <td>{{ stat.total }}</td>
+          <td>{{ stat.average_cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      statistics: [] // Сюда будут загружены данные статистики
+    };
+  },
+  created() {
+    this.fetchStatistics();
+  },
+  methods: {
+    fetchStatistics() {
+      axios.get('http://localhost:8000/hotel_api/api/room-statistics/')
+        .then(response => {
+          this.statistics = response.data;
+        })
+        .catch(error => {
+          console.error('Ошибка при получении статистики комнат:', error);
+        });
+    }
+  }
 }
-.navigation-links button {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+</script>
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.navigation-links button:hover {
-  color: #007bff;
-  text-decoration: underline;
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #fff;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
 }
 </style>
 
@@ -516,6 +842,7 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 
     <!-- Выбор даты бронирования -->
     <div class="date-selection">
+      Выберите дату:
       <input type="date" v-model="startDate" placeholder="Дата начала">
       <input type="date" v-model="endDate" placeholder="Дата окончания">
     </div>
@@ -641,593 +968,190 @@ export default {
 </style>
 
 
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
-
-import { createStore } from 'vuex';
-
-export default createStore({
-  state: {
-    user: null, // Состояние пользователя
-  },
-  mutations: {
-    setUser(state, userData) {
-      state.user = userData; // Установка данных пользователя
-    },
-    
-    clearUser(state) {
-      state.user = {}; // очищаем данные пользователя
-    },
-  },
-  actions: {
-    logout({ commit }) {
-      commit('clearUser'); // Вызов мутации для очистки пользователя
-      
-    }
-  },
-  getters: {
-    isAuthenticated: state => !!state.user, // Проверка аутентификации
-    user: state => state.user, // Получение данных пользователя
-  },
-});
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/package.json
-
-{
-  "name": "my-project",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "axios": "^1.6.3",
-    "bootstrap": "^5.3.2",
-    "bootstrap-vue": "^2.23.1",
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-axios": "^3.5.2",
-    "vuetify": "^3.4.0-beta.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "description": "## Project setup ``` npm install ```",
-  "main": "babel.config.js",
-  "author": "",
-  "license": "ISC"
-}
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LeaveFeedback.vue
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
 
 <template>
   <div>
-    <h2>Отзывы о комнате {{ roomId }}</h2>
-    <ul>
-      <li v-for="review in reviews" :key="review.id">
-        {{ review.text }} - {{ review.author }}
-      </li>
-    </ul>
-    <button @click="goToAddReview">Добавить отзыв</button>
+    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
+    <div class="navigation-links">
+      <button @click="showRooms">Комнаты</button>
+      <button @click="showClients">Клиенты</button>
+      <button @click="showEmployees">Сотрудники</button>
+      <button @click="showRoomStatistics">Статистика комнат</button>
+      <button @click="showComplexRooms">Комплексная информация о комнатах</button>
+      <button @click="showAddReviewForm">Оставить отзыв</button>
+      <button @click="showReviewList">Показать отзывы</button>
+      <button @click="logout">Выход</button>
+    </div>
+
+    <component :is="currentComponent" v-if="showTable" />
+
+    <div v-if="showReviewForm">
+      <AddReview :roomId="selectedRoomId" @review-added="updateReviews" />
+    </div>
+
+    <div v-if="showReviews">
+      <h3>Отзывы</h3>
+      <ul>
+        <li v-for="review in reviews" :key="review.id">
+          {{ review.text }} - {{ review.author }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
-<script>
-import axios from 'axios';
-
-export default {
-  props: {
-    roomId: {
-      type: Number,
-      required: true
-    }
-  },
-  data() {
-    return {
-      reviews: []
-    };
-  },
-  methods: {
-    fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-        }
-      })
-      .then(response => {
-        this.reviews = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка при получении отзывов:', error);
-      });
-    }
-  },
-  created() {
-    this.fetchReviews();
-  }
-};
-</script>
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/FloorOccupancy.vue
-
-<template>
-  <div>
-    <h2>Заполненность этажей</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Этаж</th>
-          <th>Занятые комнаты</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="floor in floors" :key="floor.number">
-          <td>{{ floor.number }}</td>
-          <td>{{ floor.occupied_rooms_count }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
 
 <script>
-import axios from 'axios';
+import RoomsTable from './RoomsTable.vue';
+import ClientsTable from './ClientsTable.vue';
+import EmployeesTable from './EmployeesTable.vue';
+import AddReview from './AddReview.vue';
+import ReviewService from '@/reviewService'; // Путь к файлу ReviewService
+import RoomStatistics from './RoomStatistics.vue';
+import ComplexRoomsTable from './ComplexRoomsTable.vue';
+import LogoutButton from './LogoutButton.vue';
+import store from '@/store';
 
 export default {
-  data() {
-    return {
-      floors: []
-    };
-  },
-  created() {
-    axios.get('http://localhost:8000/hotel_api/floor_occupancy/')
-      .then(response => {
-        this.floors = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка:', error);
-      });
-  }
-};
-</script>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ClientsTable.vue
-
-<template>
-  <div>
-    <h2>Список клиентов</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID клиента</th>
-          <th>Имя</th>
-          <th>Фамилия</th>
-          <th>Номер комнаты</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="client in clients" :key="client.id">
-          <td>{{ client.id }}</td>
-          <td>{{ client.client_info.first_name }}</td>
-          <td>{{ client.client_info.last_name }}</td>
-          <td>{{ client.room }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      clients: []
-    };
-  },
-  created() {
-    this.fetchClients();
-  },
-  methods: {
-    fetchClients() {
-      axios.get('http://localhost:8000/hotel_api/api/clients')
-        .then(response => {
-          this.clients = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении данных о клиентах:', error);
-        });
-    }
-  }
-};
-</script>
-
-<style scoped>
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.table th,
-.table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.table th {
-  background-color: #f2f2f2;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomStatistics.vue
-
-<template>
-  <div>
-    <h2>Статистика комнат</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Тип комнаты</th>
-          <th>Общее количество</th>
-          <th>Средняя стоимость</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="stat in statistics" :key="stat.room_type">
-          <td>{{ stat.room_type }}</td>
-          <td>{{ stat.total }}</td>
-          <td>{{ stat.average_cost }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      statistics: [] // Сюда будут загружены данные статистики
-    };
-  },
-  created() {
-    this.fetchStatistics();
-  },
-  methods: {
-    fetchStatistics() {
-      axios.get('http://localhost:8000/hotel_api/api/room-statistics/')
-        .then(response => {
-          this.statistics = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении статистики комнат:', error);
-        });
-    }
-  }
-}
-</script>
-
-<style>
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ComplexRoomsTable.vue
-
-<template>
-  <div>
-    <h2>Комплексная информация о комнатах</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID комнаты</th>
-          <th>Тип комнаты</th>
-          <th>Статус</th>
-          <th>Стоимость</th>
-          
-          <th>Сотрудники</th>
-          <th>Забронировал</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in complexRooms" :key="room.id">
-          <td>{{ room.id }}</td>
-          <td>{{ room.room_type }}</td>
-          <td>{{ room.status }}</td>
-          <td>{{ room.cost }}</td>
-          <td>
-            <ul>
-              <li v-for="employee in room.employees" :key="employee.id">
-                {{ employee.employee.first_name }} {{ employee.employee.last_name }}
-              </li>
-            </ul>
-          </td>
-          <td>
-            {{ room.booked_by }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      complexRooms: []
-    };
-  },
-  created() {
-    this.fetchComplexRooms();
-  },
-  methods: {
-    fetchComplexRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/complex_rooms/')
-        .then(response => {
-          this.complexRooms = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении комплексной информации о комнатах:', error);
-        });
-    },
-    checkIn(roomId) {
-      axios.post(`http://localhost:8000/api/rooms/${roomId}/check_in`, { is_occupied: true })
-        .then(() => {
-          this.fetchComplexRooms();
-        }).catch(error => {
-          console.error('Ошибка при обновлении статуса комнаты:', error);
-        });
-    }
-  }
-};
-</script>
-
-<style>
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LeaveFeedback.vue
-
-<template>
-  <div>
-    <h2>Отзывы о комнате {{ roomId }}</h2>
-    <ul>
-      <li v-for="review in reviews" :key="review.id">
-        {{ review.text }} - {{ review.author }}
-      </li>
-    </ul>
-    <button @click="goToAddReview">Добавить отзыв</button>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  props: {
-    roomId: {
-      type: Number,
-      required: true
-    }
-  },
-  data() {
-    return {
-      reviews: []
-    };
-  },
-  methods: {
-    fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-        }
-      })
-      .then(response => {
-        this.reviews = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка при получении отзывов:', error);
-      });
-    }
-  },
-  created() {
-    this.fetchReviews();
-  }
-};
-</script>
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/AddReview.vue
-
-<template>
-  <div>
-    <h2>Добавить общий отзыв</h2>
-    <form @submit.prevent="submitReview">
-      <label for="reviewText">Отзыв:</label>
-      <textarea id="reviewText" v-model="reviewText" placeholder="Введите ваш отзыв"></textarea>
-      
-      <button type="submit">Отправить</button>
-    </form>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      reviewText: ''
-    };
-  },
   computed: {
     username() {
-      // Получение имени пользователя из состояния Vuex
-      return this.$store.state.user ? this.$store.state.user.username : 'Аноним';
+      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
     }
   },
-  methods: {
-    submitReview() {
-      const reviewData = {
-        author: this.username, // Использование имени пользователя из Vuex
-        text: this.reviewText
-      };
-
-      axios.post('http://localhost:8000/hotel_api/api/reviews/', reviewData, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-        }
-      })
-      .then(() => {
-        alert('Отзыв успешно добавлен!');
-        this.reviewText = ''; // Очистка поля ввода после отправки отзыва
-      })
-      .catch(error => {
-        console.error('Ошибка при добавлении отзыва:', error);
-      });
-    }
-  }
-};
-</script>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomReviewsList.vue
-
-<template>
-  <div>
-    <h2>Отзывы о комнате {{ roomId }}</h2>
-    <ul>
-      <li v-for="review in reviews" :key="review.id">
-        {{ review.text }} - {{ review.author }}
-      </li>
-    </ul>
-    <router-link :to="`/room/${roomId}/add-review`">Добавить отзыв</router-link>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  props: {
-    roomId: {
-      type: Number,
-      required: true
-    }
+  components: {
+    RoomsTable,
+    ClientsTable,
+    EmployeesTable,
+    AddReview,
+    RoomStatistics,
+    ComplexRoomsTable,
+    LogoutButton,
   },
   data() {
     return {
-      reviews: []
+      showTable: false,
+      currentComponent: null,
+      showReviewForm: false,
+      showReviews: false,
+      reviews: [],
+      selectedRoomId: null
     };
   },
   methods: {
+    logout() {
+      store.commit('clearUser'); // Очистка данных пользователя
+      this.$router.push('/'); // Перенаправление на главную страницу
+      location.reload(); // Принудительное обновление страницы
+    },
+    showAddReviewForm(roomId) {
+      this.selectedRoomId = roomId;
+      this.showReviewForm = true;
+      this.showReviews = false;
+    },
+    showReviewList() {
+      this.showReviewForm = false;
+      this.showReviews = true;
+      this.fetchReviews();
+    },
+    emitBack() {
+      this.showTable = false;
+      this.showReviewForm = false;
+      this.showReviews = false;
+    },
     fetchReviews() {
-      axios.get(`http://localhost:8000/hotel_api/api/rooms/${this.roomId}/reviews`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}` //  метод авторизации
-        }
-      })
+      ReviewService.getAllReviews()
         .then(response => {
           this.reviews = response.data;
         })
         .catch(error => {
           console.error('Ошибка при получении отзывов:', error);
         });
-    }
+    },
+    updateReviews() {
+      this.fetchReviews();
+      this.showReviewForm = false;
+      this.showReviews = true;
+    },
+    goToLeaveFeedback() {
+      this.$router.push('/add-review');
+    },
+    leaveFeedback() {
+      this.$router.push('');
+    },
+    showComplexRooms() {
+      this.currentComponent = 'ComplexRoomsTable';
+      this.showTable = true;
+    },
+    showRoomStatistics() {
+      this.currentComponent = 'RoomStatistics';
+      this.showTable = true;
+    },
+    showRooms() {
+      this.currentComponent = 'RoomsTable';
+      this.showTable = true;
+    },
+    showClients() {
+      this.currentComponent = 'ClientsTable';
+      this.showTable = true;
+    },
+    showEmployees() {
+      this.currentComponent = 'EmployeesTable';
+      this.showTable = true;
+    },
   },
   created() {
     this.fetchReviews();
   }
 };
 </script>
+
+<style scoped>
+.navigation-links {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.navigation-links button {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+.navigation-links button:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+</style>
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/main.js
+
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BootstrapVue3 from 'bootstrap-vue-3';
+import VueAxios from 'vue-axios';
+import { createVuetify } from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+
+const app = createApp(App);
+const vuetify = createVuetify();
+
+app.use(router);
+app.use(store);
+app.use(BootstrapVue3);
+app.use(VueAxios, axios);
+app.use(vuetify);
+
+const userToken = localStorage.getItem('userToken');
+if (userToken) {
+  store.commit('setUser', { token: userToken });
+}
+
+app.mount('#app');
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/reviewService.js
@@ -1259,3 +1183,91 @@ class ReviewService {
 }
 
 export default new ReviewService();
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/router/index.js
+
+import { createRouter, createWebHistory } from 'vue-router';
+import RegistrationPage from '../components/RegistrationPage.vue';
+import LoginPage from '../components/LoginPage.vue';
+import UserProfile from '../components/UserProfile.vue';
+import ClientsTable from '../components/ClientsTable.vue';
+import EmployeesTable from '../components/EmployeesTable.vue';
+import RoomStatistics from '../components/RoomStatistics.vue';
+import ComplexRoomsTable from '../components/ComplexRoomsTable.vue';
+import RoomsTable from '../components/RoomsTable.vue';
+import RoomReviewsList from '../components/RoomReviewsList.vue';
+import LeaveFeedback from '../components/LeaveFeedback.vue';
+import AddReview from '../components/AddReview.vue';
+//import store from '../store'; // Импорт Vuex Store
+
+const routes = [
+  { path: '/registration', component: RegistrationPage },
+  { path: '/login', component: LoginPage },
+  { path: '/user-profile', component: UserProfile },
+  { path: '/clients', component: ClientsTable },
+  { path: '/employees', component: EmployeesTable },
+  { path: '/room-statistics', component: RoomStatistics },
+  { path: '/complex-rooms', component: ComplexRoomsTable },
+  { path: '/rooms-table', component: RoomsTable },
+  {
+    path: '/room/:roomId/reviews',
+    name: 'RoomReviewsList',
+    component: RoomReviewsList,
+    props: true
+  },
+  {
+    path: '/room/:roomId/leave-feedback',
+    name: 'LeaveFeedback',
+    component: LeaveFeedback,
+    props: true
+  },
+  {
+    path: '/room/:roomId/add-review',
+    name: 'AddReview',
+    component: AddReview,
+    props: true
+  },
+  {
+    path: '/room-statistics',
+    name: 'RoomStatistics',
+    component: RoomStatistics
+  }
+];
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+});
+
+export default router;
+
+
+File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
+
+import { createStore } from 'vuex';
+
+export default createStore({
+  state: {
+    user: null, // Состояние пользователя
+  },
+  mutations: {
+    setUser(state, userData) {
+      state.user = userData; // Установка данных пользователя
+    },
+    
+    clearUser(state) {
+      state.user = {}; // очищаем данные пользователя
+    },
+  },
+  actions: {
+    logout({ commit }) {
+      commit('clearUser'); // Вызов мутации для очистки пользователя
+      
+    }
+  },
+  getters: {
+    isAuthenticated: state => !!state.user, // Проверка аутентификации
+    user: state => state.user, // Получение данных пользователя
+  },
+});

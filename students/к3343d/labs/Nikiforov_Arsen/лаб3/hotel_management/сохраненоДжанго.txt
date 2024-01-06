@@ -6,12 +6,10 @@ from django.contrib import admin
 from .models import (Room, Client, ClientInfo, Employee, Floor, Day, 
                      EmployeeFloor, EmployeeDay, Booking, CustomUser)
 
-# Класс администратора для модели Room
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('room_type', 'floor', 'status', 'cost')
 
-# Класс администратора для модели Booking 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['user', 'room', 'start_date', 'end_date', 'confirmed']
@@ -20,9 +18,11 @@ class BookingAdmin(admin.ModelAdmin):
     def confirm_booking(self, request, queryset):
         for booking in queryset:
             booking.confirmed = True
-            booking.room.set_occupied()  # Меняем статус комнаты на 'occupied'
+            booking.room.booked_by = booking.user
+            booking.room.set_occupied(True)  # Указываем True, что комната теперь занята
+            booking.room.save()
             booking.save()
-    confirm_booking.short_description = "Confirm selected bookings"
+    confirm_booking.short_description = "Подтвердить выбранные бронирования"
 
     def cancel_booking(self, request, queryset):
         for booking in queryset:
@@ -30,14 +30,14 @@ class BookingAdmin(admin.ModelAdmin):
             room.set_available()
             room.save()
             booking.delete()
-    cancel_booking.short_description = "Cancel selected bookings and set room available"
+    cancel_booking.short_description = "Отменить выбранные бронирования и установить комнату доступной"
 
     def delete_queryset(self, request, queryset):
         for obj in queryset:
             room = obj.room
             room.set_available()
             room.save()
-        queryset.delete()  # This deletes all bookings in the queryset
+        queryset.delete()  # Удаляем все бронирования в выборке
 
     def delete_model(self, request, obj):
         room = obj.room
@@ -45,7 +45,6 @@ class BookingAdmin(admin.ModelAdmin):
         room.save()
         obj.delete()
 
-# Регистрация других моделей
 admin.site.register(CustomUser)
 admin.site.register(Client)
 admin.site.register(ClientInfo)
@@ -58,19 +57,21 @@ admin.site.register(EmployeeDay)
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/urls.py
 
+from django import views
 from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from .views import (
     RoomViewSet, ClientViewSet, EmployeeViewSet, FloorViewSet,
     FloorOccupancyViewSet, DayViewSet, EmployeeFloorViewSet,
     EmployeeDayViewSet, ClientInfoViewSet, ComplexRoomViewSet,
-    NestedClientViewSet, UserViewSet, BookingViewSet,
+    NestedClientViewSet, UserViewSet, BookingViewSet, update_room_status,
     RoomStatisticsView, home, register_view,
     login_view, alternative_login_view, api_login,
     generate_token, register_user, book_room,
     rooms_list, clients_list, employees_list, floors_list,
     client_info_list, days_list, employee_floors_list,
-    employee_days_list, bookings_list, book_selected_rooms
+    employee_days_list, bookings_list, book_selected_rooms,
+    ReviewViewSet
 )
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -79,8 +80,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-
-
+from .views import ReviewViewSet
+from . import views
 
 app_name = 'hotel_api'
 
@@ -109,6 +110,10 @@ router.register(r'nested_clients', NestedClientViewSet)
 router.register(r'floor_occupancy', FloorOccupancyViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'bookings', BookingViewSet)
+router.register(r'reviews', ReviewViewSet)
+router.register(r'rooms', RoomViewSet)
+router.register(r'bookings', BookingViewSet)
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -129,13 +134,17 @@ urlpatterns = [
     path('api/login/', api_login, name='api_login'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/book_room/<int:room_id>/', book_room, name='book_room'),
+    path('api/rooms/<int:room_id>/book_room/', views.book_room, name='book_room'),
     path('api/room-statistics/', RoomStatisticsView.as_view(), name='room-statistics'),
     path('api/', include(router.urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/rooms/<int:room_id>/check_in', update_room_status, name='update_room_status'),
+    path('api/bookings/<int:pk>/confirm/', BookingViewSet.as_view({'post': 'confirm_booking'}), name='confirm-booking'),
+    path('api/bookings/<int:pk>/cancel/', BookingViewSet.as_view({'post': 'cancel_booking'}), name='cancel-booking'),
+    
 ]
 
 
@@ -144,10 +153,15 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import Room, Client, ClientInfo, Employee, Floor, Day, EmployeeFloor, EmployeeDay, Booking, CustomUser
+from .models import Review
+
+
 
 User = get_user_model()
 
 class RoomSerializer(serializers.ModelSerializer):
+    current_occupant = serializers.StringRelatedField(read_only=True)
+    
     class Meta:
         model = Room
         fields = '__all__'
@@ -193,9 +207,15 @@ class NestedClientSerializer(serializers.ModelSerializer):
 class ComplexRoomSerializer(serializers.ModelSerializer):
     clients = NestedClientSerializer(many=True, read_only=True)
     employees = EmployeeFloorSerializer(source='employee_floor_set', many=True, read_only=True)
+    booked_by = serializers.SerializerMethodField()
+
     class Meta:
         model = Room
-        fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees']
+        fields = ['id', 'room_type', 'status', 'cost', 'floor', 'clients', 'employees', 'booked_by']
+
+    def get_booked_by(self, obj):
+        return obj.booked_by.username if obj.booked_by else None
+
 
 class ClientSerializer(serializers.ModelSerializer):
     client_info = ClientInfoSerializer()
@@ -217,13 +237,17 @@ class UserSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     user_details = serializers.SerializerMethodField()
     room_details = serializers.SerializerMethodField()
+
     class Meta:
         model = Booking
-        fields = ['id', 'user', 'room', 'start_date', 'end_date', 'confirmed']
+        fields = ['id', 'user', 'room', 'start_date', 'end_date', 'confirmed', 'user_details', 'room_details']
+
     def get_user_details(self, obj):
         return UserSerializer(obj.user).data
+
     def get_room_details(self, obj):
         return RoomSerializer(obj.room).data
+
 
 class FloorOccupancySerializer(serializers.ModelSerializer):
     occupied_rooms_count = serializers.SerializerMethodField()
@@ -232,6 +256,12 @@ class FloorOccupancySerializer(serializers.ModelSerializer):
         fields = ['number', 'occupied_rooms_count']
     def get_occupied_rooms_count(self, floor):
         return Room.objects.filter(floor=floor, status='occupied').count()
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['author', 'text', 'created_at']
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/models.py
@@ -280,6 +310,13 @@ class Room(models.Model):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     booked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='booked_rooms')
     booking_confirmed = models.BooleanField(default=False)
+    current_occupant = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='occupied_rooms'
+    )
     
     def set_booked(self):
         self.status = 'booked'
@@ -291,6 +328,20 @@ class Room(models.Model):
 
     def set_available(self):
         self.status = 'available'
+        self.save()
+    
+    def set_occupied(self, is_occupied):
+        self.status = 'occupied' if is_occupied else 'available'
+        self.save()
+    
+    def confirm_booking(self, user):
+        self.status = 'occupied'
+        self.current_occupant = user
+        self.save()
+
+    def cancel_booking(self):
+        self.status = 'available'
+        self.current_occupant = None
         self.save()
 
 
@@ -372,6 +423,16 @@ class EmployeeDay(models.Model):
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} on {self.day.name}"
 
+# models.py
+
+class Review(models.Model):
+    author = models.CharField(max_length=255)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review by {self.author}'
+
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/views.py
 
@@ -380,11 +441,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
-from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser
+from .models import Room, Client, Employee, Floor, Day, EmployeeFloor, EmployeeDay, ClientInfo, Booking, CustomUser,Review
 from .serializers import (RoomSerializer, ClientSerializer, EmployeeSerializer, 
                           FloorSerializer, DaySerializer, EmployeeFloorSerializer, 
                           EmployeeDaySerializer, ClientInfoSerializer, BookingSerializer, 
-                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, 
+                          ComplexRoomSerializer, NestedClientSerializer, FloorOccupancySerializer, ReviewSerializer,
                           UserSerializer)
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
@@ -399,11 +460,37 @@ from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, TokenErro
 import json
 from rest_framework.views import APIView
 from django.db.models import Count, Avg
+from django.shortcuts import get_object_or_404
+from .models import Room
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 User = get_user_model()
 
+
+
+from django.http import JsonResponse
+from .models import Room
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+
+
+
+@api_view(['POST'])
+def update_room_status(request, room_id):
+    room = Room.objects.get(id=room_id)
+    is_occupied = request.data.get('is_occupied')
+    room.set_occupied(is_occupied)
+    serializer = RoomSerializer(room)
+    return Response(serializer.data)
+
+
+
+
+
 class RoomStatisticsView(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         stats = Room.objects.values('room_type').annotate(
             total=Count('id'),
             average_cost=Avg('cost')
@@ -433,8 +520,26 @@ class BookingViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(bookings, many=True)
         return Response(serializer.data)
 
+    def perform_create(self, serializer):
+        booking = serializer.save(user=self.request.user)
+        room = booking.room
+        room.confirm_booking(self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def confirm_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.room.confirm_booking(request.user)
+        return Response({'status': 'booking confirmed'})
+
+    @action(detail=True, methods=['post'])
+    def cancel_booking(self, request, pk=None):
+        booking = self.get_object()
+        booking.room.cancel_booking()
+        booking.delete()  # Удаляем бронирование
+        return Response({'status': 'booking cancelled'})
+
 class ComplexRoomViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Room.objects.filter(status='occupied').prefetch_related('clients', 'employee_floor_set')
+    queryset = Room.objects.all().prefetch_related('clients', 'employee_floor_set')
     serializer_class = ComplexRoomSerializer
 
 class NestedClientViewSet(viewsets.ReadOnlyModelViewSet):
@@ -495,10 +600,12 @@ def book_room(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
     if room.status != 'available':
         return JsonResponse({'status': 'error', 'message': 'Room is not available'}, status=400)
+    
     start_date = request.data.get('start_date')
     end_date = request.data.get('end_date')
     if not start_date or not end_date:
         return JsonResponse({'status': 'error', 'message': 'Start date and end date are required'}, status=400)
+    
     try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
         end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
@@ -506,10 +613,12 @@ def book_room(request, room_id):
             return JsonResponse({'status': 'error', 'message': 'End date must be after start date'}, status=400)
     except ValueError:
         return JsonResponse({'status': 'error', 'message': 'Invalid date format'}, status=400)
+    
     booking = Booking.objects.create(user=request.user, room=room, start_date=start_date, end_date=end_date)
     room.status = 'booked'
     room.save()
     return JsonResponse({'status': 'success', 'booking_id': booking.id})
+
 
 def rooms_list(request):
     room_type_query = request.GET.get('room_type', '').strip()
@@ -646,6 +755,13 @@ def employee_floors_list(request):
 def employee_days_list(request):
     employee_days = EmployeeDay.objects.all()
     return render(request, 'hotel_api/employee_days_list.html', {'employee_days': employee_days})
+
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
 
 
 File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/hotel_api/rooms_list.html
@@ -1149,990 +1265,3 @@ File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/
     </form>
 </body>
 </html>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/main.js
-
-import { createApp } from 'vue'; 
-import App from './App.vue';
-import router from './router';
-import store from './store'; //  хранилище Vuex
-import axios from 'axios';
-import { VueAxios } from 'vue-axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import BootstrapVue3 from 'bootstrap-vue-3';
-
-const app = createApp(App);
-
-app.use(router);
-app.use(store); // Vuex в приложении
-app.use(BootstrapVue3);
-app.use(VueAxios, axios);
-
-// Проверка localStorage на наличие токена и его установка в состояние Vuex
-const userToken = localStorage.getItem('userToken');
-if (userToken) {
-  store.commit('setUser', { token: userToken });
-}
-
-app.mount('#app');
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/App.vue
-
-<template>
-  <div class="app-container">
-    <img alt="Vue logo" src="./assets/logo.png" class="logo">
-    <div class="menu" v-if="showButtons">
-      <h1>Добро пожаловать в наш отель!</h1>
-      <button @click="showComponent = 'login'">Вход</button>
-      <button @click="showComponent = 'registration'">Регистрация</button>
-    </div>
-    <LoginPage v-if="showComponent === 'login'" @show-user-profile="showUserProfile" />
-    <RegistrationPage v-if="showComponent === 'registration'" />
-    <UserProfile v-if="showComponent === 'userProfile'" @go-back="showMainButtons" />
-  </div>
-</template>
-
-<script>
-import RegistrationPage from './components/RegistrationPage.vue';
-import LoginPage from './components/LoginPage.vue';
-import UserProfile from './components/UserProfile.vue';
-
-export default {
-  name: 'App',
-  components: {
-    RegistrationPage,
-    LoginPage,
-    UserProfile
-  },
-  data() {
-    return {
-      showComponent: null,
-      showButtons: true,
-    };
-  },
-  methods: {
-    showUserProfile() {
-      this.showComponent = 'userProfile';
-      this.showButtons = false;
-    },
-    showMainButtons() {
-      this.showComponent = null;
-      this.showButtons = true;
-    }
-  }
-};
-</script>
-
-<style scoped>
-.app-container {
-  text-align: center;
-  background: linear-gradient(to right, #b4ffb0, #b19dff); 
-  min-height: 100vh;
-}
-
-.logo {
-  max-width: 150px;
-  margin: 20px auto;
-}
-
-.menu h1 {
-  color: #fff;
-  text-shadow: 2px 2px 4px #000;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/router/index.js
-
-import { createRouter, createWebHistory } from 'vue-router';
-import RegistrationPage from '../components/RegistrationPage.vue';
-import LoginPage from '../components/LoginPage.vue';
-import UserProfile from '../components/UserProfile.vue';
-import ClientsTable from '../components/ClientsTable.vue';
-import EmployeesTable from '../components/EmployeesTable.vue';
-
-const routes = [
-  
-  { path: '/registration', component: RegistrationPage },
-  { path: '/login', component: LoginPage },
-  { path: '/user-profile', component: UserProfile },
-  { path: '/clients', component: ClientsTable },
-  { path: '/employees', component: EmployeesTable },
-  
-  // другие маршруты...
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-export default router;
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RegistrationPage.vue
-
-<template>
-  <div>
-    <h2>Регистрация</h2>
-    <!-- Форма регистрации -->
-    <form @submit.prevent="register">
-      <div class="input-wrapper">
-        <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-      </div>
-      <div class="input-wrapper">
-        <input type="password" v-model="userData.password" placeholder="Пароль">
-      </div>
-      <button type="submit">Зарегистрироваться</button>
-    </form>
-
-    <!-- Сообщение об успешной регистрации -->
-    <div v-if="registrationSuccess" class="success-message">
-      Регистрация прошла успешно! Теперь вы можете войти.
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      userData: {
-        username: '',
-        email: '',
-        password: ''
-      },
-      registrationSuccess: false, // Добавляем переменную для отслеживания успешной регистрации
-    };
-  },
-  methods: {
-    async register() {
-      try {
-        const response = await fetch('http://localhost:8000/hotel_api/register/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.userData)
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Успешная регистрация', data);
-          this.registrationSuccess = true; // Устанавливаем успешную регистрацию в true
-        } else {
-          console.error('Ошибка регистрации', response.statusText);
-        }
-      } catch (error) {
-        console.error('Ошибка сети', error);
-      }
-    }
-  }
-};
-</script>
-
-<style scoped>
-.navigation-links {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.navigation-links a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-}
-
-.navigation-links a:hover {
-  color: #007bff;
-  text-decoration: underline;
-}
-
-.input-wrapper {
-  margin-bottom: 10px; /* Расстояние между полями ввода */
-}
-
-.success-message {
-  color: green;
-  margin-top: 10px;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LoginPage.vue
-
-<template>
-  <form @submit.prevent="login">
-    <h2>Вход</h2>
-    <div class="input-wrapper">
-      <input type="text" v-model="userData.username" placeholder="Имя пользователя">
-    </div>
-    <div class="input-wrapper">
-      <input type="password" v-model="userData.password" placeholder="Пароль">
-    </div>
-    <button type="submit">Войти</button>
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-  </form>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      userData: {
-        username: '',
-        password: '',
-      },
-      errorMessage: '',
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await fetch('http://localhost:8000/hotel_api/api/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.userData)
-        });
-
-        if (response.ok) {
-  const data = await response.json();
-  localStorage.setItem('userToken', data.access);
-
-  // Сохраните имя пользователя в состоянии Vuex
-  this.$store.commit('setUser', { username: this.userData.username, token: data.access });
-
-  this.$emit('show-user-profile');
-  this.errorMessage = '';
-}     
-         else {
-          this.errorMessage = 'Введите корректные данные';
-        }
-      } catch (error) {
-        console.error('Ошибка сети', error);
-      }
-    }
-  }
-};
-</script>
-
-<style>
-.input-wrapper {
-  margin-bottom: 10px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/UserProfile.vue
-
-<template>
-  <div>
-    <h2>Добро пожаловать в систему управления отелем, {{ username }}!</h2>
-    <div class="navigation-links">
-      <button @click="showRooms">Комнаты</button>
-      <button @click="showClients">Клиенты</button>
-      <button @click="showEmployees">Сотрудники</button>
-      <button @click="emitBack">Назад</button>
-    </div>
-    <component :is="currentComponent" v-if="showTable" />
-  </div>
-</template>
-
-<script>
-import RoomsTable from './RoomsTable.vue';
-import ClientsTable from './ClientsTable.vue';
-import EmployeesTable from './EmployeesTable.vue';
-
-export default {
-  computed: {
-    username() {
-      return this.$store.state.user ? this.$store.state.user.username : 'Guest';
-    }
-  },
-  components: {
-    RoomsTable,
-    ClientsTable,
-    EmployeesTable
-  },
-  data() {
-    return {
-      showTable: false,
-      currentComponent: null
-    };
-  },
-  methods: {
-    showRooms() {
-      this.currentComponent = 'RoomsTable';
-      this.showTable = true;
-    },
-    showClients() {
-      this.currentComponent = 'ClientsTable';
-      this.showTable = true;
-    },
-    showEmployees() {
-      this.currentComponent = 'EmployeesTable';
-      this.showTable = true;
-    },
-    emitBack() {
-      this.showTable = false;
-    }
-  }
-};
-</script>
-
-<style scoped>
-.navigation-links {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.navigation-links button {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-}
-
-.navigation-links button:hover {
-  color: #007bff;
-  text-decoration: underline;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomsTable.vue
-
-<template> 
-  <div>
-    <h2>Список комнат</h2>
-
-    <!-- Фильтры -->
-    <label for="room_type">Тип комнаты:</label>
-    <select v-model="filterType">
-      <option value="">--Выберите тип--</option>
-      <option value="single">Одноместный</option>
-      <option value="double">Двухместный</option>
-      <option value="suite">Люкс</option>
-    </select>
-
-    <label for="room_status">Статус комнаты:</label>
-    <select v-model="filterStatus">
-      <option value="">--Выберите статус--</option>
-      <option value="available">Доступна</option>
-      <option value="occupied">Занята</option>
-      <option value="cleaning">На уборке</option>
-    </select>
-
-
-
-    <!-- Выбор даты бронирования -->
-    <div class="date-selection">
-      <input type="date" v-model="startDate" placeholder="Дата начала">
-      <input type="date" v-model="endDate" placeholder="Дата окончания">
-    </div>
-
-    <!-- Таблица комнат -->
-    <table>
-      <thead>
-        <tr>
-          <th>Тип комнаты</th>
-          <th>Номер этажа</th>
-          <th>Статус</th>
-          <th>Стоимость</th>
-          <th>Действия</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="room in filteredRooms" :key="room.id">
-          <td>{{ room.room_type }}</td>
-          <td>{{ room.floor.number }}</td>
-          <td>{{ room.status }}</td>
-          <td>{{ room.cost }}</td>
-          <td>
-            <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
-              Забронировать
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      rooms: [],
-      filterType: '',
-      filterStatus: '',
-      startDate: '', // Для хранения даты начала бронирования
-      endDate: ''   // Для хранения даты окончания бронирования
-    };
-  },
-  computed: {
-    filteredRooms() {
-      return this.rooms.filter(room => {
-        return (!this.filterType || room.room_type === this.filterType) &&
-               (!this.filterStatus || room.status === this.filterStatus);
-      });
-    }
-  },
-  methods: {
-    fetchRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/rooms/')
-        .then(response => {
-          this.rooms = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка загрузки комнат:', error);
-        });
-    },
-    applyFilter() {
-      this.fetchRooms();
-    },
-    bookRoom(roomId) {
-    if (!this.startDate || !this.endDate) {
-      alert('Необходимо указать даты начала и окончания бронирования');
-      return;
-    }
-
-    const token = localStorage.getItem('userToken');
-    axios.post(`http://localhost:8000/hotel_api/api/book_room/${roomId}/`, {
-      start_date: this.startDate,
-      end_date: this.endDate
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      if (response.data.status === 'success') {
-        alert('Комната успешно забронирована');
-        this.fetchRooms(); // Обновление списка комнат
-      } else {
-        console.error('Ответ об ошибке:', response.data);
-        alert('Ошибка бронирования: ' + response.data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Ошибка бронирования комнаты:', error);
-      alert('Ошибка бронирования: ' + error.message);
-    });
-  }
-  },
-  created() {
-    this.fetchRooms();
-  }
-};
-</script>
-
-<style scoped>
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-}
-
-.date-selection {
-  margin: 10px 0;
-}
-
-.date-selection input {
-  margin-right: 10px;
-}
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/store.js
-
-import { createStore } from 'vuex';
-
-
-export default createStore({
-  state: {
-    user: null,
-  },
-  mutations: {
-    setUser(state, userData) {
-      state.user = userData;
-    },
-    clearUser(state) {
-      state.user = null;
-    },
-  },
-  getters: {
-    isAuthenticated: state => !!state.user,
-    user: state => state.user,
-  },
-});
-
-
-
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/package.json
-
-{
-  "name": "my-project",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "axios": "^1.6.3",
-    "bootstrap": "^5.3.2",
-    "bootstrap-vue": "^2.23.1",
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-axios": "^3.5.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "description": "## Project setup ``` npm install ```",
-  "main": "babel.config.js",
-  "author": "",
-  "license": "ISC"
-}
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/LeaveFeedback.vue
-
-<template>
-  <div>
-    <h2>Оставить отзыв</h2>
-    <form @submit.prevent="submitFeedback">
-      <div>
-        <label for="room">Комната:</label>
-        <select v-model="feedback.room">
-          <option v-for="room in rooms" :value="room.id" :key="room.id">{{ room.name }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="text">Текст отзыва:</label>
-        <textarea v-model="feedback.text"></textarea>
-      </div>
-      <button type="submit">Отправить</button>
-    </form>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      feedback: {
-        room: '',
-        text: ''
-      },
-      rooms: [] // Массив для хранения списка комнат
-    };
-  },
-  methods: {
-    submitFeedback() {
-      axios.post('http://localhost:8000/hotel_api/api/reviews/', this.feedback, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('userToken')}`
-        }
-      })
-      .then(() => {
-        alert('Отзыв отправлен');
-        this.feedback.room = '';
-        this.feedback.text = '';
-      })
-      .catch(error => {
-        console.error('Ошибка:', error);
-      });
-    },
-    fetchRooms() {
-      axios.get('http://localhost:8000/hotel_api/api/rooms/', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('userToken')}`
-        }
-      })
-      .then(response => {
-        this.rooms = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка при загрузке комнат:', error);
-      });
-    }
-  },
-  created() {
-    this.fetchRooms();
-  }
-};
-</script>
-
-<style>
-/*  стили */
-</style>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/FloorOccupancy.vue
-
-<template>
-  <div>
-    <h2>Заполненность этажей</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Этаж</th>
-          <th>Занятые комнаты</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="floor in floors" :key="floor.number">
-          <td>{{ floor.number }}</td>
-          <td>{{ floor.occupied_rooms_count }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      floors: []
-    };
-  },
-  created() {
-    axios.get('http://localhost:8000/hotel_api/floor_occupancy/')
-      .then(response => {
-        this.floors = response.data;
-      })
-      .catch(error => {
-        console.error('Ошибка:', error);
-      });
-  }
-};
-</script>
-
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/RoomReviews.vue
-
-<template> 
-    <div>
-      <h2>Список комнат</h2>
-  
-      <!-- Фильтры -->
-      <label for="room_type">Тип комнаты:</label>
-      <select v-model="filterType">
-        <option value="">--Выберите тип--</option>
-        <option value="single">Одноместный</option>
-        <option value="double">Двухместный</option>
-        <option value="suite">Люкс</option>
-      </select>
-  
-      <label for="room_status">Статус комнаты:</label>
-      <select v-model="filterStatus">
-        <option value="">--Выберите статус--</option>
-        <option value="available">Доступна</option>
-        <option value="occupied">Занята</option>
-        <option value="cleaning">На уборке</option>
-      </select>
-  
-      <button @click="applyFilter">Применить фильтр</button>
-  
-      <!-- Выбор даты бронирования -->
-      <div class="date-selection">
-        <input type="date" v-model="startDate" placeholder="Дата начала">
-        <input type="date" v-model="endDate" placeholder="Дата окончания">
-      </div>
-  
-      <!-- Таблица комнат -->
-      <table>
-        <thead>
-          <tr>
-            <th>Тип комнаты</th>
-            <th>Номер этажа</th>
-            <th>Статус</th>
-            <th>Стоимость</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="room in filteredRooms" :key="room.id">
-            <td>{{ room.room_type }}</td>
-            <td>{{ room.floor.number }}</td>
-            <td>{{ room.status }}</td>
-            <td>{{ room.cost }}</td>
-            <td>
-              <button v-if="room.status === 'available'" @click="bookRoom(room.id)">
-                Забронировать
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        rooms: [],
-        filterType: '',
-        filterStatus: '',
-        startDate: '', // Для хранения даты начала бронирования
-        endDate: ''   // Для хранения даты окончания бронирования
-      };
-    },
-    computed: {
-      filteredRooms() {
-        return this.rooms.filter(room => {
-          return (!this.filterType || room.room_type === this.filterType) &&
-                 (!this.filterStatus || room.status === this.filterStatus);
-        });
-      }
-    },
-    methods: {
-      fetchRooms() {
-        axios.get('http://localhost:8000/hotel_api/rooms/')
-          .then(response => {
-            this.rooms = response.data;
-          })
-          .catch(error => {
-            console.error('Ошибка загрузки комнат:', error);
-          });
-      },
-      applyFilter() {
-        this.fetchRooms();
-      },
-      bookRoom(roomId) {
-      if (!this.startDate || !this.endDate) {
-        alert('Необходимо указать даты начала и окончания бронирования');
-        return;
-      }
-  
-      const token = localStorage.getItem('userToken');
-      axios.post(`http://localhost:8000/hotel_api/book_room/${roomId}/`, {
-        start_date: this.startDate,
-        end_date: this.endDate
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        if (response.data.status === 'success') {
-          alert('Комната успешно забронирована');
-          this.fetchRooms(); // Обновление списка комнат
-        } else {
-          console.error('Ответ об ошибке:', response.data);
-          alert('Ошибка бронирования: ' + response.data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка бронирования комнаты:', error);
-        alert('Ошибка бронирования: ' + error.message);
-      });
-    }
-    },
-    created() {
-      this.fetchRooms();
-    }
-  };
-  </script>
-  
-  <style scoped>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  td {
-    background-color: #fff;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .date-selection {
-    margin: 10px 0;
-  }
-  
-  .date-selection input {
-    margin-right: 10px;
-  }
-  </style>
-
-File: C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб4/my-project/src/components/ClientsTable.vue
-
-<template>
-  <div>
-    <h2>Список клиентов</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID клиента</th>
-          <th>Имя</th>
-          <th>Фамилия</th>
-          <th>Номер комнаты</th>
-          <!-- Дополнительные столбцы по необходимости -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="client in clients" :key="client.id">
-          <td>{{ client.id }}</td>
-          <td>{{ client.first_name }}</td>
-          <td>{{ client.last_name }}</td>
-          <td>{{ client.room_number }}</td>
-          <!-- Дополнительные данные по необходимости -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      clients: []
-    };
-  },
-  created() {
-    this.fetchClients();
-  },
-  methods: {
-    fetchClients() {
-      axios.get('http://localhost:8000/hotel_api/api//clients') // API URL
-        .then(response => {
-          this.clients = response.data;
-        })
-        .catch(error => {
-          console.error('Ошибка при получении данных о клиентах:', error);
-        });
-    }
-  }
-};
-</script>
-
-<style>
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #fff;
-}
-
-tr:hover {
-  background-color: #f5f5f5;
-}
-</style>

@@ -1,3 +1,5 @@
+script_dir=$(dirname "$0")
+
 for file in \
 "C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/admin.py" \
 "C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/urls.py" \
@@ -13,7 +15,10 @@ for file in \
 "C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/forms.py" \
 "C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/utils.py" \
 "C:/Users/apce1/Desktop/УЧЕБА/Веб-программирование/ITMO_ICT_WebDevelopment_2023-2024/students/к3343d/labs/Nikiforov_Arsen/лаб3/hotel_management/hotel_api/templates/hotel_api/book_room.html" \
+
 do 
-    echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\nFile: $file\n"
+    echo -e "\n\nFile: $file\n"
     cat "$file"
-done > сохранено.txt
+done > "$script_dir/сохраненоДжанго.txt"
+
+start "" "$сохраненоДжанго.txt" 
