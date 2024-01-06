@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'tablo' %}" class="btn btn-secondary">К таблице</a>
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post" class="mb-5">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            {{ form.team.label_tag }}
+            {{ form.team }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            {{ form.experience.label_tag }}
+            {{ form.experience }}
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+
+    <form method="post" class="mb-5">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ password_form.old_password.label_tag }}
+            {{ password_form.old_password }}
+        </div>
+        <div class="form-group">
+            {{ password_form.new_password1.label_tag }}
+            {{ password_form.new_password1 }}
+        </div>
+        <div class="form-group">
+            {{ password_form.new_password2.label_tag }}
+            {{ password_form.new_password2 }}
+        </div>
+        <button type="submit" name="password_change" value="password_change" class="btn btn-primary">Изменить пароль
+        </button>
+    </form>
+</div>
+</body>
+</html>
