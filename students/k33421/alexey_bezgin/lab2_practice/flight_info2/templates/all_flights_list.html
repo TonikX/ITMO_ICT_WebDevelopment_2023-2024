@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Flight List</title>
+</head>
+<body>
+<h1>Flight List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Airline</th>
+        <th>Type</th>
+        <th>Gate</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        {% if user.is_staff %}
+        <th>Passengers</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for flight in flights %}
+    <tr>
+        <td>{{ flight.airline }}</td>
+        <td>{{ flight.get_type_display }}</td>
+        <td>{{ flight.gate }}</td>
+        <td>{{ flight.departure }}</td>
+        <td>{{ flight.arrival }}</td>
+
+        {% if user.is_staff %}
+        <td><a href="{% url 'flight_passengers' flight.id %}">Passengers</a></td>
+        {% endif %}
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h2>
+    <a href="{% url 'personal_space' %}">Go home</a>
+</h2>
+
+</body>
+</html>

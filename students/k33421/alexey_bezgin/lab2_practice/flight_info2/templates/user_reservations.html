@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Your Reservations</title>
+</head>
+<body>
+    <h2>Your Reservations</h2>
+    <ul>
+        {% for reservation in reservations %}
+            <li>
+                Flight: {{ reservation.flight }}
+                Registered: {{ reservation.registered }}
+                Ticket Number: {{ reservation.ticket }}
+                Seat №: {{ reservation.seat }}
+
+                <a href="{% url 'edit_reservation' reservation.id %}">Edit</a>
+                <a href="{% url 'delete_reservation' reservation.id %}">Delete</a>
+                <a href="{% url 'create_review' reservation.flight.id %}">Create review</a>
+
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>
+        <a href="{% url 'personal_space' %}">Go home</a>
+    </h2>
+</body>
+</html>

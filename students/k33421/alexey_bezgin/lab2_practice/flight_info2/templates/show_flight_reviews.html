@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Reviews for {{ flight }}</title>
+</head>
+<body>
+    <h2>Reviews for Flight {{ flight }}</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>Commentator:</strong> {{ review.user.username }}<br>
+                <strong>Date:</strong> {{ review.date }}<br>
+                <strong>Rating:</strong> {{ review.rating }}<br>
+                <strong>Comment:</strong> {{ review.text }}
+            </li>
+        {% empty %}
+            <li>No reviews available for this flight.</li>
+        {% endfor %}
+
+    </ul>
+    <h2>
+        <a href="{% url 'personal_space' %}">Go home</a>
+    </h2>
+</body>
+</html>
