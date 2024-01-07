@@ -47,8 +47,6 @@
         date_end = models.DateField(null=True, blank=True)
         ended = models.BooleanField()
     ```
-    ![Cars](media/cars.jpg)
-    ![Owners](media/owners.jpg)
 
 === "Задание 1"
 
@@ -108,7 +106,8 @@
     )
 
     ```
-
+    ![Cars](media/cars.jpg)
+    ![Owners](media/owners.jpg)
 
 === "Задание 2"
 
