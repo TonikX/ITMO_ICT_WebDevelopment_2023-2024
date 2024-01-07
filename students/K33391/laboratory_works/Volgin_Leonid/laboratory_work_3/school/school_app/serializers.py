@@ -21,7 +21,8 @@ class ClassSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Students
-        fields = '__all__'
+        #fields = '__all__'
+        fields = ["FIO", "klass",]
 
 class GoodClassSerializer(serializers.ModelSerializer):
 
