@@ -1,0 +1,25 @@
+{% extends 'aviasales/extend/navbar.html' %}
+{% block title %}
+    User Detail
+{% endblock %}
+
+{% block body %}
+    <h1>{{ object.username }}</h1>
+    <ul>
+        <li>Фамилия имя: {{ object.first_name }} {{ object.last_name }}</li>
+        {% if object.email %}
+            <li>Email: {{ object.email }}</li>
+        {% endif %}
+        {% if object.birth_date %}
+            <li>Дата рождения: {{ object.birth_date }}</li>
+        {% endif %}
+        {% if object.passport_number is not None %}
+            <li>Номер паспорта: {{ object.passport_number }}</li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+
+
+
+
