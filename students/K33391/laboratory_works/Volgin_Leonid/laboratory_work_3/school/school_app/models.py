@@ -57,7 +57,7 @@ class Schedules(models.Model):
 class Students(models.Model):
     klass = models.ForeignKey('Classes', on_delete=models.CASCADE, verbose_name='Класс', blank=True, null=True)
     FIO = models.CharField(max_length=120, verbose_name='ФИО')
-    schedules = models.ManyToManyField('Schedules', verbose_name='Занятия', through='Grades',related_name='student_schedules')
+    schedules = models.ManyToManyField('Schedules', verbose_name='Занятия', through='Grades',related_name='student_schedules',blank=True)
 
 
 class Grades(models.Model):

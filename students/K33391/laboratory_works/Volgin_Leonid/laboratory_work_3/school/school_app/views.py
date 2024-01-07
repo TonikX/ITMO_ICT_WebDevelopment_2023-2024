@@ -223,7 +223,7 @@ class SpecialStudentListView(generics.ListAPIView):
 
 class GradeListView(generics.ListAPIView):
     queryset = Grades.objects.all()
-    serializer_class = SubjectSerializer
+    serializer_class = GradeSerializer
     permission_classes = [permissions.IsAuthenticated, ]
 
 class GradeRetrieveView(generics.RetrieveAPIView):
