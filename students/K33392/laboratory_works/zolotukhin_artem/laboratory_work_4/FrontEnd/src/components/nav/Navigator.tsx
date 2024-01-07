@@ -22,6 +22,9 @@ const Nav = () => {
       <ul className='nav-links'>
         {user ? (
           <>
+            <NavLink className='nav-childs' to='/animals'>
+              Animals
+            </NavLink>
             <NavLink className='nav-childs' to='/dashboard'>
               Dashboard
             </NavLink>

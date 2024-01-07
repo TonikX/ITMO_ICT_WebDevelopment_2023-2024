@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Dashboard from './pages/dashboard/Dashboard'
 import NotFoundPage from './pages/notFound/NotFoundPage'
 import ResetPasswordPageConfirm from './pages/reset_password_confirm/ResetPasswordPageConfirm'
+import AnimalsPage from './pages/animals/Animals'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             element={<ResetPasswordPageConfirm />}
           />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/animals' element={<AnimalsPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </Router>

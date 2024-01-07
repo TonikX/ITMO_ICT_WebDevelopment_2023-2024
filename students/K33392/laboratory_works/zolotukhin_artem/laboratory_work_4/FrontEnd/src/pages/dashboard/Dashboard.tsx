@@ -2,7 +2,8 @@ import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
   const { userInfo } = useSelector((state) => state.auth)
-  console.log(userInfo)
+  console.log('userInfo', userInfo)
+
   return (
     <div>
       <h1>
