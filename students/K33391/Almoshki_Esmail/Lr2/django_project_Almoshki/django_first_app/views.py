@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from .models import Driver, Car
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 
 
 def index(request):
@@ -49,9 +50,7 @@ class CarDeleteView(DeleteView):
 
 class CarUpdateView(UpdateView):
     model = Car
+    context_object_name = 'car'
     success_url = reverse_lazy('car_list')
     fields = ['governmental_number', 'model', 'stamp', 'color']
     template_name = "django_first_app/car_update.html"
-
-    def get_object(self):
-        id_ = self.kwargs.get("")

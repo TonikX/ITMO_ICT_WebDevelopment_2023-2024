@@ -1,14 +1,27 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 
-class Driver(models.Model):
+# class User(AbstractUser):
+#     name = models.CharField(max_length=100, blank=True, null=True)
+#     passport_number = models.CharField(max_length=30, null=True, blank=True)
+#     address = models.CharField(max_length=100, null=True, blank=True)
+#     nationality = models.CharField(max_length=30, null=True, blank=True)
+
+
+class Driver(AbstractUser):
     last_name = models.CharField(max_length=30)
     first_name = models.CharField(max_length=30)
     birthdate = models.DateTimeField(null=True)
+    passport_number = models.CharField(max_length=30)
+    address = models.CharField(max_length=255)
+    nationality = models.CharField(max_length=30)
+
+    REQUIRED_FIELDS = ["passport_number", "address", "nationality"]
 
     def __str__(self):
-        return f"{self.last_name} {self.first_name} "
+        return f"{self.username} + ' ' + {self.nationality} + ' ' + {self.address} + ' ' + {self.passport_number} "
 
 
 class DivingLicense(models.Model):
@@ -26,6 +39,9 @@ class Car(models.Model):
     stamp = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
     color = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"Car is {self.model} holding number {self.governmental_number}"
 
 
 class Ownership(models.Model):
