@@ -8,6 +8,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/auth/', include('djoser.urls')),
+    path('api/v1/auth/', include('djoser.urls.jwt')),
+
     path('system/', include('system.urls')),
     path(r'auth/', include('djoser.urls')),
     re_path(r'auth/', include('djoser.urls.authtoken')),
