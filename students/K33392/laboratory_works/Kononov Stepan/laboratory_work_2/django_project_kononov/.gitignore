@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django-related
+*.log
+*.pot
+db.sqlite3
+.env
+
+# Media files
+media/
+
+# Static files
+staticfiles/
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Environment-specific files
+*.env
+*.env.*
+env/
+
+# Compiled Python files
+
+# macOS .DS_Store files
+.DS_Store
+
+# Byte-compiled files created by Python 3.2 and later
+
+# Python bytecode
+
+# Caches
+.cached_data/
+
+# Ignore virtual environment
+venv/
