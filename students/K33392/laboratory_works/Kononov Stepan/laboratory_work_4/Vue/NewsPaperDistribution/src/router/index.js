@@ -1,9 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
-import NewspapersList from "@/components/NewspapersList.vue";
-import PrintingHousesList from "@/components/PrintingHousesList.vue";
-import PostOfficeList from "@/components/PostOfficeList.vue";
+import NewspapersList from "@/views/NewspapersList.vue";
+import PrintingHousesList from "@/views/PrintingHousesList.vue";
+import PostOfficeList from "@/views/PostOfficeList.vue";
+import PrintRuns from "@/views/PrintRuns.vue";
+import PostArrivals from "@/views/PostArrivals.vue";
+import Profile from "@/views/Profile.vue";
 
 
 const router = createRouter({
@@ -29,11 +32,25 @@ const router = createRouter({
             name: 'printing_house',
             component: PrintingHousesList
         },
-
         {
             path: '/post_offices',
             name: 'post_offices',
             component: PostOfficeList
+        },
+        {
+            path: '/print_runs',
+            name: 'print_runs',
+            component: PrintRuns
+        },
+        {
+            path: '/post_arrivals',
+            name: 'post_arrivals',
+            component: PostArrivals
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile
         },
     ]
 })

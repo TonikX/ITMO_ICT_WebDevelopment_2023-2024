@@ -1,20 +1,5 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg">
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <router-link to="/newspapers" class="nav-link">Газеты</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/printing_house" class="nav-link">Типографии</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/post_offices" class="nav-link">Почтовые отделения</router-link>
-          </li>
-        </ul>
-      </div>
-    </nav>
 
     <div class="add-printing-house-form text-center">
       <h3>Добавить новую типографию</h3>

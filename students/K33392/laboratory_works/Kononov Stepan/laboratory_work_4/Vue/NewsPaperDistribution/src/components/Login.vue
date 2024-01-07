@@ -24,17 +24,21 @@
       </p>
     </div>
   </div>
+  <theme-switcher></theme-switcher>
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 
 export default {
+  components: {ThemeSwitcher},
   data() {
     return {
       username: '',
       password: '',
       error: null,
+      user: null,
     };
   },
   methods: {
@@ -59,12 +63,10 @@ export default {
       }
     },
     handleLoginResponse(responseJson) {
-
-      this.$router.push('/newspapers')
-      if (responseJson.authToken) {
-        localStorage.authToken = responseJson.authToken;
-        localStorage.user = JSON.stringify(responseJson.user);
-        this.$router.push('/newspapers')
+      if (responseJson.auth_token) {
+        localStorage.setItem('authToken', responseJson.auth_token);
+        localStorage.setItem('user', JSON.stringify(responseJson.user));
+        this.$router.push('/newspapers');
       } else {
         this.displayErrorAlert();
       }
@@ -85,6 +87,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 @keyframes fadeIn {
