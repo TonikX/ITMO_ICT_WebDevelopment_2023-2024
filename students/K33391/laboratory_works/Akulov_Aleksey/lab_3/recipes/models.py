@@ -66,4 +66,4 @@ class RecipeTool(models.Model):
 
 
 class UserProfile(AbstractUser):
-    favorite_recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    favorite_recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, null=True, blank=True)
