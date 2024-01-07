@@ -1,7 +1,6 @@
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.decorators import action
 from drf_spectacular.utils import extend_schema, OpenApiTypes
-from rest_framework.permissions import SAFE_METHODS
 from . import serializers
 from .utils import get_tokens_for_user
 from django.contrib.auth import authenticate, login, logout
@@ -71,32 +70,37 @@ class ChangePasswordView(generics.GenericAPIView):
 class NewspaperViewSet(ModelViewSet):
     queryset = Newspaper.objects.all()
     serializer_class = serializers.NewspaperSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PostOfficeViewSet(ModelViewSet):
     queryset = PostOffice.objects.all()
     serializer_class = serializers.PostOfficeSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PrinterViewSet(ModelViewSet):
     queryset = Printer.objects.all()
     serializer_class = serializers.PrinterSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PrintingNewspaperViewSet(ModelViewSet):
     queryset = PrintingNewspaper.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.action in SAFE_METHODS:
+        if self.action in ['list']:
             return serializers.ShowPrintingNewspaperSerializer
         return serializers.PrintingNewspaperSerializer
 
 
 class PostOfficeOrderViewSet(ModelViewSet):
     queryset = PostOfficeOrder.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.action in SAFE_METHODS:
+        if self.action in ['list']:
             return serializers.ShowPostOfficeOrderSerializer
         return serializers.PostOfficeOrderSerializer
 
@@ -104,19 +108,21 @@ class PostOfficeOrderViewSet(ModelViewSet):
 class TransportationViewSet(ModelViewSet):
 
     queryset = Transportation.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.action in SAFE_METHODS:
+        if self.action in ['list']:
             return serializers.ShowTransportationSerializer
         return serializers.TransportationSerializer
 
 
 class ActionViewSet(ViewSet):
+    permission_classes = [IsAuthenticated]
 
     @extend_schema(request=OpenApiTypes.STR, responses=serializers.ShowLossSerializer)
     @action(detail=False, methods=['POST'], url_path='more-expensive-newspapers')
     def by_cost(self, request):
-        cost =  float(list(request.data.keys())[0])
+        cost = float(list(request.data.keys())[0])
         gazettes = Newspaper.objects.filter(cost__gt=cost)
         qs = PostOfficeOrder.objects.filter(newspaper__in=gazettes)
         ser = serializers.ShowPostOfficeOrderSerializer(qs, many=True)
@@ -130,9 +136,10 @@ class ActionViewSet(ViewSet):
 
         for obj in PostOffice.objects.all():
             for journal in PostOfficeOrder.objects.filter(post_office=obj.id):
-                sum = Transportation.objects.filter(post_office_order__post=obj.id,
-                                                    post_office_order_newspaper=journal.id).aggregate(Sum('amount'))
-                if sum['amount__sum'] < journal.amount:
+                sum = Transportation.objects.filter(post_office_order__post_office=obj.id,
+                                                    post_office_order__newspaper=journal.id).aggregate(Sum('amount'))
+                print(sum)
+                if sum['amount__sum'] < journal.how_many_needed:
                     qs |= PostOfficeOrder.objects.filter(id=journal.id)
                     context[journal.id] = sum
 
@@ -156,7 +163,8 @@ class ActionViewSet(ViewSet):
         gip = PrintingNewspaper.objects.filter(newspaper__name=name, printer__address=address).first()
         obj = Transportation.objects.filter(printing_newspaper=gip.id).first()
         ser = serializers.ShowTransportEndSerializer(obj)
-        return Response(ser.data, status=status.HTTP_200_OK)
+        print(ser.data)
+        return Response(ser.data)
 
     @extend_schema(responses={
         'most-sold-redactor': serializers.ShowRedactor,

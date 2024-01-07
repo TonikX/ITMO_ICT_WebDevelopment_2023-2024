@@ -162,8 +162,9 @@ class FindTransportationsSerializers(serializers.Serializer):
 
 
 class ShowTransportEndSerializer(serializers.ModelSerializer):
-    post_needed = ShowPostOfficeOrderSerializer(read_only=True)
+    post_office_order = ShowPostOfficeOrderSerializer()
+
     class Meta:
         model = Transportation
-        fields = ['post_needed']
+        fields = ['post_office_order']
 

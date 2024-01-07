@@ -1,0 +1,52 @@
+<script setup>
+import {ref} from "vue";
+import instance from "@/AxiosInstance";
+import router from "@/router/router";
+import {TokenStore} from "@/stores/TokenStore";
+
+const Token = TokenStore()
+
+const error = ref(false)
+
+const form = ref('')
+const addresses = ref()
+
+function create(){
+  instance.post('/system/do/find-addresses/', form.value, {
+    headers: {
+      'Authorization': `Bearer ${Token.token}`
+    }
+  }).then(response => {
+        if (response.status === 200){
+          addresses.value = response.data
+        }
+      }
+  ).catch(e => error.value = true )
+}
+
+</script>
+
+<template>
+  <v-app>
+    <div class="w-50 mx-auto">
+      <h2>Найти адрес печати</h2>
+      <v-text-field label="Название газеты" v-model="form"></v-text-field>
+      <v-btn @click="create">Найти</v-btn>
+    </div>
+    <div v-if="error" class="text-red">
+      Не найдено
+    </div>
+    <div v-else-if="addresses">
+      <template v-for="address in addresses" :key="address">
+        <v-card
+            width="400"
+            :title="address.address"
+        ></v-card>
+      </template>
+    </div>
+  </v-app>
+</template>
+
+<style scoped>
+
+</style>
