@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block tittle %}Рады Вас видеть!{% endblock %}
+
+{% block content %}
+    <header class="px-6 py 10 lg:py-20 bg-green-400">
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="lg:text-4xl text-white">Добро пожаловать в мой импровизированный магазин!</p>
+
+            <p class="mb-10 text-white">Много всего, что может и быть и не связано друг с другом!</p>
+
+            <a href="#" class="inline-block px-8 py-4 rounded-xl bg-white text-green-400 hover:bg-gray-200">Начни шопиться!</a>
+        </div>
+    </header>
+
+<div class="max-w-6xl mx-auto py-2 px-6 xl:px-0">
+    <div class="products flex items-center flex-wrap">
+        {% for product in products %}
+        	 {% include 'products/partials/product_list_item.html' %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Guest</title>
+</head>
+<body>
+    <h2>Create Guest</h2>
+    <form method="post" action="{% url 'create_guest' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Guest</button>
+    </form>
+</body>
+</html>

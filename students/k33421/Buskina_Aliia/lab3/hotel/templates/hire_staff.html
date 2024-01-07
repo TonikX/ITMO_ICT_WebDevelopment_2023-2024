@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Принять на работу</title>
+</head>
+<body>
+    <h1>Принять на работу</h1>
+    <form method="post" action="{% url 'hire_staff' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Принять на работу</button>
+    </form>
+</body>
+</html>
