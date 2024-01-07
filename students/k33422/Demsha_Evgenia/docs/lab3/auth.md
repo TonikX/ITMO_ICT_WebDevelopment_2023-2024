@@ -2,7 +2,6 @@
 
 Настроим аутентификацию по токенам.
 
-
 ```commandline
  pip install -U djoser
 ```
