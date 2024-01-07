@@ -6,6 +6,7 @@ import FlightsTab from "../FlightsTab";
 import RoutesTab from "../RoutesTab";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import InfoTab from "../InfoTab";
 
 function Main() {
   const navigate = useNavigate();
@@ -41,6 +42,9 @@ function Main() {
           </Tab>
           <Tab eventKey="routes" title="Маршруты">
             <RoutesTab />
+          </Tab>
+          <Tab eventKey="info" title="Места на рейс">
+            <InfoTab />
           </Tab>
         </Tabs>
       </div>

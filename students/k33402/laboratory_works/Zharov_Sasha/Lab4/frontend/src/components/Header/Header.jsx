@@ -17,10 +17,14 @@ function Header({ username }) {
       <div className="container header-div">
         <div className="lable">Авиасейлс</div>
         <div className="header-left-cell">
-          <Button variant="outline-danger" onClick={() => onLogout()}>
+          <div>{username}</div>
+          <Button
+            variant="outline-danger"
+            className="logout-button"
+            onClick={() => onLogout()}
+          >
             Выйти
           </Button>
-          <div>{username}</div>
         </div>
       </div>
     </header>

@@ -33,3 +33,16 @@ button {
   font-weight: 600;
   font-size: 26px;
 }
+
+.search-cell {
+  display: flex;
+  align-items: center;
+}
+
+.info-cell {
+  font-weight: 600;
+}
+
+.logout-button {
+  margin-left: 20px;
+}
