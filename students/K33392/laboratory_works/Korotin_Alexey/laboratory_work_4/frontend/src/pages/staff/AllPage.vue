@@ -1,33 +1,5 @@
 <template>
     <q-page class="bg-primary" padding>
-        <q-dialog v-model="modal">
-            <q-card class="bg-primary">
-                <q-card-section>
-                    <div class="text text-h6">Create facility</div>
-                </q-card-section>
-
-                <q-separator />
-                <q-form>
-                    <q-card-section style="max-height: 50vh" class="scroll">
-                        <q-input label-color="white" label="Name" placeholder="Facility name" input-class="input-field"
-                            type="text"></q-input>
-                        <q-input label-color="white" label="Longitude" placeholder="Facility longitude"
-                            input-class="input-field" type="number"></q-input>
-                        <q-input label-color="white" label="Latitude" placeholder="Facility latitude"
-                            input-class="input-field" type="number"></q-input>
-
-                    </q-card-section>
-
-                    <q-separator />
-
-                    <q-card-actions align="right">
-                        <q-btn flat label="Create" type="submit" color="secondary" v-close-popup />
-                        <q-btn flat label="Close" color="secondary" v-close-popup />
-                    </q-card-actions>
-                </q-form>
-            </q-card>
-        </q-dialog>
-
         <div class="row justify-between flex-center">
             <div class="row">
                 <div class="text text-h6">Staff</div>
@@ -37,9 +9,6 @@
                 <q-select class="pagesize-input text q-ml-xl" v-model="pageSize" :options="perPageOptions" label="Per page"
                     label-color="white" dense standout  flat dark filled color="secondary" />
 
-            </div>
-            <div>
-                <q-btn color="secondary" text-color="primary" icon="add" label="Add" @click="modal = true;" />
             </div>
         </div>
 
