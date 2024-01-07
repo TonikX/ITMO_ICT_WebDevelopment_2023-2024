@@ -6,8 +6,8 @@
 
     ```Python
     from django.db import models
-
-
+    
+    
     class CarOwner(models.Model):
         last_name = models.CharField(max_length=30)
         first_name = models.CharField(max_length=30)
@@ -17,13 +17,13 @@
             return f'{self.first_name} {self.last_name}'
     
     
-    class License(models.Model):
+    class Licence(models.Model):
         LICENSE_TYPE = (
             ('B', 'passenger car'),
             ('C', 'truck'),
             ('D', 'bus'),
         )
-        car_owner = models.ForeignKey(CarOwner, on_delete=models.CASCADE)
+        car_owner = models.ForeignKey(CarOwner, on_delete=models.CASCADE, related_name="licence")
         license_number = models.IntegerField()
         type = models.CharField(max_length=2, choices=LICENSE_TYPE)
         date_of_issue = models.DateField()
@@ -41,48 +41,70 @@
     
     
     class Ownership(models.Model):
-        user = models.ForeignKey(CarOwner, on_delete=models.CASCADE)
-        car = models.ForeignKey(Car, on_delete=models.CASCADE)
+        user = models.ForeignKey(CarOwner, on_delete=models.CASCADE, related_name="ownership")
+        car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="ownership")
         date_start = models.DateField()
         date_end = models.DateField(null=True, blank=True)
         ended = models.BooleanField()
     ```
+    ![Cars](media/cars.jpg)
+    ![Owners](media/owners.jpg)
 
 === "Задание 1"
 
     ```Python
     
-    from django.utils import datetime
-    from project_first_app.models import CarOwner, Car, Ownership, Licence
+    from django.utils import timezone
+    from demsha_drf_app.models import CarOwner, Car, Ownership, Licence
+    import os
+    import django
+    
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demsha_drf_project.settings')
+    django.setup()
+    
     
     owners = CarOwner.objects.bulk_create(
         [
-            CarOwner(last_name="Беляев ", first_name="Глеб ", birth_date=datetime.now()),
-            CarOwner(last_name="Пономарев", first_name="Егор", birth_date=datetime.now()),
-            CarOwner(last_name="Сидорова", first_name="Марьяна", birth_date=datetime.now()),
-            CarOwner(last_name="Гордеева", first_name="Ксения", birth_date=datetime.now()),
-            CarOwner(last_name="Синицына", first_name="Екатерина", birth_date=datetime.now()),
-            CarOwner(last_name="Абрамов", first_name="Фёдор", birth_date=datetime.now()),
+            (gleb := CarOwner(last_name="Беляев", first_name="Глеб ", birth_date="2000-03-11")),
+            (egor := CarOwner(last_name="Пономарев", first_name="Егор", birth_date="1998-08-01")),
+            (mariana := CarOwner(last_name="Сидорова", first_name="Марьяна", birth_date="1990-12-19")),
+            (ksenia := CarOwner(last_name="Гордеева", first_name="Ксения", birth_date="1999-10-22")),
+            (kate1 := CarOwner(last_name="Синицына", first_name="Екатерина", birth_date="1985-02-12")),
+            (fedor := CarOwner(last_name="Абрамов", first_name="Фёдор", birth_date="1977-04-30")),
+            (kate2 := CarOwner(last_name="Мухина", first_name="Екатерина", birth_date="2002-08-02")),
         ]
     )
     
     cars = Car.objects.bulk_create(
         [
-            Car(license_plate_number=" Х574ТМ", brand="Jeep", model="Compass", color="черный"),
-            Car(license_plate_number="У342УР", brand="Honda", model="Clarity", color="синий"),
-            Car(license_plate_number="С699НО", brand="Ford", model="Fusion", color="белый"),
-            Car(license_plate_number="У253КМ", brand="Kia", model="Rio", color="серый"),
-            Car(license_plate_number="Т191ВХ", brand="Volkswagen", model="Atlas", color="черный"),
-            Car(license_plate_number="E543MK", brand="Ford", model="Maverick", color="зеленый"),
+            (jeep := Car(license_plate_number="Х574ТМ", brand="Jeep", model="Compass", color="black")),
+            (honda := Car(license_plate_number="У342УР", brand="Honda", model="Clarity", color="gray")),
+            (ford1 := Car(license_plate_number="С699НО", brand="Ford", model="Fusion", color="red")),
+            (kia := Car(license_plate_number="У253КМ", brand="Kia", model="Rio", color="white")),
+            (vw := Car(license_plate_number="Т191ВХ", brand="Volkswagen", model="Atlas", color="gold")),
+            (tesla := Car(license_plate_number="Н882РА", brand="Tesla", model="Model 3", color="blue")),
+            (ford2 := Car(license_plate_number="E543MK", brand="Ford", model="Maverick", color="red")),
         ]
     )
     
     ownerships = Ownership.objects.bulk_create(
-        [Ownership(owner=owners[i], car=cars[i], start_date=datetime.now()) for i in range(6)]
+        Ownership(user=gleb, car=ford1, date_start="2019-10-25", date_end="2021-11-15"),
+        Ownership(user=egor, car=tesla, date_start="2018-11-15", date_end="2022-06-06"),
+        Ownership(user=egor, car=honda, date_start="2022-07-07"),
+        Ownership(user=mariana, car=tesla, date_start="2017-12-03", date_end="2018-11-14"),
+        Ownership(user=mariana, car=honda, date_start="2018-11-19", date_end="2022-07-05"),
+        Ownership(user=mariana, car=kia, date_start="2022-05-13"),
+        Ownership(user=ksenia, car=jeep, date_start="2020-03-14"),
+        Ownership(user=kate2, car=honda, date_start=" 2017-08-11", date_end="2020-12-23"),
+        Ownership(user=kate2, car=ford1, date_start="2021-11-15"),
+        Ownership(user=fedor, car=ford1, date_start="2018-01-29", date_end="2019-10-20"),
+        Ownership(user=fedor, car=vw, date_start=" 2020-12-25"),
+        Ownership(user=fedor, car=tesla, date_start="2022-06-07"),
+        Ownership(user=kate2, car=ford2, date_start="2023-06-16"),
     )
     
-    licences = DrivingLicence.objects.bulk_create(
-        [Licence(owner=owners[i], number=str(i + 1) * 10, type="B", issue_date=datetime.now()) for i in range(6)]
+    licences = Licence.objects.bulk_create(
+        [Licence(owner=owners[i], licence_number=str(i + 1) * 10, type="B", date_of_issue=timezone.now()) for i in range(7)]
     )
 
     ```
@@ -91,20 +113,24 @@
 === "Задание 2"
 
     ```Python
-    from django.utils import datetime
-    from project_first_app.models import CarOwner, Car, Licence
+    from django.utils import timezone
+    from demsha_drf_app.models import CarOwner, Car, Licence
+    import os
+    import django
     
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demsha_drf_project.settings')
+    django.setup()
     
-    toyota_cars = Car.objects.filter(brand="Ford").all()
+    fords = Car.objects.filter(brand="Ford").all()
     
-    ivan_owners = CarOwner.objects.filter(first_name="Екатерина").all()
+    kates = CarOwner.objects.filter(first_name="Екатерина").all()
     
-    random_owner_id = CarOwner.objects.order_by("?").values_list("id", flat=True).first()
-    random_owner_licence = DrivingLicence.objects.get(owner_id=random_owner_id)
+    random_id = CarOwner.objects.order_by("?").values("id").first()
+    random_licence = Licence.objects.get(owner_id=random_id)
     
-    black_car_owners = CarOwner.objects.filter(ownerships__car__color="черный").all()
+    red_car_owners = CarOwner.objects.filter(ownership__car__color="red").all()
     
-    this_year_owners = CarOwner.objects.filter(licences__issue_date__year=datetime.now().year).all()
+    this_year_owners = CarOwner.objects.filter(licence__date_of_issue__year=timezone.now().year).all()
 
     ```
 
@@ -113,19 +139,21 @@
     ```Python
 
     from django.db.models import Min, Max, Count
+    from demsha_drf_app.models import CarOwner, Car, Ownership, Licence
+    import os
+    import django
     
-    from project_first_app.models import CarOwner, Car, Ownership, Licence
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demsha_drf_project.settings')
+    django.setup()
     
-    oldest_licence = Licence.objects.aggregate(max_issue_date=Min("issue_date"))["max_issue_date"]
+    old_licence = Licence.objects.aggregate(max_issue_date=Min("date_of_issue"))["max_issue_date"]
     
-    newest_ownership = Ownership.objects.aggregate(max_start_date=Max("start_date"))["max_start_date"]
+    new_ownership = Ownership.objects.aggregate(max_start_date=Max("start_date"))["max_start_date"]
     
-    ownerships_counts = CarOwner.objects.annotate(count=Count("ownerships"))
-    ownerships_counts_str = [f"{owner.full_name}: {owner.count}" for owner in ownerships_counts]
+    ownership_count = CarOwner.objects.annotate(count=Count("ownership"))
     
-    cars_count_by_brands = Car.objects.values("brand").annotate(count=Count("id"))
-    cars_count_by_brands_str = [f"{car['brand']}: {car['count']}" for car in cars_count_by_brands]
+    cars_brands_count = Car.objects.values("brand").annotate(count=Count("id"))
     
-    sorted_owners = CarOwner.objects.order_by("ownerships__start_date").all()
+    owners_sort = CarOwner.objects.order_by("ownership__start_date").all()
 
     ```

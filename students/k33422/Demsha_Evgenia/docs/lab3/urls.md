@@ -10,6 +10,7 @@
     from django.db import models
 
     --8<-- "laboratiry_work_3/museum/museum/urls.py:1:31"
+
     ```
 
     admin/ - админка <br>

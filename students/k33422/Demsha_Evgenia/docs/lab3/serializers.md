@@ -28,6 +28,7 @@
 
 
     --8<-- "laboratiry_work_3/museum/museum_app/serializers.py:101:131"
+
     ```
 
 

@@ -8,6 +8,7 @@
     ```Python
 
     --8<-- "laboratiry_work_3/museum/museum_app/models.py:1:20"
+
     ```
 
 === "Предмет и Картотека"

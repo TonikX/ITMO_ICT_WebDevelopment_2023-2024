@@ -11,6 +11,7 @@
     from django.db.models import Count, F
 
     --8<-- "laboratiry_work_3/museum/museum_app/views.py:71:97"
+
     ```
 
 === "Остальные представления, для вывода в виде списка, детального вывода и создания объектов"
