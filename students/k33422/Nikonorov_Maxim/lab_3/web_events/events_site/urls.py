@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import LoginView
 
 from django.urls import path
 from .views import (
@@ -9,14 +10,15 @@ from .views import (
     PlaceListView, PlaceDetailView,
     UsersEventsListView,
     SubscribedEmailListView,
-    EventParticipantsView
+    EventParticipantsView,
+    CurrentUserView
 )
 
 urlpatterns = [
     path('users/', EventsUserListView.as_view(), name='events-user-list'),
     path('users/<int:pk>/', EventsUserDetailView.as_view(), name='events-user-detail'),
 
-    path('events/', EventCardListView.as_view(), name='event-card-list'),
+    path('api/events/', EventCardListView.as_view(), name='event-card-list'),
     path('events/<int:pk>/', EventCardDetailView.as_view(), name='event-card-detail'),
 
     path('event-types/', EventTypeListView.as_view(), name='event-type-list'),
@@ -28,4 +30,5 @@ urlpatterns = [
     path('event-list/', EventParticipantsView.as_view(), name='event-card-list'),
     
     path('subscribed-emails/', SubscribedEmailListView.as_view(), name='subscribed-email-list'),
+    path('current_user/', CurrentUserView.as_view(), name='current-user'),
 ]

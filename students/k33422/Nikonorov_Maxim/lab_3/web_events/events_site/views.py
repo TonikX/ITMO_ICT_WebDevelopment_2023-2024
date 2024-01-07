@@ -1,11 +1,17 @@
 from rest_framework import generics
 from django.db.models import Count
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate, login
 from .models import EventsUser, EventCard, EventTypeList, Place, UsersEventsList, SubscribedEmail
 from .serializers import (
     EventsUserSerializer, EventCardSerializer, EventTypeListSerializer,
     PlaceSerializer, UsersEventsListSerializer, SubscribedEmailSerializer,
-    EventParticipantsSerializer
+    EventParticipantsSerializer, 
 )
+
+from rest_framework.response import Response
+from rest_framework import status
 
 class EventsUserListView(generics.ListCreateAPIView):
     queryset = EventsUser.objects.all()
@@ -56,6 +62,9 @@ class EventParticipantsView(generics.ListAPIView):
             participants_list.append(participants_)
 
         return participants_list
-
-
+    
+class CurrentUserView(APIView):
+    def get(self, request):
+        serializer = EventsUserSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 

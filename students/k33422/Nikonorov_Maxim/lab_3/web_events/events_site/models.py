@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.utils import timezone
 from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
+from rest_framework.authtoken.models import Token
+
 
 class EventsUser(AbstractUser):
     LastName = models.CharField(null=False, max_length=30)
@@ -11,6 +13,12 @@ class EventsUser(AbstractUser):
     PhoneNumber = models.CharField(null=True, max_length=30, blank=True)
     IsSubscribed = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        if not Token.objects.filter(user=self).exists():
+            Token.objects.create(user=self)
+            
     def __str__(self):
         return f"user {self.LastName} {self.FirstName}"
 

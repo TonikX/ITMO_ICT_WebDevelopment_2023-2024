@@ -7,22 +7,30 @@ class EventsUserSerializer(serializers.ModelSerializer):
         model = EventsUser
         fields = ['id', 'username', 'LastName', 'FirstName', 'DateOfBirth', 'PhoneNumber', 'IsSubscribed']
 
-class EventCardSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EventCard
-        fields = ['id', 'PostTitle', 'EventType', 'Description', 'DateOfEvent', 'EventPlace', 'NumberOfParticipants', 'AgeRestriction', 'Status']
-
 class EventTypeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventTypeList
         fields = ['id', 'TypeTitle', 'Description', 'Colour']
+        
 
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ['id', 'PlaceTitle', 'PlaceAddress', 'PlaceCapacity']
 
+class EventCardSerializer(serializers.ModelSerializer):
+    EventType = EventTypeListSerializer()
+    EventPlace = PlaceSerializer()
+    
+    class Meta:
+        model = EventCard
+        fields = ['id', 'PostTitle', 'EventType', 'Description', 'DateOfEvent', 'EventPlace', 'NumberOfParticipants', 'AgeRestriction', 'Status']
+
 class UsersEventsListSerializer(serializers.ModelSerializer):
+    
+    EventUser = EventsUserSerializer()
+    EventCard = EventCardSerializer()
+    
     class Meta:
         model = UsersEventsList
         fields = ['id', 'EventUser', 'EventCard', 'TimeOfRegistration']
@@ -44,4 +52,5 @@ class EventParticipantsSerializer(serializers.Serializer):
 
     def get_TotalParticipants(self, obj):
         return len(obj['Participants'])
+
 
