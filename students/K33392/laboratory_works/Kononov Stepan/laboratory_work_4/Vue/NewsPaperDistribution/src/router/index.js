@@ -2,6 +2,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
 import NewspapersList from "@/components/NewspapersList.vue";
+import PrintingHousesList from "@/components/PrintingHousesList.vue";
+import PostOfficeList from "@/components/PostOfficeList.vue";
 
 
 const router = createRouter({
@@ -21,6 +23,17 @@ const router = createRouter({
             path: '/newspapers',
             name: 'newspapers',
             component: NewspapersList
+        },
+        {
+            path: '/printing_house',
+            name: 'printing_house',
+            component: PrintingHousesList
+        },
+
+        {
+            path: '/post_offices',
+            name: 'post_offices',
+            component: PostOfficeList
         },
     ]
 })

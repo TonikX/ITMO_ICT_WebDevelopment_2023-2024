@@ -105,6 +105,84 @@ class PostalArrivalRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIVi
     serializer_class = PostalArrivalSerializer
 
 
+class NewspapersList(APIView):
+    """
+    Эндпоинт для получения полной информации о всех газетах
+    """
+
+    def get(self, request, *args, **kwargs):
+        newspapers = Newspaper.objects.all()
+        try:
+            response_data = list()
+            for newspaper in newspapers:
+                print_runs = PrintRun.objects.filter(newspaper=newspaper)
+                printing_houses = [
+                    {
+                        'id': run.printing_house.id,
+                        "name": run.printing_house.name,
+                        "address": run.printing_house.address
+                    }
+                    for run in print_runs
+                ]
+
+                postal_arrivals = PostalArrival.objects.filter(newspaper=newspaper)
+                post_offices = [
+                    {
+                        "id": arrival.post_office.id,
+                        "number": arrival.post_office.number,
+                        "address": arrival.post_office.address
+                    }
+                    for arrival in postal_arrivals
+                ]
+
+                response_data.append({
+                    "id": newspaper.id,
+                    "name": newspaper.name,
+                    "edition_index": newspaper.edition_index,
+                    "editor": newspaper.editor.middle_name,
+                    "price_per_copy": newspaper.price_per_copy,
+                    'printing_houses': printing_houses,
+                    'post_offices': post_offices
+                })
+
+            return Response(response_data)
+
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class PrintingHouseList(APIView):
+    """
+    Эндпоинт для получения полной информации о всех типографиях
+    """
+    def get(self, request, *args, **kwargs):
+
+        printing_houses = PrintingHouse.objects.all()
+
+        try:
+            response_data = list()
+            for printing_house in printing_houses:
+                print_runs = PrintRun.objects.filter(printing_house=printing_house)
+
+                newspapers = [
+                    {
+                        "newspaper_name": run.newspaper.name,
+                        "copies_count": run.copies_count
+                    }
+                    for run in print_runs
+                ]
+                response_data.append({
+                    "id": printing_house.id,
+                    "name": printing_house.name,
+                    "address": printing_house.address,
+                    "status": printing_house.status,
+                    "newspapers": newspapers
+                })
+            return Response(response_data)
+        except Newspaper.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 class PrintingHouseAddressesView(APIView):
     """
     Эндпоинт для поиска типографий, где печатается газета с указанным именем
@@ -231,6 +309,7 @@ class NewspaperArrivalView(APIView):
     """
        Эндпоинт для получения информации о том, куда поступает газета, печатающаяся по указанному адресу типографии.
     """
+
     def get(self, request, *args, **kwargs):
         printing_house_address = request.data.get('printing_house_address', None)
 

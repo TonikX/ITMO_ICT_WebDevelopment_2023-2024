@@ -28,7 +28,8 @@ from distribution.views import (
     PrintRunListCreateView, PrintRunRetrieveUpdateDestroyView, PostOfficeListCreateView,
     PostOfficeRetrieveUpdateDestroyView, PostalArrivalListCreateView, PostalArrivalRetrieveUpdateDestroyView,
     PrintingHouseAddressesView,
-    MaxPrintRunEditorView, PostOfficeAddressesView, UnderstockedNewspapersView, NewspaperArrivalView)
+    MaxPrintRunEditorView, PostOfficeAddressesView, UnderstockedNewspapersView, NewspaperArrivalView, NewspapersList,
+    PrintingHouseList)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -47,12 +48,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('newspapers/', NewspaperListCreateView.as_view(), name='newspaper-list-create'),
+    path('newspapers/list', NewspapersList.as_view(), name='newspaper-list'),
     path('newspapers/<int:pk>/', NewspaperRetrieveUpdateDestroyView.as_view(),
          name='newspaper-retrieve-update-destroy'),
 
     path('printinghouses/', PrintingHouseListCreateView.as_view(), name='printinghouse-list-create'),
-    path('printinghouses/<int:pk>/', PrintingHouseRetrieveUpdateDestroyView.as_view(),
-         name='printinghouse-retrieve-update-destroy'),
+    path('printinghouses/<int:pk>/', PrintingHouseRetrieveUpdateDestroyView.as_view()),
+    path('printinghouses/list', PrintingHouseList.as_view(), name='printinghouse-list'),
 
     path('editors/', EditorListCreateView.as_view(), name='editor-list-create'),
     path('editors/<int:pk>/', EditorRetrieveUpdateDestroyView.as_view(), name='editor-retrieve-update-destroy'),
@@ -83,5 +85,4 @@ urlpatterns = [
 
     path('doc/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('doc/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
-
 ]
