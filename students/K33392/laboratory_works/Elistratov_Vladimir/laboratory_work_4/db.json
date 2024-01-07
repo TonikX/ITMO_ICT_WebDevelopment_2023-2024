@@ -1,0 +1,132 @@
+{
+  "users": [
+    {
+      "email": "test1@gmail.com",
+      "password": "$2a$10$mxehQ3cxke2SmOg5COAxUeqdatpYBVdyHOSqF/aNjnmwXF/xRTjo6",
+      "firstname": "Сантос",
+      "username": "Sasha",
+      "capCount": 0,
+      "id": 1
+    },
+    {
+      "email": "test6666@gmail.com",
+      "password": "$2a$10$glekeC2mvPvCBy/AGuYwTO2zRsKcX1dZK4k1Tz3IqwqRDrO5xjC/i",
+      "firstname": "Владимир",
+      "username": "TestUser",
+      "capCount": 0,
+      "id": 2
+    }
+  ],
+  "capsules": [
+    {
+      "name": "Vue first",
+      "openDate": 1701644520000,
+      "description": "fffffffffffffffffffffffff",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 1
+    },
+    {
+      "name": "fsdfsdf",
+      "openDate": 1703631720000,
+      "description": "fsdfsdfsdfd",
+      "access": "false",
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 2
+    },
+    {
+      "name": "New Vue 3",
+      "openDate": 1702944180000,
+      "description": "Alarm",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 3
+    },
+    {
+      "name": "fsdgfdsgfsdgsdg",
+      "openDate": 1703780400000,
+      "description": "fsdfsdfsdfsdf",
+      "access": "false",
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 4
+    },
+    {
+      "name": "New Vie 4",
+      "openDate": 1701802020000,
+      "description": "wfdwsdfsdfvgsdf",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 5
+    },
+    {
+      "name": "Мистер ЗЛОООООООО 3.0",
+      "openDate": 1702494900000,
+      "description": "fsdafsdfvadsdvf",
+      "access": true,
+      "text": "ЭВРИКА\nЭВРИКА\nЭВРИКА\nЭВРИКА",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 6
+    },
+    {
+      "name": "Мистер ЗЛОООООООО",
+      "openDate": 1704658380000,
+      "description": "gg",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 7
+    },
+    {
+      "name": "TEST NOW",
+      "openDate": 1701817320000,
+      "description": "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 2,
+      "userName": "TestUser",
+      "id": 8
+    },
+    {
+      "name": "4.1.24    -     11.2.24",
+      "openDate": 1707600240000,
+      "description": "dvdsfbvdbfdbsgfbfgdbfgb df df f fdbgfdgfgf",
+      "access": true,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 9
+    },
+    {
+      "name": "123123",
+      "openDate": 1699392300000,
+      "description": "vsdfvfdsbdfvbfdb",
+      "access": false,
+      "text": "",
+      "files": "",
+      "userId": 1,
+      "userName": "Sasha",
+      "id": 10
+    }
+  ]
+}
