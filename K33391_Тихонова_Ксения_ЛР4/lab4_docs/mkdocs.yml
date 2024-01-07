@@ -1,0 +1,15 @@
+site_name: Lab 4 - Documentation
+theme: readthedocs 
+
+nav: 
+- Задание: index.md
+- Регистрация: registration.md
+- Вход: login.md
+- Профиль: profile.md
+- Homepage: homepage.md
+- Animals: animals.md
+- Locations: locations.md
+- Shop: shop.md
+- Other zoos: other_zoos.md
+
+

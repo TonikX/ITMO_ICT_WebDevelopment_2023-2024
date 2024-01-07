@@ -1,0 +1,34 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<h1 class="text-center mb-5">Various hotels to choose from</h1>
+
+<form method="GET" class='mb-5'>
+    <div class='mb-3'>
+        <label for="capacitySearchSelect" class="form-label">Capacity (people from):</label>
+        <select id="capacitySearchSelect" name="capacity" class="form-select form-select-lg">
+            <option value="0">Choose capacity:</option>
+            {% for available_cap in available_capacities %}
+                <option value="{{ available_cap }}" {% if capacity == available_cap %} selected {% endif %}>
+                    {{ available_cap }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-info">Find</button>
+</form>
+
+{% for hotel in hotels %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">Hotel: {{ hotel.name }}</h4>
+            <h5 class="card-subtitle mb-2 text-muted">Owner: {{ hotel.owner }}</h5>
+            <h5 class="card-subtitle mb-2 text-muted">Address: {{ hotel.address }}</h5>
+            <h5>
+                <a class="btn btn-info" href="{% url 'hotel_detail' hotel.id %}">Details</a>
+            </h5>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'hotel_detail' hotel.id %}" class="btn btn-secondary mb-4">Back to hotel</a>
+
+    {% if user_has_reservation %}
+        <h5 class="my-3">Add Comment</h5>
+        <form method="post" class="mb-5">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-info">Add Comment</button>
+        </form>
+    {% else %}
+        <p>You need a reservation to leave a comment.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<a href="{% url 'hotel_detail' reservation.room.hotel.id %}" class="btn btn-secondary mb-4">Back to Hotel</a>
+
+<h2 class="mb-4">Delete Reservation</h2>
+<div class="my-3">
+    <h5>Information about Reservation</h5>
+    <div>Room: {{ reservation.room }}</div>
+    <div>Date start: {{ reservation.date_start }}</div>
+    <div>Date end: {{ reservation.date_finish }}</div>
+</div>
+
+<form method="POST" class="mt-3">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the reservation?</p>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+{% endblock %}
