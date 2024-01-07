@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class Ingredient(models.Model):
@@ -62,3 +63,7 @@ class RecipeIngredient(models.Model):
 class RecipeTool(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     tool = models.ForeignKey(Tool, on_delete=models.CASCADE)
+
+
+class UserProfile(AbstractUser):
+    favorite_recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

@@ -1,15 +1,14 @@
 from django.db.models import Sum
 from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from .models import Ingredient, NutritionalValue, Tool, Recipe, MealPlan, \
-    RecipeIngredient
+    RecipeIngredient, UserProfile
 
 from .serializers import IngredientSerializer, NutritionalValueSerializer, \
-    ToolSerializer, RecipeSerializer, MealPlanSerializer
-
+    ToolSerializer, RecipeSerializer, MealPlanSerializer, UserProfileSerializer
 
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
@@ -29,6 +28,19 @@ class ToolViewSet(viewsets.ModelViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 def find_highest_calorie_plan():
@@ -96,3 +108,10 @@ def find_recipes_by_nutrition(request):
 
     serializer = RecipeSerializer(queryset, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+

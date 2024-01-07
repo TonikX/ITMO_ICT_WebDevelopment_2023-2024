@@ -1,6 +1,7 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from .models import Ingredient, NutritionalValue, Tool, Recipe, MealPlan, \
-    RecipeIngredient, RecipeTool
+    RecipeIngredient, RecipeTool, UserProfile
 
 
 class NutritionalValueSerializer(serializers.ModelSerializer):
@@ -57,3 +58,22 @@ class MealPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = MealPlan
         fields = '__all__'
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    favorite_recipe = RecipeSerializer()
+
+    class Meta:
+        model = UserProfile
+        fields = (
+            "id",
+            "password",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "favorite_recipe"
+        )
+
+    def create(self, validated_data):
+        return super().create({**validated_data, "password": make_password(
+            validated_data["password"])})

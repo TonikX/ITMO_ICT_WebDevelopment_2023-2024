@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-o+b$b6d%ctmf31c&f$)vh&@!+one_j^^@3pjphh^pur+tbj55x
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = "recipes.UserProfile"
 
 
 # Application definition
