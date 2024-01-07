@@ -10,9 +10,23 @@ from .models import Ingredient, NutritionalValue, Tool, Recipe, MealPlan, \
 from .serializers import IngredientSerializer, NutritionalValueSerializer, \
     ToolSerializer, RecipeSerializer, MealPlanSerializer, UserProfileSerializer
 
+
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class NutritionalValueViewSet(viewsets.ModelViewSet):
@@ -114,4 +128,32 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+    @action(detail=True, methods=['patch'])
+    def partial_update_profile(self, request, pk=None):
+        instance = self.get_object()
+        partial_data = request.data
+        serializer = self.get_serializer(instance, data=partial_data,
+                                         partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        for key, value in serializer.validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+
+        return Response(self.get_serializer(instance).data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
