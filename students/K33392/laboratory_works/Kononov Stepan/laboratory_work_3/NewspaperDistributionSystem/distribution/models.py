@@ -5,6 +5,7 @@ from django.db import models
 class Editor(AbstractUser):
     middle_name = models.CharField(max_length=255)
     REQUIRED_FIELDS = ['email', 'middle_name']
+
     def __str__(self):
         return f"{self.last_name} {self.first_name} {self.middle_name}"
 

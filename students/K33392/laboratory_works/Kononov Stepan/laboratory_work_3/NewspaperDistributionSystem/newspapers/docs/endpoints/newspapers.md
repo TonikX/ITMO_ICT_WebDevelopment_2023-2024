@@ -165,7 +165,6 @@ tags: [ Newspapers ]
   "printing_house_addresses": [
     "Адрес типографии 1",
     "Адрес типографии 2",
-    ...
   ]
 }
 ```
