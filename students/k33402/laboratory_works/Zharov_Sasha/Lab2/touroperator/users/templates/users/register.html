@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="mb-4">Регистрация</h2>
+          <form method="post">
+            {% csrf_token %} {{ form.username.label_tag }} {{ form.username }}
+            <br />
+            {{ form.email.label_tag }} {{ form.email }}
+            <br />
+            {{ form.birth_date.label_tag }} {{ form.birth_date }}
+            <br />
+            <br />
+            {{ form.groups.label_tag }} {{ form.groups }}
+            <br />
+            {{ form.password1.label_tag }} {{ form.password1 }}
+            <br />
+            {{ form.password2.label_tag }} {{ form.password2 }}
+            <br /><br />
+            <button type="submit" class="btn btn-primary">
+              Зарегистрироваться
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
