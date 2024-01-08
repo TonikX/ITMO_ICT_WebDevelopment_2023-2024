@@ -43,14 +43,13 @@ export default {
   },
   methods: {
     register() {
-      axios.post('http://localhost:8000/auth/users/create/', {
+      axios.post('http://localhost:8000/event/auth/users/', {
         username: this.username,
         email: this.email,
         password: this.password,
         LastName: this.LastName,
         FirstName: this.FirstName,
-
-      })
+      }, )
       .then(response => {
         console.log('Успешная регистрация:', response.data);
         
@@ -58,9 +57,8 @@ export default {
       })
       .catch(error => {
         console.error('Ошибка регистрации:', error.response.data);
-        
       });
     },
-  },
-};
+  }
+}
 </script>

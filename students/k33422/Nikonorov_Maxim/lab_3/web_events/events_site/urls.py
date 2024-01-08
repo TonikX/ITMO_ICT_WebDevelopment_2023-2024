@@ -11,7 +11,8 @@ from .views import (
     UsersEventsListView,
     SubscribedEmailListView,
     EventParticipantsView,
-    CurrentUserView
+    CurrentUserView,
+    UsersEventsListWideView
 )
 
 urlpatterns = [
@@ -31,4 +32,6 @@ urlpatterns = [
     
     path('subscribed-emails/', SubscribedEmailListView.as_view(), name='subscribed-email-list'),
     path('current_user/', CurrentUserView.as_view(), name='current-user'),
+    
+    path('users-wide-events/', UsersEventsListWideView.as_view(), name='users-events-wide-list')
 ]

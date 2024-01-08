@@ -34,14 +34,31 @@
         })
         .then(response => {
           console.log('Успешный вход:', response.data);
-
+          sessionStorage.setItem('token', response.data.auth_token)
+          sessionStorage.setItem('username', this.username)
+          sessionStorage.setItem('password', this.password)
+  
+          // Получение данных пользователя сразу после аутентификации
+          this.getUserData();
+  
           this.$router.push({ name: 'EventHome' });
         })
         .catch(error => {
-          
           console.error('Ошибка входа:', error.response.data);
-          // Здесь можете обработать ошибку входа
         });
+      },
+      async getUserData() {
+        try {
+          const response = await axios.get('http://127.0.0.1:8000/event/auth/users/me', {
+            headers: { Authorization: 'Token ' + sessionStorage.getItem('token') },
+          });
+          this.user = response.data;
+          sessionStorage.setItem('user_id', this.user.id);
+          this.$store.commit('setAuthenticated', true);
+          console.log('hi')
+        } catch (error) {
+          console.log('Ошибка при получении данных пользователя:', error);
+        }
       },
     },
   };
@@ -49,4 +66,3 @@
   
   <style scoped>
   </style>
-  

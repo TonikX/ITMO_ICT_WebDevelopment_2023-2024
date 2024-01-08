@@ -26,14 +26,35 @@ class EventCardSerializer(serializers.ModelSerializer):
         model = EventCard
         fields = ['id', 'PostTitle', 'EventType', 'Description', 'DateOfEvent', 'EventPlace', 'NumberOfParticipants', 'AgeRestriction', 'Status']
 
-class UsersEventsListSerializer(serializers.ModelSerializer):
-    
+
+class UsersEventsListViewSerializer(serializers.ModelSerializer):
     EventUser = EventsUserSerializer()
     EventCard = EventCardSerializer()
-    
+
     class Meta:
         model = UsersEventsList
-        fields = ['id', 'EventUser', 'EventCard', 'TimeOfRegistration']
+        fields = ['EventUser', 'EventCard', 'TimeOfRegistration']
+    
+class UsersEventsListSerializer(serializers.ModelSerializer):
+    
+    EventUser = serializers.PrimaryKeyRelatedField(queryset=EventsUser.objects.all())
+    EventCard = serializers.PrimaryKeyRelatedField(queryset=EventCard.objects.all())
+
+    class Meta:
+        model = UsersEventsList
+        fields = ['EventUser', 'EventCard', 'TimeOfRegistration']
+
+    def create(self, validated_data):
+        event_user = validated_data.pop('EventUser')
+        event_card = validated_data.pop('EventCard')
+
+        user_event, created = UsersEventsList.objects.get_or_create(
+            EventUser=event_user,
+            EventCard=event_card,
+            defaults=validated_data
+        )
+
+        return user_event
 
 class SubscribedEmailSerializer(serializers.ModelSerializer):
     class Meta:

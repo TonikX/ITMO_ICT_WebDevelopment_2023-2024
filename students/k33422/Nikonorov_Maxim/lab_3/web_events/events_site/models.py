@@ -72,7 +72,7 @@ class Place(models.Model):
 class UsersEventsList(models.Model):
     EventUser = models.ForeignKey('EventsUser', null=False, on_delete=models.CASCADE)
     EventCard = models.ForeignKey('EventCard', null=False, on_delete=models.CASCADE, related_name='events_users_list')
-    TimeOfRegistration = models.DateField(null=False, default=timezone.now)
+    TimeOfRegistration = models.DateField(auto_now_add=True)
     
     class Meta:
         unique_together = ('EventUser', 'EventCard')
