@@ -1,0 +1,22 @@
+site_name: Lab №1 Злотникова Карина K33392
+nav:
+  - Home: index.md
+  - Первое задание: first.md
+  - Второе задание: second.md
+  - Третье задание: third.md
+  - Четвертое задание: forth.md
+  - Пятое задание: fifth.md
+
+theme:
+  name: mkdocs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: ru
