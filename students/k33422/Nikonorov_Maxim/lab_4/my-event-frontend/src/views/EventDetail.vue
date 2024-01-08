@@ -1,18 +1,16 @@
 <template>
-  <div class="event-detail">
-    <router-link to="/" class="back-button">&lt;</router-link>
-    <div v-if="event">
-      <br>
-      <br>
-      <h1>{{ event.PostTitle || 'Название не указано' }}</h1> 
-      <p v-html="event.Description || 'Описание не указано'"></p>
-      <p>Дата: {{ event.DateOfEvent || 'Дата не указана' }}</p>
-      <p>
+  <div class="event-detail card">
+    <router-link to="/" class="btn btn-dark mb-3">&lt; Назад</router-link>
+    <div v-if="event" class="card-body">
+      <h1 class="card-title text-dark">{{ event.PostTitle || 'Название не указано' }}</h1>
+      <div class="alert alert-dark" role="alert" v-html="event.Description || 'Описание не указано'"></div>
+      <p class="card-text">Дата: {{ event.DateOfEvent || 'Дата не указана' }}</p>
+      <p class="card-text">
         Место: {{ event.EventPlace ? event.EventPlace.PlaceTitle || 'Место не указано' : 'Место не указано' }}
       </p>
       <!-- Registration Form -->
       <div v-if="user && event.Status === 'OPENED' && !registrationError">
-        <button class="btn btn-primary" @click="registerForEvent">Зарегистрироваться</button>
+        <button class="btn btn-dark" @click="registerForEvent">Зарегистрироваться</button>
       </div>
       <div v-else-if="registrationError">
         <button class="btn btn-danger">Вы уже зарегистрированы на это мероприятие.</button>
@@ -23,9 +21,6 @@
       <div v-else>
         <b><p>Войдите, чтобы зарегистрироваться на мероприятие.</p></b>
       </div>
-    </div>
-    <div v-else>
-      <p>Загрузка данных...</p>
     </div>
   </div>
 </template>

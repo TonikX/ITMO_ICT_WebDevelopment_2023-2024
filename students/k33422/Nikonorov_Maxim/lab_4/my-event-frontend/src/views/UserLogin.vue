@@ -1,19 +1,23 @@
 <template>
-    <div>
-      <h1>Вход</h1>
-      <form @submit.prevent="login">
-        <div>
-          <label for="username">Логин:</label>
-          <input type="text" id="username" v-model="username" required>
-        </div>
-        <div>
-          <label for="password">Пароль:</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-        <button type="submit">Войти</button>
-      </form>
-    </div>
-  </template>
+  <div class="card" style="max-width: 50%; margin: 50px auto;">
+    <h1 class="text-dark" style="text-align: center;">Вход</h1>
+    <form @submit.prevent="login" class="card-body">
+      <div class="form-group">
+        <label for="username" class="text-secondary">Логин:</label>
+        <input type="text" id="username" v-model="username" required class="form-control" placeholder="Логин">
+      </div>
+      <div class="form-group">
+        <label for="password" class="text-secondary">Пароль:</label>
+        <input type="password" id="password" v-model="password" required class="form-control" placeholder="Пароль">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-dark">Войти</button>
+      <br>
+      <p v-if="err" class="text-danger">{{ err }}</p>
+    </form>
+  </div>
+</template>
+
   
   <script>
   import axios from 'axios';
@@ -24,6 +28,7 @@
       return {
         username: '',
         password: '',
+        err: null,
       };
     },
     methods: {
@@ -45,6 +50,7 @@
         })
         .catch(error => {
           console.error('Ошибка входа:', error.response.data);
+          this.err = 'Неправильный логин или пароль';
         });
       },
       async getUserData() {

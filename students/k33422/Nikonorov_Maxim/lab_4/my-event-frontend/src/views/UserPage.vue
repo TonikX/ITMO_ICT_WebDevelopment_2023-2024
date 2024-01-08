@@ -1,13 +1,9 @@
 <template>
   <div class="container mt-5">
     <div class="card">
-      <div class="card-header">
-        <h1>Личный кабинет</h1>
-      </div>
       <div class="card-body">
         <h2>Аккаунт</h2>
-        <p><strong>Логин:</strong> {{ user.username }}</p>
-        <p><strong>Имя:</strong> {{ user.FirstName }} {{ user.LastName }}</p>
+        <div class="alert alert-dark" role="alert">Привет, {{ user.username }}</div>
       </div>
     </div>
 
