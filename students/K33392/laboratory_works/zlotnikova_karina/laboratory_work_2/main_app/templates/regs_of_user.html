@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4">Your registrations</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Race </th>
+        <th scope="col">Date of Race</th>
+        <th scope="col">Time</th>
+        <th scope="col">Result</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for reg in regs %}
+    <tr>
+        <td class="align-middle">{{reg.race.name}}</td>
+        <td class="align-middle">{{reg.race.when}}</td>
+        {% if reg.race.finished %}
+        <td class="align-middle">{{reg.time_result}}</td>
+        <td class="align-middle">{{reg.result}}</td>
+        {% else %}
+        <td class="align-middle"> -- </td>
+        <td class="align-middle"> -- </td>
+        {% endif %}
+
+        <td><a href="{% url 'reg_delete' reg.id %}" class="btn btn-danger">delete</a></td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

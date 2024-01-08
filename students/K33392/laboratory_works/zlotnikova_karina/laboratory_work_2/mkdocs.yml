@@ -1,0 +1,22 @@
+site_name: Lab №2 Злотникова Карина K33392
+nav:
+  - Home: index.md
+  - Регистрация: first.md
+  - Просмотр и удаление регистраций: second.md
+  - Комментарии: third.md
+  - Администрирование: forth.md
+  - Таблица заздов: fifth.md
+
+theme:
+  name: mkdocs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: ru
