@@ -1,0 +1,20 @@
+site_name: Lab №3 Злотникова Карина K33392
+nav:
+  - Home: index.md
+  - Регистрация и авторизация по токенам: first.md
+  - Калькулятор калорий: second.md
+  - Дневник калорий: third.md
+
+theme:
+  name: mkdocs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: ru
