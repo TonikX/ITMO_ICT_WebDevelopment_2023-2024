@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add owner</title>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td>  You are signed in as {{ user }} </td>
+             <td><a href="/logout/"> Sign out </a> </td>
+             <td><a href="/login/"> Sign in </a> </td>
+        </tr>
+    </table>
+    <br>
+
+<nav class="menu">
+    <table class="menu">
+        <tr>
+            <td>  <a href="/guests/register/">Registration</a></td>
+            <td>  <a href="/attendance/register/">Apply</a> </td>
+            <td><a href="/conferences/list/">See all conferences</a> </td>
+            <td><a href="/conferences/my/">My conferences</a></td>
+        </tr>
+    </table>
+</nav>
+<br>
+
+    <br>
+ <table><tr><td> <span><a href="/attendance/my/">My registrations</a></span></td></tr></table>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <!-- Security token -->
+    {% csrf_token %}
+
+    <!-- Using the formset -->
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+</body>
+</html>
+<style>
+html {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+    margin-left: auto;
+  margin-right: auto;
+
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+caption {
+  padding: 10px;
+}
+ul {
+  list-style-type: none;
+}
+input:focus {
+  background-color: #eefcff;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
+.menu td, .menu th {
+  width: 150px;
+  background-color: rgb(150,150,150);
+}
+
+</style>

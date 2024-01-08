@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en-us">
+  <head>    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">    <title>Comments</title>
+  </head>
+<body>
+
+    <table>
+        <tr>
+            <td>  You are signed in as {{ user }} </td>
+             <td><a href="/logout/"> Sign out </a> </td>
+             <td><a href="/login/"> Sign in </a> </td>
+        </tr>
+    </table>
+    <br>
+
+<nav class="menu">
+    <table class="menu">
+        <tr>
+            <td>  <a href="/guests/register/">Registration</a></td>
+            <td>  <a href="/attendance/register/">Apply</a> </td>
+            <td><a href="/conferences/list/">See all conferences</a> </td>
+            <td><a href="/conferences/my/">My conferences</a></td>
+        </tr>
+    </table>
+</nav>
+<br>
+
+  <span><h1>Comments for {{ object_list.first.conference }}</h1><a href="/comments/create/">Add a new one</a></span>  <ul>
+
+<table class="comment-table">
+    <tr>
+    <td>User</td>
+    <td>Conference:</td>
+    <td>Conference dates:</td>
+    <td>Text:</td>
+    <td>Rating:</td>
+    <td>Sent at:</td>
+    <td>Actions:</td>
+
+    </tr>
+</table>
+
+    {% for comment in object_list %}
+
+<table class="comment-table">
+    <tr>
+    <td>{{ comment.user }}</td>
+    <td>{{ comment.conference }}</td>
+    <td> {{comment.conference.date_begin }} - {{ comment.conference.date_end }} </td>
+    <td>{{ comment.text }}</td>
+    <td>{{ comment.type }} / 10</td>
+    <td>{{ comment.sent_at }}</td>
+    {% if comment.user == user %}
+      <td><a href="/comments/{{ comment.id }}/edit/"> Edit </a> | <a href="/comments/{{ comment.id }}/delete/"> Delete </a> </td>
+    {% else %}
+        <td> You cannot edit this comment. </td>
+    {% endif %}
+
+    </tr>
+
+</table>
+
+    {% empty %}
+        <li>No comments yet.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html><style>
+html {  font-family: sans-serif;
+  text-align: center;
+}
+.center {  margin-left: auto;
+  margin-right: auto;}
+table {
+  border-collapse: collapse;  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;  font-size: 0.8rem;
+    margin-left: auto;  margin-right: auto;
+}
+td, th {
+  border: 1px solid rgb(190,190,190);  padding: 10px 20px;
+}
+th {  background-color: rgb(235,235,235);
+}
+td {  text-align: center;
+}
+tr:nth-child(even) td {
+  background-color: rgb(201,201,201);}
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);}
+caption {
+  padding: 10px;}
+.comment-table tr:nth-child(even) td {
+  background-color: rgb(251,251,251);}
+.comment-table tr:nth-child(odd) td {
+  background-color: rgb(251,251,251);}
+    .fixed-table {
+  width: 500px;
+  height: 200px;
+}
+.comment-table td, .comment-table th {
+  width: 100px;
+  height: 50px;
+}
+
+.menu td, .menu th {
+  width: 150px;
+  background-color: rgb(150,150,150);
+}
+
+</style>
+

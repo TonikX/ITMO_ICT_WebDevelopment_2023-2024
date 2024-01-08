@@ -1,0 +1,7 @@
+for i, owner in enumerate(CarOwner.objects.all()[7:8]):
+    license = DriversLicence(owner_car=owner, licence_number=f"0877{i}939", type="Valid", given_at="2023-07-25")
+    license.save()
+    new_car = Car(gov_number=f"27232{i}", car_make=f"121232{i}", model="Kia Rio", color="pink")
+    new_car.save()
+    car_ownership = CarOwnership(car=new_car, owner=owner, date_begin='2001-02-01')
+    car_ownership.save()

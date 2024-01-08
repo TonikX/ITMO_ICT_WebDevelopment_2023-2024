@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>All Conferences</title>
+  </head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>  You are signed in as {{ user }} </td>
+             <td><a href="/logout/"> Sign out </a> </td>
+             <td><a href="/login/"> Sign in </a> </td>
+        </tr>
+    </table>
+    <br>
+
+<nav class="menu">
+    <table class="menu">
+        <tr>
+            <td>  <a href="/guests/register/">Registration</a></td>
+            <td>  <a href="/attendance/register/">Apply</a> </td>
+            <td><a href="/conferences/list/">See all conferences</a> </td>
+            <td><a href="/conferences/my/">My conferences</a></td>
+        </tr>
+    </table>
+</nav>
+<br>
+
+
+<h1> Forms sent by me: </h1>
+<td>  <a href="/attendance/register/">Go back</a> </td>
+
+  <ul>
+
+      <table class="attendance-table">
+            <tr>
+                <td><b>Conference:</b></td>
+                <td><b>Actions:</b></td>
+                <td><b>Guest:</b></td>
+                <td><b>Role:</b></td>
+      </table>
+    </tr>
+          	{% for attendance in object_list %}
+                <table class="attendance-table">
+
+    <tr>
+        <td>{{ attendance.conference }}</td>
+        <td><a href="/attendance/edit/{{ attendance.id }}/">Update attendance</a> | <a href="/attendance/delete/{{ attendance.id }}/">Delete Attendance</a> </td>
+        <td>{{ attendance.guest }}</td>
+        <td> {{  attendance.get_role_display }} </td>
+    </tr>
+  </table>
+
+	{% empty %}
+	<li>No forms for attendance yet.</li>
+	{% endfor %}
+	  </tr>
+  </ul>
+
+</body>
+
+</html>
+<style>
+html {
+  font-family: sans-serif;
+  text-align: center;
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+    margin-left: auto;
+  margin-right: auto;
+
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+caption {
+  padding: 10px;
+}
+
+.attendance-table td, .attendance-table th {
+  width: 150px;
+  height: 50px;
+}
+
+    .menu td, .menu th {
+  width: 150px;
+  background-color: rgb(150,150,150);
+}
+
+</style>

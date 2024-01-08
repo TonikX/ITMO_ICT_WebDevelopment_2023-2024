@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete attendance</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>  You are signed in as {{ user }} </td>
+             <td><a href="/logout/"> Sign out </a> </td>
+             <td><a href="/login/"> Sign in </a> </td>
+        </tr>
+    </table>
+    <br>
+
+<nav class="menu">
+    <table class="menu">
+        <tr>
+            <td>  <a href="/guests/register/">Registration</a></td>
+            <td>  <a href="/attendance/register/">Apply</a> </td>
+            <td><a href="/conferences/list/">See all conferences</a> </td>
+            <td><a href="/conferences/my/">My conferences</a></td>
+        </tr>
+    </table>
+</nav>
+<br>
+
+<td>  <a href="/attendance/my/">Go back</a> </td>
+<h1> Delete form: </h1>
+
+  <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete attendance "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+  </form>
+  <br>
+    <br>
+</body>
+</html>
+
+<style>
+html {
+  font-family: sans-serif;
+  text-align: center;
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+    margin-left: auto;
+  margin-right: auto;
+
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+caption {
+  padding: 10px;
+}
+
+    .menu td, .menu th {
+  width: 150px;
+  background-color: rgb(150,150,150);
+}
+
+</style>

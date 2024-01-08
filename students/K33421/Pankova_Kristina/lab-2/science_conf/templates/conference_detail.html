@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Lectures</title>
+  </head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>  You are signed in as {{ user }} </td>
+             <td><a href="/logout/"> Sign out </a> </td>
+             <td><a href="/login/"> Sign in </a> </td>
+        </tr>
+    </table>
+    <br>
+
+<nav class="menu">
+    <table class="menu">
+        <tr>
+            <td>  <a href="/guests/register/">Registration</a></td>
+            <td>  <a href="/attendance/register/">Apply</a> </td>
+            <td><a href="/conferences/list/">See all conferences</a> </td>
+            <td><a href="/conferences/my/">My conferences</a></td>
+        </tr>
+    </table>
+</nav>
+<br>
+
+
+  <span><h1> {{ conference }}</h1><a href="/conferences/list/">Go back</a></span>
+    <br>
+<br>
+
+
+<table class="conference-table">
+      <tr>
+    <td>Conference type</td>
+    <td>The date of the beginning:</td>
+    <td>The date of the end:</td>
+    <td>City:</td>
+    <td>The description of the place:</td>
+    <td>Payment fee (rub):</td>
+    <td>Conference description:</td>
+    <td>Conditions:</td>
+      </tr>
+    <tr>
+<td> {{ conference.get_type_display }} </td>
+<td> {{ conference.date_begin }} </td>
+<td> {{ conference.date_end }} </td>
+<td> {{ conference.city }} </td>
+<td> {{ conference.place_description }} </td>
+<td> {{ conference.payment_fee }} </td>
+<td> {{ conference.description }} </td>
+<td> {{ conference.conditions }} </td>
+</tr>
+</table>
+
+  <span><h3><a href="/attendance/register/">Apply!</a></h3></span>
+
+
+</body>
+
+</html>
+<style>
+html {
+  font-family: sans-serif;
+  text-align: center;
+
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+    margin-left: auto;
+  margin-right: auto;
+
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) td {
+  background-color: rgb(250,250,250);
+}
+
+tr:nth-child(odd) td {
+  background-color: rgb(245,245,245);
+}
+
+caption {
+  padding: 10px;
+}
+
+.conference-table td, .conference-table th {
+  width: 100px;
+  height: 50px;
+}
+
+.menu td, .menu th {
+  width: 150px;
+  background-color: rgb(150,150,150);
+}
+
+</style>

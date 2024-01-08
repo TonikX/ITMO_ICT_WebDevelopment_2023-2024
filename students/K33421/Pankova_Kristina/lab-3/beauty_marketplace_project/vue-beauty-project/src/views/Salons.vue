@@ -1,0 +1,163 @@
+<template>
+  <div class="app">
+
+    <button v-on:click="CreateSalon" class="button">Register a new salon</button>
+
+    <div v-if="showComponent === 'CreateSalon'">
+        <salon-form class="form" />
+    </div>
+
+    <h1 class="title">Registered salons: </h1>
+    <button v-on:click="fetchSalons" class="button">Get a list of all salons</button>
+    <salon-list v-bind:salons="salons" class="list" />
+  </div>
+</template>
+
+<style>
+.app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.list {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+</style>
+
+<script>
+import SalonForm from "@/components/SalonForm.vue";
+import SalonList from "@/components/SalonList.vue";
+import axios from "axios";
+
+export default {
+ components: {
+   SalonForm, SalonList
+ },
+
+ data() { // data - это функция, которая возвращает объект с данными
+   return {
+     salons: [], // Массив данных (передается в компонент SalonList, получает данные средствами функции fetchSalons
+     showComponent: null
+   }
+ },
+
+
+ methods: { // methods. Это объект, который содержит список Javascript функций, которые должны выполняться в зависимости от того, какие действия производит пользователь.
+   async fetchSalons () { // асинхронная функция для получения данных
+     try {
+       const response = await axios.get('http://127.0.0.1:8000/salon/salons/') // Выполнение GET-запроса Backend-серверу. Запрос вернет JSON.
+       console.log(response.data.results)
+       console.log(response)
+       this.salons = response.data // Массив данных salons из блока(функции) data() получает значением результат только-что выполненного запроса
+     } catch (e) {
+       alert('Ошибка')
+     }
+   },
+    CreateSalon() {
+      this.showComponent = 'CreateSalon';
+    },
+
+ },
+ mounted() {
+ //  this.fetchSalons() // Vue вызывает хук mount(), когда компонент добавляется в DOM.  В данном примере это позволяет вызвать fetchSalons для получения списка воинов до отрисовки страницы в браузере, благодаря этому страница загружается с уже полученными ранее данными.
+ }
+}
+</script>
+
+<template>
+    <UserComponent />
+  <div>
+    <div v-if="!showComponent">
+      <button @click="showSignIn">Sign in</button>
+      <button @click="showSignUp">Sign up</button>
+      <button @click="showSalons">Show Salons</button>
+
+    </div>
+
+    <div v-if="showComponent === 'signIn'">
+      <SignIn />
+    </div>
+
+    <div v-if="showComponent === 'signUp'">
+      <SignUpChoice />
+    </div>
+
+    <div v-if="showComponent === 'salons'">
+      <Salons />
+    </div>
+
+
+    <button v-if="showComponent" @click="goBack">Go back</button>
+  </div>
+</template>
+
+<style>
+button {
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+</style>
+
+<script>
+import SignIn from './SignIn.vue';
+import SignUpChoice from './SignUpChoice.vue';
+import UserComponent from './UserComponent.vue';
+import Salons from '@/views/Salons.vue';
+
+export default {
+  components: {
+    SignIn,
+    SignUpChoice,
+    UserComponent,
+    Salons
+  },
+  data() {
+    return {
+      showComponent: null
+    };
+  },
+  methods: {
+    showSignIn() {
+      this.showComponent = 'signIn';
+    },
+    showSignUp() {
+      this.showComponent = 'signUp';
+    },
+    showSalons() {
+      this.showComponent = 'salons';
+    },
+
+    goBack() {
+      this.showComponent = null;
+    }
+  }
+};
+</script>
