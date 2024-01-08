@@ -8,11 +8,11 @@
         <CNavbarToggler aria-label="Toggle navigation" aria-expanded={visible} @click="visible = !visible"/>
         <CCollapse class="navbar-collapse" :visible="visible">
           <CNavbarNav>
-
-            <CNavItem>
-              <router-link :to="{ name: 'UserPage' }"><CNavLink>Мой кабинет</CNavLink></router-link>
-            </CNavItem>
             <div v-if="$store.state.isAuthenticated">
+              <CNavItem>
+                <router-link :to="{ name: 'UserPage' }"><CNavLink>Мой кабинет</CNavLink></router-link>
+              </CNavItem>
+              
               <CNavItem>
                 <CNavLink @click="logout">Выйти</CNavLink>
               </CNavItem>

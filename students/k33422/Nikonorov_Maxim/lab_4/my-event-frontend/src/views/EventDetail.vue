@@ -21,7 +21,7 @@
         <p :class="statusClass(event.Status)">Регистрация на мероприятие: {{ event.Status }}</p>
       </div>
       <div v-else>
-        <p>Войдите, чтобы зарегистрироваться на мероприятие.</p>
+        <b><p>Войдите, чтобы зарегистрироваться на мероприятие.</p></b>
       </div>
     </div>
     <div v-else>
@@ -32,8 +32,18 @@
 
 <script>
 import axios from 'axios';
+import { reactive } from 'vue';
 
 export default {
+
+  setup() {
+    const authState = reactive({
+      isAuthenticated: !!sessionStorage.getItem('token'),
+    });
+
+    return { authState };
+  },
+
   data() {
     return {
       event: null,

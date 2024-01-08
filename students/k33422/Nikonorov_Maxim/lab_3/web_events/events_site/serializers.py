@@ -33,7 +33,7 @@ class UsersEventsListViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UsersEventsList
-        fields = ['EventUser', 'EventCard', 'TimeOfRegistration']
+        fields = ['id', 'EventUser', 'EventCard', 'TimeOfRegistration']
     
 class UsersEventsListSerializer(serializers.ModelSerializer):
     
