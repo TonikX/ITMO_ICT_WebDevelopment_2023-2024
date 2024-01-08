@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Главная
+{% endblock %}
+
+{% block content %}
+    <h1>Водители</h1>
+    <a href="/drivers/add">Добавить водителя</a>
+    <ul>
+        {% for driver in drivers %}
+            <li><a href="/drivers/{{ driver.id_driver }}">{{ driver.first_name }} {{ driver.last_name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h1>Автомобили</h1>
+    <a href="/cars/add">Добавить автомобиль</a>
+    <ul>
+        {% for car in cars %}
+            <li>{{ car.id_car }}: {{ car.brand }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

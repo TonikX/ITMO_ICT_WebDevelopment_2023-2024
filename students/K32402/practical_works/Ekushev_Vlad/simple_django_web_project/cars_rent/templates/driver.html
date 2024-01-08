@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Водитель
+{% endblock %}
+
+{% block content %}
+    <h3>{{ driver.first_name }} {{ driver.last_name }}</h3>
+    <p>ID: {{ driver.id_driver }}</p>
+    <p>Дата рождения: {{ driver.birth_date }}</p>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+        <a href="/drivers/update/1">Изменить данные</a>
+        <a href="/drivers/delete/1">Удалить водителя</a>
+        <a href="/">Назад</a>
+    </div>
+{% endblock %}

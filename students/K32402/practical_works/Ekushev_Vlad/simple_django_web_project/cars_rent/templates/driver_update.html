@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Изменить водителя
+{% endblock %}
+
+{% block content %}
+    <h3>{{ object.first_name }} {{ object.last_name }}</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить">
+    </form>
+    <a href="/drivers/{{ object.id_driver }}">Отмена</a>
+{% endblock %}

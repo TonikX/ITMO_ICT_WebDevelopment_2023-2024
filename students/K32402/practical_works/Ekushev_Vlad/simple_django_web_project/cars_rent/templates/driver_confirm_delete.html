@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Удалить водителя
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Вы хотите удалить этого водителя?</p>
+        <input type="submit" value="Удалить">
+    </form>
+    <a href="/drivers/{{ object.id_driver }}">Отмена</a>
+{% endblock %}
