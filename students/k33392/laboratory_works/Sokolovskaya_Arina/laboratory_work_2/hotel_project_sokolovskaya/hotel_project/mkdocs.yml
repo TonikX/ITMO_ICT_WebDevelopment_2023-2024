@@ -1,0 +1,8 @@
+site_name: My Docs
+
+
+nav:
+  - Task: task.md
+  - Models: models.md
+  - Views: views.md
+  - Urls: urls.md
