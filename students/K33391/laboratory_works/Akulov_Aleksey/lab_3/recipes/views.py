@@ -125,7 +125,7 @@ def find_recipes_by_nutrition(request):
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 

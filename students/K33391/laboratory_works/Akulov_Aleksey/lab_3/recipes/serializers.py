@@ -11,8 +11,6 @@ class NutritionalValueSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-    nutritional_value = NutritionalValueSerializer(read_only=True)
-
     class Meta:
         model = Ingredient
         fields = '__all__'
