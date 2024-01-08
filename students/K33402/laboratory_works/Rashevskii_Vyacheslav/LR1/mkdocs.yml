@@ -1,0 +1,6 @@
+site_name: "Рашевский_Вячеслав_K33402"
+nav:
+  - "Whole project from 2020":
+    - index.md
+    - vue.md
+    - docker.md
