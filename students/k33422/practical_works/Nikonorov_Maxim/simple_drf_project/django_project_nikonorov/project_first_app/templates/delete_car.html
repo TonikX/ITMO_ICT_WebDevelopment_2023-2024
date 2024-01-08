@@ -1,0 +1,19 @@
+{% extends 'strap.html' %}
+{% block title %}Delete car{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<h1>Delete car</h1>
+
+<h3>You are deleting {{ object.Brand }} {{ object.Model }}. Are you sure?</h3>
+
+</br></br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a href="{% url 'car' %}" class="btn btn-secondary">No, back home</a>
+  </form>
+</div>
+{% endblock %}

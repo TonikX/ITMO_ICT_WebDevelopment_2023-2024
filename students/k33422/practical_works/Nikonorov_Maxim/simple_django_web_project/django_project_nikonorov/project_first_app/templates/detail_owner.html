@@ -1,0 +1,22 @@
+{% extends 'strap.html' %}
+{% block content %}
+    Name: {{owner.FirstName}} {{owner.LastName}} <br>
+    {% if owner.DateOfBirth %}
+    Birth date: {{owner.DateOfBirth}} <br>
+    {% endif %}
+    {% if owner.PassportNumber %}
+    Passport number: {{owner.PassportNumber}} <br>
+    {% endif %}
+    {% if owner.Address %}
+    Address: {{owner.Address}} <br>
+    {% endif %}
+    {% if owner.Nationality %}
+    Nationality: {{owner.Nationality}} <br>
+    {% endif %}
+    <br>
+    <br>
+    <a href="{% url 'owner' %}" class="btn btn-primary btn-sm">
+        Back
+    </a>
+
+    {% endblock %}

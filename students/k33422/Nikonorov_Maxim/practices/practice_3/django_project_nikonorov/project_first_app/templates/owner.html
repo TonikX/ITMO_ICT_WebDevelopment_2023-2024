@@ -1,0 +1,20 @@
+{% extends 'strap.html' %}
+{% block content %}
+
+<b>Car Owners</b>
+<br>
+<br>
+<body>
+    {% for o in owner %}
+    Name: <a href="{% url 'detail-owner' o.id %}" class="btn btn-primary btn-sm">
+        {{o.FirstName}} {{o.LastName}}
+    </a>
+    </br><br>
+    {% endfor %}
+</body>
+<br>
+<a href="{% url 'home' %}" class="btn btn-primary btn-sm">
+        Go to home
+    </a>
+
+{% endblock %}

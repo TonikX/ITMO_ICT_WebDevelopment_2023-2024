@@ -1,0 +1,8 @@
+{% extends 'strap.html' %}
+{% block title %}Success{% endblock %}
+
+{% block content %}
+  <h1>Success</h1>
+  <p>{{ message }}</p>
+  <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+{% endblock %}
