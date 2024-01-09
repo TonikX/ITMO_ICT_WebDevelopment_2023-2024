@@ -1,0 +1,12 @@
+
+  {% extends 'base.html' %}
+
+  {% block content %}
+      <h2>Написать комментарий</h2>
+      <form method="post" action="{% url 'write_comment' pk=conference.pk %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Отправить</button>
+      </form>
+  {% endblock %}
+
