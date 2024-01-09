@@ -1,0 +1,29 @@
+<h1>SU {{ flight_number }}</h1>
+{% if dtos %}
+    <table>
+        <tr>
+            <th>Passenger name</th>
+            <th>Seat</th>
+            <th>Checked In</th>
+        </tr>
+        {% for dto in dtos %}
+            <tr>
+                <th>{{ dto.full_name }}</th>
+                <th>{{ dto.seat }}</th>
+                <th>{{ dto.checked_in }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>There are no passengers registered for this flight.</p>
+{% endif %}
+<form action="http://127.0.0.1:8000/airport/make_reservation/{{ flight_id }}">
+    <input type="submit" value="Make reservation" />
+</form>
+<form action="http://127.0.0.1:8000/airport/make_review/{{ flight_id }}/">
+    <input type="submit" value="Write review" />
+</form>
+
+<form action="http://127.0.0.1:8000/airport">
+    <input type="submit" value="Return to the main page" />
+</form>

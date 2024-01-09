@@ -1,0 +1,29 @@
+{% if flight_list %}
+    <p>ARRIVALS</p>
+    <ul>
+        {% for flight in flight_list %}
+            {% if flight.type == 'ARR' %}
+                <li><a href="/airport/{{ flight.id }}/">{{ flight.flight_number }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <p>DEPARTURES</p>
+    <ul>
+        {% for flight in flight_list %}
+            {% if flight.type == 'DEP' %}
+                <li><a href="/airport/{{ flight.id }}/">{{ flight.flight_number }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No flights are currently arriving or departing.</p>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+    <a href="http://127.0.0.1:8000/airport/list_reservations/">My reservations<br></a>
+    <a>Current user: {{ request.user.username }}</a>
+{% endif %}
+<br><br>
+{% if request.user.is_authenticated %}
+    <a href="http://127.0.0.1:8000/login/">Change user?<br></a>
+{% endif %}

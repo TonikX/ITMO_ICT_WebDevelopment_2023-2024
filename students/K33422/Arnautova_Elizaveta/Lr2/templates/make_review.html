@@ -1,0 +1,16 @@
+{% block title %}Please tell us about your experience!{% endblock %}
+
+{% block content %}
+	<div class="content-section">
+		<form method="POST" action="/airport/make_review/{{ flight_id }}/">
+			{% csrf_token %}
+			{{ form }}
+            <br><br>
+			<button name="create" type="submit">Send review</button>
+		</form>
+	</div>
+{% endblock %}
+
+<form action="http://127.0.0.1:8000/airport">
+    <input type="submit" value="Return to the main page" />
+</form>
