@@ -15,3 +15,16 @@ nav:
       - views: lab2/views.md
       - urls: lab2/urls.md
       - Выводы: lab2/itog.md
+  - Лабораторная №3:
+      - Практика 1:
+        - Создание объектов: lab3/practice1/part1.md
+        - Фильтрация объектов: lab3/practice1/part2.md
+        - Агрегация и аннотация: lab3/practice1/part3.md
+      - Практика 2: lab3/practice2/rep.md
+      - Лабораторная: 
+        - Задание: lab3/lab/index.md
+        - models: lab3/lab/models.md
+        - urls: lab3/lab/urls.md
+        - views: lab3/lab/views.md
+        - serializers: lab3/lab/serializers.md
+        - settings:  lab3/lab/settings.md
