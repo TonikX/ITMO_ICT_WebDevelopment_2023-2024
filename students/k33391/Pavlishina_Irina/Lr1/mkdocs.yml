@@ -1,0 +1,22 @@
+site_name: Lb1, Pavlishina Irina, K33391
+nav:
+  - Home: index.md
+  - Первое задание: first.md
+  - Второе задание: second.md
+  - Третье задание: third.md
+  - Четвертое задание: forth.md
+  - Пятое задание: fith.md
+
+theme:
+  name: mkdocs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: ru
