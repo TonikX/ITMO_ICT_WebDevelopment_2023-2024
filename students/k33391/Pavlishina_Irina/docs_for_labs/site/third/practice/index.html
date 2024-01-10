@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Lab3:Практика 3.1 - Pavlishina Irina, K33391</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Pavlishina Irina, K33391</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/first/" class="nav-link">Lab1:Первое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/second/" class="nav-link">Lab1:Второе задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/third/" class="nav-link">Lab1:Третье задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/forth/" class="nav-link">Lab1:Четвертое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/fith/" class="nav-link">Lab1:Пятое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/first/" class="nav-link">Lab2:Настройки сервера</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/second/" class="nav-link">Lab2:Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/third/" class="nav-link">Lab2:Формы</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/fourth/" class="nav-link">Lab2:Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/fith/" class="nav-link">Lab2:Темплэйты</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/sixth/" class="nav-link">Lab2:Ссылки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../second/seventh/" class="nav-link">Lab2:Джанго-Админ</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Lab3:Практика 3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../first/" class="nav-link">Lab3:Настройки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../second/" class="nav-link">Lab3:Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../third/" class="nav-link">Lab3:Сериалайзеры</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../forth/" class="nav-link">Lab3:Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../fith/" class="nav-link">Lab3:Ссылки</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../second/seventh/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../first/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#31" class="nav-link">Практика 3.1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#id-id-2" class="nav-link">Взяв любого случайного владельца получить его id, и по этому id получить экземпляр удостоверения в виде объекта модели (можно в 2 запроса)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Вывести всех владельцев красных машин (или любого другого цвета, который у вас присутствует)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#2010" class="nav-link">Найти всех владельцев, чей год владения машиной начинается с 2010 (или любой другой год, который присутствует у вас в базе)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_2" class="nav-link">Вывод даты выдачи самого старшего водительского удостоверения</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#-" class="nav-link">Укажите самую позднюю дату владения машиной, имеющую какую-то из существующих моделей в вашей базе</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_3" class="nav-link">Выведите количество машин для каждого водителя</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_4" class="nav-link">Подсчитайте количество машин каждой марки</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_5" class="nav-link">Отсортируйте всех автовладельцев по дате выдачи удостоверения</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="31">Практика 3.1</h1>
+<p>Модели</p>
+<pre><code>
+</code></pre>
+<p>Импорты</p>
+<pre><code>&gt;&gt;&gt; from practice.models import *
+&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; from django.db.models import Min, Max, Count
+
+
+</code></pre>
+<p>Создание объектов</p>
+<pre><code>&gt;&gt;&gt; car1 = Car.objects.create(num='num1', mark='mark1', model='model1', color='black')
+&gt;&gt;&gt; car2 = Car.objects.create(num='num2', mark='mark1', model='model2', color='black')
+&gt;&gt;&gt; car3 = Car.objects.create(num='num3', mark='mark1', model='model3', color='black')
+&gt;&gt;&gt; car4 = Car.objects.create(num='num4', mark='mark2', model='model1', color='black')
+&gt;&gt;&gt; car5 = Car.objects.create(num='num5', mark='mark2', model='model2', color='black')
+&gt;&gt;&gt; car6 = Car.objects.create(num='num6', mark='mark2', model='model3', color='black')
+
+
+&gt;&gt;&gt; owner1 = Owner.objects.create(name='name1', surname='surname1', birthday=datetime.date.today())
+&gt;&gt;&gt; owner2 = Owner.objects.create(name='name2', surname='surname2', birthday=datetime.date.today())
+&gt;&gt;&gt; owner3 = Owner.objects.create(name='name3', surname='surname3', birthday=datetime.date.today())
+&gt;&gt;&gt; owner4 = Owner.objects.create(name='name4', surname='surname4', birthday=datetime.date.today())
+&gt;&gt;&gt; owner5 = Owner.objects.create(name='name5', surname='surname5', birthday=datetime.date.today())
+&gt;&gt;&gt; owner6 = Owner.objects.create(name='name6', surname='surname6', birthday=datetime.date.today())
+
+&gt;&gt;&gt;license1 = License.objects.create(name='licence1', owner=owner1, license_type='type1', date_given=datetime.date.today())
+&gt;&gt;&gt;license2 = License.objects.create(name='licence2', owner=owner2, license_type='type1', date_given=datetime.date.today())
+&gt;&gt;&gt;license3 = License.objects.create(name='licence3', owner=owner3, license_type='type1', date_given=datetime.date.today())
+&gt;&gt;&gt;license4 = License.objects.create(name='licence4', owner=owner4, license_type='type2', date_given=datetime.date.today())
+&gt;&gt;&gt;license5 = License.objects.create(name='licence5', owner=owner5, license_type='type2', date_given=datetime.date.today())
+
+&gt;&gt;&gt;car_owing1 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car1, owner=owner1)
+&gt;&gt;&gt;car_owing2 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car2, owner=owner2)
+&gt;&gt;&gt;car_owing3 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car3, owner=owner3)
+&gt;&gt;&gt;car_owing4 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car4, owner=owner4)
+&gt;&gt;&gt;car_owing5 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car5, owner=owner5)
+&gt;&gt;&gt;car_owing6 = CarOwning.objects.create(start=datetime.date.today(), finish=datetime.date.today(),
+                                      car=car6, owner=owner6)
+
+</code></pre>
+<p>Выведете все машины марки “Toyota” (или любой другой марки, которая у вас есть)</p>
+<pre><code>&gt;&gt;&gt; Car.objects.filter(mark='mark1')
+&lt;QuerySet [&lt;Car: Car object (1)&gt;, &lt;Car: Car object (2)&gt;, &lt;Car: Car object (3)&gt;, &lt;Car: Car object (7)&gt;, &lt;Car: Car object (8)&gt;, &lt;Car: Car object (9)&gt;]&gt;
+</code></pre>
+<p>Найти всех водителей с именем “Олег” (или любым другим именем на ваше усмотрение)</p>
+<pre><code>&gt;&gt;&gt; Owner.objects.filter(name='name1')
+&lt;QuerySet [&lt;Owner: Owner object (1)&gt;, &lt;Owner: Owner object (7)&gt;]&gt;
+</code></pre>
+<h1 id="id-id-2">Взяв любого случайного владельца получить его id, и по этому id получить экземпляр удостоверения в виде объекта модели (можно в 2 запроса)</h1>
+<pre><code>&gt;&gt;&gt; License.objects.filter(owner_id=7)
+&lt;QuerySet [&lt;License: License object (1)&gt;]&gt;
+</code></pre>
+<h1 id="_1">Вывести всех владельцев красных машин (или любого другого цвета, который у вас присутствует)</h1>
+<pre><code>&gt;&gt;&gt; Car.objects.filter(color='black')
+&lt;QuerySet [&lt;Car: Car object (1)&gt;, &lt;Car: Car object (2)&gt;, &lt;Car: Car object (3)&gt;, &lt;Car: Car object (4)&gt;, &lt;Car: Car object (5)&gt;, &lt;Car: Car object (6)&gt;]&gt;
+</code></pre>
+<h1 id="2010">Найти всех владельцев, чей год владения машиной начинается с 2010 (или любой другой год, который присутствует у вас в базе)</h1>
+<pre><code>&gt;&gt;&gt; Owner.objects.filter(cars__start__gt=datetime.date(year=2010, month=1, day=1),
+...                           cars__start__lt=datetime.date(year=2011, month=1, day=1))
+&lt;QuerySet []&gt;
+&gt;&gt;&gt; Owner.objects.filter(cars__start__gt=datetime.date(year=2024, month=1, day=1), cars__start__lt=datetime.date(year=2025, month=1, day=1))
+&lt;QuerySet [&lt;Owner: Owner object (7)&gt;, &lt;Owner: Owner object (8)&gt;, &lt;Owner: Owner object (9)&gt;, &lt;Owner: Owner object (10)&gt;, &lt;Owner: Owner object (11)&gt;, &lt;Owner: Owner object (12)&gt;]&gt;
+
+</code></pre>
+<h1 id="_2">Вывод даты выдачи самого старшего водительского удостоверения</h1>
+<pre><code>&gt;&gt;&gt; License.objects.aggregate(date_given=Min('date_given'))
+{'date_given': datetime.date(2024, 1, 10)}
+
+</code></pre>
+<h1 id="-">Укажите самую позднюю дату владения машиной, имеющую какую-то из существующих моделей в вашей базе</h1>
+<pre><code>&gt;&gt;&gt; CarOwning.objects.aggregate(date_given=Max('finish'))
+{'date_given': datetime.date(2024, 1, 10)}
+
+</code></pre>
+<h1 id="_3">Выведите количество машин для каждого водителя</h1>
+<pre><code>&gt;&gt;&gt; counts = Owner.objects.annotate(Count(&quot;cars&quot;))
+&gt;&gt;&gt; for count in counts:
+...     print(count.name, count.cars__count)
+... 
+name1 1
+name2 1
+name3 1
+name4 1
+name5 1
+name6 1
+
+</code></pre>
+<h1 id="_4">Подсчитайте количество машин каждой марки</h1>
+<pre><code>&gt;&gt;&gt; Car.objects.values(&quot;mark&quot;).annotate(Count(&quot;id&quot;))
+&lt;QuerySet [{'mark': 'mark1', 'id__count': 6}, {'mark': 'mark2', 'id__count': 6}]&gt;
+</code></pre>
+<h1 id="_5">Отсортируйте всех автовладельцев по дате выдачи удостоверения</h1>
+<pre><code>&gt;&gt;&gt; CarOwning.objects.order_by(&quot;owner__licences__date_given&quot;)
+&lt;QuerySet [&lt;CarOwning: CarOwning object (1)&gt;, &lt;CarOwning: CarOwning object (2)&gt;, &lt;CarOwning: CarOwning object (3)&gt;, &lt;CarOwning: CarOwning object (4)&gt;, &lt;CarOwning: CarOwning object (5)&gt;, &lt;CarOwning: CarOwning object (6)&gt;, &lt;CarOwning: CarOwning object (12)&gt;, &lt;CarOwning: CarOwning object (7)&gt;, &lt;CarOwning: CarOwning object (8)&gt;, &lt;CarOwning: CarOwning object (9)&gt;, &lt;CarOwning: CarOwning object (10)&gt;, &lt;CarOwning: CarOwning object (11)&gt;]&gt;
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

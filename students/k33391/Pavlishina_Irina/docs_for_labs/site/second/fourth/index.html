@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Lab2:Представления - Pavlishina Irina, K33391</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Pavlishina Irina, K33391</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/first/" class="nav-link">Lab1:Первое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/second/" class="nav-link">Lab1:Второе задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/third/" class="nav-link">Lab1:Третье задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/forth/" class="nav-link">Lab1:Четвертое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../first/fith/" class="nav-link">Lab1:Пятое задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../first/" class="nav-link">Lab2:Настройки сервера</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../second/" class="nav-link">Lab2:Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../third/" class="nav-link">Lab2:Формы</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Lab2:Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../fith/" class="nav-link">Lab2:Темплэйты</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../sixth/" class="nav-link">Lab2:Ссылки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../seventh/" class="nav-link">Lab2:Джанго-Админ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/practice/" class="nav-link">Lab3:Практика 3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/first/" class="nav-link">Lab3:Настройки</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/second/" class="nav-link">Lab3:Модели</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/third/" class="nav-link">Lab3:Сериалайзеры</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/forth/" class="nav-link">Lab3:Представления</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../third/fith/" class="nav-link">Lab3:Ссылки</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../third/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../fith/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Представления</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">Представления</h1>
+<h3 id="_2">Импорты</h3>
+<pre><code>from django.http import Http404
+from django.contrib.auth import login, authenticate, logout
+from .forms import ReservationForm, RegistrationForm, LoginForm, CommentForm
+from .models import Flight, City, Reservation, Seat, Comment, AirLine
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.crypto import get_random_string
+from django.db.models import Q
+
+</code></pre>
+<h3 id="_3">Работа с юзером (регистрация, логин, логаут)</h3>
+<pre><code>def register(request):
+    if request.method == &quot;POST&quot;:
+        user_form = RegistrationForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            return redirect(&quot;user_login&quot;)
+    else:
+        user_form = RegistrationForm()
+
+    return render(request, &quot;register.html&quot;, {&quot;user_form&quot;: user_form})
+
+
+def user_login(request):
+    if request.method == &quot;POST&quot;:
+        user_form = LoginForm(request.POST)
+
+        username = user_form.data.get(&quot;username&quot;)
+        password = user_form.data.get(&quot;password&quot;)
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            return redirect(&quot;user_login&quot;)
+
+        login(request, user)
+        return redirect(&quot;flights_list&quot;)
+    else:
+        user_form = LoginForm()
+
+    return render(request, &quot;login.html&quot;, {&quot;user_form&quot;: user_form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect(&quot;user_login&quot;)
+
+</code></pre>
+<h3 id="_4">Список полетов</h3>
+<pre><code>def flights_list(request):
+
+    if request.method != &quot;GET&quot;:
+        return Http404(f&quot;Method {request.method} not supported&quot;)
+
+    city = request.GET.get(&quot;city&quot;, None)
+    available_cities = City.objects.all()
+
+    airline = request.GET.get(&quot;airline&quot;, None)
+    available_airlines = AirLine.objects.all()
+
+    print(city)
+    print(airline)
+
+    flights = Flight.objects.all()
+
+    if city is not None:
+        flights = flights.filter(Q(arrival_city__name=city) or Q(departure_city__name=city))
+
+    if airline is not None:
+        flights = flights.filter(air_line__name=airline)
+    return render(
+        request,
+        &quot;flight_list.html&quot;,
+        {
+            &quot;city&quot;: city,
+            &quot;available_cities&quot;: available_cities,
+            &quot;airline&quot;: airline,
+            &quot;available_airlines&quot;: available_airlines,
+            &quot;flights&quot;: flights
+        },
+    )
+
+</code></pre>
+<h3 id="_5">Детали полета</h3>
+<pre><code>
+def flight_detail(request, flight_id):
+    flight = get_object_or_404(Flight, pk=flight_id)
+
+    if request.method == &quot;POST&quot;:
+        if not request.user.is_authenticated:
+            return redirect(&quot;user_login&quot;)
+
+        if 'seat' in request.POST.keys():
+            seat = Seat.objects.filter(row=request.POST['seat'][0], column=request.POST['seat'][1]).first()
+            form = ReservationForm({&quot;seat&quot;: seat})
+            if not form.is_valid():
+                return redirect(&quot;flight_detail&quot;, flight_id)
+            ticket = form.save(commit=False)
+            ticket.passenger = request.user
+            ticket.flight = flight
+            ticket.ticken_number = get_random_string(32)
+            ticket.save()
+        elif &quot;rating&quot; in request.POST:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.flight = flight
+                comment.author = request.user
+                comment.save()
+
+        return redirect(&quot;flight_detail&quot;, flight_id)
+
+    else:
+        seats_set = Seat.objects.filter(plane__plane_flights__id=flight_id).order_by(&quot;row&quot;, &quot;column&quot;)
+        seats = [
+               {
+                   &quot;name&quot;: f&quot;{seat}&quot;,
+                   &quot;is_taken&quot;: Reservation.objects.filter(seat__id=seat.id, flight__id=flight_id).exists(),
+               } for seat in seats_set
+        ]
+
+        reseravtion_form = ReservationForm(flight)
+
+        has_ticket = Reservation.objects.filter(
+           passenger__id=request.user.id, flight__id=flight.id
+        ).exists()
+
+        comments = Comment.objects.filter(flight=flight)
+        comment_form = CommentForm()
+
+        return render(
+           request,
+           &quot;flight_detail.html&quot;,
+           {
+               &quot;flight&quot;: flight,
+               &quot;comments&quot;: comments,
+               &quot;tickets&quot;: Reservation.objects.filter(flight__id=flight_id),
+               &quot;seats&quot;: seats,
+               &quot;form&quot;: reseravtion_form,
+               &quot;has_ticket&quot;: has_ticket,
+               &quot;user&quot;: request.user,
+               &quot;comment_form&quot;: comment_form
+           },
+       )
+
+</code></pre>
+<h3 id="_6">Работа с бронью</h3>
+<pre><code>@login_required(login_url='/login/')
+def reservations_for_user(request):
+    reservations = Reservation.objects.filter(passenger=request.user)
+    return render(request, &quot;reservation_for_user.html&quot;, {&quot;reservations&quot;: reservations})
+
+
+def reservation_update(request, reservation_id):
+
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    #if reservation.flight.departure_time.date() &lt;= datetime.today().date():
+    #    raise Http404(f&quot;Reservation ended&quot;)
+
+    if request.method == &quot;POST&quot;:
+        form = ReservationForm(reservation.flight.id, request.POST, instance=reservation)
+        if not form.is_valid():
+            return redirect(&quot;reservation_update&quot;, reservation_id)
+
+        form.save()
+        return redirect(&quot;flight_detail&quot;, reservation.flight.id)
+    else:
+        form = ReservationForm(instance=reservation)
+        return render(
+            request,
+            &quot;reservation_update.html&quot;,
+            {&quot;form&quot;: form, &quot;reservation&quot;: reservation},
+        )
+
+
+@login_required(login_url='/login/')
+def reservation_delete(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id, passenger=request.user)
+
+    #if reservation.flight.departure_time.date() &lt;= datetime.today().date():
+    #    raise Http404(f&quot;Reservation ended&quot;)
+
+    if request.method == &quot;POST&quot;:
+        reservation.delete()
+        return redirect(&quot;flight_detail&quot;, reservation.flight.id)
+    else:
+        return render(
+            request,
+            &quot;reservation_delete.html&quot;,
+            {&quot;reservation&quot;: reservation},
+        )
+
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

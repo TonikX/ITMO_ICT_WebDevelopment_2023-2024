@@ -1,0 +1,43 @@
+site_name: Pavlishina Irina, K33391
+nav:
+  - Home: index.md
+
+  - Lab1:Первое задание: first/first.md
+  - Lab1:Второе задание: first/second.md
+  - Lab1:Третье задание: first/third.md
+  - Lab1:Четвертое задание: first/forth.md
+  - Lab1:Пятое задание: first/fith.md
+
+  - Lab2:Настройки сервера: second/first.md
+  - Lab2:Модели: second/second.md
+  - Lab2:Формы: second/third.md
+  - Lab2:Представления: second/fourth.md
+  - Lab2:Темплэйты: second/fith.md
+  - Lab2:Ссылки: second/sixth.md
+  - Lab2:Джанго-Админ: second/seventh.md
+
+  - Lab3:Практика 3.1: third/practice.md
+  - Lab3:Настройки: third/first.md
+  - Lab3:Модели: third/second.md
+  - Lab3:Сериалайзеры: third/third.md
+  - Lab3:Представления: third/forth.md
+  - Lab3:Ссылки: third/fith.md
+
+  - Lab4:Настройки: forth/first.md
+  - Lab4:Навигация: forth/second.md
+  - Lab4:Роутер: forth/third.md
+  - Lab4:Компоненты: forth/forth.md
+
+theme:
+  name: mkdocs
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: ru
