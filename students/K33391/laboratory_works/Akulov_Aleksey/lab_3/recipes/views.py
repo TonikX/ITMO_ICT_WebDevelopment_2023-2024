@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from .models import Ingredient, NutritionalValue, Tool, Recipe, MealPlan, \
-    RecipeIngredient, UserProfile
+    RecipeIngredient, UserProfile, RecipeTool
 
 from .serializers import IngredientSerializer, NutritionalValueSerializer, \
     ToolSerializer, RecipeSerializer, MealPlanSerializer, UserProfileSerializer
@@ -18,10 +18,27 @@ class IngredientViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED,
-                        headers=headers)
+
+        nutritional_data = request.data.get('nutritional_value')
+        nutritional_value = None
+
+        if nutritional_data:
+            nutritional_serializer = NutritionalValueSerializer(
+                data=nutritional_data)
+            if nutritional_serializer.is_valid():
+                if 'id' in nutritional_data:
+                    nutritional_value = NutritionalValue.objects.get(
+                        id=nutritional_data['id'])
+                else:
+                    nutritional_value = NutritionalValue.objects.create(
+                        **nutritional_serializer.validated_data)
+
+        ingredient_data = serializer.validated_data
+        ingredient_data['nutritional_value'] = nutritional_value
+        ingredient = Ingredient.objects.create(**ingredient_data)
+
+        output_serializer = IngredientSerializer(ingredient)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -46,10 +63,32 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED,
-                        headers=headers)
+
+        recipe_data = serializer.validated_data
+        recipe = Recipe.objects.create(
+            title=recipe_data['title'],
+            preparation_time=recipe_data['preparation_time'],
+            cooking_time=recipe_data['cooking_time'],
+            difficulty_level=recipe_data['difficulty_level'],
+            region=recipe_data.get('region', ''),
+            is_vegetarian=recipe_data['is_vegetarian'],
+            image_url=recipe_data.get('image_url', '')
+        )
+
+        for ingredient_data in request.data.get('ingredients', []):
+            ingredient_id = ingredient_data['id']
+            quantity = ingredient_data['quantity']
+            ingredient = Ingredient.objects.get(id=ingredient_id)
+            RecipeIngredient.objects.create(recipe=recipe, ingredient=ingredient, quantity=quantity)
+
+        for tool_data in request.data.get('tools', []):
+            tool_id = tool_data['id']
+            tool = Tool.objects.get(id=tool_id)
+            RecipeTool.objects.create(recipe=recipe, tool=tool)
+
+        output_serializer = RecipeSerializer(recipe)
+        headers = self.get_success_headers(output_serializer.data)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

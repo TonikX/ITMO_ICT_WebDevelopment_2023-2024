@@ -16,10 +16,19 @@ import NavigationMenu from "@/components/NavigationMenu.vue";
 const route = useRoute();
 
 const showHeader = computed(() => {
-  return route.path !== '/login' && route.path !== '/register' && route.path !== '/some-other-path';
+  return route.path !== '/login' && route.path !== '/register';
 });
 </script>
 
 <style scoped>
-/* Здесь вы можете добавить стили для header или другие глобальные стили */
+.main-container {
+  display: flex;
+  justify-content: space-between; /* Adjust as needed */
+  padding: 20px;
+}
+
+.recipe-container, .form-container {
+  flex: 1;
+  padding: 10px;
+}
 </style>

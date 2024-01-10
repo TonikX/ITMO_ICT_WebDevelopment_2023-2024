@@ -9,6 +9,7 @@ import axios from 'axios';
 import RegisterPage from "@/components/RegisterPage.vue";
 import IngredientsList from "@/components/IngredientsList.vue";
 import HomePage from "@/components/HomePage.vue";
+import RecipeList from "@/components/RecipeList.vue";
 
 const app = createApp(App)
 
@@ -19,6 +20,7 @@ const router = createRouter({
     { path: '/login', component: LoginPage },
     { path: '/register', component: RegisterPage },
     { path: '/ingredients', component: IngredientsList },
+    { path: '/recipes', component: RecipeList },
   ]
 });
 

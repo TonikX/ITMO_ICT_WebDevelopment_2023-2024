@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'RegisterPage',
   data() {
@@ -34,17 +36,17 @@ export default {
   methods: {
     async register() {
       try {
-        // Здесь должен быть код для отправки данных на сервер
-        // Например: await axios.post('/api/register', this.user)
-        this.$router.push('/login');
+        const response = await axios.post('http://127.0.0.1:8000/auth/users/', this.user);
+        console.log('Регистрация прошла успешно', response.data);
+        this.$router.push('/');
       } catch (error) {
-        console.error(error);
-        // Обработка ошибок
+        console.error('Ошибка при регистрации:', error.response.data);
       }
     }
   }
 }
 </script>
+
 
 
 <style scoped>

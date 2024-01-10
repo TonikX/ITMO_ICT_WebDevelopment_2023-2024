@@ -50,5 +50,45 @@ export default {
 </script>
 
 <style scoped>
-/* Стили для компонента */
+h1 {
+  color: #4CAF50;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 800px; /* Adjust as needed */
+}
+
+li {
+  background-color: #fff;
+  margin-bottom: 1em;
+  padding: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  line-height: 1.5;
+}
+
+/* Styling for Ingredient Details */
+.ingredient-details {
+  color: #333;
+  font-size: 0.9em;
+}
+
+/* Highlighting Allergens, Vegetarian Status, and Nutritional Values */
+.allergens, .vegetarian-status, .nutritional-value {
+  display: inline-block;
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.vegetarian-status {
+  color: #4CAF50; /* Green color for vegetarian indicator */
+}
+
+.allergens {
+  color: #E53935; /* Red color for allergens */
+}
 </style>
