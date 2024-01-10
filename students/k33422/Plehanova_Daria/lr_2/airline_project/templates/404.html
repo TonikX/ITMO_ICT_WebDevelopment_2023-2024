@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h1 class="display-4 mb-4">Страница не найдена</h1>
+            <p class="lead">Извините, страница, которую вы искали, не существует или была перемещена.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-4">Вернуться на главную</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

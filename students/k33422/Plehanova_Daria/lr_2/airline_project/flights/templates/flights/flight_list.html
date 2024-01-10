@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Список рейсов{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Доступные рейсы</h1>
+
+    <table class="table table-hover table-bordered table-striped flights-table">
+        <thead class="table-dark">
+        <tr>
+            <th>Рейс</th>
+            <th>Авиакомпания</th>
+            <th>Отлет</th>
+            <th>Прилет</th>
+            <th>Тип рейса</th>
+            <th>Номер гейта</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for flight in object_list %}
+            <tr>
+                <td>{{ flight.departure_location }} - {{ flight.arrival_location }}</td>
+                <td>{{ flight.airline.name }}</td>
+                <td>{{ flight.departure_time|date:"d/m/Y H:i" }}</td>
+                <td>{{ flight.arrival_time|date:"d/m/Y H:i" }}</td>
+                <td>{{ flight.get_direction_display }}</td>
+                <td>{{ flight.gate_number }}</td>
+                <td>{{ flight.get_status_display }}</td>
+                <td>
+                    <a href="{% url 'flight-detail' flight.id %}" class="btn btn-primary btn-sm">Подробнее</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="8" class="text-center">На данный момент рейсов нет.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+site_name: 'Documentation'
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Lab_3.1:
+      - Практическое задание №1: prac_1.md
+      - Практическое задание №2: prac_2.md
+      - Практическое задание №3: prac_3.md
+  - Lab_3:
+      - Alpinists: alpinists.md
+      - Guides: guides.md
+      - Mountains: mountains.md
+      - Routes: routes.md
+      - Clubs: clubs.md
+      - Climbs: climbs.md
+      - Groups: groups.md
+      - Group Members: group_members.md

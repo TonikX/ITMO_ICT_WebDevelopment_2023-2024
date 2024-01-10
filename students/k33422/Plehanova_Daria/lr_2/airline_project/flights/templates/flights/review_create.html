@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Оставить отзыв{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Оставить отзыв о рейсе</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field|add_class:"form-control" }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                    <a href="{% url 'reviews-list' flight_id %}" class="btn btn-outline-secondary">Назад к списку отзывов</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

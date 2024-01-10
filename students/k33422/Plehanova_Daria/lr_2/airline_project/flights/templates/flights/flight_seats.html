@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Места рейса – {{ flight.departure_location }} - {{ flight.arrival_location }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Места рейса – {{ flight.departure_location }} - {{ flight.arrival_location }}</h1>
+
+    <table class="table table-hover seats-table mb-4">
+        <thead>
+        <tr>
+            <th>Класс</th>
+            <th>Место</th>
+            <th>Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.seat_class }}</td>
+                <td>{{ ticket.seat }}</td>
+                <td>
+                    {% if ticket.is_booked %}
+                        <span class="badge bg-danger">Занято</span>
+                    {% else %}
+                        <a href="{% url 'ticket-book' ticket.id %}" class="btn btn-success btn-sm">Забронировать</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'flight-detail' flight.id %}" class="btn btn-info">Обратно к информации о рейсе</a>
+{% endblock %}

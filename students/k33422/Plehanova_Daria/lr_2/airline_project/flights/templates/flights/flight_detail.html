@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Рейс – {{ flight.departure_location }} - {{ flight.arrival_location }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Информация о рейсе: {{ flight.departure_location }} - {{ flight.arrival_location }}</h1>
+
+    <div class="card mb-4 flight-details">
+        <div class="card-body">
+            <p class="mb-2"><strong>Авиакомпания:</strong> {{ flight.airline.name }}</p>
+            <p class="mb-2"><strong>Отлет:</strong> {{ flight.departure_time|date:"d/m/Y H:i" }}</p>
+            <p class="mb-2"><strong>Прилет:</strong> {{ flight.arrival_time|date:"d/m/Y H:i" }}</p>
+            <p class="mb-2"><strong>Тип рейса:</strong> {{ flight.get_direction_display }}</p>
+            <p class="mb-2"><strong>Номер гейта:</strong> {{ flight.gate_number }}</p>
+        </div>
+    </div>
+
+    <a href="{% url 'flight-seats' flight.id %}" class="btn btn-primary mr-2">Посмотреть места</a>
+    <a href="{% url 'reviews-list' flight.id %}" class="btn btn-secondary">Посмотреть отзывы</a>
+{% endblock %}
