@@ -27,7 +27,7 @@ class MountainSerializer(serializers.ModelSerializer):
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Route
-        fields = ['id', 'mountain_id', 'name', 'difficulty', 'length', 'peak_height', 'estimated_time', 'description']
+        fields = ['id', 'mountain', 'name', 'difficulty', 'length', 'peak_height', 'estimated_time', 'description']
         read_only_fields = ['id']
 
 

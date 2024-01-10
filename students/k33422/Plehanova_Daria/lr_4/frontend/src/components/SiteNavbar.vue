@@ -18,8 +18,6 @@
       <v-list>
         <v-list-item v-if="!isAuthenticated" @click="openLoginModal">Login</v-list-item>
         <v-list-item v-if="!isAuthenticated" @click="openRegisterModal">Register</v-list-item>
-        <v-list-item v-if="isAuthenticated" link to="/profile">Profile</v-list-item>
-        <v-list-item v-if="isAuthenticated" link to="/ascents">My Ascents</v-list-item>
         <v-list-item v-if="isAuthenticated" @click="logout">Logout</v-list-item>
       </v-list>
     </v-menu>
