@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>Добро пожаловать в наше приложение!</h1>
-    <router-link to="/login">Вход</router-link> |
-    <router-link to="/register">Регистрация</router-link>
+    <h1>Welcome!</h1>
+    <router-link to="/login">Log in</router-link> |
+    <router-link to="/register">Register</router-link>
   </div>
 </template>
 

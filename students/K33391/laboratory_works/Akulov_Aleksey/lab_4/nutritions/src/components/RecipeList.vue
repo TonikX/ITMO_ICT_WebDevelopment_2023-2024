@@ -164,14 +164,21 @@ export default {
     this.fetchIngredients();
   },
   methods: {
-    addIngredient() {
-      this.editRecipe.ingredients.push({
-        ingredient: this.ingredients.find(ing => ing.id === this.newIngredientId),
-        quantity: this.newIngredientQuantity
-      });
-      this.newIngredientId = null;
-      this.newIngredientQuantity = '';
+    addIngredient(event) {
+      event.preventDefault();
+
+      const ingredientToAdd = this.ingredients.find(ing => ing.id === this.newIngredientId);
+      if (ingredientToAdd) {
+        this.editRecipe.ingredients.push({
+          ingredient: ingredientToAdd,
+          quantity: this.newIngredientQuantity
+        });
+
+        this.newIngredientId = null;
+        this.newIngredientQuantity = '';
+      }
     },
+
     removeIngredient(index) {
       this.editRecipe.ingredients.splice(index, 1);
     },

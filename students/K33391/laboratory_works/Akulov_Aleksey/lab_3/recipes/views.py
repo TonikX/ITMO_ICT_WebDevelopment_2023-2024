@@ -1,4 +1,5 @@
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, AllowAny
@@ -78,22 +79,47 @@ class RecipeViewSet(viewsets.ModelViewSet):
         for ingredient_data in request.data.get('ingredients', []):
             ingredient_id = ingredient_data['id']
             quantity = ingredient_data['quantity']
-            ingredient = Ingredient.objects.get(id=ingredient_id)
+            ingredient = get_object_or_404(Ingredient, id=ingredient_id)
             RecipeIngredient.objects.create(recipe=recipe, ingredient=ingredient, quantity=quantity)
 
         for tool_data in request.data.get('tools', []):
             tool_id = tool_data['id']
-            tool = Tool.objects.get(id=tool_id)
+            tool = get_object_or_404(Ingredient, id=tool_id)
             RecipeTool.objects.create(recipe=recipe, tool=tool)
 
         output_serializer = RecipeSerializer(recipe)
         headers = self.get_success_headers(output_serializer.data)
         return Response(output_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def destroy(self, request, *args, **kwargs):
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = self.get_serializer(instance, data=request.data,
+                                         partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
+
+        if 'ingredients' in request.data:
+            RecipeIngredient.objects.filter(recipe=instance).delete()
+
+            for ingredient_data in request.data['ingredients']:
+                ingredient_id = ingredient_data['ingredient']['id']
+                quantity = ingredient_data['quantity']
+                ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+                RecipeIngredient.objects.create(recipe=instance,
+                                                ingredient=ingredient,
+                                                quantity=quantity)
+
+        if 'tools' in request.data:
+            RecipeTool.objects.filter(recipe=instance).delete()
+
+            for tool_data in request.data['tools']:
+                tool_id = tool_data['tool']['id']
+                tool = get_object_or_404(Tool, id=tool_id)
+                RecipeTool.objects.create(recipe=instance, tool=tool)
+
+        return Response(serializer.data)
 
 
 def find_highest_calorie_plan():

@@ -1,19 +1,20 @@
 <template>
   <div>
-    <h1>Список Ингредиентов</h1>
+    <h1>Ingredients List</h1>
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.id">
         {{ ingredient.name }} -
-        Аллергены: {{ ingredient.allergens || 'Нет' }},
-        Вегетарианский: {{ ingredient.is_vegetarian ? 'Да' : 'Нет' }},
-        Пищевая ценность: Калории: {{ ingredient.nutritional_value.calories }},
-        Белки: {{ ingredient.nutritional_value.proteins }},
-        Углеводы: {{ ingredient.nutritional_value.carbohydrates }},
-        Жиры: {{ ingredient.nutritional_value.fats }}
+        <span class="allergens">Allergens: {{ ingredient.allergens || 'None' }}</span>,
+        <span class="vegetarian-status">Vegetarian: {{ ingredient.is_vegetarian ? 'Yes' : 'No' }}</span>,
+        <span class="nutritional-value">Nutritional Value: Calories: {{ ingredient.nutritional_value.calories }},
+        Proteins: {{ ingredient.nutritional_value.proteins }},
+        Carbohydrates: {{ ingredient.nutritional_value.carbohydrates }},
+        Fats: {{ ingredient.nutritional_value.fats }}</span>
       </li>
     </ul>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -71,13 +72,11 @@ li {
   line-height: 1.5;
 }
 
-/* Styling for Ingredient Details */
 .ingredient-details {
   color: #333;
   font-size: 0.9em;
 }
 
-/* Highlighting Allergens, Vegetarian Status, and Nutritional Values */
 .allergens, .vegetarian-status, .nutritional-value {
   display: inline-block;
   margin-right: 15px;
@@ -85,10 +84,10 @@ li {
 }
 
 .vegetarian-status {
-  color: #4CAF50; /* Green color for vegetarian indicator */
+  color: #4CAF50;
 }
 
 .allergens {
-  color: #E53935; /* Red color for allergens */
+  color: #E53935;
 }
 </style>
