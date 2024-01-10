@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="add mount detail">
+    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="minor fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/MountDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MountDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/RoutesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/RoutesTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +54,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2023.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -111,6 +109,7 @@
       <workItem from="1704822077218" duration="1530000" />
       <workItem from="1704823938939" duration="3369000" />
       <workItem from="1704827876480" duration="22152000" />
+      <workItem from="1704910365402" duration="1079000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <option name="closed" value="true" />
@@ -152,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704909169024</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="minor fix">
+      <option name="closed" value="true" />
+      <created>1704910162841</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704910162841</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +181,7 @@
     <MESSAGE value="add register modal" />
     <MESSAGE value="add crud operations on route" />
     <MESSAGE value="add mount detail" />
-    <option name="LAST_COMMIT_MESSAGE" value="add mount detail" />
+    <MESSAGE value="minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor fix" />
   </component>
 </project>
