@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="start project">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/RegisterModal.vue" afterDir="false" />
+    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="add register modal">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/ClubsTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/LoginModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/LoginModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SiteFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SiteFooter.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SiteNavbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SiteNavbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +111,7 @@
       <workItem from="1704812427769" duration="4718000" />
       <workItem from="1704822077218" duration="1530000" />
       <workItem from="1704823938939" duration="3369000" />
-      <workItem from="1704827876480" duration="13426000" />
+      <workItem from="1704827876480" duration="22152000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <option name="closed" value="true" />
@@ -131,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704878927477</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add register modal">
+      <option name="closed" value="true" />
+      <created>1704879805207</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1704879805207</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +156,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="start project" />
-    <option name="LAST_COMMIT_MESSAGE" value="start project" />
+    <MESSAGE value="add register modal" />
+    <option name="LAST_COMMIT_MESSAGE" value="add register modal" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import HomePage from '@/components/HomePage.vue';
+import ClubsTable from "@/components/ClubsTable.vue";
 
 const routes = [
     {
@@ -7,6 +8,11 @@ const routes = [
         name: 'Home',
         component: HomePage
     },
+    {
+        path: '/clubs',
+        name: 'Clubs',
+        component: ClubsTable
+    }
 ];
 
 const router = createRouter({

@@ -34,6 +34,9 @@ const store = createStore({
                 commit('setToken', token);
                 commit('setAuthStatus', 'success');
                 commit('setAuthError', null);
+
+                const userResponse = await api.get('auth/users/me/');
+                commit('setUser', userResponse.data);
             } catch (error) {
                 let errorMessage = 'Unknown error';
                 if (error.response && error.response.data && error.response.data.non_field_errors) {
