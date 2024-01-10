@@ -52,7 +52,13 @@ const store = createStore({
                 commit('setAuthStatus', 'success');
                 commit('setAuthError', null);
             } catch (error) {
-                commit('setAuthError', error.response.data);
+                let errorMessage = 'Unknown error';
+                if (error.response && error.response.data) {
+                    if (error.response.data.email && error.response.data.email.length > 0) {
+                        errorMessage = error.response.data.email[0];
+                    }
+                }
+                commit('setAuthError', errorMessage);
                 commit('setAuthStatus', 'error');
             }
         },

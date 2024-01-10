@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <v-card>
-      <v-card-title class="headline">Вход</v-card-title>
+      <v-card-title class="headline">Регистрация</v-card-title>
       <v-card-text>
         <v-form>
           <v-text-field label="Email" v-model="email" required></v-text-field>
@@ -11,7 +11,7 @@
       <v-card-actions>
         <v-btn text color="red" @click="dialog = false">Отмена</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="login">Войти</v-btn>
+        <v-btn color="primary" text @click="register">Зарегистрироваться</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -43,10 +43,10 @@ export default {
     }
   },
   methods: {
-    async login() {
-      await this.$store.dispatch('login', {email: this.email, password: this.password});
+    async register() {
+      await this.$store.dispatch('register', {email: this.email, password: this.password});
       if (this.authStatus === 'success') {
-        this.snackbar.text = 'Вы успешно вошли в систему';
+        this.snackbar.text = 'Success registration!';
         this.snackbar.show = true;
         this.dialog = false;
       } else {

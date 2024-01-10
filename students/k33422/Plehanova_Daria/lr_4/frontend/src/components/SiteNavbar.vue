@@ -17,7 +17,7 @@
       </template>
       <v-list>
         <v-list-item v-if="!isAuthenticated" @click="openLoginModal">Login</v-list-item>
-        <v-list-item v-if="!isAuthenticated" link to="/register">Register</v-list-item>
+        <v-list-item v-if="!isAuthenticated" @click="openRegisterModal">Register</v-list-item>
         <v-list-item v-if="isAuthenticated" link to="/profile">Profile</v-list-item>
         <v-list-item v-if="isAuthenticated" link to="/ascents">My Ascents</v-list-item>
         <v-list-item v-if="isAuthenticated" @click="logout">Logout</v-list-item>
@@ -26,15 +26,18 @@
   </v-app-bar>
 
   <login-modal ref="loginModal"></login-modal>
+  <register-modal ref="registerModal"></register-modal>
 </template>
 
 <script>
 import LoginModal from './LoginModal.vue';
+import RegisterModal from "@/components/RegisterModal.vue";
 
 export default {
   name: 'SiteNavbar',
   components: {
     LoginModal,
+    RegisterModal
   },
   computed: {
     isAuthenticated() {
@@ -44,6 +47,9 @@ export default {
   methods: {
     openLoginModal() {
       this.$refs.loginModal.dialog = true;
+    },
+    openRegisterModal() {
+      this.$refs.registerModal.dialog = true;
     },
     logout() {
       this.$store.dispatch('logout');
