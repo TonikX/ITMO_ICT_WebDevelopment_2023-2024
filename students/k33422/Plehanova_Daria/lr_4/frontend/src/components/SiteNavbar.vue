@@ -1,14 +1,9 @@
 <template>
   <v-app-bar app color="indigo" dark>
-    <v-toolbar-title>Alpinists</v-toolbar-title>
+    <v-toolbar-title>
+      <router-link style="text-decoration: none; color: inherit;" to="/">Alpinists</router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-text-field
-        solo-inverted
-        flat
-        hide-details
-        append-icon="mdi-magnify"
-        label="Search Routes"
-    />
     <v-btn text to="/routes">Routes</v-btn>
     <v-btn text to="/clubs">Clubs</v-btn>
     <v-menu offset-y>

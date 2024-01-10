@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="add register modal">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/RoutesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lr_3/mountaineering_club/mountaineering/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lr_3/mountaineering_club/mountaineering/serializers.py" afterDir="false" />
+    <list default="true" id="94235b77-6a86-472a-b639-e02c78ff71ac" name="Changes" comment="add crud operations on route">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/MountDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/HomePage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/SiteNavbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SiteNavbar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
     </list>
@@ -139,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704879805207</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add crud operations on route">
+      <option name="closed" value="true" />
+      <created>1704907615534</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1704907615534</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +166,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="start project" />
     <MESSAGE value="add register modal" />
-    <option name="LAST_COMMIT_MESSAGE" value="add register modal" />
+    <MESSAGE value="add crud operations on route" />
+    <option name="LAST_COMMIT_MESSAGE" value="add crud operations on route" />
   </component>
 </project>

@@ -88,6 +88,7 @@ export default {
     },
     selectMountain(mountain) {
       this.selectedMountain = mountain;
+      this.$router.push({name: 'MountainDetail', params: {id: mountain.id}});
     },
   },
   mounted() {
