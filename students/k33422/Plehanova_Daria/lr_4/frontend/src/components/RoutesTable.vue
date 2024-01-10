@@ -19,7 +19,6 @@
         >
           <template #item="{ item }">
             <tr>
-              <td>{{ item.mountain_id }}</td>
               <td>{{ item.name }}</td>
               <td>
                 <v-expansion-panels>
@@ -106,7 +105,6 @@ export default {
       valid: false,
       serverError: null,
       headers: [
-        {title: 'Mountain'},
         {title: 'Name'},
         {title: 'Details', sortable: false},
         {title: 'Actions', sortable: false},

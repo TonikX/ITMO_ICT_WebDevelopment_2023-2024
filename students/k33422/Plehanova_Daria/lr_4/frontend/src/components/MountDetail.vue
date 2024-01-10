@@ -8,7 +8,6 @@
           <v-card-text>
             <p>Height: {{ mountain.height }} м</p>
             <p>Location: {{ mountain.country }}, {{ mountain.region }}</p>
-            <p>Description: {{ mountain.description }}</p>
           </v-card-text>
         </v-card>
       </v-col>
