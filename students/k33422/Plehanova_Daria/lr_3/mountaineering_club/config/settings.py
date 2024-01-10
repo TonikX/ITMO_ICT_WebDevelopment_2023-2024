@@ -37,6 +37,7 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'corsheaders'
 ]
 
 # Apps
@@ -55,6 +56,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+MIDDLEWARE += [
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -128,6 +133,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

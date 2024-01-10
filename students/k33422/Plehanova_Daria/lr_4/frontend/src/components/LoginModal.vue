@@ -1,0 +1,59 @@
+<template>
+  <v-dialog v-model="dialog" max-width="500px">
+    <v-card>
+      <v-card-title class="headline">Вход</v-card-title>
+      <v-card-text>
+        <v-form>
+          <v-text-field label="Email" v-model="email" required></v-text-field>
+          <v-text-field label="Пароль" v-model="password" type="password" required></v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text color="red" @click="dialog = false">Отмена</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" text @click="login">Войти</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <v-snackbar v-model="snackbar.show">
+    {{ snackbar.text }}
+    <v-btn color="red" text @click="snackbar.show = false">Закрыть</v-btn>
+  </v-snackbar>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      dialog: false,
+      email: '',
+      password: '',
+      snackbar: {
+        show: false,
+        text: ''
+      }
+    };
+  },
+  computed: {
+    authError() {
+      return this.$store.state.authError;
+    },
+    authStatus() {
+      return this.$store.state.authStatus;
+    }
+  },
+  methods: {
+    async login() {
+      await this.$store.dispatch('login', {email: this.email, password: this.password});
+      if (this.authStatus === 'success') {
+        this.snackbar.text = 'Вы успешно вошли в систему';
+        this.snackbar.show = true;
+        this.dialog = false;
+      } else {
+        this.snackbar.text = this.authError; // Отображение сообщения об ошибке
+        this.snackbar.show = true;
+      }
+    }
+  }
+};
+</script>
