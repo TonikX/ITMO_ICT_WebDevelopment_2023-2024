@@ -1,0 +1,226 @@
+body {
+  font-family: 'Corbel', sans-serif;
+}
+
+nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #5DD0C0;
+  border-top: 1px solid #e7e7e7;
+}
+
+nav ul {
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #111111;
+  padding: 10px 15px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+
+body {
+  margin-bottom: 60px;
+}
+
+
+/*
+hotel list
+ */
+
+/* Стили для общего заголовка */
+h2 {
+  color: #111111;
+  margin-bottom: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  background-color: #f9f9f9;
+  border: 1px solid #e1e1e1;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+ul li h3 {
+  margin-top: 0;
+  color: #5DD0C0;
+}
+
+ul li p {
+  margin: 8px 0;
+}
+
+
+/* welcome page */
+
+.auth-links a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 15px;
+  background-color: #B564D4;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.auth-links a:hover {
+  background-color: #5DD0C0;
+}
+
+/* reservation list */
+.reservations-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reservations-list li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.reservations-list p {
+  margin: 5px 0;
+}
+
+
+.reservation-action {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #FFDC73;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.reservation-action:hover {
+  background-color: #5DD0C0;
+}
+
+
+
+/*
+Hotel guests
+ */
+h2, h3 {
+  color: #111111;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table thead th {
+  background-color: #FFDC73;
+  color: black;
+  padding: 10px;
+  text-align: left;
+}
+
+table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.no-show {
+  color: #FFDC73;
+}
+
+/*
+forms
+ */
+
+form {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+}
+
+form p {
+  margin-bottom: 10px;
+}
+
+form label {
+  display: block;
+  margin-bottom: .5rem;
+  color: black;
+}
+
+form input[type='text'],
+form input[type='date'],
+form input[type='email'],
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* delete review edit */
+
+input[type="submit"] {
+  display: block;
+  width: 20%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #FFDC73;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: red;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 20%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #FFDC73;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #5DD0C0;
+}

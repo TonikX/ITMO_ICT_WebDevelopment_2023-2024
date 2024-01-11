@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car owners</title>
+</head>
+<body>
+<h1>Владельцы:</h1>
+    <ul>
+      {% for owner in owners %}
+      <li>
+          <h4>Фамилия: {{owner.surname}}</h4>
+          <h4>Имя: {{owner.name}}</h4>
+          <h4>Дата рождения: {{owner.birth_date}}</h4>
+          <h4>Паспорт: {{owner.passport}}</h4>
+          <h4>Адрес: {{owner.address}}</h4>
+          <h4>Национальность: {{owner.nationality}}</h4>
+      </li>
+      {% endfor %}
+    </ul>
+</body>
+</html>
