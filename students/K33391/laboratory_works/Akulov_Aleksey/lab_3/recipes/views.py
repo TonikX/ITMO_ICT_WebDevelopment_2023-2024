@@ -1,18 +1,50 @@
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from .models import Ingredient, NutritionalValue, Tool, Recipe, MealPlan, \
-    RecipeIngredient, UserProfile
+    RecipeIngredient, UserProfile, RecipeTool
 
 from .serializers import IngredientSerializer, NutritionalValueSerializer, \
     ToolSerializer, RecipeSerializer, MealPlanSerializer, UserProfileSerializer
 
+
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        nutritional_data = request.data.get('nutritional_value')
+        nutritional_value = None
+
+        if nutritional_data:
+            nutritional_serializer = NutritionalValueSerializer(
+                data=nutritional_data)
+            if nutritional_serializer.is_valid():
+                if 'id' in nutritional_data:
+                    nutritional_value = NutritionalValue.objects.get(
+                        id=nutritional_data['id'])
+                else:
+                    nutritional_value = NutritionalValue.objects.create(
+                        **nutritional_serializer.validated_data)
+
+        ingredient_data = serializer.validated_data
+        ingredient_data['nutritional_value'] = nutritional_value
+        ingredient = Ingredient.objects.create(**ingredient_data)
+
+        output_serializer = IngredientSerializer(ingredient)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class NutritionalValueViewSet(viewsets.ModelViewSet):
@@ -32,15 +64,62 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED,
-                        headers=headers)
 
-    def destroy(self, request, *args, **kwargs):
+        recipe_data = serializer.validated_data
+        recipe = Recipe.objects.create(
+            title=recipe_data['title'],
+            preparation_time=recipe_data['preparation_time'],
+            cooking_time=recipe_data['cooking_time'],
+            difficulty_level=recipe_data['difficulty_level'],
+            region=recipe_data.get('region', ''),
+            is_vegetarian=recipe_data['is_vegetarian'],
+            image_url=recipe_data.get('image_url', '')
+        )
+
+        for ingredient_data in request.data.get('ingredients', []):
+            ingredient_id = ingredient_data['id']
+            quantity = ingredient_data['quantity']
+            ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+            RecipeIngredient.objects.create(recipe=recipe, ingredient=ingredient, quantity=quantity)
+
+        for tool_data in request.data.get('tools', []):
+            tool_id = tool_data['id']
+            tool = get_object_or_404(Ingredient, id=tool_id)
+            RecipeTool.objects.create(recipe=recipe, tool=tool)
+
+        output_serializer = RecipeSerializer(recipe)
+        headers = self.get_success_headers(output_serializer.data)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        serializer = self.get_serializer(instance, data=request.data,
+                                         partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
+
+        if 'ingredients' in request.data:
+            RecipeIngredient.objects.filter(recipe=instance).delete()
+
+            for ingredient_data in request.data['ingredients']:
+                ingredient_id = ingredient_data['ingredient']['id']
+                quantity = ingredient_data['quantity']
+                ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+                RecipeIngredient.objects.create(recipe=instance,
+                                                ingredient=ingredient,
+                                                quantity=quantity)
+
+        if 'tools' in request.data:
+            RecipeTool.objects.filter(recipe=instance).delete()
+
+            for tool_data in request.data['tools']:
+                tool_id = tool_data['tool']['id']
+                tool = get_object_or_404(Tool, id=tool_id)
+                RecipeTool.objects.create(recipe=instance, tool=tool)
+
+        return Response(serializer.data)
 
 
 def find_highest_calorie_plan():
@@ -111,7 +190,35 @@ def find_recipes_by_nutrition(request):
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+    @action(detail=True, methods=['patch'])
+    def partial_update_profile(self, request, pk=None):
+        instance = self.get_object()
+        partial_data = request.data
+        serializer = self.get_serializer(instance, data=partial_data,
+                                         partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        for key, value in serializer.validated_data.items():
+            setattr(instance, key, value)
+
+        instance.save()
+
+        return Response(self.get_serializer(instance).data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

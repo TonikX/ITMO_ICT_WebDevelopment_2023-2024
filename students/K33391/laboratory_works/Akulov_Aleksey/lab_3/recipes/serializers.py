@@ -11,7 +11,7 @@ class NutritionalValueSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-    nutritional_value = NutritionalValueSerializer()
+    nutritional_value = NutritionalValueSerializer(read_only=True)
 
     class Meta:
         model = Ingredient
@@ -42,8 +42,8 @@ class RecipeToolSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = RecipeIngredientSerializer(source='recipeingredient_set',
-                                             many=True)
-    tools = RecipeToolSerializer(source='recipetool_set', many=True)
+                                             many=True, read_only=True)
+    tools = RecipeToolSerializer(source='recipetool_set', many=True, read_only=True)
 
     class Meta:
         model = Recipe
@@ -59,8 +59,10 @@ class MealPlanSerializer(serializers.ModelSerializer):
         model = MealPlan
         fields = '__all__'
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
-    favorite_recipe = RecipeSerializer()
+    favorite_recipe = serializers.PrimaryKeyRelatedField(
+        queryset=Recipe.objects.all(), allow_null=True)
 
     class Meta:
         model = UserProfile
