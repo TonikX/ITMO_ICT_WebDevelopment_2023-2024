@@ -378,7 +378,7 @@ input[type="text"], input[type="number"], select {
 
 input[type="checkbox"] {
   transform: scale(1.5);
-  margin-right: 5px;
+  margin-left: 10px;
   border-color: #4CAF50;
 }
 </style>
