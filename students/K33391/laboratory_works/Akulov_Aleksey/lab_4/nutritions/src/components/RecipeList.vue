@@ -3,41 +3,47 @@
     <div class = "recipe-list-container">
 
       <h1>Recipes</h1>
-        <ul>
+        <ul class="recipe-list">
           <li v-for="recipe in recipes" :key="recipe.id">
             <h2>{{ recipe.title }}</h2>
-            <p>Preparation Time: {{ recipe.preparation_time }} min</p>
-            <p>Cooking time: {{ recipe.cooking_time }} min</p>
-            <p>Difficulty: {{ recipe.difficulty_level }}</p>
-            <p>Region: {{ recipe.region }}</p>
-            <p>Vegetarian: {{ recipe.is_vegetarian ? 'Yes' : 'No' }}</p>
+
+            <p><span class="label">Preparation Time:</span> <span class="value">{{ recipe.preparation_time }} min</span></p>
+            <p><span class="label">Cooking Time:</span> <span class="value">{{ recipe.cooking_time }} min</span></p>
+            <p><span class="label">Difficulty:</span> <span class="value">{{ recipe.difficulty_level }}</span></p>
+            <p><span class="label">Region:</span> <span class="value">{{ recipe.region }}</span></p>
+            <p><span class="label">Vegetarian:</span> <span class="value">{{ recipe.is_vegetarian ? 'Yes' : 'No' }}</span></p>
+            <br><br>
             <div v-if="recipe.ingredients.length">
               <h3>Ingredients:</h3>
               <ul>
                 <li v-for="ingredient in recipe.ingredients" :key="ingredient.id">
-                  {{ ingredient.ingredient.name }} - {{ ingredient.quantity }}
+                  <span class="value">{{ ingredient.ingredient.name }}</span> - <span class="value">{{ ingredient.quantity }}</span>
                 </li>
               </ul>
             </div>
+
             <div v-if="recipe.tools.length">
               <h3>Tools:</h3>
               <ul>
                 <li v-for="tool in recipe.tools" :key="tool.id">
-                   {{ tool.tool.name }}
+                  <span class="value">{{ tool.tool.name }}</span>
                 </li>
               </ul>
             </div>
+
+            <br>
             <button @click="deleteRecipe(recipe.id)">Delete</button>
             <button @click="startEdit(recipe)">Edit</button>
           </li>
         </ul>
+
 
         <div  v-if="editRecipe">
           <h2>Recipe Edition: {{ editRecipe.title }}</h2>
           <form @submit.prevent="updateRecipe">
             <div>
               <label for="editTitle">Title:</label>
-              <input id="editTitle" v-model="editRecipe.title" required>
+              <input id="editTitle" type="text" v-model="editRecipe.title" required>
             </div>
 
             <div>
@@ -61,7 +67,7 @@
 
             <div>
               <label for="editRegion">Region:</label>
-              <input id="editRegion" v-model="editRecipe.region">
+              <input id="editRegion" type="text" v-model="editRecipe.region">
             </div>
 
             <div>
@@ -99,7 +105,7 @@
       <form @submit.prevent="createRecipe">
         <div>
           <label for="newTitle">Title:</label>
-          <input id="newTitle" v-model="newRecipe.title" required>
+          <input id="newTitle" type="text" v-model="newRecipe.title" required>
         </div>
 
         <div>
@@ -123,13 +129,15 @@
 
         <div>
           <label for="newRegion">Region:</label>
-          <input id="newRegion" v-model="newRecipe.region">
+          <input id="newRegion" type="text" v-model="newRecipe.region">
         </div>
 
         <div>
           <label for="newVegetarian">Vegetarian:</label>
           <input id="newVegetarian" type="checkbox" v-model="newRecipe.is_vegetarian">
         </div>
+
+        <br>
 
         <button type="submit">Create Recipe</button>
       </form>
@@ -303,8 +311,22 @@ ul {
   border-radius: 5px;
 }
 
-.recipe-list h2 {
-  margin-top: 0;
+.recipe-list p, .recipe-list li {
+  font-size: 1em;
+}
+
+.recipe-list p {
+  margin: 5px 0;
+}
+
+.recipe-list p span.label {
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+}
+
+.recipe-list p span.value {
+  color: #555;
 }
 
 button {
@@ -324,26 +346,39 @@ button:hover {
 input[type="text"], input[type="number"], select {
   width: 100%;
   padding: 10px;
-  margin: 8px 0;
+  margin: 10px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
 .main-container {
   display: flex;
-  margin-top: 60px; /* Adjust based on the height of your navigation menu */
+  justify-content: space-between;
+  align-items: stretch;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+}
+
+.recipe-list-container,
+.form-container {
+  flex: 1;
+  padding: 50px;
+  overflow: auto;
 }
 
 .recipe-list-container {
-  flex: 1; /* Takes up 1 part of the available space */
-  padding: 10px;
+  max-width: 50%;
 }
 
 .form-container {
-  flex: 1; /* Takes up 1 part of the available space */
-  padding: 10px;
+  max-width: 50%;
 }
 
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 5px;
+  border-color: #4CAF50;
+}
 </style>

@@ -1,20 +1,21 @@
 <template>
   <div>
-    <h2>Регистрация</h2>
+    <h2>Registration</h2>
     <form @submit.prevent="register">
       <div>
-        <label for="username">Имя пользователя:</label>
+        <label for="username">Username:</label>
         <input id="username" v-model="user.username" type="text" required>
       </div>
       <div>
-        <label for="email">Электронная почта:</label>
+        <label for="email">Email:</label>
         <input id="email" v-model="user.email" type="email" required>
       </div>
       <div>
-        <label for="password">Пароль:</label>
+        <label for="password">Password:</label>
         <input id="password" v-model="user.password" type="password" required>
       </div>
-      <button type="submit">Зарегистрироваться</button>
+      <button type="submit">Register</button>
+      <router-link to="/login">Log in</router-link>
     </form>
   </div>
 </template>
@@ -37,7 +38,17 @@ export default {
     async register() {
       try {
         const response = await axios.post('http://127.0.0.1:8000/auth/users/', this.user);
-        console.log('Регистрация прошла успешно', response.data);
+        console.log('Registration successful', response.data);
+
+        const response_login = await axios.post('http://127.0.0.1:8000/auth/token/login/', {
+          username: this.user.username,
+          password: this.user.password,
+        });
+
+        const accessToken = response_login.data.auth_token;
+        localStorage.setItem('access_token', accessToken);
+        console.log('Login successful. Token:', accessToken);
+
         this.$router.push('/');
       } catch (error) {
         console.error('Ошибка при регистрации:', error.response.data);
@@ -50,5 +61,42 @@ export default {
 
 
 <style scoped>
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
+h2 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+button {
+  background-color: #3bbc55;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 4px;
+}
 </style>
