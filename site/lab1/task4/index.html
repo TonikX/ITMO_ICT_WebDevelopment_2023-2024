@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Задание 4 - Web Programming Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u0417\u0430\u0434\u0430\u043d\u0438\u0435 4";
+        var mkdocs_page_input_path = "lab1\\task4.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Web Programming Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">ЛР1</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../task/">Задание</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task1/">Задание 1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task2/">Задание 2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task3/">Задание 3</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Задание 4</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#clientpy">client.py</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#serverpy">server.py</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../task5/">Задание 5</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">ЛР2</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/task/">Задание</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/practice/">Практическая работа</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/main_page_login/">Главная страница</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/hotels/">Отели</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab2/reservations/">Бронирование</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">ЛР3</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/task/">Задание</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/practice/">Практическая работа</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/models/">Модели</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/serializers/">Serializers</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/views/">Views</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab3/swagger/">Swagger</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">ЛР4</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/task/">Задание</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/registration/">Регистрация</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/login/">Вход</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/profile/">Профиль</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/homepage/">Homepage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/animals/">Animals</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/locations/">Locations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/shop/">Shop</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab4/other_zoos/">Other zoos</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Web Programming Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">ЛР1</li>
+      <li class="breadcrumb-item active">Задание 4</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="4">Задание 4</h2>
+<p>Реализовать двухпользовательский или многопользовательский чат. Реализация
+многопользовательского часа позволяет получить максимальное количество
+баллов. Обязательно использовать библиотеку threading.</p>
+<h3 id="clientpy">client.py</h3>
+<pre><code class="language-python">import socket
+from threading import Thread
+
+
+def receive():
+    while True:
+        try:
+            msg = client.recv(1024).decode('utf-8')
+            print(msg)
+        except:
+            break
+
+
+def respond():
+    while True:
+        client.send((input()).encode('utf-8'))
+
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_adress = ('localhost', 7777)
+
+client.connect(client_adress)
+
+username = input('Введите имя: ')
+
+rec_thread = Thread(target=receive)
+rec_thread.start()
+
+client.send(username.encode('utf-8'))
+respond()
+</code></pre>
+<h3 id="serverpy">server.py</h3>
+<pre><code class="language-python">
+import socket
+from threading import Thread
+
+
+class User:
+    def __init__(self, connection):
+        self.connection = connection
+        self.name = ''
+        self.ready = False
+
+
+
+def c_listen(user):
+    while True:
+        data = user.connection.recv(1024)
+        if not data:
+            break
+
+        msg = data.decode('utf-8')
+        if user.ready:
+            send_users(f'{user.name}: {msg}')
+        else:
+            user.name = msg
+            user.ready = True
+            send_users(f'{user.name} присоединился\ась')
+
+    users.remove(user)
+    user.connection.close()
+    send_users(f'{user.name} покинул(а) чат')
+
+
+
+def send_users(msg):
+    for user in users:
+        if user.ready:
+            user.connection.send(msg.encode('utf-8'))
+
+
+users = []
+
+srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_adress = ('localhost', 7777)
+
+srv.bind(server_adress)
+srv.listen(1)
+
+def connect():
+    while True:
+        connect, _ = srv.accept()
+
+        user = User(connect)
+        users.append(user)
+
+        client_thread = Thread(target=c_listen, args=[user])
+        client_thread.start()
+
+
+connect()
+</code></pre>
+<p><img alt="Задание4" src="../img/task4.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../task3/" class="btn btn-neutral float-left" title="Задание 3"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../task5/" class="btn btn-neutral float-right" title="Задание 5">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../task3/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../task5/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
