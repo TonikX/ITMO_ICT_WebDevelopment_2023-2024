@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Endpoints - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../task/" class="nav-link">Task</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../pract/" class="nav-link">Practical 3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../models/" class="nav-link">Models</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../urls/" class="nav-link">Urls</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../views/" class="nav-link">Views</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../serializers/" class="nav-link">Serializers</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Endpoints</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Api <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../auth/autorization/" class="dropdown-item">authorization</a>
+</li>
+                                    
+<li>
+    <a href="../auth/token/" class="dropdown-item">token authorization</a>
+</li>
+                                    
+<li>
+    <a href="../books/list/" class="dropdown-item">books list</a>
+</li>
+                                    
+<li>
+    <a href="../books/info/" class="dropdown-item">books info</a>
+</li>
+                                    
+<li>
+    <a href="../books/create/" class="dropdown-item">books create</a>
+</li>
+                                    
+<li>
+    <a href="../rooms/list/" class="dropdown-item">rooms list</a>
+</li>
+                                    
+<li>
+    <a href="../rooms/info/" class="dropdown-item">rooms info</a>
+</li>
+                                    
+<li>
+    <a href="../rooms/create/" class="dropdown-item">rooms create</a>
+</li>
+                                    
+<li>
+    <a href="../copys/list/" class="dropdown-item">copys list</a>
+</li>
+                                    
+<li>
+    <a href="../copys/info/" class="dropdown-item">copys info</a>
+</li>
+                                    
+<li>
+    <a href="../copys/update/" class="dropdown-item">copys update</a>
+</li>
+                                    
+<li>
+    <a href="../copys/create/" class="dropdown-item">copys create</a>
+</li>
+                                    
+<li>
+    <a href="../readers/list/" class="dropdown-item">readers list</a>
+</li>
+                                    
+<li>
+    <a href="../readers/info/" class="dropdown-item">readers info</a>
+</li>
+                                    
+<li>
+    <a href="../readers/update/" class="dropdown-item">readers update</a>
+</li>
+                                    
+<li>
+    <a href="../readers/create/" class="dropdown-item">readers create</a>
+</li>
+                                    
+<li>
+    <a href="../author/list/" class="dropdown-item">authors list</a>
+</li>
+                                    
+<li>
+    <a href="../author/info/" class="dropdown-item">authors info</a>
+</li>
+                                    
+<li>
+    <a href="../author/create/" class="dropdown-item">authors create</a>
+</li>
+                                    
+<li>
+    <a href="../booktake/list/" class="dropdown-item">book takes list</a>
+</li>
+                                    
+<li>
+    <a href="../booktake/info/" class="dropdown-item">book take info</a>
+</li>
+                                    
+<li>
+    <a href="../booktake/create/" class="dropdown-item">book take create</a>
+</li>
+                                    
+<li>
+    <a href="../category/list/" class="dropdown-item">category list</a>
+</li>
+                                    
+<li>
+    <a href="../category/create/" class="dropdown-item">category create</a>
+</li>
+                                    
+<li>
+    <a href="../task/show_taken/" class="dropdown-item">books own by reader</a>
+</li>
+                                    
+<li>
+    <a href="../task/taken_last_month/" class="dropdown-item">readers that own book more than month</a>
+</li>
+                                    
+<li>
+    <a href="../task/unique_books/" class="dropdown-item">books with less 2 copys</a>
+</li>
+                                    
+<li>
+    <a href="../task/readers_under_20.md" class="dropdown-item">readers under_20</a>
+</li>
+                                    
+<li>
+    <a href="../task/education_percentage.md" class="dropdown-item">education percentage</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../serializers/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../auth/autorization/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Список всех эндпоинтов</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">Список всех эндпоинтов</h1>
+<ul>
+<li>admin/</li>
+<li>library/ ^reader/$ [name='reader-list']</li>
+<li>library/ ^reader.(?P<format>[a-z0-9]+)/?$ [name='reader-list']</li>
+<li>library/ ^reader/percentage/$ [name='reader-percentage']</li>
+<li>library/ ^reader/percentage.(?P<format>[a-z0-9]+)/?$ [name='reader-percentage']</li>
+<li>library/ ^reader/youngest/$ [name='reader-youngest']</li>
+<li>library/ ^reader/youngest.(?P<format>[a-z0-9]+)/?$ [name='reader-youngest']</li>
+<li>library/ ^reader/(?P<pk>[^/.]+)/$ [name='reader-detail']</li>
+<li>library/ ^reader/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='reader-detail']</li>
+<li>library/ ^reader/(?P<pk>[^/.]+)/show_taken/$ [name='reader-show-taken']</li>
+<li>library/ ^reader/(?P<pk>[^/.]+)/show_taken.(?P<format>[a-z0-9]+)/?$ [name='reader-show-taken']</li>
+<li>library/ ^category/$ [name='category-list']</li>
+<li>library/ ^category.(?P<format>[a-z0-9]+)/?$ [name='category-list']</li>
+<li>library/ ^category/(?P<pk>[^/.]+)/$ [name='category-detail']</li>
+<li>library/ ^category/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='category-detail']</li>
+<li>library/ ^author/$ [name='author-list']</li>
+<li>library/ ^author.(?P<format>[a-z0-9]+)/?$ [name='author-list']</li>
+<li>library/ ^author/(?P<pk>[^/.]+)/$ [name='author-detail']</li>
+<li>library/ ^author/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='author-detail']</li>
+<li>library/ ^reading-room/$ [name='readingroom-list']</li>
+<li>library/ ^reading-room.(?P<format>[a-z0-9]+)/?$ [name='readingroom-list']</li>
+<li>library/ ^reading-room/(?P<pk>[^/.]+)/$ [name='readingroom-detail']</li>
+<li>library/ ^reading-room/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='readingroom-detail']</li>
+<li>library/ ^reading-room/(?P<pk>[^/.]+)/show_readers/$ [name='readingroom-show-readers']</li>
+<li>library/ ^reading-room/(?P<pk>[^/.]+)/show_readers.(?P<format>[a-z0-9]+)/?$ [name='readingroom-show-readers']</li>
+<li>library/ ^book/$ [name='book-list']</li>
+<li>library/ ^book.(?P<format>[a-z0-9]+)/?$ [name='book-list']</li>
+<li>library/ ^book/take_unique_books/$ [name='book-take-unique-books']</li>
+<li>library/ ^book/take_unique_books.(?P<format>[a-z0-9]+)/?$ [name='book-take-unique-books']</li>
+<li>library/ ^book/(?P<pk>[^/.]+)/$ [name='book-detail']</li>
+<li>library/ ^book/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='book-detail']</li>
+<li>library/ ^book-copy/$ [name='bookcopy-list']</li>
+<li>library/ ^book-copy.(?P<format>[a-z0-9]+)/?$ [name='bookcopy-list']</li>
+<li>library/ ^book-copy/(?P<pk>[^/.]+)/$ [name='bookcopy-detail']</li>
+<li>library/ ^book-copy/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='bookcopy-detail']</li>
+<li>library/ ^book-taken/$ [name='booktake-list']</li>
+<li>library/ ^book-taken.(?P<format>[a-z0-9]+)/?$ [name='booktake-list']</li>
+<li>library/ ^book-taken/take_last_month/$ [name='booktake-take-last-month']</li>
+<li>library/ ^book-taken/take_last_month.(?P<format>[a-z0-9]+)/?$ [name='booktake-take-last-month']</li>
+<li>library/ ^book-taken/(?P<pk>[^/.]+)/$ [name='booktake-detail']</li>
+<li>library/ ^book-taken/(?P<pk>[^/.]+).(?P<format>[a-z0-9]+)/?$ [name='booktake-detail']</li>
+<li>library/ ^$ [name='api-root']</li>
+<li>library/ ^.(?P<format>[a-z0-9]+)/?$ [name='api-root']</li>
+<li>auth/</li>
+<li>auth/</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
