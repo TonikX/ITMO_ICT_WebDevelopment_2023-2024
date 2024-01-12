@@ -1,0 +1,16 @@
+{% extends "header.html" %}
+{% block content %}
+
+  <span><h1 style="margin-left: 40px">Rooms</h1>
+  <ul>
+	{% for room in object_list %}
+	<p><strong>{{ room.type }}</strong>
+        <a href="/{{ room.hotel }}/rooms/{{ room.type }}">Book room</a></p>
+    <p>{{ room.description }}</p>
+    <p>From {{ room.cost }}$</p>
+	{% empty %}
+	No rooms yet
+	{% endfor %}
+  </ul>
+  </span>
+{% endblock %}

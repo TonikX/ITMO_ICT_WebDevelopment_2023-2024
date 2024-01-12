@@ -1,0 +1,19 @@
+{% extends "header.html" %}
+{% block content %}
+
+<span><h1 style="margin-left: 40px">Hotels</h1>
+<ul>
+{% for hotel in object_list %}
+<p><strong>{{ hotel.name }} in {{ hotel.city }}, {{ hotel.country }}</strong>
+    <a href="/{{ hotel.city }}/rooms/">View rooms</a></p>
+<img src="media/{{ hotel.image }}" width="460" height="345"><br>
+<br>
+{{ hotel.description }}
+<br>
+<br>
+{% empty %}
+No hotels yet
+{% endfor %}
+</ul>
+</span>
+{% endblock %}
