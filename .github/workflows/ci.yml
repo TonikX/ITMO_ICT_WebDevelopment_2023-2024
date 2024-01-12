@@ -17,7 +17,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          path: .cache 
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material mkdocs-glightbox
