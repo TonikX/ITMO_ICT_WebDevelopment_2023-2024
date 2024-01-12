@@ -1,0 +1,72 @@
+site_name: "Документация по лабораторным работам"
+theme:
+  name: material
+  features:
+    - navigation.indexes
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github-alt
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/lightbulb
+        name: Переключиться на тёмную тему
+    - media: "(prefers-color-scheme: dark)"
+      primary: black
+      scheme: slate
+      toggle:
+        icon: material/lightbulb-outline
+        name: Переключиться на светлую тему
+  language: ru
+repo_url: https://github.com/7Alexandra8/ITMO_ICT_WebDevelopment_2023-2024
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      restrict_base_path: False
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+plugins:
+  - glightbox:
+      auto_caption: true
+extra_css:
+- css/custom.css
+- css/palette.scss
+nav:
+  - "Лабораторная №1: Сокеты":
+      - laboratory_work_1/index.md
+      - laboratory_work_1/task1.md
+      - laboratory_work_1/task2.md
+      - laboratory_work_1/task3.md
+      - laboratory_work_1/task4.md
+      - laboratory_work_1/task5.md
+
+  - "Лабораторная №2: Django":
+      - laborstory_work_2/a_index.md
+      - laborstory_work_2/settings.md
+      - laborstory_work_2/models.md
+      - laborstory_work_2/admin.md
+      - laborstory_work_2/forms.md
+      - laborstory_work_2/views.md
+      - laborstory_work_2/router.md
+      - laborstory_work_2/templates.md
+  - "Лабораторная №3: DRF":
+      - laboratory_work_3/index.md
+  - "Лабораторная №4: Vue.js":
+      - laboratory_work_4/a_index.md
+      - laboratory_work_4/settings.md
+      - laboratory_work_4/store.md
+      - laboratory_work_4/components.md
+      - laboratory_work_4/router.md
+      - laboratory_work_4/views.md
