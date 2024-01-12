@@ -17,17 +17,17 @@ class AnimalViewSet(ModelViewSet):
         return [IsAdminUser()]
 
     @action(detail=False, methods=["GET"])
-    def animals_in_lease(self):
+    def animals_in_lease(self,request ):
         qs = Animal.objects.filter(in_lease=True)
         ser = self.serializer_class(qs, many=True)
         return ser.data
 
-    @action(detail=False, methods=["GET"])
-    def animals_in_communas(self, request):
-        aias = AnimalInCage.objects.filter(cage__communal=True)
-        ser = serializers.AnimalInCageSerializer(aias, many=True)
-        return Response(ser.data, status=status.HTTP_200_OK)
-
+    @action(detail=False, methods=['get'])
+    def animals_in_lease(self, request):
+        qs = self.get_queryset().filter(in_lease=True)
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+    
     @action(detail=True, methods=["GET"])
     def leaving_together(self, request, pk=None):
         animal = self.get_object()
