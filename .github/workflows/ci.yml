@@ -20,6 +20,6 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install mkdocs-material mkdocs-listbox
+      - run: pip install mkdocs-material mkdocs-glightbox
       - run: mkdocs gh-deploy --force
         working-directory: ./students/K33392/laboratory_works/Пронина_Александра
