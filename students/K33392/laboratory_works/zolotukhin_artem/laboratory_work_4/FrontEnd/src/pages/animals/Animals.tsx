@@ -7,6 +7,8 @@ import {
   updateAnimal,
 } from '../../features/animals/animalSlice'
 
+import styles from './animals.module.css'
+
 type AnimalData = {
   num: string
   name: string
@@ -86,33 +88,149 @@ const AnimalsPage = () => {
   if (!Array.isArray(animals)) return <p>Error: Animals data is not an array</p>
 
   return (
-    <div>
+    <div className={styles['container']}>
       <h1>Animals</h1>
       {animals.map((animal: AnimalData) => (
-        <div key={animal.id}>
+        <div key={animal.id} className={styles['animal_data_container']}>
           <h2>{animal.name}</h2>
           <p>Number: {animal.num}</p>
           {/* More details... */}
-          <button onClick={() => handleEditClick(animal)}>Edit</button>
-          <button onClick={() => handleDeleteAnimal(animal.id)}>Delete</button>
+          <div className={styles['animal_btn--row']}>
+            <button
+              className={styles['animal_btn']}
+              onClick={() => handleEditClick(animal)}
+            >
+              Edit
+            </button>
+            <button
+              className={styles['animal_btn']}
+              onClick={() => handleDeleteAnimal(animal.id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
-      <div>
+      <div className={styles['animal_btn--column']}>
         {selectedAnimal ? <h2>Edit Animal</h2> : <h2>Add New Animal</h2>}
-        {/* Form for adding or editing an animal */}
+
         <input
           type='text'
+          className={styles['animal_input']}
           placeholder='Number'
           value={newAnimalData.num}
           onChange={(e) =>
             setNewAnimalData({ ...newAnimalData, num: e.target.value })
           }
         />
-        {/* I need to add more inputs later, but that works! */}
+        <input
+          type='text'
+          className={styles['animal_input']}
+          placeholder='Name'
+          value={newAnimalData.name}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, name: e.target.value })
+          }
+        />
+        <input
+          type='number'
+          className={styles['animal_input']}
+          placeholder='Age'
+          value={newAnimalData.age}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, age: Number(e.target.value) })
+          }
+        />
+        <select
+          value={newAnimalData.sex}
+          className={styles['animal_input']}
+          onChange={(e) =>
+            setNewAnimalData({
+              ...newAnimalData,
+              sex: e.target.value as 'm' | 'f',
+            })
+          }
+        >
+          <option value='m'>Male</option>
+          <option value='f'>Female</option>
+        </select>
+        <input
+          type='text'
+          className={styles['animal_input']}
+          placeholder='Diet'
+          value={newAnimalData.diet}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, diet: e.target.value })
+          }
+        />
+        <input
+          type='date'
+          className={styles['animal_input']}
+          placeholder='Birthdate'
+          value={newAnimalData.birthdate}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, birthdate: e.target.value })
+          }
+        />
+        <input
+          type='text'
+          className={styles['animal_input']}
+          placeholder='Owner'
+          value={newAnimalData.owner}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, owner: e.target.value })
+          }
+        />
+        <input
+          type='text'
+          className={styles['animal_input']}
+          placeholder='Previous Owner'
+          value={newAnimalData.previous_owner}
+          onChange={(e) =>
+            setNewAnimalData({
+              ...newAnimalData,
+              previous_owner: e.target.value,
+            })
+          }
+        />
+        <label>
+          In Lease:
+          <input
+            type='checkbox'
+            className={styles['animal_input']}
+            checked={newAnimalData.in_lease}
+            onChange={(e) =>
+              setNewAnimalData({ ...newAnimalData, in_lease: e.target.checked })
+            }
+          />
+        </label>
+        <input
+          type='text'
+          className={styles['animal_input']}
+          placeholder='Where is now'
+          value={newAnimalData.where_is_now}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, where_is_now: e.target.value })
+          }
+        />
+        <input
+          type='date'
+          className={styles['animal_input']}
+          placeholder='Since'
+          value={newAnimalData.since}
+          onChange={(e) =>
+            setNewAnimalData({ ...newAnimalData, since: e.target.value })
+          }
+        />
+
         {selectedAnimal ? (
-          <button onClick={handleUpdateAnimal}>Update Animal</button>
+          <button className={styles['animal_btn']} onClick={handleUpdateAnimal}>
+            Update Animal
+          </button>
         ) : (
-          <button onClick={handleAddAnimal}>Add Animal</button>
+          <button className={styles['animal_btn']} onClick={handleAddAnimal}>
+            Add Animal
+          </button>
         )}
       </div>
     </div>
