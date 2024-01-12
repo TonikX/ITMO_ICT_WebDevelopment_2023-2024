@@ -47,3 +47,7 @@ nav:
       - lab3/views.md
       - lab3/urls.md
       - lab3/auth.md
+  - "Клиентская часть с Vue.js":
+      - lab4/router.md
+      - lab4/components.md
+      - lab4/result.md
