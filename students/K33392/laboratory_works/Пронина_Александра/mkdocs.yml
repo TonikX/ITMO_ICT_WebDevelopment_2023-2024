@@ -57,10 +57,9 @@ nav:
       - laborstory_work_2/settings.md
       - laborstory_work_2/models.md
       - laborstory_work_2/admin.md
-      - laborstory_work_2/forms.md
-      - laborstory_work_2/views.md
       - laborstory_work_2/router.md
       - laborstory_work_2/templates.md
+      - laborstory_work_2/views.md
   - "Лабораторная №3: DRF":
       - laboratory_work_3/index.md
   - "Лабораторная №4: Vue.js":
