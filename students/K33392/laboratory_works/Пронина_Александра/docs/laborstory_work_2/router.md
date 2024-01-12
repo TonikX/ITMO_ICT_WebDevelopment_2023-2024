@@ -1,19 +1,25 @@
-# Маршрутизация
+    from django.urls import path
+    from .views import *
+    urlpatterns = [
+        path('main/', main_page, name='main_page'),
+        path('register/', registerPage, name='register'),
+        path('login/', loginPage, name='login'),
+        path('logout/', Logout.as_view(), name='logout'),
+        path("rooms/", RoomsList.as_view(), name='rooms'),
+        path("book/", BookingCreateView.as_view(), name='book'),
+        path("users_bookings/", user_book, name='my_bookings'),
+        path("update_book/<int:pk>/", UpdateBooking.as_view(), name='update_booking'),
+        path("del_book/<int:pk>/", DeleteBooking.as_view(), name='delete_booking'),
+        path("comment/", CommentCreateView.as_view(), name='comment'),
+        path('all_comments/', all_comments, name='all_comments'),
+        path('hotel/', guests_list, name='hotel_info'),
+    ]
 
-В директории нашего проекта перейдём в файл `urls.py` и зарегистрируем маршруты для админ-панели и для нашего приложения:
 
-```Python title="laboratory_work_2/urls.py"
---8<-- "laboratory_work_2/laboratory_work_2/urls.py:17:24"
-```
-
-
-Теперь в директории нашего приложения создадим файл `urls.py` и пропишем маршруты для каждого представления:
-
-```Python title="flights/urls.py"
---8<-- "laboratory_work_2/flights/urls.py:17:31"
-```
-
-Для каждого маршрута пропишем значение аргумента `name`, чтобы можно было на них ссылаться.
-
-Также для некоторых маршрутов мы использовали конвертеров типов. Например, `#!py3 <str:tab>` передаст в наше представление аргумент 
-`tab` типа `#!py3 str`, а `#!py3 <int:flight_id>` передаст аргумент `flight_id` типа `#!py3 int`.
+    from django.contrib import admin #9
+    from django.urls import path,include
+    
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('hotels.urls')), #10
+    ]
