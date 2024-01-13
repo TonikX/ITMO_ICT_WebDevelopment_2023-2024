@@ -1,0 +1,8 @@
+site_name: Samarov_Ilya web
+
+nav:
+  - lab_1: lab_1.md
+  - lab_2: lab_2.md
+  - lab_3: lab_3.md
+  - prac_3_1: 3_1.md
+  - lab_4: lab_4.md
