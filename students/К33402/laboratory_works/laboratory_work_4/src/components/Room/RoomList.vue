@@ -12,7 +12,7 @@ const spec = ref([])
 function getRooms(){
   instance.get('/main/rooms/', {
     headers: {
-      'Authorization': `Bearer ${Token.token}`
+      'Authorization': `Token ${Token.token}`
     }
   }).then(response => {
         if (response.status === 200){

@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import instance from "@/AxiosInstance";
 import router from "@/router/router";
 import {TokenStore} from "@/stores/TokenStore";
@@ -11,6 +11,8 @@ const form = ref({
   schedule : "",
   mark : "",
 })
+
+const students = ref([])
 
 function create(){
   form.value.schedule = router.currentRoute.value.params.id
@@ -27,6 +29,23 @@ function create(){
   ).catch(error => console.log(error))
 }
 
+function getRooms(){
+  instance.get('/main/students/', {
+    headers: {
+      'Authorization': `Bearer ${Token.token}`
+    }
+  }).then(response => {
+        if (response.status === 200) {
+          students.value = response.data
+        }
+      }
+  ).catch(error => console.log(error))
+
+}
+
+onMounted(() => {
+  getRooms()
+})
 
 
 </script>
@@ -35,7 +54,13 @@ function create(){
   <v-app>
     <div class="w-50 mx-auto">
       <h2>Добавить оценку</h2>
-      <v-text-field label="Студент" v-model="form.student"></v-text-field>
+      <v-select
+          label="Студент"
+          v-model="form.student"
+          :items="students"
+          item-title="name"
+          item-value="id"
+      ></v-select>
       <v-text-field label="Оценка" v-model="form.mark"></v-text-field>
       <v-btn @click="create">Создать</v-btn>
     </div>

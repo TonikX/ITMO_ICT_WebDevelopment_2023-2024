@@ -54,7 +54,6 @@ onMounted(() => {getmarks()})
         </v-btn>
       </v-card-actions></v-card>
     </template>
-    <v-btn @click="router.push('/add-mark')">Добавить</v-btn>
   </div>
 </template>
 

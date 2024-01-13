@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import instance from "@/AxiosInstance";
 import router from "@/router/router";
 import {TokenStore} from "@/stores/TokenStore";
@@ -12,6 +12,7 @@ const form = ref({
   sex: "",
   student_class: "",
 })
+const classes = ref([])
 
 function create(){
   instance.post('/main/students/', form.value, {
@@ -26,6 +27,25 @@ function create(){
   ).catch(error => console.log(error))
 }
 
+function getRooms(){
+  instance.get('/main/classes/', {
+    headers: {
+      'Authorization': `Bearer ${Token.token}`
+    }
+  }).then(response => {
+        if (response.status === 200) {
+          classes.value = response.data
+        }
+      }
+  ).catch(error => console.log(error))
+
+}
+
+onMounted(() => {
+  getRooms()
+})
+
+
 </script>
 
 <template>
@@ -39,7 +59,13 @@ function create(){
           v-model="form.sex"
           :items="['f', 'm']"
       ></v-select>
-      <v-text-field label="Класс" v-model="form.student_class"></v-text-field>
+      <v-select
+          label="Класс"
+          v-model="form.student_class"
+          :items="classes"
+          :item-title="item => item.teacher + ' '+ item.lesson"
+          item-value="id"
+      ></v-select>
       <v-btn @click="create">Создать</v-btn>
     </div>
   </v-app>
