@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto list</title>
+</head>
+
+<body>
+  <h1>Auto</h1>
+  <a href="/auto/create/">Add new auto</a>
+  <a href="/owner/create/">Add new owner</a>
+
+  <ul>
+    {% for auto in autos %}
+    <li><strong>State number:</strong> {{ auto.state_number }}, actions: <a href="/auto/{{ auto.id }}/update/">Edit</a> | <a href="/auto/{{ auto.id }}/delete/">Delete</a> | <a href="/auto/{{ auto.id }}/">Detail</a> 
+      <p><strong>Brand:</strong> {{ auto.brand }}</p>
+      <p><strong>Model:</strong> {{ auto.model }}</p>
+      <p><strong>Colour:</strong> {{ auto.colour }}</p>
+    </li>
+    {% empty %}
+    <li>No auto yet.</li>
+    {% endfor %}
+  </ul>
+</body>
+
+</html>
