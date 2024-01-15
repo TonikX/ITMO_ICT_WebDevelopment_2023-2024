@@ -1,8 +1,11 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from .models import User # TODO: Job
+from .models import User 
 from django import forms
 
+# class StudentSkillsForm(forms.Form):
+    # Поля формы
+    # skill = forms.Ma # CharField(label='example_lable', max_length=100)
 
 class MyUserCreationForm(UserCreationForm):
     class Meta:

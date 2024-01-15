@@ -37,7 +37,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-
+     
 class BaseModel(models.Model):
     name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
@@ -50,6 +50,17 @@ class BaseModel(models.Model):
     
     def __str__(self):
         return self.name    
+    
+class Skill(BaseModel):
+    class Meta:
+        ordering = ['-updated', '-created']
+    
+    def __str__(self):
+        return self.name
+
+class UserSkills(BaseModel):
+    skills = models.ManyToManyField('Skill', verbose_name='Навыки', related_name='user_skills')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 class File(BaseModel):
     file_field = models.FileField(upload_to="users-files")

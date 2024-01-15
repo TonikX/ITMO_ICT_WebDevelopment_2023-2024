@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 # Create your views here.
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm # TODO: JobForm, MyUserCreationForm
+from .forms import UserForm# , # StudentSkillsForm # TODO: JobForm, MyUserCreationForm
 
 from projects.models import File, ProjectTopic, Project, GradeReport, \
 ProjectOfUser, Teacher, Student, Grade, ProjectMeeting, Meeting
@@ -17,6 +18,34 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True  # Разрешить любые безопасные (например, GET) запросы.
         return obj.owner == request.user  # Здесь obj.owner - это поле, содержащее владельца объекта.
+    
+@login_required
+def home_page(request):
+    # if request.user.is_superuser:
+    #     return render(request, 'admin_page.html')
+    if False:
+        return render(request, 'moderator_page.html')
+    elif False:
+        return render(request, 'teacher_page.html')
+    elif True:
+        return render(request, 'base/student_page.html')
+    else:
+        return render(request, 'general_page.html')
+
+# @login_required
+def student_form(request):
+    if request.method == 'POST':
+        form = StudentSkillsForm(request.POST)
+        print(form)
+        if form.is_valid():
+            student_name = form.cleaned_data['skill']
+            student = Student.objects.create(name=student_name)
+            student.save()
+            return HttpResponse('Student was created with name ' + student.name)
+    # логика формы для студентов
+    form = StudentSkillsForm()
+    context = {'form': form}
+    return render(request, 'base/student_form.html', context)
 
 # File
 class FileListAPIView(generics.ListAPIView):

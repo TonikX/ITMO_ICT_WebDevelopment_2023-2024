@@ -6,7 +6,9 @@ app_name = "projects"
 
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('', home_page, name='home'),
+    path('student-form/', student_form, name='student-form'),
+    # path('', home, name="home"), # TODO:
 
     path('update-user/', updateUser, name="update-user"),
     path('topics/', topicsPage, name="topics"),
@@ -24,17 +26,17 @@ urlpatterns = [
     path('file/delete/<str:pk>/', FileDestroyAPIView.as_view()),
     path('file/update/<str:pk>/', FileUpdateAPIView.as_view()),
     # ProjectTopic
-    path('topic/create/', ProjectTopicCreateAPIView.as_view()),
     path('topic/<str:pk>/', ProjectTopicListAPIView.as_view()),
+    path('topic/create/', ProjectTopicCreateAPIView.as_view()),
     path('topic/list/', ProjectTopicListAPIView.as_view()),
     path('topic/delete/<str:pk>/', ProjectTopicDestroyAPIView.as_view()),
     path('topic/update/<str:pk>/', ProjectTopicUpdateAPIView.as_view()),
     # Project
-    path('create/', ProjectCreateAPIView.as_view()),
-    path('<str:pk>/', ProjectListAPIView.as_view()),
-    path('list/', ProjectListAPIView.as_view()),
-    path('delete/<str:pk>/', ProjectDestroyAPIView.as_view()),
-    path('update/<str:pk>/', ProjectUpdateAPIView.as_view()),
+    path('project/create/', ProjectCreateAPIView.as_view()),
+    path('project/<str:pk>/', ProjectListAPIView.as_view()),
+    path('project/list/', ProjectListAPIView.as_view()),
+    path('project/delete/<str:pk>/', ProjectDestroyAPIView.as_view()),
+    path('project/update/<str:pk>/', ProjectUpdateAPIView.as_view()),
     # GradeReport
     path('grade_report/create/', GradeReportCreateAPIView.as_view()),
     path('grade_report/<str:pk>/', GradeReportListAPIView.as_view()),
