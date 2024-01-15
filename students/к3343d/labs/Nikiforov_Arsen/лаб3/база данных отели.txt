@@ -1,0 +1,53 @@
+rooms {
+    id int pk
+    room_type varchar
+    cost decimal
+    floor_id int > floors.id
+    status varchar
+}
+
+
+clients {
+    id int pk
+    client_info_id int > client_info.id
+    room_id int > rooms.id
+}
+
+client_info {
+    id int pk
+    passport_number varchar
+    first_name varchar
+    last_name varchar
+    patronymic varchar
+    city varchar
+    check_in_date datetime
+}
+
+employees {
+    id int pk
+    first_name varchar
+    last_name varchar
+    patronymic varchar
+}
+
+floors {
+    id int pk
+    number int
+}
+
+days {
+    id int pk
+    name varchar
+}
+
+employee_floors {
+    id int pk
+    employee_id int > employees.id
+    floor_id int > floors.id
+}
+
+employee_days {
+    id int pk
+    employee_id int > employees.id
+    day_id int > days.id
+}

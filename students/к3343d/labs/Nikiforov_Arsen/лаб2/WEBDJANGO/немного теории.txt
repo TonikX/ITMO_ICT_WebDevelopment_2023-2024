@@ -1,0 +1,4 @@
+python -m django startproject myproject
+
+python -m mkdocs build
+python -m mkdocs serve

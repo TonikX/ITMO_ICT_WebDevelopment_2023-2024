@@ -1,0 +1,13 @@
+<!-- templates/reservation_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Детали бронирования</title>
+</head>
+<body>
+    <h1>Бронирование</h1>
+    <p>Пользователь: {{ reservation.users.username }}</p>
+    <p>Тур: {{ reservation.tour.name }}</p>
+    <p>Подтверждено: {{ reservation.is_confirmed }}</p>
+</body>
+</html>

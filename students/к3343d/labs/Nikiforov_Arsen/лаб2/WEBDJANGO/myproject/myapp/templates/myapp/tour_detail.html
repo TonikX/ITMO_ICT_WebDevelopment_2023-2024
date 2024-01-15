@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tour.title }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+            text-align: center;
+        }
+        h2, h3 {
+            color: #009688;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #009688;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+        .reviews {
+            margin-top: 20px;
+        }
+        .reviews h3 {
+            color: #009688;
+        }
+        .reviews p {
+            margin: 5px 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ tour.title }}</h2>
+    <p>{{ tour.description }}</p>
+    <p>Period: {{ tour.period }}</p>
+    <p>Payment Conditions: {{ tour.payment_conditions }}</p>
+
+    <!-- Форма для резервирования тура -->
+    <form method="post" action="{% url 'reserve_tour' tour.id %}">
+        {% csrf_token %}
+        <button type="submit">Reserve</button>
+    </form>
+
+    <!-- Отображение отзывов -->
+    <div class="reviews">
+        <h3>Reviews</h3>
+        {% for review in reviews %}
+            <p>{{ review.user.username }} - Rating: {{ review.rating }} - {{ review.text }} - {{ review.date_added }}</p>
+        {% endfor %}
+    </div>
+
+    <!-- Форма для добавления отзыва -->
+    <h3>Add a Review</h3>
+    <form method="post" action="{% url 'tour_detail' tour_id=tour.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Review</button>
+    </form>
+
+    <!-- Кнопка для возврата к списку туров -->
+    <form method="get" action="{% url 'tour_list' %}">
+        <button type="submit">Назад к списку туров</button>
+    </form>
+</body>
+</html>
