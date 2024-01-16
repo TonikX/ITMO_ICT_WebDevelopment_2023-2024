@@ -28,3 +28,15 @@ nav:
         - views: lab3/lab/views.md
         - serializers: lab3/lab/serializers.md
         - settings:  lab3/lab/settings.md
+  - Лабораторная №4:
+      - register & login: lab4/register_login.md
+      - home: lab4/home.md
+      - climbers: lab4/climbers.md
+      - mountain: lab4/mountain.md
+      - ascension: lab4/ascension.md
+      - clubs: lab4/clubs.md
+      - groups: lab4/groups.md
+     
+      
+      
+      
