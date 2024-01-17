@@ -6,7 +6,7 @@
           <p>{{ project.description }}</p>
           <p><strong>Руководитель:</strong> {{ project.creator }}</p>
           <!-- <p><strong>Оценка сложности:</strong> {{ project.complexity }}</p> -->
-          <!-- <p><strong>Web-технологии:</strong> {{ project.technologies }}</p> -->
+          <p><strong>Технологии:</strong> {{ project.topics }}</p> 
           <div class="buttons">
                <!--  -->
                <button @click="rateProject(project.id, 'очень не хочу')" :class="{ 'active': this.choose[project.id] === 'очень не хочу' }">Очень не хочу</button>

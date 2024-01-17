@@ -8,6 +8,7 @@
       <router-link v-if="isLoggedIn" to="/profile" class="nav-link" :class="{ 'active': $route.path === '/profile' }">Профиль</router-link>
       <router-link v-if="isLoggedIn" to="/projects" class="nav-link" :class="{ 'active': $route.path === '/projects' }">Проекты</router-link>
       <router-link v-if="isLoggedIn" to="/projects-choose" class="nav-link" :class="{ 'active': $route.path === '/projects-choose' }">Выбор проекта</router-link>
+      <router-link v-if="isLoggedIn" to="/dashboard" class="nav-link" :class="{ 'active': $route.path === '/dashboard' }">Дашборд</router-link>
       <button v-if="isLoggedIn" @click="logout" class="logout-button">Выйти</button>
     </nav>
   </header>

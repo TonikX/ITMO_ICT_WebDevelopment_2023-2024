@@ -8,6 +8,7 @@ import Register from './views/RegisterPage.vue';
 import Profile from './views/ProfilePage.vue';
 import Projects from './views/ProjectsPage.vue';
 import ProjectsChoose from './views/ProjectsChoosePage.vue';
+import Dashboard from './views/DashboardPage.vue';
 
 const app = createApp(App);
 
@@ -20,6 +21,7 @@ const router = createRouter({
     { path: '/profile', component: Profile },
     { path: '/projects', component: Projects},
     { path: '/projects-choose', component: ProjectsChoose},
+    { path: '/dashboard', component: Dashboard},
   ],
 });
 

@@ -90,6 +90,26 @@ class ProjectTopicCreateAPIView(generics.CreateAPIView):
    permission_classes = [permissions.IsAdminUser] # TODO
 
 # Project
+# def respond(request, pk):
+#     job = Job.objects.get(id=pk)
+#     job_customer = get_customer(job)
+#     сandidate_matches = Match.objects.filter(Q(user=request.user)&
+#                                            Q(job=job)&
+#                                            Q(type=MatchType.objects.get_or_create(name='Сandidate')[0]))
+#     if request.user == job_customer:
+#         return HttpResponse('Your are the creator of this job!!')
+#     if request.user in [match.user for match in сandidate_matches]:
+#         return HttpResponse('Вы уже стали кандидатом!!')
+#     if request.method == 'POST':
+#         match = Match.objects.filter(job=job)
+#         match = Match.objects.create(
+#             job = job,
+#             user = request.user,
+#             type = MatchType.objects.get_or_create(name='Сandidate')[0],
+#         )
+#         match.save()
+#         return redirect('home') # jobRoom(request, pk) #redirect(f'job/{pk}')
+    
 class ProjectListAPIView(generics.ListAPIView):
     serializer_class = ProjectSerializer # ProjectDepthSerializer TODO:
     queryset = Project.objects.all()
