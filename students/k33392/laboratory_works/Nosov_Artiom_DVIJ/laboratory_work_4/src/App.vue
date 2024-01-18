@@ -48,6 +48,7 @@ body {
   height: 100vh;  background: linear-gradient(to left, #5a216c, #cba1d6);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   background-position: center;
 }
 

@@ -74,6 +74,13 @@ class Project(BaseModel):
     end_date = models.DateTimeField(null=True)
     topics = models.ManyToManyField('ProjectTopic', verbose_name='Темы', related_name='project_topics')
 
+class ProjectVote(BaseModel):
+    project_field = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
+    user_field = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.user_field.name + ' за ' + self.project_field.name + ' is ' + self.name
+
 class GradeReport(BaseModel):
     projects = models.ManyToManyField('Project', verbose_name='Проекты', related_name='gradereport_projects')
 

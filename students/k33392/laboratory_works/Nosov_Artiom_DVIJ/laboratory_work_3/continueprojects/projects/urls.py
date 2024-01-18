@@ -32,6 +32,10 @@ urlpatterns = [
     path('topic/delete/<str:pk>/', ProjectTopicDestroyAPIView.as_view()),
     path('topic/update/<str:pk>/', ProjectTopicUpdateAPIView.as_view()),
     # Project
+    path('project/my/', UserProjectsView.as_view()),
+    path('project/participants/', ProjectParticipantsView.as_view()),
+    path('project/vote/', ProjectVoteView.as_view()),
+
     path('project/create/', ProjectCreateAPIView.as_view()),
     path('project/<str:pk>/', ProjectListAPIView.as_view()),
     path('project/list/', ProjectListAPIView.as_view()),

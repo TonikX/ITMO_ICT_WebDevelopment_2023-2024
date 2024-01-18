@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+import json
+from django.contrib import messages
 
 # Create your views here.
 from django.db.models import Q
@@ -7,10 +9,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserForm# , # StudentSkillsForm # TODO: JobForm, MyUserCreationForm
 
 from projects.models import File, ProjectTopic, Project, GradeReport, \
-ProjectOfUser, Teacher, Student, Grade, ProjectMeeting, Meeting
+ProjectOfUser, Teacher, Student, Grade, ProjectMeeting, Meeting, User, ProjectVote
 from projects.serializers import *
 
 from rest_framework import generics, permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -90,25 +94,74 @@ class ProjectTopicCreateAPIView(generics.CreateAPIView):
    permission_classes = [permissions.IsAdminUser] # TODO
 
 # Project
-# def respond(request, pk):
-#     job = Job.objects.get(id=pk)
-#     job_customer = get_customer(job)
-#     сandidate_matches = Match.objects.filter(Q(user=request.user)&
-#                                            Q(job=job)&
-#                                            Q(type=MatchType.objects.get_or_create(name='Сandidate')[0]))
-#     if request.user == job_customer:
-#         return HttpResponse('Your are the creator of this job!!')
-#     if request.user in [match.user for match in сandidate_matches]:
-#         return HttpResponse('Вы уже стали кандидатом!!')
-#     if request.method == 'POST':
-#         match = Match.objects.filter(job=job)
-#         match = Match.objects.create(
-#             job = job,
-#             user = request.user,
-#             type = MatchType.objects.get_or_create(name='Сandidate')[0],
-#         )
-#         match.save()
-#         return redirect('home') # jobRoom(request, pk) #redirect(f'job/{pk}')
+class UserProjectsView(APIView):
+    def get(self, request):
+        user = request.user
+        projectOfUserList = ProjectOfUser.objects.filter(user_field=user)
+        user_projects = [projectOfUser.project_field.id for projectOfUser in projectOfUserList]
+        projects = Project.objects.filter(id__in=user_projects)
+        meetings = ProjectMeeting.objects.filter(project_field__in=projects)
+        student = Student.objects.filter(user_field=user)
+        teacher = Teacher.objects.filter(user_field=user)
+        grades = Grade.objects.filter(Q(student_field__in=student)&Q(project_field__in=projects))
+        
+        content = {}
+
+        content['result'] = {
+            'projects': [ProjectSerializerSafe(project).data for project in projects],
+            'meetings': [ProjectMeetingSerializer(meeting).data for meeting in meetings],
+            'grades': [GradeSerializer(grade).data for grade in grades],
+            'projectOfUserList': [ProjectOfUserSerializer(projectOfUser).data for projectOfUser in projectOfUserList]
+        }
+
+        if (student):
+            content['result']['student'] = StudentSerializer(student[0]).data
+        if (teacher):
+            content['result']['teacher'] = StudentSerializer(teacher[0]).data
+
+        return Response(content)
+    
+class ProjectParticipantsView(APIView):
+    def get(self, request):
+        projectOfUserList = ProjectOfUser.objects.filter(user_field=request.user)
+        his_projects = [projectOfUser.project_field for projectOfUser in projectOfUserList]
+        projectOfUserListParticipants = ProjectOfUser.objects.filter(project_field__in=his_projects)
+        res_list = [ProjectOfUserSerializerSafe(projectOfUser).data for projectOfUser in projectOfUserListParticipants]
+        # for res_i in res_list:
+        #     res_i.user_field = 
+        content = {}
+
+        content['result'] = {
+            'projectOfUserListParticipants': res_list
+        }
+        return Response(content)
+    
+class ProjectVoteView(APIView):
+    def post(self, request):
+        project_id = request.data['project_id']
+        vote_name = request.data['vote']
+        find_vote = ProjectVote.objects.filter(user_field=request.user,
+            project_field=Project.objects.get(id=project_id))
+        if (find_vote):
+            find_vote.update(name=vote_name)
+            return Response({'result': 'success update'})
+        else:
+            vote = ProjectVote.objects.get_or_create(
+                user_field=request.user,
+                project_field=Project.objects.get(id=request.data['project_id']),
+                name=request.data['vote'],
+            )
+            return Response({'result': 'success create'})
+    
+    def get(self, request):
+        votes = ProjectVote.objects.filter(user_field=request.user)
+
+        content = {}
+
+        content['result'] = {
+            'votes': ProjectVoteSerializerSafe(votes, many=True).data
+        }
+        return Response(content)
     
 class ProjectListAPIView(generics.ListAPIView):
     serializer_class = ProjectSerializer # ProjectDepthSerializer TODO:
