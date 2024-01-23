@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All owners</title>
+</head>
+<body>
+
+<div class="main">
+
+    {% for owner in owners_list %}
+    <ul>
+    {{ owner.id }}<br/>
+    {{ owner.last_name}}<br/>
+    {{ owner.first_name }}<br/>
+    {{ owner.birth_date}}<br/>
+    {{ owner.passport}}<br/>
+    {{ owner.address}}<br/>
+    {{ owner.nationality}}<br/>
+
+    </ul>
+     <hr/>
+    {% endfor %}
+
+</div>
+</body>
+</html>

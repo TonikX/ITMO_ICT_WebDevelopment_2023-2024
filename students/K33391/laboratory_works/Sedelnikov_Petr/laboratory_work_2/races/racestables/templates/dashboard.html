@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div id="header">
+    <div class="container mt-5">
+    <span class="user">
+            {{ request.user }}
+        <div>
+            <p><a href="{% url 'logout' %}" class="btn btn-primary mb-2">Выйти</a></p>
+            <p><a href="{% url 'delete_user' %}" class="btn btn-danger">Удалить профиль</a></p>
+        </div>
+
+    </span>
+    </div>
+    <div class="container mt-5">
+    <h1>Профиль</h1>
+        <p><a href="{% url 'races_list' %}" class="btn btn-primary">Гонки</a></p>
+        <p><a href="{% url 'redact_user' %}" class="btn btn-primary mb-2">Редактировать профиль</a></p>
+        <p><a href="{% url 'change_password' %}" class="btn btn-primary mb-2">Сменить пароль</a></p>
+        {% if not has_racer %}
+        <p><a href="{% url 'registrate_racer' %}" class="btn btn-primary mb-2">Зарегистрировать гонщика</a></p>
+        {% else %}
+        <p><a href="{% url 'redact_racer' %}" class="btn btn-primary mb-2">Редактирование гонщика</a></p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
