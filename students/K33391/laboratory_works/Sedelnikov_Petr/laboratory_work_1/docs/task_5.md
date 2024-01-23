@@ -1,20 +1,29 @@
-import socket
-import sys
+# Задание 5
 
+Необходимо написать простой web-сервер для обработки GET и POST http
+запросов средствами Python и библиотеки socket.
 
-class Response:
-    def __init__(self, status, reason, headers=None, body=None):
-        self.status = status
-        self.reason = reason
-        self.headers = headers
-        self.body = body
+## Ход выполнения работы
 
+### Код server.py
 
-class MyHTTPServer:
-    def __init__(self, host, port):
-        self.host = host
-        self.port = port
-        self.marks = {}
+    import socket
+    import sys
+    
+    
+    class Response:
+        def __init__(self, status, reason, headers=None, body=None):
+            self.status = status
+            self.reason = reason
+            self.headers = headers
+            self.body = body
+    
+    
+    class MyHTTPServer:
+        def __init__(self, host, port):
+            self.host = host
+            self.port = port
+            self.marks = {}
 
     def serve_forever(self):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -81,8 +90,52 @@ class MyHTTPServer:
 
 
 
-if __name__ == '__main__':
-    host = 'localhost'
-    port = 14900
-    server = MyHTTPServer(host, port)
-    server.serve_forever()
+    if __name__ == '__main__':
+        host = 'localhost'
+        port = 14900
+        server = MyHTTPServer(host, port)
+        server.serve_forever()
+
+### client.py
+
+    import socket
+
+    server_address = ('localhost', 14900)
+    
+    def send_mark(name, value):
+        http_method = 'POST'
+        http_url = f"isu.ifmo.ru/pls/apex/f?name={name}&value={value}"
+        http_version = "HTTP/1.1"
+        data = f"{http_method} {http_url} {http_version}\nHost: example.local\n"
+
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect(server_address)
+    client.send(bytes(data, 'UTF-8'))
+
+    data = client.recv(16384)
+    print(data.decode("UTF-8"))
+
+    client.close()
+
+    def get_marks(name):
+        http_method = 'GET'
+        http_url = f"isu.ifmo.ru/pls/apex/f?name={name}"
+        http_version = "HTTP/1.1"
+        data = f"{http_method} {http_url} {http_version}\nHost: example.local\n"
+
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect(server_address)
+    client.send(bytes(data, 'UTF-8'))
+
+    data = client.recv(16384)
+    print(data.decode("UTF-8"))
+
+    client.close()
+
+    send_mark('ООП', 5)
+    get_marks('ООП')
+    get_marks('Математика')
+
+## Результат
+
+![Результат](images/5.png)
