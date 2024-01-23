@@ -1,0 +1,14 @@
+site_name: My Docs
+
+nav:
+  - Home: index.md
+  - Models: models.md
+  - Endpoints:
+      - Client: client.md
+      - Employee_contracts: employee_contracts.md
+      - Agents: agents.md
+      - Specializations: specializations.md
+      - Payouts: payouts.md
+      - Enterprises: enterprises.md
+      - Contracts: contracts.md
+      - Claims: claims.md
