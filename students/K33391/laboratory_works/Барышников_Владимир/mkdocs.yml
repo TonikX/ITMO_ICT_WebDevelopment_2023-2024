@@ -1,0 +1,65 @@
+site_name: Владимир_Барышников_К33391
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.indexes
+  icon:
+    repo: fontawesome/brands/github-alt
+  palette:
+    scheme: default
+    primary: orange
+    accent: purple
+  language: ru
+repo_url: https://github.com/UnG1n/ITMO_ICT_WebDevelopment_2023-2024
+repo_name: My_GitHub
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      restrict_base_path: False
+  - pymdownx.superfences
+  - pymdownx.keys
+plugins:
+  - glightbox:
+      auto_caption: true
+extra_css:
+- css/custom.css
+- css/palette.scss
+nav:
+  - "Лабораторная №1":
+      - Задание 1: task1.md
+      - Задание 2: task2.md
+      - Задание 3: task3.md
+      - Задание 4: task4.md
+      - Задание 5: task5.md
+  - "Лабораторная №2":
+      - Модели: lab_2_models.md
+      - Админ: lab_2_admin.md
+      - Формы: lab_2_forms.md
+      - Представления: lab_2_views.md
+      - Маршрутизация: lab_2_urls.md
+      - Шаблоны: lab_2_templates.md
+  - "Лабораторная №3":
+      - Практика_3.1: practice_3.md
+      - Модели: lab_3_models.md
+      - Админ: lab_3_admin.md
+      - Сериализаторы: lab_3_serilizators.md
+      - Представления: lab_3_views.md
+      - Маршрутизация: lab_3_urls.md
+  - "Лабораторная №4":
+      - Знакомство с vue.js: lab_4_start.md
+      - Компоненты: lab_4_components.md
+      - Роутер: lab_4_router.md
+      - Макет: lab_4_main.md
+      - Работа Сайта: lab_4_site.md
+
+
+
