@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %} {% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Все резервирования</h1>
+  <ul class="list-group">
+    {% for data in dataset %}
+    <li class="list-group-item">
+      <h2>
+        <a href="{% url 'tour_page' data.tour.id %}">{{ data.tour.name }}</a>
+      </h2>
+      <p class="mb-0">Турагенство: {{ data.tour.agency_name }}</p>
+      <p class="mb-0">Страна: {{ data.tour.country }}</p>
+      <p class="mb-0">Цена: {{ data.tour.price }}</p>
+      <p class="mb-1">Пользователь: {{ data.user }}</p>
+      {% if data.status == 'Подтвержден' %}
+      <div class="mb-0 d-flex">
+        <p class="mb-0">Статус:</p>
+        <p class="mb-0 text-success">{{ data.status }}</p>
+      </div>
+      {% else %}
+      <div class="mb-0 d-flex">
+        <p class="mb-0">Статус:</p>
+        <p class="mb-0 text-danger">{{ data.status }}</p>
+      </div>
+      {% endif %}
+
+      <p class="mb-0">
+        Даты резервации: {{ data.start_date}} - {{ data.end_date}}
+      </p>
+
+      <!-- Кнопки для управления резервацией -->
+      <div class="btn-group mt-3" role="group">
+        <!-- Удалить резервацию -->
+        <form
+          method="post"
+          class="mr-3"
+          action="{% url 'delete_reservation_admin' reservation_id=data.id %}"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            Удалить резервацию
+          </button>
+        </form>
+
+        <!-- Подтвердить резервацию -->
+        {% if data.status == 'Подтвержден' %}
+        <form
+          method="post"
+          class="mr-3"
+          action="{% url 'cancel_reservation_admin' reservation_id=data.id %}"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-warning">
+            Отменить подтверждение
+          </button>
+        </form>
+        {% else %}
+        <form
+          method="post"
+          class="mr-3"
+          action="{% url 'access_reservation_admin' reservation_id=data.id %}"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">Подтвердить</button>
+        </form>
+        {% endif %}
+      </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет зарезервированных туров</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
