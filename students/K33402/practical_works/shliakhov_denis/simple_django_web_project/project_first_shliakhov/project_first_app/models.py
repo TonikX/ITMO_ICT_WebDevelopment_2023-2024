@@ -7,6 +7,9 @@ class Owner(AbstractUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     birthday = models.DateField(blank=True, null=True)
+    passport = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    nationality = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self) -> str:
         return self.first_name.capitalize() + " " + self.last_name.capitalize()

@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic import DetailView, UpdateView, DeleteView, CreateView, ListView
 from .forms import OwnerForm
 from .models import Owner, Car
 
@@ -19,17 +19,15 @@ def owner(request, pk):
 
 
 def create_owner_view(request):
-    visual = {}
     form = OwnerForm(request.POST or None)
     if form.is_valid():
         form.save()
-    visual['form'] = form
-    return render(request, 'create_owner.html', visual)
+    return render(request, 'create_owner.html', {'form': form})
 
 
-def cars(request):
-    visual = {"cars": Car.objects.all()}
-    return render(request, 'cars.html', visual)
+class CarsView(ListView):
+    model = Car
+    template_name = 'cars.html'
 
 
 class CarView(DetailView):
