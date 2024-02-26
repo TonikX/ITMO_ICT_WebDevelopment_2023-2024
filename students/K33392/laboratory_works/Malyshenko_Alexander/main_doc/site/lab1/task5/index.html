@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Задание №5 - My Docs</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab1 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../task1/" class="dropdown-item">Задание №1</a>
+</li>
+                                    
+<li>
+    <a href="../task2/" class="dropdown-item">Задание №2</a>
+</li>
+                                    
+<li>
+    <a href="../task3/" class="dropdown-item">Задание №3</a>
+</li>
+                                    
+<li>
+    <a href="../task4/" class="dropdown-item">Задание №4</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Задание №5</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab2 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../lab2/Main/" class="dropdown-item">Main</a>
+</li>
+                                    
+<li>
+    <a href="../../lab2/Model/" class="dropdown-item">Model</a>
+</li>
+                                    
+<li>
+    <a href="../../lab2/Urls/" class="dropdown-item">Urls</a>
+</li>
+                                    
+<li>
+    <a href="../../lab2/Views/" class="dropdown-item">Views</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab3 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../lab3/Model/" class="dropdown-item">Model</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Serializers/" class="dropdown-item">Сериалайзеры</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Urls/" class="dropdown-item">Urls</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Views/" class="dropdown-item">Views</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../task4/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../lab2/Main/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#no5" class="nav-link">Задание №5</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Выполнение задания</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">Примеры</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="no5">Задание №5</h1>
+<p>Необходимо написать простой web-сервер для обработки GET и POST http
+запросов средствами Python. Необходимо исользовать библиотеку socket.</p>
+<p>Задание: сделать сервер, который может:</p>
+<p>● Принять и записать информацию о дисциплине и оценке по дисциплине.</p>
+<p>● Отдать информацию обо всех оценах по дсициплине в виде html-страницы. </p>
+<h2 id="_1">Выполнение задания</h2>
+<h3 id="_2">Серверная часть</h3>
+<pre><code class="language-py">import socket
+from io import BufferedReader
+from urllib.parse import urlparse
+import urllib.parse as urlParse
+import json
+
+
+class Request:
+    def __init__(self, method: str, target: str, version: str, headers: list[str], body: list[str], fileReader: BufferedReader):
+        self.method = method
+        self.target = target
+        self.version = version
+        self.headers = headers
+        self.body = body
+        self.fileReader = fileReader
+
+    @property
+    def getUrl(self) -&gt; urlParse.ParseResult:
+        return urlparse(self.target)
+
+    @property
+    def getPath(self):
+        return self.getUrl.path
+
+
+class Response:
+    def __init__(self, status: int, reason: str, headers = None, body = None):
+        self.status = status
+        self.reason = reason
+        self.headers = headers
+        self.body = body
+
+
+
+class HTTPServer:
+    def __init__(self, host: str, port: int, name: str):
+        self._host = host
+        self._port = port
+        self._name = name
+        self._handlers = 0
+        self._disciplinesGrades: dict[str, list[int]] = {&quot;Информатика&quot;: list('5')}
+        self._maxBufferLen = 1024 * 64
+
+    def serverStart(self):
+        '''
+        Start server \n
+        Create server socket and try to connect to client
+        '''
+
+        serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        try:
+            serverSocket.bind((self._host, self._port))
+            serverSocket.listen(5)
+            print(f&quot;=== Server [{self._name}] is running ===&quot;)
+
+            while True:
+                try:
+                    (clientSocket, adrress) = serverSocket.accept()
+                    self.serveClient(clientSocket)
+
+                except Exception as ex:
+                    print(&quot;=== Client connection failed ===\n&quot;, ex)
+
+        except Exception as ex:
+            print(f&quot;=== Error when starting the server [{self._name}] ===&quot;)
+
+        finally:
+            serverSocket.close()
+            print(f&quot;=== Server [{self._name}] stopped ===&quot;)
+
+    def serveClient(self, clientSocket: socket.socket):
+        try:
+            request = self.parseRequest(clientSocket)
+            print(f&quot;Received request: {request.method}, target: {request.target}&quot;)
+            response = self.handleRequest(request)
+            print(f&quot;Return response: {response.reason}, status: {response.status}\n&quot;)
+            self.sendResponse(clientSocket, response)
+
+        except ConnectionResetError as conEx:
+            clientSocket = False
+
+
+        except Exception as ex:
+            print(f&quot;Failed receive request and return response&quot;)
+
+        if clientSocket:
+            clientSocket.close()
+
+    def parseRequest(self, clientSocket: socket.socket) -&gt; Request:
+        fileReader = clientSocket.makefile('rb')
+        requestString = fileReader.readline(self._maxBufferLen + 1)
+        if len(requestString) &gt; self._maxBufferLen:
+            raise Exception('Too long request')
+
+        requestLine = str(requestString, 'iso-8859-1')
+        requestLine = requestLine.rstrip('\r\n')
+        partsOfRequest = requestLine.split()
+        if len(partsOfRequest) != 3:
+            raise Exception('Incorrect request line')
+
+        method, target, version = partsOfRequest
+        if version != &quot;HTTP/1.1&quot;:
+            raise Exception(&quot;Incorrect HTTP Version&quot;)
+
+        requestHeaders = self._parseRequestHeaders(fileReader)
+        requestBody = self._parseRequestBody(fileReader, requestHeaders)
+
+
+        return Request(method, target, version, requestHeaders, requestBody, fileReader)
+
+    def _parseRequestHeaders(self, requestFileReader: BufferedReader) -&gt; list[str]:
+
+        headersList = []
+
+        while True:
+            requestString = requestFileReader.readline(self._maxBufferLen + 1)
+            if requestString in (b&quot;\r\n&quot;, b&quot;\n&quot;, b&quot;&quot;):
+                break
+
+            headersList.append(requestString.decode(&quot;iso-8859-1&quot;))
+
+        return headersList
+
+    def _parseRequestBody(self, requestFileReader: BufferedReader, requestHeaders: list[str]) -&gt; list[str]:
+
+        length = 0
+        for header in reversed(requestHeaders):
+            index = header.find('Content-Length: ')
+            lastIndex = index + len('Content-Length: ')
+            if index != -1:
+                length = int(header[lastIndex : header.find('\r')])
+
+        if length != 0:
+            body = requestFileReader.read(length)
+
+        return body
+
+    def handleRequest(self, request: Request):
+        if request.getPath == &quot;/disciplines&quot; and request.method == &quot;POST&quot;:
+            return self._handlePostDiscipline(request)
+
+        if request.getPath == &quot;/disciplines&quot; and request.method == &quot;GET&quot;:
+            return self._handleGetDiscipline()
+
+        raise Exception(&quot;Not found such response&quot;)
+
+    def _handlePostDiscipline(self, request: Request):
+        postBody = json.loads(request.body)
+        if not postBody[&quot;discipline&quot;] in self._disciplinesGrades:
+            self._disciplinesGrades[postBody[&quot;discipline&quot;]] = []
+
+        self._disciplinesGrades[postBody[&quot;discipline&quot;]].append(postBody[&quot;grade&quot;])
+        responseBody = json.dumps({&quot;Post done&quot;: True}).encode(&quot;utf-8&quot;)
+        headers = [
+            (&quot;Content-Type&quot;, &quot;application/json; charset=utf-8&quot;),
+            (&quot;Content-Length&quot;, len(responseBody))]
+
+        return Response(204, 'Created', headers, responseBody)
+
+    def _handleGetDiscipline(self):
+        requestBody = self._htmlTableGen()
+        requestBody = requestBody.encode('utf-8')
+        requestHeaders = [(&quot;Content-Type&quot;, &quot;text/html; charset=utf-8&quot;), (&quot;Content-Length&quot;, len(requestBody))]
+
+        return Response(200, &quot;OK&quot;, requestHeaders, requestBody)
+
+    def _htmlMain(self, ctx: str) -&gt; str:
+        return f&quot;&quot;&quot;&lt;!DOCTYPE html&gt;
+        &lt;head&gt;
+            &lt;style&gt;
+                table {{ background: CadetBlue }}
+                td {{ background: SkyBlue }}
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            {ctx}
+        &lt;/body&gt;
+        &lt;/html&gt;&quot;&quot;&quot;
+
+    def _htmlTableGen(self) -&gt; str:
+        tableRows = []
+        for discipline in self._disciplinesGrades:
+            gradesString = ', '.join(list(map(str, list(self._disciplinesGrades[discipline]))))
+            tableRows.append(
+                f&quot;&quot;&quot;
+                &lt;tr&gt;
+                    &lt;td&gt;{discipline}&lt;/td&gt;
+                    &lt;td&gt;{gradesString}&lt;/td&gt;
+                &lt;/tr&gt;&quot;&quot;&quot;)
+
+        tableHead = &quot;&quot;&quot;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                &lt;th scope=&quot;col&quot;&gt;Discipline&lt;/th&gt;
+                &lt;th scope=&quot;col&quot;&gt;Grades&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;&quot;&quot;&quot;
+
+        tableRows = &quot;\n&quot;.join(tableRows)
+        tableBody = f&quot;&lt;tbody&gt;{tableRows}&lt;/tbody&gt;&quot;
+        return self._htmlMain(f&quot;&lt;table&gt;{tableHead}\n{tableBody}&lt;/table&gt;&quot;)
+
+    def sendResponse(self, clientSocket: socket.socket, response: Response):
+        fileWriter = clientSocket.makefile(&quot;wb&quot;)
+        status = f&quot;HTTP/1.1 {response.status} {response.reason}\r\n&quot;
+        fileWriter.write(status.encode('iso-8859-1'))
+
+        if response.headers:
+            for key, value in response.headers:
+                header = f&quot;{key}: {value}\r\n&quot;
+                fileWriter.write(header.encode(&quot;iso-8859-1&quot;))
+
+        fileWriter.write(b'\r\n')
+
+        if response.body:
+            fileWriter.write(response.body)
+
+
+if __name__ == &quot;__main__&quot;:
+
+    host, port = &quot;127.0.0.1&quot;, 9090
+    name = &quot;lab5.local&quot;
+
+    server = HTTPServer(host, port, name)
+    try:
+        server.serverStart()
+    except:
+        pass
+</code></pre>
+<h2 id="_3">Примеры</h2>
+<p>Запуск сервера
+<img alt="Пример задания 5.1" src="../pic/task5_startServer.png" />
+Отправка GET, POST, и GET после POST запросов
+<img alt="Пример задания 5.2" src="../pic/task5_post%26get.png" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

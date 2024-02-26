@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Views - My Docs</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab1 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../lab1/task1/" class="dropdown-item">Задание №1</a>
+</li>
+                                    
+<li>
+    <a href="../../lab1/task2/" class="dropdown-item">Задание №2</a>
+</li>
+                                    
+<li>
+    <a href="../../lab1/task3/" class="dropdown-item">Задание №3</a>
+</li>
+                                    
+<li>
+    <a href="../../lab1/task4/" class="dropdown-item">Задание №4</a>
+</li>
+                                    
+<li>
+    <a href="../../lab1/task5/" class="dropdown-item">Задание №5</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab2 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Main/" class="dropdown-item">Main</a>
+</li>
+                                    
+<li>
+    <a href="../Model/" class="dropdown-item">Model</a>
+</li>
+                                    
+<li>
+    <a href="../Urls/" class="dropdown-item">Urls</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Views</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lab3 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../lab3/Model/" class="dropdown-item">Model</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Serializers/" class="dropdown-item">Сериалайзеры</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Urls/" class="dropdown-item">Urls</a>
+</li>
+                                    
+<li>
+    <a href="../../lab3/Views/" class="dropdown-item">Views</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Urls/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../../lab3/Model/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Представления</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="_1">Представления</h2>
+<h3 id="_2">Представление для регистрации нового пользователя</h3>
+<pre><code class="language-py">def registration(request):
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/races')
+
+    else:
+        form = CreateUserForm()
+
+    return render(request, 'registration.html', {'form': form})
+</code></pre>
+<p>В зависимости от метода запроса возвращает форму регистрации
+или регистрирует нового пользователя в бд по введеным в форме данным.</p>
+<h3 id="_3">Представление для авторизации пользователя</h3>
+<pre><code class="language-py">def sign_in(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            user = authenticate(request=request, username=cleaned_data['username'], password=cleaned_data['password'])
+            if user is None:
+                return HttpResponse('Invalid login')
+            else:
+                login(request, user)
+                return redirect('/races')
+    else:
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+</code></pre>
+<p>В зависимости от метода запроса возвращает форму авторизации
+или авторизовывает пользователя по введеным в форме данным.</p>
+<h3 id="_4">Представление для получения данных о конкретном пользователе</h3>
+<pre><code class="language-py">def get_user(request, user_id):
+    try:
+        user_object = User.objects.get(pk=user_id)
+
+    except User.DoesNotExist:
+        raise Http404(&quot;User does not exist&quot;)
+
+    if user_object.is_racer:
+        racer_object = Racer.objects.get(user_id=user_id)
+        isRacerBool = True
+        isRacer = 'User is racer'
+        racerInfo = f'Racer class: {racer_object.drive_class} | Racer experience: {racer_object.experience} years'
+        racerDesc = f'{racer_object.description}'
+
+    else:
+        isRacerBool = False
+        isRacer = 'User is not racer'
+        racerInfo = ''
+        racerDesc = f''
+
+    return render(request, 'userPage.html',
+                  {'user': user_object, 'racerInfo': racerInfo, 'racerDesc': racerDesc, 'isRacer': isRacer,
+                   'isRacerBool': isRacerBool})
+</code></pre>
+<p>Вовзращает форму с данными о пользователе, полученными по id этого пользователя.</p>
+<h3 id="_5">Представление для получения списка гонок</h3>
+<pre><code class="language-py">def get_races(request):
+    races_object = Race.objects.all()
+    winners = []
+    for race_object in races_object:
+        if race_object.winner_id:
+            winners.append(race_object.winner_id.team)
+
+        else:
+            winners.append('No winner')
+
+    races_and_winners = dict(zip(races_object, winners))
+    return render(request, &quot;races.html&quot;, {'dataset': races_and_winners})
+</code></pre>
+<p>Вовзращает форму с таблицей данных о всех гонках, так же с возможностью выбора конкретной гонки.</p>
+<h3 id="_6">Представление для получения данных о конкретной гонке</h3>
+<pre><code class="language-py">def get_race(request, race_id):
+    winners = []
+    try:
+        race_object = Race.objects.get(pk=race_id)
+        if race_object.status == 'over':
+            # winners_team = race_object.winner_id.team
+            winners = list(Racer.objects.filter(team=race_object.winner_id.team))
+
+        racers_stats = list(Statistic.objects.filter(race_id=race_id))
+        comments_list = Comment.objects.filter(race_id=race_id)
+
+    except User.DoesNotExist:
+        raise Http404(&quot;Data does not exist&quot;)
+
+    try:
+        user = User.objects.get(id=request.user.id)
+        if request.user.is_authenticated and user.is_racer:
+            racer_and_not_start = (user.is_racer and race_object.status == &quot;not started&quot;)
+            reg = (Statistic.objects.filter(user_id=Racer.objects.get(user_id=request.user))
+                   &amp; Statistic.objects.filter(race_id=race_id))
+            racer_and_not_start = (racer_and_not_start and not reg)
+
+        else:
+            racer_and_not_start = False
+    except:
+        racer_and_not_start = False
+
+    try:
+        user = User.objects.get(id=request.user.id)
+        if request.user.is_authenticated and user.is_racer:
+            racer_not_start_reg = (user.is_racer and race_object.status == &quot;not started&quot;)
+            reg = (Statistic.objects.filter(user_id=Racer.objects.get(user_id=request.user))
+                   &amp; Statistic.objects.filter(race_id=race_id))
+            racer_not_start_reg = (racer_not_start_reg and reg)
+
+        else:
+            racer_not_start_reg = False
+    except:
+        racer_not_start_reg = False
+
+    return render(request, 'race.html', {'race': race_object, 'rns': racer_and_not_start,
+                                         'rnsr': racer_not_start_reg, 'racers': racers_stats,
+                                         'winners': winners, 'comments': comments_list})
+</code></pre>
+<p>Вовзращает форму данными о конкретной гонке по ее id.
+Так же, на этой форме, участики могут зарегистрироваться или отменить регистрацию на гонку.
+И все авторизованные пользователи могут читать и оставлять комментарии.</p>
+<h3 id="_7">Представление для регистрации пользователя как гонщика</h3>
+<pre><code class="language-py">def racer_registration(request):
+    form = RacerReg(request.POST or None)
+    if request.method == 'POST':
+        # form = RacerReg(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            racer = Racer(
+                user_id=request.user,
+                description=cleaned_data['description'],
+                experience=cleaned_data['experience'],
+                drive_class=cleaned_data['drive_class'],
+                team=cleaned_data['team']
+            )
+
+            user = User.objects.get(pk=request.user.id)
+            user.is_racer = True
+            user.save()
+            racer.save()
+            return redirect(f'/users/{request.user.id}')
+
+    return render(request, 'racerReg.html', {'form': form})
+</code></pre>
+<p>В зависимости от метода запроса возвращает форму регистрации нового гонщика
+или регистрирует пользователя в бд как гонщика.</p>
+<h3 id="_8">Представление для регистрации гонщиков на гонку</h3>
+<pre><code class="language-py">def register_for_race(request, race_id):
+    race_object = Race.objects.get(pk=race_id)
+    if race_object.winner_id is not None:
+        return redirect('/races')
+
+    if not request.user.is_authenticated:
+        return redirect('/races')
+
+    user = User.objects.get(pk=request.user.id)
+    racer = Racer.objects.get(user_id=user)
+    stats = Statistic.objects.filter(race_id=race_object) &amp; Statistic.objects.filter(user_id=racer)
+    if stats.count() &gt; 0:
+        return redirect('/races')
+
+    stats = Statistic.objects.create(user_id=racer, race_id=race_object)
+    return redirect('/races/' + str(race_object.id))
+</code></pre>
+<p>Представление регистрирует авторизованного гонщика как участника выбранной гонки.</p>
+<h3 id="_9">Представление для удаления регистрации гонщиков на гонку</h3>
+<pre><code class="language-py">def unregister_for_race(request, race_id):
+    race_object = Race.objects.get(pk=race_id)
+    if race_object.winner_id is not None:
+        return redirect('/races')
+
+    if not request.user.is_authenticated:
+        return redirect('/races')
+
+    user = User.objects.get(pk=request.user.id)
+    racer = Racer.objects.get(user_id=user)
+    stats = Statistic.objects.filter(race_id=race_object) &amp; Statistic.objects.filter(user_id=racer)
+    if stats.count() &lt;= 0:
+        return redirect('/races')
+
+    stats.delete()
+    return redirect('/races/' + str(race_object.id))
+</code></pre>
+<p>Представление противоположное предыдущему.
+Удаляет регистрацию авторизованного гонщика из выбранной гонки.</p>
+<h3 id="_10">Представление для создания новых комментариев</h3>
+<pre><code class="language-py">def commentCreate(request, race_id):
+    form = CommentCreate(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            race = Race.objects.get(pk=race_id)
+            user = User.objects.get(pk=request.user.id)
+            comment = Comment(
+                main_text=cleaned_data['main_text'],
+                race_id=race,
+                race_date=race.race_date,
+                type=cleaned_data['type'],
+                rate=random.randint(1, 10),
+                commentator_id=user
+            )
+            comment.save()
+            return redirect(f'/races/{race_id}')
+
+    return render(request, 'comment.html', {'form': form})
+</code></pre>
+<p>В зависимости от метода запроса возвращает форму для написания нового комментария к гонке
+или создает новый комментарий к гонке в бд.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
