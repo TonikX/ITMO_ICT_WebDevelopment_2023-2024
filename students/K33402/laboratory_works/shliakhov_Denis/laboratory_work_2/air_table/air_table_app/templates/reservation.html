@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+
+<a href="{% url 'flight_info' flight.id %}" class="btn btn-secondary mb-4">Назад</a>
+
+<h2 class="mb-4">Бронирование</h2>
+
+<h5 class="mb-3">Информация о рейсе</h5>
+<div>Номер рейса: {{ flight.flight_number }}</div>
+<div>Авиакомпания: {{ flight.airline }}</div>
+<div>Вылет: {{ flight.departure_city }} {{ flight.departure_date }}</div>
+<div>Прилет: {{ flight.arrival_city }} {{ flight.arrival_date }}</div>
+<div>Выход: {{ flight.gate }}</div>
+
+<form method="post" class="mt-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+{% endblock %}
