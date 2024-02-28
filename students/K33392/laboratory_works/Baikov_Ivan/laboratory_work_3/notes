@@ -1,0 +1,2 @@
+justagent@MacBook-Air-Ivan-2 library_project % py manage.py runserver 0.0.0.0:8001
+justagent@MacBook-Air-Ivan-2 library_project % mkdocs serve
