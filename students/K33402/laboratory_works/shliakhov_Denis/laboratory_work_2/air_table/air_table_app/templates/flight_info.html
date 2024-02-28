@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="d-flex align-items-center mb-4">
+    <h2 class="mr-4">Рейс {{flight}}</h2>
+    {% if is_register and is_available %}
+    <div>
+        <a href="{% url 'reservation_update' reservation.id %}" class="btn btn-primary btn-sm">Изменить</a>
+        <a href="{% url 'reservation_delete' reservation.id %}" class="btn btn-danger btn-sm">Отменить</a>
+    </div>
+    {% elif is_available %}
+    <div><a href="{% url 'reservation' flight.id %}" class="btn btn-primary btn-sm">Забронировать</a></div>
+    {% endif %}
+</div>
+
+<h5 class="mb-3">Информация о рейсе</h5>
+<div>Номер рейса: {{flight.flight_number}}</div>
+<div>Авиакомпания: {{flight.airline}}</div>
+<div>Вылет: {{flight.departure_city}} {{flight.departure}}</div>
+<div>Прилет: {{flight.arrival_city}} {{flight.arrival}}</div>
+<div>Тип: {{flight.type }}</div>
+<div>Выход: {{flight.gate}}</div>
+<div>Пассажиры:
+    {% for passenger in passengers %}
+    {{ passenger }},
+    {% endfor %}
+</div>
+
+{% if is_register %}
+<h5 class="my-3">Бронирование</h5>
+<div>Место: {{reservation.seat}}</div>
+<div>Дата бронирования: {{reservation.date}}</div>
+<div>Номер билета: {{reservation.ticket_number}}</div>
+
+
+<h5 class="my-3">Добавить комментарий</h5>
+<form method="post" class="mb-5">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endif %}
+
+<h5 class="my-3">Комментарии</h5>
+<ul class="list-group">
+    {% for comment in comments %}
+    <li class="list-group-item">
+        <strong>{{comment.passenger.username}}</strong>
+        <br>
+        Рейтинг: {{comment.rating}}
+        <br>
+        Комментарий: {{comment.text}}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
