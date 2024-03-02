@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Delete Car{% endblock title %}
+{% block content  %}
+
+<form action="" method="post">
+   {% csrf_token %}
+  <p>
+    are you sure you want to delete the car {{car.govermental_number}}
+  </p>
+  <input type="submit" value="Delete"/>
+  </form>
+  <br>
+  <a href={% url "car_list" %}>get back</a> 
+{% endblock content  %}

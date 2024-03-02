@@ -1,0 +1,7 @@
+site_name: My Docs
+nav:
+  - About Project:  about.md
+  - Serializers : serializers.md
+  - Authorization : authorization.md
+theme:
+  name: material

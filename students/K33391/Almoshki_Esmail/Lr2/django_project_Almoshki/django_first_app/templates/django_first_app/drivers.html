@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block title %}Drivers{% endblock title %}
+{% block content %}
+<h2>Drivers</h2>
+<ul>
+{% for driver in object_list %}
+<li>
+  <h3> First Name: </h3>{{driver.first_name}} 
+   <h3> Last Name:</h3> {{driver.last_name}} 
+    <h3> Birthdate:</h3> {{driver.birthdate}} 
+</li>
+
+<hr>
+{% empty %}
+<h2>Currently <br>There are no items</h2>
+
+
+{% endfor %}
+</ul>
+{% endblock content %}
+
+
