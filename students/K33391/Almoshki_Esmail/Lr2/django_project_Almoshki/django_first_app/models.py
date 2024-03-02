@@ -3,11 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 
 
-# class User(AbstractUser):
-#     name = models.CharField(max_length=100, blank=True, null=True)
-#     passport_number = models.CharField(max_length=30, null=True, blank=True)
-#     address = models.CharField(max_length=100, null=True, blank=True)
-#     nationality = models.CharField(max_length=30, null=True, blank=True)
 
 
 class Driver(AbstractUser):
