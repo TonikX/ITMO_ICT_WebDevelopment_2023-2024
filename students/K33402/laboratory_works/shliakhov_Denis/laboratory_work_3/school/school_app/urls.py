@@ -18,7 +18,7 @@ urlpatterns = [
 
     path('student/all/', UniversalListView.as_view(model=Student, serializer_class=StudentSerializer)),
     path('student/<int:pk>/', UniversalRetrieveView.as_view(model=Student, serializer_class=StudentSerializer)),
-    path('student/create/', UniversalCreateView.as_view(model=Student, serializer_class=StudentSerializer)),
+    path('student/create/', UniversalCreateView.as_view(model=Student, serializer_class=CreateStudentSerializer)),
     path('student/update/<int:pk>/', UniversalUpdateView.as_view(model=Student, serializer_class=StudentSerializer)),
     path('student/delete/<int:pk>/', UniversalDeleteView.as_view(model=Student, serializer_class=StudentSerializer)),
 

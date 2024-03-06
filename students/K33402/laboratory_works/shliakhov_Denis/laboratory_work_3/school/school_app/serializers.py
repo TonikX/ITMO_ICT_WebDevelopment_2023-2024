@@ -15,10 +15,25 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class GradeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Grade
+        fields = '__all__'
+
+
 class StudentSerializer(serializers.ModelSerializer):
+    grade_set = GradeSerializer(many=True)
+
     class Meta:
         model = Student
         fields = '__all__'
+
+
+class CreateStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
 
 class TeachProcessSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,11 +46,6 @@ class SubjectSerializer(serializers.ModelSerializer):
         model = Subject
         fields = '__all__'
 
-
-class GradeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Grade
-        fields = '__all__'
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
