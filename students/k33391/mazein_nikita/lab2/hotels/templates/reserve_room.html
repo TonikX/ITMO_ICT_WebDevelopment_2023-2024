@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+
+<a href="{% url 'hotel_detail' hotel.id %}" class="btn btn-secondary mb-4">Back to hotel</a>
+
+<h2>Reserve  a room</h2>
+<div class="row">
+  <div class="col-md-3">
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="roomNumberInput" class="form-label">Room Number: </label>
+        <input name='room' class="form-control" id="roomNumberInput">
+
+          <label for="DateStartInput" class="form-label">Date start: </label>
+        <input name='date-start' class="form-control" id="DateStartInput">
+
+          <label for="DateEndInput" class="form-label">Date end: </label>
+        <input name='date-finish' class="form-control" id="DateEndInput">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+

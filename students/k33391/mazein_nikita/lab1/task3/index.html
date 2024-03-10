@@ -1,0 +1,41 @@
+<html>
+        <head>
+          <title>My Page</title>
+          <style>
+            body {
+              background-image: url('https://i.stack.imgur.com/J5xAl.gif');
+              background-size: cover;
+              background-repeat: no-repeat;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Welcome to My Page</h1>
+          <p>Click the button below to see some cute dogs:</p>
+          <button onclick="showDogs()">Click Dogs</button>
+          <button onclick="removeDogs()">Remove Dogs</button>
+          <script>
+            function showDogs() {
+              const images = [
+                'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/cute-cat-photos-1593441022.jpg?crop=0.670xw:1.00xh;0.167xw,0&resize=640:*',
+                'https://bit.ly/fcc-relaxing-cat',
+                'https://www.everypaw.com/.imaging/mte/everypaw/blog/dam/all-things-pet/buying-a-kitten-heres-what-you-should-look-out-for/buying-a-kitten.jpg/jcr:content/buying-a-kitten.jpg'
+              ];
+      
+              for (const image of images) {
+                const imgElement = document.createElement('img');
+                imgElement.src = image;
+                document.body.appendChild(imgElement);
+              }
+              alert('Caugth Ya, DogLovers!')
+            }
+      
+            function removeDogs() {
+              const images = document.querySelectorAll('img');
+              for (const image of images) {
+                image.remove();
+              }
+            }
+          </script>
+        </body>
+</html>
