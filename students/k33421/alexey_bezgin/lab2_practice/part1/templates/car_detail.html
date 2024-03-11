@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publisher detail</title>
+</head>
+
+<body>
+	<li><strong>Number:</strong> {{ object.gov_num }}, actions: <a href="/car/{{ car.id }}/update/">Edit</a> | <a href="/car/{{ car.id }}/delete/">Delete</a> | <a href="/car/{{ car.id }}/">Detail</a>
+  	<p><strong>Car:</strong> {{object.car_mark}} {{object.car_model}}</p>
+  	<p><strong>Color:</strong> {{ object.color }}</p>
+</body>
+</html>

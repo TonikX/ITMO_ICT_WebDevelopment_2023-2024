@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Personal Space</title>
+</head>
+<body>
+<h2>Welcome to Your Personal Space, {{ username }}</h2>
+<p>Your username is: {{ username }}</p>
+
+
+<h2><a href="{% url 'user_reservations' %}">My reservations</a></h2>
+<h2><a href="{% url 'flights_list' %}">All flights</a></h2>
+<h2><a href="{% url 'logout' %}">Logout</a></h2>
+
+
+</body>
+</html>

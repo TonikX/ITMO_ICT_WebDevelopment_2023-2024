@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Create Review for Flight {{ flight }}</title>
+</head>
+<body>
+    <h2>Create Review for Flight {{ flight }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+</html>

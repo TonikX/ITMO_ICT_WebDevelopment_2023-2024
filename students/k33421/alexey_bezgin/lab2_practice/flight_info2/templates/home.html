@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Flights Table Info App</title>
+</head>
+<body>
+<h1>Flights Table Info App</h1>
+<p>Welcome to the Flights Table Info App. This is the default page.</p>
+
+<h2><a href="{% url 'register' %}">Register</a></h2>
+<h2><a href="{% url 'login' %}">Login</a></h2>
+
+</body>
+</html>

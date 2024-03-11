@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <title>Passengers on {{ flight }}</title>
+</head>
+<body>
+<h2>Passengers on Flight {{ flight }}</h2>
+<ul>
+    {% for reservation in reservations %}
+    <li>{{ reservation.user.username }} - Ticket Number: {{ reservation.ticket }}</li>
+    {% empty %}
+    <li>No passengers registered for this flight.</li>
+    {% endfor %}
+</ul>
+
+    <h2>
+        <a href="{% url 'personal_space' %}">Go home</a>
+    </h2>
+
+</body>
+</html>
