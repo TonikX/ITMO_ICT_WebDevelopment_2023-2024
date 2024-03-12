@@ -77,7 +77,7 @@ class Subject(models.Model):
         SPORT = 'Спорт',
         ENGLISH = 'Английский',
         RUSSIAN = 'Русский язык'
-        Literature = 'Литература'
+        LITERATURE = 'Литература'
 
     teachers = models.ManyToManyField(Teacher, through=TeachProcess)
     name = models.CharField(max_length=100, choices=SubjectType)
