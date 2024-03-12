@@ -5,6 +5,14 @@
     <title>Заголовок</title>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            <li><a href="{% url 'tour_list' %}">Список туров</a></li>
+            <li><a href="{% url 'tours_by_country' %}">Туры по странам</a></li>
+            <li><a href="{% url 'register' %}">Регистрация</a></li>
+        </ul>
+    </nav>
     {% block content %}
     {% endblock %}
 </body>

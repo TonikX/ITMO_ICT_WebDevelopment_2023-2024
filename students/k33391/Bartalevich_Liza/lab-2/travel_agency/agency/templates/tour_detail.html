@@ -4,4 +4,5 @@
   <h2>{{ tour.name }}</h2>
   <p>{{ tour.description }}</p>
   <a href="{% url 'reserve_tour' tour.id %}">Забронировать тур</a>
+  <a href="{% url 'add_review' tour.id %}">Добавить комментарий</a>
 {% endblock %}

@@ -4,7 +4,7 @@ import socket
 def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        client.connect(('localhost', 9999))
+        client.connect(('localhost', 9998))
         a = input('Введите высоту параллелограмма: ')
         b = input('Введите длину стороны параллелограмма: ')
         data = a + ',' + b

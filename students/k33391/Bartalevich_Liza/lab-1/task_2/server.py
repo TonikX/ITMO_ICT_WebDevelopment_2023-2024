@@ -3,9 +3,9 @@ import socket
 
 def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('localhost', 9999))
+    server.bind(('localhost', 9998))
     server.listen(2)
-    print(f"Server is running on http://localhost:9999")
+    print(f"Server is running on http://localhost:9998")
 
     while True:
         client, address = server.accept()

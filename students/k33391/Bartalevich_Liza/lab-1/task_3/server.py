@@ -13,9 +13,9 @@ def get_response():
 
 def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('localhost', 9999))
+    server.bind(('localhost', 9990))
     server.listen(1)
-    print(f"Server is running on http://localhost:9999")
+    print(f"Server is running on http://localhost:9990")
 
     while True:
         client, address = server.accept()

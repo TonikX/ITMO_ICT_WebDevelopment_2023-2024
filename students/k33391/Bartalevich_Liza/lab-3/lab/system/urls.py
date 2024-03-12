@@ -4,16 +4,15 @@ from . import views
 
 router = SimpleRouter()
 router.register('animals', views.AnimalViewSet)
-router.register('animals/winterp-laces', views.WinterPlaceViewSet)
+router.register('winter-places', views.WinterPlaceViewSet)
 
 router.register('food', views.TypeOfDietViewSet)
-router.register('food/diets', views.DietViewSet)
+router.register('diets', views.DietViewSet)
 router.register('habitats', views.HabitatViewSet)
 
 router.register('locations', views.AreaViewSet)
-router.register('locations/aviaries', views.AviaryViewSet)
-router.register('locations/who-is-there', views.AnimalInAviaryViewSet)
-
+router.register('aviaries', views.AviaryViewSet)
+router.register('who-is-there', views.AnimalInAviaryViewSet)
 
 router.register('other-zoos', views.ZooViewSet)
 router.register('ownings', views.OwningViewSet)

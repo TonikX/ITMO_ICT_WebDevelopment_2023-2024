@@ -89,4 +89,4 @@ def add_review(request, tour_id):
             return HttpResponseRedirect(reverse('tour_detail', args=[tour.id]))
     else:
         form = ReviewForm()
-    return render(request, 'tour_comment.html', {'form': form, 'tour': tour})
+    return render(request, 'add_review.html', {'form': form, 'tour': tour})

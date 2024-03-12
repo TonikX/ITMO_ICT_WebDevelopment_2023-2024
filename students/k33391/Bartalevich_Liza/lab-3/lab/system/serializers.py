@@ -1,4 +1,4 @@
-from rest_framework import  serializers
+from rest_framework import serializers
 from .models import *
 
 
@@ -67,7 +67,7 @@ class AnimalSerializer(serializers.ModelSerializer):
 class WinterPlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = WinterPlace
-        fields ='__all__'
+        fields = '__all__'
 
 
 class AnimalInAviarySerializer(serializers.ModelSerializer):

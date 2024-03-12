@@ -7,7 +7,7 @@ class Aviary(models.Model):
                             null=True, blank=True)
     
     communal = models.BooleanField()
-    winter_place = models.BooleanField
+    winter_place = models.BooleanField()
     additional = models.CharField(max_length=2000, null=True, blank=True)
 
     def __str__(self):
