@@ -23,6 +23,12 @@ from config import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('apps.urls')),
+]
+
+# Packages urls
+
+urlpatterns += [
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
