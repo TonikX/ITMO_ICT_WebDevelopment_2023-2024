@@ -1,0 +1,64 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import instance from "@/AxiosInstance";
+import router from "@/router/router";
+import { TokenStore } from "@/stores/TokenStore";
+
+const Token = TokenStore();
+
+const form = ref({
+  num: "",
+  base: "",
+});
+
+function getCard() {
+  instance
+    .get(`/main/rooms/${router.currentRoute.value.params.id}/`, {
+      headers: {
+        Authorization: `Bearer ${Token.token}`,
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        form.value = response.data;
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
+function saveCard() {
+  // const { id, ...rest } = form.value;
+  instance
+    .patch(`/main/rooms/${router.currentRoute.value.params.id}/`, form.value, {
+      headers: {
+        Authorization: `Bearer ${Token.token}`,
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        router.push("/rooms");
+      }
+    })
+    .catch((error) => console.log(error));
+}
+
+onMounted(() => {
+  getCard();
+});
+</script>
+
+<template>
+  <v-app>
+    <div class="w-50 mx-auto">
+      <h2>Аудитория</h2>
+      <v-text-field label="Номер" v-model="form.num"></v-text-field>
+      <v-text-field
+        label="Без специализации"
+        v-model="form.base"
+      ></v-text-field>
+      <v-btn @click="saveCard">Сохранить</v-btn>
+    </div>
+  </v-app>
+</template>
+
+<style scoped></style>
