@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, DetailView
+from django.views.generic import CreateView, TemplateView, DetailView, ListView
 
 from apps.user.forms import UserRegisterForm, UserLoginForm
 from apps.user.models import Student, Teacher, Roles
@@ -50,3 +50,9 @@ class TeacherDetailView(DetailView):
     model = Teacher
     template_name = 'user/teacher_detail.html'
     context_object_name = 'teacher'
+
+
+class TeacherListView(ListView):
+    model = Teacher
+    template_name = 'user/teacher_list.html'
+    context_object_name = 'teachers'

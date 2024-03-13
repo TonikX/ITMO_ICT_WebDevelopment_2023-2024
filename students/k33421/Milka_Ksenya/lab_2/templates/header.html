@@ -13,22 +13,19 @@
                     {#                    href="{% url 'students' %}"#}
                     <a class="navbar-item">Students</a>
                 {% elif user.role == 'student' %}
-                    {#                    href="{% url 'teachers' %}"#}
-                    <a class="navbar-item">Teachers</a>
+                    <a class="navbar-item" href="{% url 'teacher_list' %}">Teachers</a>
                 {% endif %}
                 {#                href="{% url 'homeworks' %}"#}
-                <a class="navbar-item">Homeworks</a>
             {% endif %}
         </div>
 
         <div class="navbar-end">
             {% if user.is_authenticated %}
-                {#                href="{% url 'profile' %}"#}
                 <div class="navbar-item">
                     <div class="dropdown is-right is-hoverable">
                         <div class="dropdown-trigger">
                             <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-                                <span>Click me</span>
+                                <span>Profile</span>
                             </button>
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu3" role="menu">
@@ -36,12 +33,11 @@
                                 <a class="dropdown-item" href="{% url 'user_info' %}">
                                     Information
                                 </a>
-                                <a href="#" class="dropdown-item">
-                                    Modifiers
+                                {% if user.role == 'student' %}
+                                    <a class="dropdown-item" href="{% url 'student_submissions' %}">
+                                        My Submissions
                                 </a>
-                                <a href="#" class="dropdown-item">
-                                    Grid
-                                </a>
+                                {% endif %}
                                 <hr class="dropdown-divider">
                                 <div class="dropdown-item">
                                     <form method="post" action="{% url 'logout' %}">

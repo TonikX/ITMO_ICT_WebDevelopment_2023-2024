@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Teachers</h1>
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Assigned Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for teacher in teachers %}
+                    <tr>
+                        <td>{{ teacher.user.full_name }}</td>
+                        <td>{{ teacher.user.email }}</td>
+                        <td>{{ teacher.user.date_of_birth }}</td>
+                        <td>{{ teacher.assigned_date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
