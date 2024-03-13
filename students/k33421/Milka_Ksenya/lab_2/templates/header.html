@@ -7,8 +7,7 @@
 
     <div class="navbar-menu">
         <div class="navbar-start">
-            {#        href="{% url 'subjects' %}"#}
-            <a class="navbar-item">Subjects</a>
+            <a class="navbar-item" href="{% url 'subject_list' %}">Subjects</a>
             {% if user.is_authenticated %}
                 {% if user.role == 'teacher' %}
                     {#                    href="{% url 'students' %}"#}

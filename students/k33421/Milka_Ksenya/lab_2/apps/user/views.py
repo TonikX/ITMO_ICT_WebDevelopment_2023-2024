@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, DetailView
 
 from apps.user.forms import UserRegisterForm, UserLoginForm
 from apps.user.models import Student, Teacher, Roles
@@ -44,3 +44,9 @@ class UserInfoView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['user_info'] = self.request.user
         return context
+
+
+class TeacherDetailView(DetailView):
+    model = Teacher
+    template_name = 'user/teacher_detail.html'
+    context_object_name = 'teacher'

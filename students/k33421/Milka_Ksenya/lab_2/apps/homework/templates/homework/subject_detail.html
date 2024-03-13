@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">{{ subject.name }}</h1>
+            <h2 class="subtitle">Academic Year: {{ subject.academic_year }}</h2>
+
+            <div class="box">
+                <h3 class="title is-4">Teachers</h3>
+                {% for teacher in teachers %}
+                    <p>
+                        <a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.user.full_name }}</a>
+                        - Assigned Date: {{ teacher.assigned_date }}
+                    </p>
+                {% endfor %}
+            </div>
+
+            <div class="box">
+                <h3 class="title is-4">Homeworks</h3>
+                {% for homework in homeworks %}
+                    <article class="message is-primary">
+                        <div class="message-header">
+                            <p>{{ homework.title }}</p>
+                            <p>Due: {{ homework.due_date }}</p>
+                            <a href="{% url 'submission_create' homework.pk %}" class="button is-primary">Отправить
+                                решение</a>
+                        </div>
+                        <div class="message-body">
+                            {{ homework.description|safe }}
+                        </div>
+                    </article>
+                {% empty %}
+                    <p>No homeworks assigned yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
