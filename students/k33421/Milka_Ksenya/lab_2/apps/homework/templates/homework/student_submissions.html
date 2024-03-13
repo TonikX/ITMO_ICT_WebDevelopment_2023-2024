@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">My Submissions</h1>
+            {% for subject, submissions in grouped_submissions.items %}
+                <h2 class="subtitle">{{ subject }}</h2>
+                {% for submission in submissions %}
+                    <div class="box">
+                        <article class="message is-primary">
+                            <div class="message-header">
+                                <p><strong>{{ submission.homework.title }}</strong></p>
+                                <p><small>Submitted: {{ submission.submission_date }}</small></p>
+                                <p>{{ submission.comments }}</p>
+                            </div>
+                            <div class="message-body">
+                                {% if submission.is_graded %}
+                                    <p>Grade: <strong>{{ submission.grade.value }}</strong> Graded by
+                                        <strong>{{ submission.grade.teacher.user.full_name }}</strong></p>
+                                    <br>
+                                        <p>{{ submission.grade.comments|safe }}</p>
+                                {% else %}
+                                    <p>Not graded yet.</p>
+                                {% endif %}
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            {% empty %}
+                <p>You have not submitted any homework yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

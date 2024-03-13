@@ -1,0 +1,66 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'home' %}">
+            School
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{% url 'subject_list' %}">Subjects</a>
+            {% if user.is_authenticated %}
+                {% if user.role == 'teacher' %}
+                    <a class="navbar-item" href="{% url 'students_list' %}">Students</a>
+                {% elif user.role == 'student' %}
+                    <a class="navbar-item" href="{% url 'teacher_list' %}">Teachers</a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="navbar-end">
+            {% if user.is_authenticated %}
+                <div class="navbar-item">
+                    <div class="dropdown is-right is-hoverable">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                                <span>Profile</span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" href="{% url 'user_info' %}">
+                                    Information
+                                </a>
+                                {% if user.role == 'student' %}
+                                    <a class="dropdown-item" href="{% url 'student_submissions' %}">
+                                        My Submissions
+                                </a>
+                                {% elif user.role == 'teacher' %}
+                                    <a class="dropdown-item" href="{% url 'teacher_homework_list' %}">
+                                        My Homeworks
+                                    </a>
+                                {% endif %}
+                                <hr class="dropdown-divider">
+                                <div class="dropdown-item">
+                                    <form method="post" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button class="button" aria-haspopup="true" type="submit">
+                                            <span>logout</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <a class="navbar-item" href="{% url 'login' %}">Login</a>
+                <a class="navbar-item" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<form id="logout-form" action="{% url 'logout' %}" method="post" class="hidden">
+    {% csrf_token %}
+</form>

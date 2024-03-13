@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Teacher Information</h1>
+            <div class="box">
+                <p><strong>Name:</strong> {{ teacher.user.full_name }}</p>
+                <p><strong>Email:</strong> {{ teacher.user.email }}</p>
+                <p><strong>Assigned Date:</strong> {{ teacher.assigned_date }}</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

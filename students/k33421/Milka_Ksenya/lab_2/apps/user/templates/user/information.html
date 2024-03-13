@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="hero is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    User Information
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <div class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>Email:</strong> <br> {{ user_info.email }}
+                                    </p>
+                                    <p>
+                                        <strong>Full Name:</strong> <br> {{ user_info.full_name }}
+                                    </p>
+                                    <p>
+                                        <strong>Date of Birth:</strong> <br> {{ user_info.date_of_birth }}
+                                    </p>
+                                    <p>
+                                        <strong>Role:</strong> <br> {{ user_info.role|title }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
