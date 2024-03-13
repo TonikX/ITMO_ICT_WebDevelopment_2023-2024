@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Туры</h2>
+  <ul>
+    {% for tour in tours %}
+      <li>
+        <a href="{% url 'tour_detail' tour.id %}">{{ tour.name }}</a> - {{ tour.description }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
