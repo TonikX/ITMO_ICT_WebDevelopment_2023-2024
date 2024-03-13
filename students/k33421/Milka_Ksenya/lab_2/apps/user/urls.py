@@ -9,4 +9,5 @@ urlpatterns = [
     path('info/', views.UserInfoView.as_view(), name='user_info'),
     path('teachers/<int:pk>/', views.TeacherDetailView.as_view(), name='teacher_detail'),
     path('teachers/', views.TeacherListView.as_view(), name='teacher_list'),
+    path('students/', views.StudentListView.as_view(), name='students_list'),
 ]

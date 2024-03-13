@@ -56,3 +56,9 @@ class TeacherListView(ListView):
     model = Teacher
     template_name = 'user/teacher_list.html'
     context_object_name = 'teachers'
+
+
+class StudentListView(ListView):
+    model = Student
+    template_name = 'user/students.html'
+    context_object_name = 'students'

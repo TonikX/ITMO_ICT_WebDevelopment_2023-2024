@@ -10,12 +10,10 @@
             <a class="navbar-item" href="{% url 'subject_list' %}">Subjects</a>
             {% if user.is_authenticated %}
                 {% if user.role == 'teacher' %}
-                    {#                    href="{% url 'students' %}"#}
-                    <a class="navbar-item">Students</a>
+                    <a class="navbar-item" href="{% url 'students_list' %}">Students</a>
                 {% elif user.role == 'student' %}
                     <a class="navbar-item" href="{% url 'teacher_list' %}">Teachers</a>
                 {% endif %}
-                {#                href="{% url 'homeworks' %}"#}
             {% endif %}
         </div>
 

@@ -23,8 +23,10 @@
                         <div class="message-header">
                             <p>{{ homework.title }}</p>
                             <p>Due: {{ homework.due_date }}</p>
+                            {% if user.role == 'student' %}
                             <a href="{% url 'submission_create' homework.pk %}" class="button is-primary">Отправить
                                 решение</a>
+                            {% endif %}
                         </div>
                         <div class="message-body">
                             {{ homework.description|safe }}
