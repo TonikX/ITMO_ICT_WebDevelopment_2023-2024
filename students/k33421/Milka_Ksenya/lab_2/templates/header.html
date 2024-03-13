@@ -35,6 +35,10 @@
                                     <a class="dropdown-item" href="{% url 'student_submissions' %}">
                                         My Submissions
                                 </a>
+                                {% elif user.role == 'teacher' %}
+                                    <a class="dropdown-item" href="{% url 'teacher_homework_list' %}">
+                                        My Homeworks
+                                    </a>
                                 {% endif %}
                                 <hr class="dropdown-divider">
                                 <div class="dropdown-item">

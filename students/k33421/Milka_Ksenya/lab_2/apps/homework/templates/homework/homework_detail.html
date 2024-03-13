@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">{{ homework.title }}</h1>
+            <h2 class="subtitle">Due Date: {{ homework.due_date }}</h2>
+            <div class="content">{{ homework.description|safe }}</div>
+            <h3>Submissions:</h3>
+            {% for submission in submissions %}
+                <div class="box">
+                    <p>Student: {{ submission.student.user.full_name }}</p>
+                    <p>Submitted On: {{ submission.submission_date }}</p>
+                    {% if not submission.is_graded %}
+                        <p><a href="{% url 'grade_submission' submission.pk %}">Grade Submission</a></p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No submissions yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

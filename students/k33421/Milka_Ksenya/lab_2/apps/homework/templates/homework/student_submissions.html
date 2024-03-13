@@ -16,14 +16,10 @@
                             </div>
                             <div class="message-body">
                                 {% if submission.is_graded %}
-                                    <p>Grade: <strong>{{ submission.grade.value }}</strong>
-                                        by {{ submission.grade.teacher }}</p>
+                                    <p>Grade: <strong>{{ submission.grade.value }}</strong> Graded by
+                                        <strong>{{ submission.grade.teacher.user.full_name }}</strong></p>
                                     <br>
-                                    <div class="box">
                                         <p>{{ submission.grade.comments|safe }}</p>
-                                        <br>
-                                        <p>Graded by <strong>{{ submission.grade.teacher.user.full_name }}</strong></p>
-                                    </div>
                                 {% else %}
                                     <p>Not graded yet.</p>
                                 {% endif %}

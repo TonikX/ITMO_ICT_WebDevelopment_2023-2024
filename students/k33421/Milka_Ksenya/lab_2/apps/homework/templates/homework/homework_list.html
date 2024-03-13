@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Teacher's Homework List</h1>
+            {% for subject, homeworks in grouped_homeworks.items %}
+                <h2 class="subtitle">{{ subject }}</h2>
+                {% for homework in homeworks %}
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong><a
+                                                href="{% url 'teacher_homework_detail' homework.pk %}">{{ homework.title }}</a></strong>
+                                        <br>
+                                        Due Date: {{ homework.due_date }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            {% empty %}
+                <p>No homework assignments found.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
