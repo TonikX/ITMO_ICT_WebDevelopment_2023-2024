@@ -28,9 +28,9 @@ class CustomUserCreationForm(UserCreationForm):
 		max_length=254,
 		widget=forms.TextInput(attrs={'class': 'form-control'})
 	)
-	password1 = forms.CharField(
+	userPassword = forms.CharField(
 		widget=forms.PasswordInput(attrs={'class': 'form-control'})
 	)
-	password2 = forms.CharField(
+	repeatedUserPassword = forms.CharField(
 		widget=forms.PasswordInput(attrs={'class': 'form-control'})
 	)

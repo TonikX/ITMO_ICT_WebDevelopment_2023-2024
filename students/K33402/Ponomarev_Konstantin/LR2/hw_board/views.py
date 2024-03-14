@@ -65,7 +65,7 @@ class UserRegister(View):
             return render(request, 'board/user_register.html', {'form': form})
         form.save()
         username = form.cleaned_data['username']
-        password = form.cleaned_data['password1']
+        password = form.cleaned_data['userPassword']
         user = authenticate(username=username, password=password)
         login(request, user)
         return redirect('profile_url')

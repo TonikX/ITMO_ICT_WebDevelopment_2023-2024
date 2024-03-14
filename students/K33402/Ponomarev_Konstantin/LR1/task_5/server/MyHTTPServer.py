@@ -43,15 +43,6 @@ class MyHTTPServer:
     def get_response(self, request) -> Response:
         print(f"get_response:{request.method} {request.path}")
         if request.method == Method.GET and request.path.startswith("/grades"):
-            query_parameters = parse_qs(urlparse(request.path).query)
-            if "subject" not in query_parameters:
-                return Response(
-                    protocolVersion="HTTP/1.1",
-                    status=400,
-                    headers={"Content-Type": "application/json"},
-                    body=json.dumps({"errorMessage": "subject query param was not specified"}).encode(),
-                )
-
             return Response(
                 protocolVersion="HTTP/1.1",
                 status=200,
