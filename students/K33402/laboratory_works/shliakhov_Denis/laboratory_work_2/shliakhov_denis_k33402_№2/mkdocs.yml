@@ -1,0 +1,8 @@
+site_name: shliakhov_denis_k33402_№2
+dev_addr: '127.0.0.1:9000'
+nav:
+  - models: models.md
+  - views: views.md
+  - forms: forms.md
+  - other files: other_files.md
+  - site works: site_work_example.md

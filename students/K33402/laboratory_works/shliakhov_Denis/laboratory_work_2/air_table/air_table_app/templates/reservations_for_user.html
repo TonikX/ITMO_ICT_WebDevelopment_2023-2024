@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4">Бронирования</h2>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Место</th>
+        <th scope="col">Дата бронирования</th>
+        <th scope="col">Номер билета</th>
+        <th scope="col">Рейс</th>
+        <th scope="col">Подробности</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reservation in reservations %}
+    <tr>
+        <td>{{ reservation.seat }}</td>
+        <td>{{ reservation.date }}</td>
+        <td>{{ reservation.ticket_number }}</td>
+        <td>
+            <div>Номер рейса: {{ reservation.flight.flight_number }}</div>
+            <div>Авиакомпания: {{ reservation.flight.airline }}</div>
+            <div>Вылет: {{ reservation.flight.departure_city }} {{ reservation.flight.date }}</div>
+            <div>Прилет: {{ reservation.flight.arrival_city }} {{ reservation.flight.date }}</div>
+            <div>Выход: {{ reservation.flight.gate }}</div>
+        </td>
+        <td><a href="{% url 'flight_info' reservation.flight.id %}" class="btn btn-primary">Клик</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
