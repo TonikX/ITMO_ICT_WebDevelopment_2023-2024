@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1 class="text-center">Hotels</h1>
+
+<form method="GET" class='mb-5'>
+
+  <div class='mb-3'>
+    <label for="capacitySearchSelect" class="form-label">Capacity: </label>
+    <select id="capacitySearchSelect" name="capacity" class="form-select form-select-lg ">
+      <option value="">Choose:</option>
+      {% for available_cap in available_capacities %}
+        <option
+          value="{{available_cap}}"
+          {% if capacity == available_cap %} selected {% endif %}
+        >
+          {{available_cap}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class='mb-3'>
+    <label for="citySearchSelect" class="form-label">City: </label>
+    <select id="citySearchSelect" name="city" class="form-select form-select-lg ">
+      <option value="">Choose:</option>
+      {% for available_city in available_cities %}
+        <option
+          value="{{available_city}}"
+          {% if city == available_city %} selected {% endif %}
+        >
+          {{available_city}}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Find</button>
+</form>
+
+
+{% for hotel in hotels %}
+      <h4>Hotel: {{hotel.name}}</h4>
+      <h5>Owner: {{hotel.owner}}</h5>
+      <h5>City: {{hotel.city.name}}</h5>
+      <h5>Address: {{hotel.address}}</h5>
+    <h5>
+      <a class="text-primary" href="{% url 'hotel_detail' hotel.id %}">Смотреть подробнее</a>
+    </h5>
+    <br>
+
+{% endfor %}
+
+{% endblock %}
