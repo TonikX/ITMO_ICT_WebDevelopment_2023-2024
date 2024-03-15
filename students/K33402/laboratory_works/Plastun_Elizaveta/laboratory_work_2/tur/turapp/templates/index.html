@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-2">
+  <div>
+    {% if user.is_authenticated %}
+    <div class="text-success">Добро пожаловать, {{ user.username }}!</div>
+    {% endif %}
+  </div>
+  <h1 class="mb-4">Туры</h1>
+  {% if user_is_admin %}
+  <a class="btn btn-success mb-3" href="{% url 'create_tour' %}"
+    >Добавить тур</a
+  >
+  {% endif %}
+
+  <ul class="list-group">
+    {% for data in dataset %}
+    <li class="list-group-item position-relative">
+      <h2>
+        <a href="{% url 'tour_page' data.id %}">{{ data.name }}</a>
+      </h2>
+      <p class="mb-0">Страна: {{ data.country }}</p>
+      <p class="mb-0">Турагенство: {{ data.agency_name }}</p>
+      <p class="mb-3">Цена: {{ data.price }}</p>
+      {% if user_is_admin %}
+      <form
+        action="{% url 'delete_tour' data.id %}"
+        method="post"
+        style="display: inline"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </form>
+      {% endif %}
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет доступных туров</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

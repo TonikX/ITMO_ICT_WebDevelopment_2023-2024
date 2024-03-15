@@ -1,0 +1,4 @@
+site_name: My Docs
+dev_addr: '127.0.0.1:9030'
+nav:
+  - lab_4: lab_4.md
