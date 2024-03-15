@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Лабораторная работа 3 - Лабораторные работы</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Лабораторные работы</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../lab1/" class="nav-link">Лабораторная работа 1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab2/" class="nav-link">Лабораторная работа 2</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Лабораторная работа 3</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab4/" class="nav-link">Лабораторная работа 4</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../lab2/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../lab4/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#no3-django-rest-api" class="nav-link">ЛАБОРАТОРНАЯ РАБОТА №3 :  Реализация серверной части на django rest. Документирование API.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Выполнение работы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="no3-django-rest-api">ЛАБОРАТОРНАЯ РАБОТА №3 :  Реализация серверной части на django rest. Документирование API.</h1>
+<p><strong>Цель:</strong> Овладеть практическими навыками и умениями реализации web-сервисов средствами Django.</p>
+<p><strong>Задание:</strong> Реализовать сайт, используя фреймворк Django 3, Django REST Framework, Djoser и СУБД PostgreSQL, в соответствии с вариантом задания лабораторной работы.</p>
+<h2 id="_1">Выполнение работы</h2>
+<h3 id="13">Вариант 13 (из курса основы баз данных)</h3>
+<p>Создать программную систему, предназначенную для хранения информации о торгах на товарно-сырьевой бирже.</p>
+<p>На торги могут быть представлены разные товары одной и той же фирмы и одни и те же товары разных фирм. Каждый товар имеет свой уникальный код, произведен определенной формой в определенное время. Товар имеет гарантийный срок хранения, единицу измерения. Товар считается просроченным, если дата его отгрузки более поздняя, чем дата производства этого товара в сумме с гарантийным сроком хранения. Товары поставляются партиями. Партия характеризуется: номером, количеством единиц в партии, ценой поставляемого товара, условиями поставки (предоплата или нет). Партии товаров выставляют брокеры.</p>
+<p>В одну партию товаров включаются разнообразные товары от разных производителей. Считается, что партии товаров, выставленные на продажу, покупает сама биржа, и она же расплачивается с брокером и производителями товара. Если условием поставки указана предоплата, то биржа перечисляет деньги в день заключения договора, а если нет — то в день отгрузки.</p>
+<p>Брокеры работают за фиксированный процент прибыли — 10% от суммы заключенных сделок. Ежемесячно брокеры перечисляют конторе, в которой они работают, фиксированную сумму денег, а все остальные заработанные ими деньги составляют их чистый доход (зарплату).</p>
+<p>Перечень возможных запросов к базе данных:</p>
+<ul>
+<li>подсчитать, сколько единиц товара каждого вида выставлено на продажу от начала торгов до заданной даты;</li>
+<li>найти фирму-производителя товаров, которая за заданный период времени выручила максимальную сумму денег;</li>
+<li>найти товары, которые никогда не выставляли на продажу брокеры заданной конторы;</li>
+<li>найти все факты выставления на продажу товаров с просроченной годностью (номер партии, код товара, наименование товара, данные о брокере);</li>
+<li>найти зарплату всех брокеров заданной конторы.
+Необходимо предусмотреть возможность получения отчета по последним торгам по всем товарам с указанием фирм, предлагающих товар в партиях, количества единиц, суммарного количества по торгам, общего количества наименований, участвующих в торгах.</li>
+</ul>
+<p><img alt="" src="../l3_db.png" /></p>
+<p><strong>serializers.py</strong></p>
+<pre><code class="language-python">import datetime
+from rest_framework import serializers
+from .models import Consignment, Company, BrokerCompany, Broker, ProductByCompany, Product
+
+
+class ProductSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = &quot;__all__&quot;
+
+
+class CountProductSerialiser(serializers.ModelSerializer):
+
+    count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = [&quot;count&quot;]
+
+    def get_count(self, obj):
+        return ProductByCompany.objects.filter(product=obj.id, created__lt=self.context[&quot;date&quot;]).count()
+
+
+class DateSerializer(serializers.Serializer):
+    date = serializers.DateField(default=datetime.date.today())
+
+    class Meta:
+        fields = ['date']
+
+
+class ProductByCompanySerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = ProductByCompany
+        fields = &quot;__all__&quot;
+
+
+class CompanySerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = &quot;__all__&quot;
+
+
+class BrokerSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = Broker
+        fields = &quot;__all__&quot;
+
+
+class CountBrokerSalarySerializer(serializers.ModelSerializer):
+
+    salary = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Broker
+        fields = ['id', 'name', 'salary']
+
+    def get_salary(self, obj):
+        count = 0
+        for c in Consignment.objects.filter(broker=obj.id):
+            count = ProductByCompany.objects.filter(consignment=c.id).count() * c.cost
+        return count
+
+
+class BrokerCompanySerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = BrokerCompany
+        fields = &quot;__all__&quot;
+
+
+class ConsignmentSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = Consignment
+        fields = &quot;__all__&quot;
+
+class BrokerTopProductsSerializer(serializers.ModelSerializer):
+    top_products = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Broker
+        fields = ['id', 'name', 'top_products']
+
+    def get_top_products(self, obj):
+        current_year = self.context['date'].year
+        consignments = Consignment.objects.filter(broker=obj.id, date_sold__year=current_year)
+
+        product_counts = {}
+
+        for consignment in consignments:
+            products_in_consignment = ProductByCompany.objects.filter(consignment=consignment.id)
+
+            for product_by_company in products_in_consignment:
+                product = product_by_company.product
+                product_count = product_counts.get(product.id, 0)
+                product_counts[product.id] = product_count + 1
+
+        sorted_products = sorted(product_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+
+        top_products_data = []
+
+        for product_id, count in sorted_products:
+            product = Product.objects.get(id=product_id)
+            top_products_data.append({
+                'product_id': product_id,
+                'product_name': product.name,
+                'count': count,
+            })
+
+        return top_products_data
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
