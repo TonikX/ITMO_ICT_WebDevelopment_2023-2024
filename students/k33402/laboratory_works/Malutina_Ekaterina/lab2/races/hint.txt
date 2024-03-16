@@ -1,0 +1,19 @@
+python manage.py startapp main_app
+# write all code
+python manage.py createsuperuser
+# kate-kate
+python manage.py makemigrations
+python manage.py migrate
+# models migrated to db
+python manage.py runserver
+# server is running now, cmd+c or ctrl+c to exit (terminate process)
+
+python -m mkdocs new .
+# or
+mkdocs new .
+# docs directory and file mkdocs.yml created
+
+python -m mkdocs serve
+# or
+mkdocs serve
+# docs is running now, cmd+c or ctrl+c to exit (terminate process)

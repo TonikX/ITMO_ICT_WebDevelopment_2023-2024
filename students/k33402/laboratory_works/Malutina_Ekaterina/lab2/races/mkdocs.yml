@@ -1,0 +1,5 @@
+site_name: Лабораторные работы
+nav:
+  - "Описание": index.md
+  - "Код приложения MainApp": main_app.md
+  - "Код приложения Races": races.md
