@@ -1,0 +1,61 @@
+{% extends 'hotels/main.html' %}
+
+{% block content %}
+<style>
+    .main-content {
+        background-size: cover;
+        background-position: center;
+        padding: 150px 0;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        color: #5bb8fa;
+    }
+
+    .hero p {
+        font-size: 18px;
+        color: #5bb8fa;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .hero-card {
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        border: none;
+    }
+</style>
+
+<main class="main-content">
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="card hero-card">
+                        <div class="card-body">
+                            <h1 class="card-title">Welcome to Our Hotel Booking</h1>
+                            <p class="card-text">Book your dream stay today</p>
+                            <a href="{% url 'hotels' %}" class="btn btn-primary">Explore Hotels</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

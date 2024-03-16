@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Doc</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">Doc</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="." class="nav-link">Lab 3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="lab32/" class="nav-link">Lab 3.2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="lab33/" class="nav-link">Lab 3.3</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="lab/" class="nav-link">Lab 3 (exercise)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="diagram/" class="nav-link">Lab 3 (diagram)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="final/" class="nav-link">Lab 3</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" class="nav-link disabled">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="lab32/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#1" class="nav-link">Задание 1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Условие</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_2" class="nav-link">Выполнение</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#_3" class="nav-link">Результат</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="1">Задание 1</h1>
+<h1 id="_1">Условие</h1>
+<p>Воспользуйтесь проектом из практики 2.1 и напишите запрос на создание 6-7 новых автовладельцев и 5-6 автомобилей, каждому автовладельцу назначьте удостоверение и от 1 до 3 автомобилей. Задание можете выполнить либо в интерактивном режиме интерпретатора, либо в отдельном python-файле. Результатом должны стать запросы и отображение созданных объектов.</p>
+<h1 id="_2">Выполнение</h1>
+<p>Для создания объектов воспользуемся менеджером objects, чтобы сразу создать запись в базе данных. Воспользуемся методом create(). Создадим скрипт в директории проекта scripts/script1.py:</p>
+<pre><code class="language-python">from project_first_app.models import Car, CarOwner, Ownership, DrivingLicense
+from django.utils import timezone
+
+# Создание автовладельцев
+owner1 = CarOwner.objects.create(last_name=&quot;Смит&quot;, first_name=&quot;Джон&quot;, birth_date=timezone.now())
+owner2 = CarOwner.objects.create(last_name=&quot;Джонсон&quot;, first_name=&quot;Эмили&quot;, birth_date=timezone.now())
+owner3 = CarOwner.objects.create(last_name=&quot;Брейн&quot;, first_name=&quot;Олег&quot;, birth_date=timezone.now())
+owner4 = CarOwner.objects.create(last_name=&quot;Фомин&quot;, first_name=&quot;Олег&quot;, birth_date=timezone.now())
+owner5 = CarOwner.objects.create(last_name=&quot;Токарев&quot;, first_name=&quot;Вилли&quot;, birth_date=timezone.now())
+owner6 = CarOwner.objects.create(last_name=&quot;Ванг&quot;, first_name=&quot;Джулия&quot;, birth_date=timezone.now())
+owner7 = CarOwner.objects.create(last_name=&quot;Шепс&quot;, first_name=&quot;Олег&quot;, birth_date=timezone.now())
+
+# Создание автомобилей
+car1 = Car.objects.create(registration_number=&quot;AAA111&quot;, brand=&quot;Toyota&quot;, model=&quot;Camry&quot;, color=&quot;White&quot;)
+car2 = Car.objects.create(registration_number=&quot;BBB222&quot;, brand=&quot;Nissan&quot;, model=&quot;Altima&quot;, color=&quot;Black&quot;)
+car3 = Car.objects.create(registration_number=&quot;CCC333&quot;, brand=&quot;Honda&quot;, model=&quot;Civic&quot;, color=&quot;Blue&quot;)
+car4 = Car.objects.create(registration_number=&quot;DDD444&quot;, brand=&quot;Ford&quot;, model=&quot;Focus&quot;, color=&quot;Red&quot;)
+car5 = Car.objects.create(registration_number=&quot;EEE555&quot;, brand=&quot;BMW&quot;, model=&quot;M3&quot;, color=&quot;Silver&quot;)
+
+# Создание владений
+Ownership.objects.create(owner=owner1, car=car1, start_date=timezone.now())
+Ownership.objects.create(owner=owner2, car=car2, start_date=timezone.now())
+Ownership.objects.create(owner=owner3, car=car3, start_date=timezone.now())
+Ownership.objects.create(owner=owner4, car=car1, start_date=timezone.now())
+Ownership.objects.create(owner=owner5, car=car2, start_date=timezone.now())
+Ownership.objects.create(owner=owner6, car=car3, start_date=timezone.now())
+Ownership.objects.create(owner=owner7, car=car4, start_date=timezone.now())
+
+# Создание водительских удостоверений
+DrivingLicense.objects.create(owner=owner1, license_number=&quot;LIC111&quot;, type=&quot;A&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner2, license_number=&quot;LIC222&quot;, type=&quot;B&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner3, license_number=&quot;LIC333&quot;, type=&quot;C&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner4, license_number=&quot;LIC444&quot;, type=&quot;D&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner5, license_number=&quot;LIC555&quot;, type=&quot;E&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner6, license_number=&quot;LIC666&quot;, type=&quot;F&quot;, issue_date=timezone.now())
+DrivingLicense.objects.create(owner=owner7, license_number=&quot;LIC777&quot;, type=&quot;G&quot;, issue_date=timezone.now())
+</code></pre>
+<p>Далее исполним команды в интерактивном режиме. Для этого создадим следующий bash-скрипт в директории simple_drf_project и исполним его (в качестве аргумента передадим название python-файла, в нашем случае — script1.py):</p>
+<pre><code class="language-bash">#!/bin/bash
+cd ../simple_django_web_project/django_project_Piatygo
+python3 manage.py shell &lt; scripts/$1
+</code></pre>
+<h1 id="_3">Результат</h1>
+<p>Покажем результат выполнения скрипта на примере таблицы автовладельцев. Её содержимое до исполнения:</p>
+<p><img alt="Пример изображения" src="1.png" title="Это пример изображения" /></p>
+<p><img alt="Пример изображения" src="2.png" title="Это пример изображения" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="js/jquery-3.6.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js"></script>
+        <script src="search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.5.3
+Build Date UTC : 2024-03-16 16:41:51.805488+00:00
+-->

@@ -1,0 +1,9 @@
+site_name: My Docs
+nav:
+  - Задание: index.md
+  - Ход работы: Progress.md
+  - Модели: Models.md
+  - Формы: Forms.md
+  - Представления: View.md
+  - Пример работы: prim.md
+  - Вывод: final.md
