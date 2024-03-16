@@ -1,6 +1,6 @@
 site_name: My Docs
 nav:
-  - Задание: index.md
+  - Задание: main.md
   - Технологии и инструменты: Tools.md
   - Авторизация и регистрация: Progress.md
   - Работа приложения: grade.md

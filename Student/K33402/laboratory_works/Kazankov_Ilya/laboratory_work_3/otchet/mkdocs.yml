@@ -1,6 +1,6 @@
 site_name: Doc
 nav:
-  - Lab 3.1: index.md
+  - Lab 3.1: main.md
   - Lab 3.2: lab32.md
   - Lab 3.3: lab33.md
   - Lab 3 (exercise): lab.md
