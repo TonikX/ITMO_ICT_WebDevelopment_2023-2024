@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Представления - Doc</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Doc</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Lab 3.1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab32/" class="nav-link">Lab 3.2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab33/" class="nav-link">Lab 3.3</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab/" class="nav-link">Lab 3 (exercise)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../diagram/" class="nav-link">Lab 3 (diagram)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../final/" class="nav-link">Lab 3</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">Представления</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">Представления</h1>
+<p>Представления в Django —это то, что в классическом паттерне MVC называется контроллерами. Это место, где происходит обработка запросов и формирование ответов. Они определяются в файле views.py.</p>
+<p>В рамках данной лабораторной работы структура этого файла следующая:</p>
+<pre><code class="language-python">from django.shortcuts import render, get_object_or_404, redirect
+from .models import *
+import datetime
+from .forms import *
+from django.forms import inlineformset_factory
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .decorators import unauthenticated
+from django.db.models import Sum, F
+
+@unauthenticated
+def registerPage(response):
+    if response.user.is_authenticated:
+        return redirect('profile')
+    else:
+        form = CreateUserForm()
+        if response.method == 'POST':
+            form = CreateUserForm(response.POST) 
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                Customer.objects.create(
+                    user=User.objects.get(username=user),
+                    name=user,
+                    email=form.cleaned_data.get('email'),
+                )
+                messages.success(response, 'Account was created for ' + user)
+                return redirect('login')
+
+    return render(response, 'hotels/register.html', {'form': form})
+
+@unauthenticated
+def loginPage(response):
+    if response.user.is_authenticated:
+        return redirect('profile')
+    if response.method == 'POST':
+        username = response.POST.get('username')
+        password = response.POST.get('password')
+
+        user = authenticate(response, username=username, password=password)
+
+        if user is not None:
+            login(response, user)
+            return redirect('home')
+        else:
+            messages.info(response, 'Username OR password is incorrect')
+    context = {}
+
+    return render(response, 'hotels/login.html', context)
+
+def logoutUser(response):
+    logout(response)
+    return render(response, 'hotels/home.html')
+
+def home(response):
+    return render(response, 'hotels/home.html')
+
+def hotels(response):
+    hotels = Hotel.objects.all()
+    return render(response, 'hotels/hotels.html', {'hotels': hotels})
+
+@login_required(login_url='login')
+def profile(response):
+    customer = response.user.customer
+    bookings = Booking.objects.filter(user=customer)
+
+    context = {'user': response.user, 'bookings': bookings, 'customer': customer}
+    return render(response, 'hotels/profile.html', context)
+
+@login_required(login_url='login')
+def update_profile(response):
+    customer = response.user.customer
+    form = CustomerForm(instance=customer)
+
+    if response.method == 'POST':
+        form = CustomerForm(response.POST, response.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+    context = {'form': form}
+    return render(response, 'hotels/profile_settings.html', context)
+
+@login_required(login_url='login')
+def hotelpage(request, hotel_name):
+    hotel = get_object_or_404(Hotel, name=hotel_name)
+
+    rooms = Room.objects.filter(hotel=hotel)
+    reviews = Review.objects.filter(booking__room__hotel=hotel)
+    last_month = datetime.date.today() - datetime.timedelta(days=30)
+
+    customers_for_last_month = Customer.objects.filter(
+        reservations__room__hotel=hotel,
+        reservations__check_in_date__gte=last_month,
+        reservations__status='Completed'
+    ).distinct()
+
+    context = {
+        'hotel': hotel,
+        'rooms': rooms,
+        'reviews': reviews,
+        'customers_for_last_month': customers_for_last_month,
+    }
+
+    return render(request, 'hotels/hotelpage.html', context)
+
+@login_required(login_url='login')
+def booking(request, hotel_name, room_category):
+    hotel = get_object_or_404(Hotel, name=hotel_name)
+    room = get_object_or_404(Room, hotel=hotel, category=room_category)
+    user = request.user.customer
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user.customer
+            booking.room = room
+            booking.status = 'Pending'
+            booking.save()
+            return redirect('profile')
+    else:
+
+        form = BookingForm(initial={'user':user, 'room': room, 'check_in_date': datetime.date.today(), 'check_out_date': datetime.date.today() + datetime.timedelta(days=1)})
+
+    context = {
+        'room': room,
+        'form': form,
+    }
+
+    return render(request, 'hotels/booking.html', context)
+
+def edit_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user.customer)
+
+    if request.method == 'POST':
+        form = EditBookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = EditBookingForm(instance=booking)
+
+    context = {
+        'form': form,
+        'booking': booking,
+    }
+
+    return render(request, 'hotels/edit_booking.html', context)
+
+@login_required(login_url='login')
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user.customer)
+
+    if request.method == 'POST':
+        booking.cancel_booking()
+        return redirect('profile')
+
+    context = {'booking': booking}
+    return render(request, 'hotels/cancel_booking.html', context)
+
+@login_required(login_url='login')
+def review(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user.customer)
+    review = Review.objects.filter(booking=booking).first()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.booking = booking
+            review.user = request.user.customer
+            review.save()
+            return redirect('profile')
+    else:
+        form = ReviewForm(instance=review)
+
+    context = {
+        'form': form,
+        'booking': booking,
+        'review': review,
+    }
+
+    return render(request, 'hotels/review.html', context)
+
+</code></pre>
+<p>Этот файл содержит представления (views) для обработки запросов и взаимодействия с данными в Django веб-приложении. Он включает в себя функции для регистрации и входа пользователей, просмотра домашней страницы, отображения отелей и их номеров, управления профилем пользователя, бронирования номеров, а также оставления отзывов.</p>
+<ul>
+<li>
+<p>registerPage: Представление для регистрации новых пользователей. Если пользователь уже аутентифицирован, он перенаправляется на страницу профиля. После успешной регистрации создается учетная запись и профиль клиента.</p>
+</li>
+<li>
+<p>loginPage: Представление для входа пользователей. Если пользователь уже аутентифицирован, он перенаправляется на главную страницу. После ввода данных формы и аутентификации пользователь получает доступ к своему профилю.</p>
+</li>
+<li>
+<p>logoutUser: Представление для выхода из системы. После выхода пользователь перенаправляется на домашнюю страницу.</p>
+</li>
+<li>
+<p>home: Представление для отображения домашней страницы приложения.</p>
+</li>
+<li>
+<p>hotels: Отображение списка отелей.</p>
+</li>
+<li>
+<p>profile: Отображение профиля пользователя, включая информацию о бронированиях номеров.</p>
+</li>
+<li>
+<p>update_profile: Представление для обновления данных профиля пользователя.</p>
+</li>
+<li>
+<p>hotelpage: Отображение страницы конкретного отеля с информацией о номерах, отзывах и клиентах за последний месяц.</p>
+</li>
+<li>
+<p>booking: Представление для бронирования номера отеля.</p>
+</li>
+<li>
+<p>edit_booking: Представление для редактирования бронирования.</p>
+</li>
+<li>
+<p>cancel_booking: Представление для отмены бронирования.</p>
+</li>
+<li>
+<p>review: Представление для оставления отзыва о номере отеля.</p>
+</li>
+</ul>
+<p>Эти представления обрабатывают запросы пользователя, взаимодействуют с моделями данных через формы и обеспечивают функциональность веб-приложения для работы с отелями и бронированиями.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

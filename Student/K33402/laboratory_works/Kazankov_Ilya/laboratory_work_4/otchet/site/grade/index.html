@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Работа приложения - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Задание</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Tools/" class="nav-link">Технологии и инструменты</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../Progress/" class="nav-link">Авторизация и регистрация</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Работа приложения</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../conclusion/" class="nav-link">Вывод</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../Progress/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../conclusion/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#backend" class="nav-link">Backend</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#frontend" class="nav-link">Frontend</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="backend">Backend</h1>
+<ul>
+<li>
+<p>Django и Django REST Framework: Для создания API бэкенда использовались фреймворки Django и Django REST Framework. Они обеспечивают быстрое создание API на основе моделей данных и предоставляют множество инструментов для обработки запросов.</p>
+</li>
+<li>
+<p>Модели данных: Были созданы модели данных для Лабораторных работ, Аудиторий, Учителей, Уроков и других сущностей. Модели определяют структуру данных и взаимосвязи между ними.</p>
+</li>
+</ul>
+<pre><code class="language-python">class Room(models.Model):
+    num = models.CharField(max_length=4)
+    base = models.BooleanField(default=True)
+
+class Teacher(models.Model):
+    name = models.CharField(max_length=100)
+
+class Lesson(models.Model):
+    name = models.CharField(max_length=100)
+</code></pre>
+<p>Маршруты и представления: Были созданы маршруты и представления для обработки запросов связанных с Аудиториями, Учителями, Уроками и другими сущностями. Представления взаимодействуют с моделями данных и возвращают JSON-ответы.</p>
+<pre><code class="language-python">class RoomViewSet(viewsets.ModelViewSet):
+    queryset = Room.objects.all()
+    serializer_class = serializers.RoomSerializer
+</code></pre>
+<h1 id="frontend">Frontend</h1>
+<p>Vue.js и Vuetify: Во фронтенде использовались фреймворк Vue.js и UI-библиотека Vuetify для создания пользовательского интерфейса. С их помощью были созданы страницы и компоненты для отображения данных о Лабораторных работах, Аудиториях, Учителях, Уроках и других сущностях.</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;v-app&gt;
+    &lt;div v-for=&quot;lesson in lessons&quot; :key=&quot;lesson.id&quot;&gt;
+      &lt;h3&gt;{{ lesson.name }}&lt;/h3&gt;
+      &lt;!-- Другие детали урока --&gt;
+    &lt;/div&gt;
+  &lt;/v-app&gt;
+&lt;/template&gt;
+</code></pre>
+<p>Axios для выполнения запросов: Для отправки HTTP-запросов к бэкенду использовалась библиотека Axios. Она обеспечивает выполнение асинхронных запросов и обработку ответов от сервера.</p>
+<pre><code class="language-vue">&lt;script setup&gt;
+import { ref, onMounted } from &quot;vue&quot;;
+import instance from &quot;@/AxiosInstance&quot;;
+
+const lessons = ref([]);
+
+onMounted(() =&gt; {
+  instance.get('/lessons/').then(response =&gt; {
+    lessons.value = response.data;
+  }).catch(error =&gt; console.log(error));
+});
+&lt;/script&gt;
+</code></pre>
+<p>Эти технологии и решения обеспечивают создание полнофункционального API и интерфейса пользователя для работы с данными о Лабораторных работах, Аудиториях, Учителях, Уроках и других сущностях в вашем приложении.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

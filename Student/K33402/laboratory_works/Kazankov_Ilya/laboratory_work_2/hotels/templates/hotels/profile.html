@@ -1,0 +1,79 @@
+{% extends 'hotels/main.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .img-fluid {
+        border: 2px solid #31a9ff;
+    }
+
+    .list-group {
+        margin-top: 20px;
+    }
+
+    .customization-button {
+        margin-top: 20px;
+    }
+</style>
+<div class="container mt-5">
+    <h1 style="text-align: center;">Profile</h1>
+
+    <div class="text-center">
+        {% if customer.image %}
+            <img src="{{ customer.image.url }}" alt="{{ customer.name }}" class="img-fluid rounded-circle" style="width: 250px; height: 250px;">
+        {% else %}
+            <img src="{% static 'img/default-profile.png' %}" alt="{{ customer.name }}" class="img-fluid rounded-circle" style="width: 250px; height: 250px;">
+        {% endif %}
+    </div>
+    <a href="{% url 'update_profile' %}" class="btn btn-outline-primary customization-button">Customize Profile</a>
+    <h2 class="mt-4">User Details:</h2>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <p><strong>Username:</strong> {{ customer.user.username }}</p>
+        </li>
+        <li class="list-group-item">
+            <p><strong>Email:</strong> {{ customer.email }}</p>
+        </li>
+        <li class="list-group-item">
+            <p><strong>Full Name:</strong> {{ customer.name }}</p>
+        </li>
+        <li class="list-group-item">
+            <p><strong>Phone:</strong> {{ customer.phone }}</p>
+        </li>
+        <li class="list-group-item">
+            <p><strong>Date registered:</strong> {{ customer.date_registered }}</p>
+        </li>
+    </ul>
+
+    <h2 class="mt-4">Your Bookings:</h2>
+    <ul class="list-group">
+        {% for booking in bookings %}
+            <li class="list-group-item">
+                <p><strong>Hotel:</strong> {{ booking.room.hotel.name }}</p>
+                <p><strong>Room:</strong> {{ booking.room.category }}</p>
+                <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
+                <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
+                <p><strong>Price:</strong> {{ booking.price }} rub</p>
+                <p><strong>Status:</strong> {{ booking.status }}</p>
+                
+                {% if booking.status != 'Cancelled' and booking.status != 'Completed'  and booking.status != 'Checked In' %}
+                    <a href="{% url 'edit_booking' booking.id %}" class="btn btn-info btn-sm">Edit Booking</a>
+                    <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">Cancel Booking</a>
+                {% endif %}
+            </li>
+                {% if booking.status == 'Completed' %}
+                {% if review %}
+                    <a href="{% url 'review' booking.id %}" class="btn btn-info btn-sm">Edit Review</a>
+                {% else %}
+                    <a href="{% url 'review' booking.id %}" class="btn btn-info btn-sm">Write a Review</a>
+                {% endif %}
+                {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
