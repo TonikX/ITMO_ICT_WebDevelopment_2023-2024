@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Лабораторная работа 4 - Лабораторные работы</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Лабораторные работы</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../lab1/" class="nav-link">Лабораторная работа 1</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab2/" class="nav-link">Лабораторная работа 2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../lab3/" class="nav-link">Лабораторная работа 3</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Лабораторная работа 4</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../lab3/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#no4-vuejs" class="nav-link">ЛАБОРАТОРНАЯ РАБОТА №4 :  Реализация клиентской части средствами Vue.js.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">Выполнение работы</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="no4-vuejs">ЛАБОРАТОРНАЯ РАБОТА №4 :  Реализация клиентской части средствами Vue.js.</h1>
+<p><strong>Цель:</strong> Ознакомится с базовыми конструкциями JavaScript.
+<strong>Задание:</strong> Реализовать клиентскую часть приложения средствами vue.js.</p>
+<h2 id="_1">Выполнение работы</h2>
+<p>Порядок выполнения работы:</p>
+<ul>
+<li>Выполнить практическую работу 4.1 Базовые конструкции языка JavaScript). (https://docs.google.com/document/d/1lurVq_ddbKQ-rORvxF3T9PlPPy-sOgHwFazCI0yEqYY/edit?usp=sharing)</li>
+<li>Выполнить практическую работу 4.2. Работа с Vue.JS. (https://docs.google.com/document/d/1kSXkW6Vcis8z-TunNALcapCVmMHps3jaDdIP4rZkV9E/edit?usp=sharing)</li>
+<li>Настроить для серверной части, реализованной в лабораторной работе №3 CORS (Cross-origin resource sharing) в соответствии с Практической работой 4.3</li>
+<li>Утвердить с одним из преподавателей список интерфейсов для взаимодействия с серверной частью в соответствии с вашей предметной областью (это очень важный пункт, тк бывает такое, что не все студенты понимают суть своих вариантов).</li>
+<li>Реализовать интерфейсы авторизации, регистрации и изменения учётных данных и настроить взаимодействие с серверной частью. Полезные материалы:
+Настройка авторизации средствами Vue.js и Django REST framework (DjangoSchool) (ссылка)</li>
+<li>Реализовать клиентские интерфейсы и настроить взаимодействие с серверной частью (интерфейсы из пункта 4). Полезные материалы:
+Пункты 4.2, 4.3, 4.5 в Практической работе 4.2
+Уроки 6, 7 и 10-13 из данного плейтиста (DjangoSchool) (ссылка)</li>
+<li>Подключить vuetify или аналогичную библиотеку. Полезные материалы:
+Пункт 3.1 в Практической работе 4.2</li>
+<li>Реализовать документацию, описывающую работу разработанных интерфейсов средствами MkDocs.</li>
+</ul>
+<p><strong>Components:</strong></p>
+<p>Login.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;h2&gt;Войти&lt;/h2&gt;
+    &lt;form @submit.prevent=&quot;loginUser&quot;&gt;
+      &lt;label for=&quot;username&quot;&gt;Имя пользователя:&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;username&quot; v-model=&quot;username&quot; required /&gt;
+
+      &lt;label for=&quot;password&quot;&gt;Пароль:&lt;/label&gt;
+      &lt;input type=&quot;password&quot; id=&quot;password&quot; v-model=&quot;password&quot; required /&gt;
+
+      &lt;button type=&quot;submit&quot;&gt;Войти&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    async loginUser() {
+      try {
+        const response = await axios.post('http://localhost:8000/auth/token/login/', {
+          username: this.username,
+          password: this.password,
+        });
+
+        const accessToken = response.data.auth_token;
+
+        localStorage.setItem('access_token', accessToken);
+
+        console.log('Login successful. Token:', accessToken);
+
+        // Set isAuthenticated to true in the root Vue instance
+        this.$root.isAuthenticated = true;
+
+        // Redirect the user to the profile page or another page
+        this.$router.push('/profile');
+
+        console.log('Login successful. Token:', accessToken);
+      } catch (error) {
+        console.error('Login failed:', error.response.data);
+      }
+    },
+  },
+};
+&lt;/script&gt;
+</code></pre>
+<p>Navbar.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;header&gt;
+      &lt;h1 class=&quot;logo&quot;&gt;Life Stocks&lt;/h1&gt;
+      &lt;nav&gt;
+        &lt;router-link to=&quot;/&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/' }&quot;&gt;Home&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthPage()&quot; to=&quot;/brokers&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/brokers' }&quot;&gt;Brokers&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthPage()&quot; to=&quot;/producers&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/producers' }&quot;&gt;Producers&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthPage()&quot; to=&quot;/products&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/products' }&quot;&gt;Products&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthPage()&quot; to=&quot;/cosignments&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/cosignments' }&quot;&gt;Cosignments&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthenticated&quot; to=&quot;/login&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/login' }&quot;&gt;Login&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;!isAuthenticated&quot; to=&quot;/register&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/register' }&quot;&gt;Register&lt;/router-link&gt;
+        &lt;router-link v-if=&quot;isAuthenticated&quot; to=&quot;/profile&quot; class=&quot;nav-link&quot; :class=&quot;{ 'active': $route.path === '/profile' }&quot;&gt;Profile&lt;/router-link&gt;
+        &lt;button v-if=&quot;isAuthenticated&quot; @click=&quot;logout&quot; class=&quot;nav-link logout-button&quot;&gt;Logout&lt;/button&gt;
+      &lt;/nav&gt;
+    &lt;/header&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+  export default {
+    name: 'Navbar',
+    data() {
+      return {
+        isAuthenticated: false,
+      };
+    },
+    methods: {
+      isAuthPage() {
+        const authPages = ['/login', '/register'];
+        return authPages.includes(this.$route.path);
+      },
+      logout() {
+        // Clear authentication token from local storage
+        localStorage.removeItem('access_token');
+
+        // Update the isAuthenticated status
+        this.isAuthenticated = false;
+
+        // Redirect to the login page
+        this.$router.push('/login');
+      },
+    },
+    created() {
+      // Check if the user is already authenticated
+      this.isAuthenticated = localStorage.getItem('access_token') !== null;
+    },
+  };
+  &lt;/script&gt;
+
+  &lt;style scoped&gt;
+  header {
+    background-color: #00153c;
+    color: #ff00ea;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    margin: 0;
+    color: #18ff00;
+  }
+
+  nav {
+    display: flex;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #ff00ea;
+    font-size: 1.2em;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 4px;
+    margin-left: 10px;
+    transition: color 0.3s;
+  }
+
+  .nav-link:hover,
+  .active {
+    text-decoration: underline;
+    color: #00ffea;
+  }
+
+  .logout-button {
+    background-color: #00fff6;
+    color: #ff0000;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 4px;
+    margin-left: 10px;
+    transition: color 0.3s;
+  }
+
+  .logout-button:hover {
+    color: #000000;
+    text-decoration: underline;
+  }
+  &lt;/style&gt;
+</code></pre>
+<p>Profile.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;profile-info&quot;&gt;
+      &lt;h2&gt;Profile&lt;/h2&gt;
+      &lt;div class=&quot;info-item&quot;&gt;&lt;strong&gt;Login:&lt;/strong&gt; {{ userData.username }}&lt;/div&gt;
+      &lt;div class=&quot;info-item&quot;&gt;&lt;strong&gt;Email:&lt;/strong&gt; {{ userData.email }}&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;profile-settings&quot;&gt;
+      &lt;div class=&quot;settings-panel&quot;&gt;
+        &lt;button @click=&quot;toggleSettingsPanel&quot;&gt;Change User Data&lt;/button&gt;
+
+        &lt;div v-show=&quot;showSettingsPanel&quot; class=&quot;settings-dropdown&quot;&gt;
+          &lt;button @click=&quot;toggleChangeUsernameForm&quot;&gt;Change Username&lt;/button&gt;
+          &lt;button @click=&quot;toggleChangePasswordForm&quot;&gt;Change Password&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div v-if=&quot;showChangePasswordForm&quot; class=&quot;change-form&quot;&gt;
+        &lt;form @submit.prevent=&quot;changePassword&quot; class=&quot;form&quot;&gt;
+          &lt;label for=&quot;currentPassword&quot;&gt;Current Password:&lt;/label&gt;
+          &lt;input type=&quot;password&quot; v-model=&quot;currentPassword&quot; required /&gt;
+
+          &lt;label for=&quot;newPassword&quot;&gt;New Password:&lt;/label&gt;
+          &lt;input type=&quot;password&quot; v-model=&quot;newPassword&quot; required /&gt;
+
+          &lt;button type=&quot;submit&quot;&gt;Change Password&lt;/button&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+
+      &lt;div v-if=&quot;showChangeUsernameForm&quot; class=&quot;change-form&quot;&gt;
+        &lt;form @submit.prevent=&quot;changeUsername&quot; class=&quot;form&quot;&gt;
+          &lt;label for=&quot;currentPassword&quot;&gt;Current Password:&lt;/label&gt;
+          &lt;input type=&quot;password&quot; v-model=&quot;currentPassword&quot; required /&gt;
+
+          &lt;label for=&quot;newUsername&quot;&gt;New Username:&lt;/label&gt;
+          &lt;input type=&quot;text&quot; v-model=&quot;newUsername&quot; required /&gt;
+
+          &lt;button type=&quot;submit&quot;&gt;Change Username&lt;/button&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      showChangePasswordForm: false,
+      showChangeUsernameForm: false,
+      showSettingsPanel: false,
+      currentPassword: '',
+      newPassword: '',
+      newUsername: '',
+      userData: {},
+    };
+  },
+  mounted() {
+    this.fetchUserData();
+  },
+  methods: {
+    async fetchUserData() {
+      console.log('Fetching user data...');
+
+      try {
+        const response = await axios.get('/auth/users/me/', {
+          headers: {
+            'Authorization': `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        this.userData = response.data;
+        console.log('User data:', this.userData);
+      } catch (error) {
+        console.error('Error fetching user data:', error.response.data);
+      }
+    },
+    async changePassword() {
+      try {
+        const response = await axios.post('/auth/users/set_password/', {
+          new_password: this.newPassword,
+          current_password: this.currentPassword,
+        }, {
+          headers: {
+            'Authorization': `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+
+        console.log('Password changed successfully:', response.data);
+        this.showChangePasswordForm = false;
+      } catch (error) {
+        console.error('Password change failed:', error.response.data);
+      }
+    },
+    async changeUsername() {
+      try {
+        const response = await axios.post('/auth/users/set_username/', {
+          current_password: this.currentPassword,
+          new_username: this.newUsername,
+        }, {
+          headers: {
+            'Authorization': `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+
+        console.log('Username changed successfully:', response.data);
+        this.showChangeUsernameForm = false;
+      } catch (error) {
+        console.error('Username change failed:', error.response.data);
+      }
+    },
+    toggleSettingsPanel() {
+      this.showSettingsPanel = !this.showSettingsPanel;
+    },
+    toggleChangePasswordForm() {
+      this.showChangePasswordForm = !this.showChangePasswordForm;
+    },
+    toggleChangeUsernameForm() {
+      this.showChangeUsernameForm = !this.showChangeUsernameForm;
+    },
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.info-item {
+  margin-bottom: 10px;
+}
+
+.profile-settings {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.settings-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the buttons */
+}
+
+.change-form {
+  margin-top: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px;
+  background-color: #00a48b;
+  color: #fcff00;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px; /* Add margin for spacing between buttons */
+}
+
+button:hover {
+  background-color: #ff0000;
+}
+&lt;/style&gt;
+</code></pre>
+<p>Register.vue</p>
+<pre><code>&lt;template&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;h2&gt;Зарегистрироваться&lt;/h2&gt;
+      &lt;form @submit.prevent=&quot;registerUser&quot;&gt;
+        &lt;label for=&quot;username&quot;&gt;Имя пользователя:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; v-model=&quot;username&quot; required /&gt;
+
+        &lt;label for=&quot;email&quot;&gt;Электронная почта:&lt;/label&gt;
+        &lt;input type=&quot;email&quot; v-model=&quot;email&quot; required /&gt;
+
+        &lt;label for=&quot;password&quot;&gt;Пароль:&lt;/label&gt;
+        &lt;input type=&quot;password&quot; v-model=&quot;password&quot; required /&gt;
+
+        &lt;button type=&quot;submit&quot;&gt;Зарегистрироваться&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+  import axios from 'axios';
+
+  export default {
+    data() {
+      return {
+        username: '',
+        email: '',
+        password: '',
+      };
+    },
+    methods: {
+      async registerUser() {
+        try {
+          const response = await axios.post('http://localhost:8000/auth/users/', {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+          });
+
+          console.log('User registered successfully:', response.data);
+          this.$router.push('/login');
+        } catch (error) {
+          console.error('Registration failed:', error.response.data);
+        }
+      },
+    },
+  };
+  &lt;/script&gt;
+</code></pre>
+<p>Brokers.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;brokers-table&quot;&gt;
+    &lt;h1&gt;Brokers Page&lt;/h1&gt;
+
+    &lt;!-- Sorting options --&gt;
+    &lt;label&gt;Sort By:&lt;/label&gt;
+    &lt;select v-model=&quot;sortBy&quot; @change=&quot;sortBrokers&quot;&gt;
+      &lt;option value=&quot;name&quot;&gt;Name&lt;/option&gt;
+      &lt;option value=&quot;income&quot;&gt;Income&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;!-- Search input --&gt;
+    &lt;label&gt;Search:&lt;/label&gt;
+    &lt;input v-model=&quot;searchTerm&quot; @input=&quot;filterBrokers&quot; /&gt;
+
+    &lt;!-- Table of brokers --&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Name&lt;/th&gt;
+          &lt;th&gt;Income&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr v-for=&quot;broker in filteredBrokers&quot; :key=&quot;broker.id&quot;&gt;
+          &lt;td&gt;{{ broker.name }}&lt;/td&gt;
+          &lt;td&gt;{{ broker.income }}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  name: 'Brokers',
+  data() {
+    return {
+      brokers: [],
+      sortBy: 'name',
+      searchTerm: '',
+    };
+  },
+  computed: {
+    sortedBrokers() {
+      return this.brokers.slice().sort((a, b) =&gt; {
+        if (this.sortBy === 'name') {
+          return a.name.localeCompare(b.name);
+        } else if (this.sortBy === 'income') {
+          return b.income - a.income;
+        }
+        return 0;
+      });
+    },
+    filteredBrokers() {
+      const search = this.searchTerm.toLowerCase();
+      return this.sortedBrokers.filter(
+        broker =&gt; broker.name.toLowerCase().includes(search)
+      );
+    },
+  },
+  methods: {
+    async fetchBrokers() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/main/brokers/', {
+          headers: {
+            Authorization: `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        this.brokers = response.data;
+      } catch (error) {
+        console.error('Error fetching broker data:', error);
+      }
+    },
+    sortBrokers() {
+      // Triggered when sorting option changes
+    },
+    filterBrokers() {
+      // Triggered when search term changes
+    },
+  },
+  created() {
+    this.fetchBrokers();
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+
+body{
+    min-height: 500px;
+    background-color: #001b68;
+}
+
+.brokers-table {
+  margin: 0 auto; /* Центрирует элемент по горизонтали */
+  max-width: 600px; /* Максимальная ширина таблицы */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* Сводит границы ячеек вместе */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Границы для ячеек */
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #b80098; /* Цвет фона для заголовков */
+}
+&lt;/style&gt;
+</code></pre>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;consignments-page&quot;&gt;
+    &lt;h1&gt;Consignments Page&lt;/h1&gt;
+
+    &lt;div class=&quot;consignments-table&quot;&gt;
+      &lt;label&gt;Sort By:&lt;/label&gt;
+      &lt;select v-model=&quot;sortBy&quot; @change=&quot;sortConsignments&quot;&gt;
+        &lt;option value=&quot;date_sold&quot;&gt;Date Sold&lt;/option&gt;
+        &lt;option value=&quot;cost&quot;&gt;Cost&lt;/option&gt;
+      &lt;/select&gt;
+
+      &lt;label&gt;Search:&lt;/label&gt;
+      &lt;input v-model=&quot;searchTerm&quot; @input=&quot;filterConsignments&quot; /&gt;
+
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Date Sold&lt;/th&gt;
+            &lt;th&gt;Cost&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr v-for=&quot;consignment in filteredConsignments&quot; :key=&quot;consignment.id&quot;&gt;
+            &lt;td&gt;{{ consignment.date_sold }}&lt;/td&gt;
+            &lt;td&gt;{{ consignment.cost }}&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+      &lt;h2&gt;Add New Consignment&lt;/h2&gt;
+      &lt;form @submit.prevent=&quot;addConsignment&quot;&gt;
+        &lt;label for=&quot;dateSold&quot;&gt;Date Sold:&lt;/label&gt;
+        &lt;input type=&quot;date&quot; v-model=&quot;newConsignment.date_sold&quot; required /&gt;
+
+        &lt;label for=&quot;num&quot;&gt;Number:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; v-model=&quot;newConsignment.num&quot; required /&gt;
+
+        &lt;label for=&quot;cost&quot;&gt;Cost:&lt;/label&gt;
+        &lt;input type=&quot;number&quot; v-model=&quot;newConsignment.cost&quot; required /&gt;
+
+        &lt;label for=&quot;prepayment&quot;&gt;Prepayment:&lt;/label&gt;
+        &lt;input type=&quot;checkbox&quot; v-model=&quot;newConsignment.prepayment&quot; /&gt;
+
+        &lt;label for=&quot;broker&quot;&gt;Broker ID:&lt;/label&gt;
+        &lt;input type=&quot;number&quot; v-model=&quot;newConsignment.broker&quot; required /&gt;
+
+        &lt;button type=&quot;submit&quot;&gt;Add Consignment&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  name: 'Consignments',
+  data() {
+    return {
+      consignments: [],
+      sortBy: 'date_sold',
+      searchTerm: '',
+      newConsignment: {
+        date_sold: '',
+        num: '',
+        cost: 0,
+        prepayment: false,
+        broker: 0,
+      },
+    };
+  },
+  computed: {
+    sortedConsignments() {
+      return this.consignments.slice().sort((a, b) =&gt; {
+        if (this.sortBy === 'date_sold') {
+          return new Date(b.date_sold) - new Date(a.date_sold);
+        } else if (this.sortBy === 'cost') {
+          return b.cost - a.cost;
+        }
+        return 0;
+      });
+    },
+    filteredConsignments() {
+      const search = this.searchTerm.toLowerCase();
+      return this.sortedConsignments.filter(
+        consignment =&gt; consignment.date_sold.toLowerCase().includes(search)
+      );
+    },
+  },
+  methods: {
+    async fetchConsignments() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/main/consignments/', {
+          headers: {
+            Authorization: `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        this.consignments = response.data;
+      } catch (error) {
+        console.error('Error fetching consignment data:', error);
+      }
+    },
+    sortConsignments() {
+      // Triggered when sorting option changes
+    },
+    filterConsignments() {
+      // Triggered when search term changes
+    },
+    async addConsignment() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/main/consignments/', this.newConsignment, {
+          headers: {
+            Authorization: `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        console.log('Consignment added successfully:', response.data);
+      } catch (error) {
+        console.error('Error adding consignment:', error.response.data);
+      }
+    },
+  },
+  created() {
+    this.fetchConsignments();
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.consignments-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.consignments-table {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #8b00b8;
+}
+&lt;/style&gt;
+</code></pre>
+<p>Home.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+      &lt;h1 class=&quot;title&quot;&gt;Set goals.&lt;br&gt;Have a ten-year plan.&lt;br&gt;Invest.&lt;br&gt;Wake up early.&lt;br&gt;CEO mindset&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;script&gt;
+  export default {
+    name: 'Home',
+  };
+  &lt;/script&gt;
+
+  &lt;style scoped&gt;
+  .title {
+    color: #f8ff39;
+    text-align: center;
+    margin-top: 50vh;
+    transform: translateY(-100%);
+    animation: flicker 0.5s steps(1) infinite;
+  }
+
+  @keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes colorShift {
+  0% { background-color: #f500ff; }
+  50% { background-color: #f500ff; }
+  100% { background-color: #f500ff; }
+}
+
+  &lt;/style&gt;
+
+</code></pre>
+<p>Producers.vue</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;producers-table&quot;&gt;
+    &lt;h1&gt;Producers Companies Page&lt;/h1&gt;
+
+    &lt;!-- Search input --&gt;
+    &lt;label&gt;Search by Name:&lt;/label&gt;
+    &lt;input v-model=&quot;searchTerm&quot; @input=&quot;filterProducers&quot; /&gt;
+
+    &lt;!-- Table of producers --&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Name&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr v-for=&quot;producer in filteredProducers&quot; :key=&quot;producer.id&quot;&gt;
+          &lt;td&gt;{{ producer.name }}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  name: 'Producers',
+  data() {
+    return {
+      producers: [],
+      searchTerm: '',
+    };
+  },
+  computed: {
+    filteredProducers() {
+      const search = this.searchTerm.toLowerCase();
+      return this.producers.filter(
+        producer =&gt; producer.name.toLowerCase().includes(search)
+      );
+    },
+  },
+  methods: {
+    async fetchProducers() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/main/companies/', {
+          headers: {
+            Authorization: `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        this.producers = response.data;
+      } catch (error) {
+        console.error('Error fetching producer data:', error);
+      }
+    },
+    filterProducers() {
+      // Triggered when search term changes
+    },
+  },
+  created() {
+    this.fetchProducers();
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.producers-table {
+  margin: 0 auto; /* Центрирует элемент по горизонтали */
+  max-width: 600px; /* Максимальная ширина таблицы */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* Сводит границы ячеек вместе */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Границы для ячеек */
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #b80000; /* Цвет фона для заголовков */
+}
+&lt;/style&gt;
+</code></pre>
+<p>Products</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;products-table&quot;&gt;
+    &lt;h1&gt;Products Page&lt;/h1&gt;
+
+    &lt;!-- Sorting options --&gt;
+    &lt;label&gt;Sort By:&lt;/label&gt;
+    &lt;select v-model=&quot;sortBy&quot; @change=&quot;sortProducts&quot;&gt;
+      &lt;option value=&quot;code&quot;&gt;Code&lt;/option&gt;
+      &lt;option value=&quot;name&quot;&gt;Name&lt;/option&gt;
+      &lt;option value=&quot;unit&quot;&gt;Unit&lt;/option&gt;
+      &lt;option value=&quot;shelf_life&quot;&gt;Shelf Life&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;!-- Search input --&gt;
+    &lt;label&gt;Search by Code:&lt;/label&gt;
+    &lt;input v-model=&quot;searchTerm&quot; @input=&quot;filterProducts&quot; /&gt;
+
+    &lt;!-- Table of products --&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Code&lt;/th&gt;
+          &lt;th&gt;Name&lt;/th&gt;
+          &lt;th&gt;Unit&lt;/th&gt;
+          &lt;th&gt;Shelf Life&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr v-for=&quot;product in filteredProducts&quot; :key=&quot;product.id&quot;&gt;
+          &lt;td&gt;{{ product.code }}&lt;/td&gt;
+          &lt;td&gt;{{ product.name }}&lt;/td&gt;
+          &lt;td&gt;{{ product.unit }}&lt;/td&gt;
+          &lt;td&gt;{{ product.shelf_life }}&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  name: 'Products',
+  data() {
+    return {
+      products: [],
+      sortBy: 'code',
+      searchTerm: '',
+    };
+  },
+  computed: {
+    sortedProducts() {
+      return this.products.slice().sort((a, b) =&gt; {
+        if (this.sortBy === 'code') {
+          return a.code.localeCompare(b.code);
+        } else if (this.sortBy === 'name') {
+          return a.name.localeCompare(b.name);
+        } else if (this.sortBy === 'unit') {
+          return a.unit.localeCompare(b.unit);
+        } else if (this.sortBy === 'shelf_life') {
+          return a.shelf_life - b.shelf_life;
+        }
+        return 0;
+      });
+    },
+    filteredProducts() {
+      const search = this.searchTerm.toLowerCase();
+      return this.sortedProducts.filter(
+        product =&gt; product.code.toLowerCase().includes(search)
+      );
+    },
+  },
+  methods: {
+    async fetchProducts() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/main/products/', {
+          headers: {
+            Authorization: `Token ${localStorage.getItem('access_token')}`,
+          },
+        });
+        this.products = response.data;
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    },
+    sortProducts() {
+      // Triggered when sorting option changes
+    },
+    filterProducts() {
+      // Triggered when search term changes
+    },
+  },
+  created() {
+    this.fetchProducts();
+  },
+};
+&lt;/script&gt;
+
+&lt;style scoped&gt;
+.products-table {
+  margin: 0 auto; /* Центрирует элемент по горизонтали */
+  max-width: 800px; /* Максимальная ширина таблицы */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; /* Сводит границы ячеек вместе */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Границы для ячеек */
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #b100b8; /* Цвет фона для заголовков */
+}
+&lt;/style&gt;
+
+</code></pre>
+<p>App.vue:</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div id=&quot;app&quot; class=&quot;web-1-0&quot;&gt;
+    &lt;Navbar /&gt;
+    &lt;router-view&gt;&lt;/router-view&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Navbar from './components/Navbar.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+  },
+};
+&lt;/script&gt;
+
+&lt;style&gt;
+#app {
+  background-color: #001b68;
+  min-height: 768px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+.web-1-0 {
+  background-color: #001b68; /* Bright yellow */
+  font-family: Comic Sans MS, cursive, sans-serif;
+  color: #00ffcc; /* Bright red */
+}
+&lt;/style&gt;
+
+
+</code></pre>
+<p>main.js</p>
+<pre><code class="language-js">import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+import App from './App.vue';
+import Login from './components/Login.vue';
+import Register from './components/Register.vue';
+import Profile from './components/Profile.vue';
+import Home from './views/Home.vue';
+import Brokers from './views/Brokers.vue';
+import Producers from './views/Producers.vue';
+import Products from './views/Products.vue';
+import Cosignments from './views/Cosignments.vue'
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+
+const app = createApp(App);
+app.config.globalProperties.isAuthenticated = false;
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/profile', component: Profile, meta: { requiresAuth: true } },
+    { path: '/', component: Home },
+    { path: '/brokers', component: Brokers, meta: { requiresAuth: true } },
+    { path: '/producers', component: Producers, meta: { requiresAuth: true } },
+    { path: '/products', component: Products, meta: { requiresAuth: true } },
+    { path: '/cosignments', component: Cosignments, meta: { requiresAuth: true } },
+  ],
+});
+
+router.beforeEach((to, from, next) =&gt; {
+  if (to.matched.some(record =&gt; record.meta.requiresAuth)) {
+    if (!localStorage.getItem('access_token')) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+app.use(router);
+
+app.mount('#app');
+</code></pre>
+<h3 id="_2">Демонстрация сайта</h3>
+<p><img alt="" src="../l4_1.jpg" /></p>
+<p><img alt="" src="../l4_2.jpg" /></p>
+<p><img alt="" src="../l4_3.jpg" /></p>
+<p><img alt="" src="../l4_4.jpg" /></p>
+<p><img alt="" src="../l4_5.jpg" /></p>
+<p><img alt="" src="../l4_6.jpg" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
