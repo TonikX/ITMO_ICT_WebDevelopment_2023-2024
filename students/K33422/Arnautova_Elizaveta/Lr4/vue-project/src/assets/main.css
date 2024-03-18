@@ -1,0 +1,87 @@
+/*@import './base.css';*/
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+.card {
+  background-color: #f2f3f4;
+  color: black;
+  text-align: center;
+  border-radius: 4px;
+
+}
+input {
+  height: 40px;
+  line-height: 28px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  background-color: #c5e6d9;
+  color: #0d0c22;
+  box-shadow: 0 0 5px #C1D9BF, 0 0 0 5px #f2f3f4;
+  transition: .3s ease;
+}
+
+input::placeholder {
+  color: #777;}
+
+.buttoncard{
+  background-color: white;
+}
+
+h1,h2,h3{text-align: center;}
+
+.button {
+  padding: 2px 120px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.button {
+  background-color: #c5e6d9;
+  color: black;
+  border: 3px solid #c5e6d9;
+}
+
+.button:hover {
+  background-color: #04AA6D;
+  color: white;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+/*@media (min-width: 1024px) {*/
+/*  body {*/
+/*    display: flex;*/
+/*    place-items: center;*/
+/*  }*/
+
+/*  #app {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr;*/
+/*    padding: 0 2rem;*/
+/*  }*/
+/*}*/
