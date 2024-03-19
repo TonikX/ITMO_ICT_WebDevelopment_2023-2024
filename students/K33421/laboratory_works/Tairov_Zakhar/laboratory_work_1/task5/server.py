@@ -74,8 +74,12 @@ class GradesHTTPServer:
             self.send_response(sock, self.grades_body_generator(grades))
         elif method == "POST":
             grades = json.loads(body)
+            with open("grades.json", "r", encoding="utf-8") as f:
+                grades_old = json.loads(f.read())
+            for k in grades_old:
+                grades_old[k] += grades[k]
             with open("grades.json", "w", encoding="utf-8") as f:
-                f.write(json.dumps(grades))
+                f.write(json.dumps(grades_old))
             self.send_response(sock, "")
         else:
             raise HTTPException(405, "Method Not Allowed")
@@ -125,7 +129,7 @@ Content-Length: {len(body.encode("utf-8"))}
 
 if __name__ == "__main__":
     host = "127.0.0.1"
-    port = 8080
+    port = 8081
     server = GradesHTTPServer(host, port)
     try:
         server.serve_forever()
