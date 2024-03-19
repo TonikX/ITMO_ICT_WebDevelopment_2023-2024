@@ -1,0 +1,61 @@
+site_name: "Лабораторные работы (Веб-программирование)"
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.indexes
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      primary: black
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  language: ru
+repo_url: https://github.com/Shaorrran/ITMO_ICT_WebDevelopment_2023-2024
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      restrict_base_path: false
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+plugins:
+  - glightbox:
+      auto_caption: true
+nav:
+  - "№1: Сокеты":
+    - lab1/index.md
+    - lab1/task1.md
+    - lab1/task2.md
+    - lab1/task3.md
+    - lab1/task4.md
+    - lab1/task5.md
+    - lab1/conclusion.md
+  - "№2: Django":
+    - lab2/index.md
+    - lab2/setup.md
+    - lab2/models.md
+    - lab2/admin.md
+    - lab2/forms.md
+    - lab2/urls.md
+    - lab2/templates.md
+    - lab2/conclusion.md
