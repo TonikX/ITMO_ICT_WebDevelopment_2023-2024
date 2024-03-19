@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.contrib.auth import update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -15,7 +12,7 @@ from .forms import (
     UserUpdateForm,
 )
 
-def register_racer(request):
+def register(request):
     if request.method == "POST":
         user_form = RegistrationForm(request.POST)
         racer_form = RacerForm(request.POST)
@@ -34,7 +31,7 @@ def register_racer(request):
 
     return render(
         request,
-        "register_racer.html",
+        "register.html",
         {"user_form": user_form, "racer_form": racer_form},
     )
 
@@ -42,9 +39,9 @@ def base(request):
     return render(request, "base.html")
 
 @login_required
-def races_list(request):
+def scoreboard(request):
     races = Race.objects.all()
-    return render(request, "races_list.html", {"races": races})
+    return render(request, "scoreboard.html", {"races": races})
 
 @login_required
 def race_comments(request, race_id):
@@ -83,11 +80,7 @@ def profile(request):
         return redirect("profile")
     else:
         user_form = UserUpdateForm(instance=request.user)
-        racer_form = (
-            RacerUpdateForm(instance=getattr(request.user, "racer", None))
-            if hasattr(request.user, "racer")
-            else None
-        )
+        racer_form = RacerUpdateForm(instance=getattr(request.user, "racer", None))
         password_form = PasswordChangeForm(request.user)
 
     return render(

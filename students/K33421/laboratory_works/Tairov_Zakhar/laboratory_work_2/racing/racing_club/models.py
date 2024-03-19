@@ -40,14 +40,6 @@ class Race(models.Model):
         verbose_name = "Race"
         verbose_name_plural = "Races"
 
-class RaceEntry(models.Model):
-    racer = models.ForeignKey(Racer, on_delete=models.CASCADE, verbose_name="Racer")
-    race = models.ForeignKey(Race, on_delete=models.CASCADE, verbose_name="Race")
-
-    class Meta:
-        verbose_name = "Race participation"
-        verbose_name_plural = "Race participations"
-
 class Comment(models.Model):
     race = models.ForeignKey(Race, on_delete=models.CASCADE, verbose_name="Race")
     poster = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Poster")

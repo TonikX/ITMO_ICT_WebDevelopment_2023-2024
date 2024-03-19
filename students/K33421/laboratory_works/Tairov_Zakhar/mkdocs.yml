@@ -50,3 +50,12 @@ nav:
     - lab1/task4.md
     - lab1/task5.md
     - lab1/conclusion.md
+  - "№2: Django":
+    - lab2/index.md
+    - lab2/setup.md
+    - lab2/models.md
+    - lab2/admin.md
+    - lab2/forms.md
+    - lab2/urls.md
+    - lab2/templates.md
+    - lab2/conclusion.md
