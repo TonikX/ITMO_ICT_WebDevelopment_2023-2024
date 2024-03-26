@@ -1,0 +1,7 @@
+site_name: "Тарабанов Алексей K33402"
+nav:
+  - "Описание": index.md
+  - "recipes": recipes.md
+
+
+
