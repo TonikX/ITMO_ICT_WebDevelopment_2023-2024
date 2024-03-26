@@ -1,0 +1,5 @@
+site_name: "Тарабанов Алексей K33402"
+nav:
+  - "Описание": index.md
+  - "MainApp": main_app.md
+  - "Автогонки": races.md
