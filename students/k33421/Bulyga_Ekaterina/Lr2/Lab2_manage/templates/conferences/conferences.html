@@ -1,0 +1,144 @@
+{% extends 'conferences/main.html' %}
+
+{% load custom_tags %}
+
+{% block content %}
+
+<br>
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Список конференций</h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+                    <th>Название</th>
+                    <th>Темы</th>
+                    <th>Место</th>
+                    <th>Дата</th>
+                    <th>Описание</th>
+                    <th>Описание места</th>
+                    <th>Условия участия</th>
+                    <th style="text-align: center">Регистрация</th>
+                    <th style="text-align: center">Отзыв</th>
+                </tr>
+
+                {% for conf in conferences %}
+                    <tr>
+                        <td>{{conf.name}}</td>
+                        <td>{{topics|get_item:conf.id|join:", "}}</td>
+                        <td>{{conf.location}}</td>
+                        <td>{{conf.date}}</td>
+                        <td>{{conf.description}}</td>
+                        <td>{{conf.location_description}}</td>
+                        <td>{{conf.participating_terms}}</td>
+                        <td align="center">
+                            {% if conf.id in registered %}
+                                <button type="button" disabled class="btn btn-success">Вы зарегистрированы</button>
+                            {% else %}
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal{{ conf.id }}">Регистрация</button>
+                            {% endif %}
+
+                        </td>
+                        <td align="center">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#reviewModal{{ conf.id }}">Отзывы</button>
+                        </td>
+                    </tr>
+                <div class="modal fade" id="modal{{ conf.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+                            </div>
+                            <form method="post" action="save_registration/">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="topic" placeholder="Тема выступления" required oninvalid="this.setCustomValidity('Введите тему')" oninput="setCustomValidity('')">
+                                        <input type="hidden" name="conf_id" value="{{ conf.id }}">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="reviewModal{{ conf.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reviewModalLabel">Отзывы</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form  method="post" action="/save_review/">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="reviewText">Оставьте отзыв и рейтинг</label>
+                                        <textarea name="reviewText" class="form-control" id="reviewText" rows="3" required></textarea>
+                                        <input type="hidden" name="conf_id" value="{{ conf.id }}">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <select name="rating" class="form-select" required aria-label="ratingSelect">
+                                                    <option selected value=""></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-end">
+                                                    <button type="submit" class="btn btn-primary float-right">Сохранить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="container-fluid">
+                                        {% for review in reviews|get_item:conf.id %}
+                                            <br>
+                                            <div class="row">
+                                              <div class="card" style="width: 100%;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ review.author }}</h5>
+                                                    <p class="card-text">{{ review.text }}</p>
+                                                    <hr />
+                                                    <i><p class="card-text">Дата конференции: {{ conference_dates|get_item:conf.id }}</p></i>
+                                                    <b><p class="card-text">
+                                                        <span style="font-size:115%;color:gold;">&starf;</span>
+                                                        {{ review.rating}}</p></b>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

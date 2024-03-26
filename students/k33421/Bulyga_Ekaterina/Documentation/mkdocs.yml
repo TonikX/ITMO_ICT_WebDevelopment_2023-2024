@@ -1,0 +1,74 @@
+site_name: Документация
+theme: material
+
+nav:
+- Главная: index.md
+- Лабораторные работы:
+      - Лабораторная работа 1 :
+            - Home : 'Лабораторная работа 1.md'
+            - Упражнение 1 : 'Lab1/1.md'
+            - Упражнение 2 : 'Lab1/2.md'
+            - Упражнение 3 : 'Lab1/3.md'
+      - Лабораторная работа 2 :
+            - Home: 'Лабораторная работа 2.md'
+            - Модели данных :
+                  - Home : 'Lab2/models.md'
+                  - Модель Conference : 'Lab2/conference.md'
+                  - Модель Performance : 'Lab2/performance.md'
+                  - Модель Review : 'Lab2/review.md'
+                  - Модель User : 'Lab2/user.md'
+            - Представления :
+                  - Home : 'Lab2/views.md'
+                  - Представление authenticate_user : 'Lab2/authenticate_user.md'
+                  - Представление cancel_registration : 'Lab2/cancel_registration.md'
+                  - Представление conferences : 'Lab2/conferencesView.md'
+                  - Представление logout_user : 'Lab2/logout_user.md'
+                  - Представление my_registrations : 'Lab2/my_registrationsView.md'
+                  - Представление participants : 'Lab2/participants.md'
+                  - Представление register_user : 'Lab2/register_user.md'
+                  - Представление save_registration : 'Lab2/save_registration.md'
+                  - Представление save_review : 'Lab2/save_review.md'
+                  - Представление show_conferences : 'Lab2/show_conferences.md'
+                  - Представление update_registration : 'Lab2/update_registration.md'
+            - Шаблоны HTML-страниц :
+                  - Home: 'Lab2/templates.md'
+                  - Шаблон Conferences : 'Lab2/conferences.md'
+                  - Шаблон Main : 'Lab2/main.md'
+                  - Шаблон MyRegistrations : 'Lab2/my_registrations.md'
+                  - Шаблон Navbar : 'Lab2/navbar.md'
+                  - Шаблон Participants : 'Lab2/participants.md'
+                  - Шаблон Register : 'Lab2/register.md'
+            - Форма : 'Lab2/forms.md'
+      - Лабораторная работа 3 :
+            - Home : 'Лабораторная работа 3.md'
+            - Модель базы данных : 'Lab3/database.md'
+            - Модели данных :
+                  - Модель Individual : 'Lab3/Models/individual.md'
+                  - Модель Type : 'Lab3/Models/type.md'
+                  - Модель Organization : 'Lab3/Models/organization.md'
+                  - Модель Employee : 'Lab3/Models/employee.md'
+                  - Модель InsureOrganization : 'Lab3/Models/insureorganization.md'
+                  - Модель InsureAgent : 'Lab3/Models/insureagent.md'
+                  - Модель Contract : 'Lab3/Models/contract.md'
+                  - Модель InsuranceCase : 'Lab3/Models/insurancecase.md'
+            - Представления :
+                  - Представление IndividualListCreateView :  'Lab3/Models/individuallistcreateview.md'
+                  - Представление IndividualDetailView :  'Lab3/Models/individualdetailview.md'
+                  - Представление TypeListCreateView :  'Lab3/Models/typelistcreateview.md'
+                  - Представление TypeDetailView :  'Lab3/Models/typedetailview.md'
+                  - Представление EmployeeListCreateView :  'Lab3/Models/employeelistcreateview.md'
+                  - Представление EmployeeDetailView :  'Lab3/Models/employeedetailview.md'
+                  - Представление OrganizationListCreateView :  'Lab3/Models/organizationlistcreateview.md'
+                  - Представление OrganizationDetailView :  'Lab3/Models/organizationdetailview.md'
+                  - Представление InsureOrganizationListCreateView :  'Lab3/Models/insureorganizationlistcreateview.md'
+                  - Представление InsureOrganizationDetailView :  'Lab3/Models/insureorganizationdetailview.md'
+                  - Представление InsureAgentListCreateView :  'Lab3/Models/insureagentlistcreateview.md'
+                  - Представление InsureAgentDetailView :  'Lab3/Models/insureagentdetailview.md'
+                  - Представление ContractListCreateView :  'Lab3/Models/contractlistcreateview.md'
+                  - Представление ContractDetailView :  'Lab3/Models/contractdetailview.md'
+                  - Представление InsuranceCaseListCreateView :  'Lab3/Models/insurancecaselistcreateview.md'
+                  - Представление InsuranceCaseDetailView :  'Lab3/Models/insurancecasedetailview.md'
+- Практические работы :
+      - Практическая работа 2 : 'Практическая работа 2.md'
+      - Практическая работа 3 : 'Практическая работа 3.md'
+

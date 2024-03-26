@@ -1,0 +1,75 @@
+{% extends 'conferences/main.html' %}
+
+{% load custom_tags %}
+
+{% block content%}
+
+<br>
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Список моих регистраций</h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <tr>
+                    <th style="width: 35%">Название</th>
+                    <th style="width: 35%">Тема</th>
+                    <th style="text-align: center; width: 30%">Редактирование</th>
+                </tr>
+
+                {% for conf, topic in conference_to_topic.items %}
+                    <tr>
+                        <td>{{ conf.name }}</td>
+                        <td>{{ topic }}</td>
+                        <td align="center">
+                            <div class="row">
+                                <div class="col-md">
+                                    <button type="button" style="width: 95%" class="btn btn-info" data-toggle="modal" data-target="#modal{{ conf.id }}">Изменить тему</button>
+                                </div>
+                                <div class="col-md">
+                                    <form method="post" action="/my_registrations/cancel_registration/">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="conf_id" value="{{ conf.id }}">
+                                        <button type="submit" class="btn btn-danger">Отмена регистрации</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <div class="modal fade" id="modal{{ conf.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Изменение темы</h5>
+                            </div>
+                            <form method="post" id="modalChange" action="/my_registrations/save_registration/">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="topic"
+                                               placeholder="Новая тема выступления"
+                                               oninvalid="this.setCustomValidity('Введите тему')"
+                                               oninput="setCustomValidity('')" required>
+                                        <input type="hidden" name="conf_id" value="{{ conf.id }}">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    <button type="submit" form="modalChange" class="btn btn-primary">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
